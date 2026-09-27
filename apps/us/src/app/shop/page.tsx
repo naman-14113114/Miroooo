@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { ShopPage } from "@/components/pages/ShopPage";
 
 export const metadata: Metadata = {
   title: "Shop All Miroooo Electric Toothbrushes & Accessories | US",
@@ -8,13 +8,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://miroooo.us/shop" },
 };
 
-export default function ShopPage() {
-  const content = getTemplateHtml("shop.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <ShopPage />;
 }

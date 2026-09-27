@@ -1,27 +1,16 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { ProductPage } from "@/components/product/ProductPage";
 
 export const metadata: Metadata = {
-  title: "Miroooo X1 Sonic Electric Toothbrush | UK",
+  title: "Miroooo X1 Sonic Electric Toothbrush | Ultralight 51g Unibody UK",
   description:
-    "Meet the Miroooo X1 32,000 VPM acoustic sonic electric toothbrush with 3 brushing modes, 60+ days battery life and magnetic travel case.",
+    "Miroooo X1 delivers 32,000 VPM acoustic micro-vibrations, 51g aerospace aluminium body, 3 modes, and 60+ days of battery life. Free UK delivery.",
   alternates: { canonical: "https://www.trymiroooo.com/products/miroooo-x" },
-  openGraph: {
-    title: "Miroooo X1 Sonic Electric Toothbrush",
-    description:
-      "A lightweight 32,000 VPM acoustic sonic electric toothbrush with three modes and 60+ days of battery life.",
-    url: "https://www.trymiroooo.com/products/miroooo-x",
-    images: ["/gallery_orig/Grey-color-8.jpg"],
-  },
 };
 
-export default function MirooooX1Page() {
-  const content = getTemplateHtml("miroooo-x.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default async function Page(props: {
+  searchParams?: Promise<{ color?: string }>;
+}) {
+  const searchParams = props.searchParams ? await props.searchParams : undefined;
+  return <ProductPage handle="miroooo-x" searchParams={searchParams} />;
 }

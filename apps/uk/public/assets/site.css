@@ -6507,26 +6507,31 @@ body.nav-open .miroooo-sticky-cart-wrap {
 
 @media (max-width: 640px) {
   .miroooo-sticky-cart-wrap {
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
+    bottom: max(8px, env(safe-area-inset-bottom, 8px)) !important;
+    left: 8px !important;
+    right: 8px !important;
   }
 
   .miroooo-sticky-pill {
-    min-height: 52px;
-    padding: 6px 8px;
-    border-radius: 9999px;
+    min-height: 52px !important;
+    padding: 6px 8px !important;
+    border-radius: 9999px !important;
   }
 
   .miroooo-sticky-left {
-    display: none;
+    display: none !important;
   }
 
-  .miroooo-sticky-btn {
-    width: 100%;
-    min-height: 44px;
-    padding: 0 16px;
-    font-size: 0.9rem;
+  .miroooo-sticky-pill .miroooo-sticky-btn,
+  .miroooo-sticky-pill #sticky-bar-cta-btn,
+  .miroooo-sticky-btn,
+  #sticky-bar-cta-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    min-height: 44px !important;
+    padding: 0 16px !important;
+    font-size: 0.9rem !important;
   }
 }
 

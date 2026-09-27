@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { AboutPage } from "@/components/pages/AboutPage";
 
 export const metadata: Metadata = {
-  title: "About Us | Miroooo UK",
-  description: "Learn about Miroooo's mission to design quieter, more considered oral care essentials.",
+  title: "About Us | Miroooo Considered Oral Care UK",
+  description:
+    "At Miroooo, we believe daily care should feel considered, not complicated. We engineer quietly precise electric toothbrushes combining acoustic innovation with minimalist design.",
   alternates: { canonical: "https://www.trymiroooo.com/pages/about-us" },
 };
 
-export default function AboutUsPage() {
-  const content = getTemplateHtml("about-us.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <AboutPage />;
 }

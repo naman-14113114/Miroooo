@@ -1280,21 +1280,30 @@ ${tickerItemSet.repeat(12)}
     });
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      renderGlobalHeader();
-      renderGlobalFooter();
-      initMobileMenuDrawer();
-      initMagnet();
-      initHoverButtons();
-      initSlideGalleries();
-      initDeferredVideos();
-    });
-  } else {
+  function runAllInits() {
+    renderGlobalHeader();
+    renderGlobalFooter();
+    initMobileMenuDrawer();
+    initShopDrawer();
+    initHeaderDropdowns();
+    initGlobalUKCountdown();
     initMagnet();
     initHoverButtons();
     initSlideGalleries();
+    initDeferredVideos();
+    if (window.MirooooCart && typeof window.MirooooCart.init === "function") window.MirooooCart.init();
+    if (typeof window.initProductPage === "function") window.initProductPage();
   }
+  window.runAllInits = runAllInits;
+
+  runAllInits();
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", runAllInits);
+  }
+  window.addEventListener("load", runAllInits);
+  setTimeout(runAllInits, 50);
+  setTimeout(runAllInits, 200);
 
   document.querySelectorAll("[data-current-year]").forEach((node) => {
     node.textContent = new Date().getFullYear();

@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { CartPageContent } from "@/components/cart/CartPageContent";
 
 export const metadata: Metadata = {
-  title: "Your Bag | Miroooo UK",
+  title: "Your Bag | Miroooo US",
   description: "Review your selected Miroooo electric toothbrushes and accessories.",
-  alternates: { canonical: "https://www.trymiroooo.com/cart" },
+  alternates: { canonical: "https://miroooo.us/cart" },
 };
 
-export default function CartPage() {
-  const content = getTemplateHtml("cart.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <CartPageContent />;
 }

@@ -4,6 +4,14 @@ import Script from "next/script";
 import type { ReactNode } from "react";
 import "@/styles/globals.css";
 
+import { CartProvider } from "@/context/CartContext";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { CartMinimalHeader } from "@/components/layout/CartMinimalHeader";
+import { CartMinimalFooter } from "@/components/layout/CartMinimalFooter";
+import { RouteChrome } from "@/components/layout/RouteChrome";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+
 const inter = localFont({
   variable: "--font-inter",
   display: "swap",
@@ -62,38 +70,33 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#080909",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en-US" className={`${inter.variable} ${didot.variable}`} style={{ backgroundColor: "#080909", colorScheme: "dark" }}>
+    <html
+      lang="en-US"
+      className={`${inter.variable} ${didot.variable}`}
+      style={{ backgroundColor: "#080909", colorScheme: "dark" }}
+    >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" />
-        <link rel="stylesheet" href="/assets/site.css" />
-        <link rel="stylesheet" href="/assets_ref/theme.css" />
-        <link rel="stylesheet" href="/assets_ref/apps.css" />
-        <link rel="stylesheet" href="/assets/product-shell.css" />
-        <link rel="stylesheet" href="/assets_ref/miroooo-reviews.css" />
-        <link rel="stylesheet" href="/assets/dentalcare-quiz.css" />
-        <link rel="stylesheet" href="/assets/smile-coach.css" />
-        <link rel="stylesheet" href="/assets/guides.css" />
-        <style dangerouslySetInnerHTML={{ __html: "html, body { background-color: #080909 !important; } loading-bar, .loading-bar, [data-page-rendering] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; } #tawk-bubble-container, #tawk-chat-panel, #tawk-default-container, .tawk-min-container, .widget-visible, iframe[src*='tawk.to'], iframe[title*='chat widget'], div[id*='tawk'], div[class*='tawk'] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }" }} />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap"
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html:
+              "html, body { background-color: #080909 !important; color: #ffffff; } loading-bar, .loading-bar, [data-page-rendering] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; } #tawk-bubble-container, #tawk-chat-panel, #tawk-default-container, .tawk-min-container, .widget-visible, iframe[src*='tawk.to'], iframe[title*='chat widget'], div[id*='tawk'], div[class*='tawk'] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }",
+          }}
+        />
       </head>
       <body style={{ backgroundColor: "#080909" }}>
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`
-            window.Shopify = window.Shopify || { designMode: false };
-            window.theme = window.theme || {};
-            window.theme.settings = { themeName: 'Concept', themeVersion: '2.1.1', moneyFormat: "\${{amount}}" };
-            window.theme.routes = { shop_url: '/', root_url: '/', cart_url: '/cart' };
-            document.documentElement.classList.replace('no-js', 'js');
-          `}
-        </Script>
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
@@ -103,15 +106,21 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             })(window, document, "clarity", "script", "ybadbatujm");
           `}
         </Script>
-        <a className="skip-link" href="#main">Skip to content</a>
-        
-        {children}
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
 
-        <Script src="/assets_ref/vendor.js" strategy="afterInteractive" />
-        <Script src="/assets_ref/theme.js" strategy="afterInteractive" />
-        <Script src="/assets/lottie.min.js" strategy="afterInteractive" />
-        <Script src="/assets/site.js" strategy="afterInteractive" />
-        <Script src="/assets/product-shell.js" strategy="afterInteractive" />
+        <CartProvider>
+          <RouteChrome
+            defaultHeader={<Header />}
+            defaultFooter={<Footer />}
+            cartHeader={<CartMinimalHeader />}
+            cartFooter={<CartMinimalFooter />}
+          >
+            {children}
+          </RouteChrome>
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

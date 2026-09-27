@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { SmileCoach } from "@/components/pages/SmileCoach";
 
 export const metadata: Metadata = {
-  title: "Miroooo Smile Coach™ | Interactive Brushing Companion",
-  description: "Guided 2-minute oral hygiene companion app designed for optimal 45° Bass brushing technique with Miroooo X2.",
+  title: "Smile Coach | 28-Day Habit Plan & 2-Minute Quad-Pacer Timer",
+  description:
+    "Free on-device oral care habit coach: guided 2-minute four-zone brush sessions, progress streaks, and replacement head care.",
   alternates: { canonical: "https://miroooo.us/pages/smile-coach" },
 };
 
-export default function SmileCoachPage() {
-  const content = getTemplateHtml("smile-coach.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <SmileCoach />;
 }

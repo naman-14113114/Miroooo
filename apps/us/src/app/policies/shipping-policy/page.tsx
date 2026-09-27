@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { PolicyPage } from "@/components/policies/PolicyPage";
 
 export const metadata: Metadata = {
-  title: "Shipping Policy | Miroooo US",
-  description: "Official Shipping Policy of Miroooo, detailing delivery times, USPS tracking, and dispatch standards.",
+  title: "US Shipping & Delivery Policy | Miroooo",
+  description:
+    "Read our US shipping policy: Free tracked delivery, 1-3 business days processing, 7-20 business days transit timeframe.",
   alternates: { canonical: "https://miroooo.us/policies/shipping-policy" },
 };
 
-export default function ShippingPolicyPage() {
-  const content = getTemplateHtml("shipping-policy.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <PolicyPage slug="shipping-policy" />;
 }

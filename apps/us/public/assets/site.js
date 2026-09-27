@@ -1197,7 +1197,10 @@ ${tickerItemSet.repeat(12)}
     initMagnet();
     initHoverButtons();
     initSlideGalleries();
+    if (window.MirooooCart && typeof window.MirooooCart.init === "function") window.MirooooCart.init();
+    if (typeof window.initProductPage === "function") window.initProductPage();
   }
+  window.runAllInits = runAllInits;
 
   runAllInits();
 

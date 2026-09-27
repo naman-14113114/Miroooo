@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { PolicyPage } from "@/components/policies/PolicyPage";
 
 export const metadata: Metadata = {
   title: "Return Policy | Miroooo UK",
-  description: "Official Return Policy of Miroooo, detailing our 30-day return window, cancellation policy, and return instructions.",
+  description:
+    "Miroooo UK 30-day defective return policy, RMA authorization requirements, and return process.",
   alternates: { canonical: "https://www.trymiroooo.com/policies/return-policy" },
 };
 
-export default function ReturnPolicyPage() {
-  const content = getTemplateHtml("return-policy.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <PolicyPage slug="return-policy" />;
 }

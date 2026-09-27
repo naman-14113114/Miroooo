@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { PolicyPage } from "@/components/policies/PolicyPage";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Miroooo UK",
-  description: "Official Privacy Policy of Miroooo, detailing GDPR compliance and data protection practices.",
+  description:
+    "Read the Miroooo UK Privacy Policy. Learn how we protect personal information in compliance with UK GDPR and Data Protection Act 2018.",
   alternates: { canonical: "https://www.trymiroooo.com/policies/privacy-policy" },
 };
 
-export default function PrivacyPolicyPage() {
-  const content = getTemplateHtml("privacy.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <PolicyPage slug="privacy-policy" />;
 }

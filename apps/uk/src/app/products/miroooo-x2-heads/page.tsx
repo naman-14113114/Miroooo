@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { ProductPage } from "@/components/product/ProductPage";
 
 export const metadata: Metadata = {
-  title: "Miroooo X2 Replacement Heads (2-Pack) | Miroooo UK",
+  title: "Miroooo X2 Replacement Heads (2-Pack) | 45° Bass Sweep Coupling UK",
   description:
-    "Official Miroooo X2 replacement brush heads engineered specifically for 45° Bass sweep vibration and smart pressure defense.",
+    "Official Miroooo X2 replacement brush heads engineered for the dynamic 45° oscillating drive shaft with DuPont filaments.",
   alternates: { canonical: "https://www.trymiroooo.com/products/miroooo-x2-heads" },
 };
 
-export default function MirooooX2HeadsPage() {
-  const content = getTemplateHtml("miroooo-x2-heads.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <ProductPage handle="miroooo-x2-heads" />;
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { HomePage } from "@/components/home/HomePage";
 
 export const metadata: Metadata = {
   title: "Miroooo Electric Toothbrushes | Miroooo X1 & X2 UK",
@@ -14,13 +14,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
-  const content = getTemplateHtml("index.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <HomePage />;
 }

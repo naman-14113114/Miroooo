@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { PolicyPage } from "@/components/policies/PolicyPage";
 
 export const metadata: Metadata = {
-  title: "Warranty & Quality Guarantee | Miroooo US",
-  description: "Official warranty information and quality guarantee for Miroooo sonic electric toothbrushes.",
+  title: "2-Year Warranty Policy | Miroooo US",
+  description:
+    "Comprehensive 2-year warranty terms covering Miroooo X1 & Miroooo X2 electric toothbrushes.",
   alternates: { canonical: "https://miroooo.us/policies/warranty" },
 };
 
-export default function WarrantyPolicyPage() {
-  const content = getTemplateHtml("warranty.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <PolicyPage slug="warranty" />;
 }

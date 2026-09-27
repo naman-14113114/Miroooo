@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { CartPageContent } from "@/components/cart/CartPageContent";
 
 export const metadata: Metadata = {
   title: "Your Bag | Miroooo UK",
@@ -7,13 +7,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.trymiroooo.com/cart" },
 };
 
-export default function CartPage() {
-  const content = getTemplateHtml("cart.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <CartPageContent />;
 }

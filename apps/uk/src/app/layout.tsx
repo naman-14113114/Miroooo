@@ -2,6 +2,12 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import type { ReactNode } from "react";
+import { CartProvider } from "@/context/CartContext";
+import { RouteChrome } from "@/components/layout/RouteChrome";
+import { Footer } from "@/components/layout/Footer";
+import { CartMinimalHeader } from "@/components/layout/CartMinimalHeader";
+import { CartMinimalFooter } from "@/components/layout/CartMinimalFooter";
+import { CartDrawer } from "@/components/cart/CartDrawer";
 import "@/styles/globals.css";
 
 const inter = localFont({
@@ -62,7 +68,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#080909",
   width: "device-width",
   initialScale: 1,
 };
@@ -73,7 +79,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://embed.tawk.to" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" />
         <link rel="stylesheet" href="/assets/site.css" />
         <link rel="stylesheet" href="/assets_ref/theme.css" />
@@ -83,18 +88,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="stylesheet" href="/assets/dentalcare-quiz.css" />
         <link rel="stylesheet" href="/assets/smile-coach.css" />
         <link rel="stylesheet" href="/assets/guides.css" />
-        <style dangerouslySetInnerHTML={{ __html: "html, body { background-color: #080909 !important; } loading-bar, .loading-bar, [data-page-rendering] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }" }} />
+        <link rel="preconnect" href="https://embed.tawk.to" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://embed.tawk.to" />
       </head>
       <body style={{ backgroundColor: "#080909" }}>
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`
-            window.Shopify = window.Shopify || { designMode: false };
-            window.theme = window.theme || {};
-            window.theme.settings = { themeName: 'Concept', themeVersion: '2.1.1', moneyFormat: "£{{amount}}" };
-            window.theme.routes = { shop_url: '/', root_url: '/', cart_url: '/cart' };
-            document.documentElement.classList.replace('no-js', 'js');
-          `}
-        </Script>
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
@@ -118,14 +115,17 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           `}
         </Script>
         <a className="skip-link" href="#main">Skip to content</a>
-        
-        {children}
 
-        <Script src="/assets_ref/vendor.js" strategy="afterInteractive" />
-        <Script src="/assets_ref/theme.js" strategy="afterInteractive" />
-        <Script src="/assets/lottie.min.js" strategy="afterInteractive" />
-        <Script src="/assets/site.js" strategy="afterInteractive" />
-        <Script src="/assets/product-shell.js" strategy="afterInteractive" />
+        <CartProvider>
+          <RouteChrome
+            cartHeader={<CartMinimalHeader />}
+            cartFooter={<CartMinimalFooter />}
+            defaultFooter={<Footer />}
+          >
+            {children}
+          </RouteChrome>
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

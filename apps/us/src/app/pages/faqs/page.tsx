@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { getTemplateHtml } from "@/lib/template";
+import { FaqsPage } from "@/components/pages/FaqsPage";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Miroooo US",
-  description: "Find answers to frequently asked questions about Miroooo electric toothbrushes, replacement heads, and shipping.",
+  title: "Frequently Asked Questions | Miroooo Help Center US",
+  description:
+    "Find fast answers to shipping queries, Miroooo X1 & X2 electric toothbrushes, return policy, and support info.",
   alternates: { canonical: "https://miroooo.us/pages/faqs" },
 };
 
-export default function FAQsPage() {
-  const content = getTemplateHtml("faq.html");
-  return (
-    <div
-      id="miroooo-page-root"
-      dangerouslySetInnerHTML={{ __html: content }}
-      suppressHydrationWarning
-    />
-  );
+export default function Page() {
+  return <FaqsPage />;
 }

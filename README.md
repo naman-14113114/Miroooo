@@ -6,14 +6,12 @@ A modern, high-performance multi-region e-commerce monorepo powering the **Miroo
 
 ## 🌐 Overview & Regional Storefronts
 
-The monorepo contains four independent, localized storefront applications and shared core libraries:
+The monorepo contains two independent, localized storefront applications and shared core libraries:
 
 | Storefront | Target Region | Currency & Pricing | Canonical Domain | Directory |
 | :--- | :--- | :--- | :--- | :--- |
 | **UK** | United Kingdom | GBP (`£`) | `https://www.trymiroooo.com` | `apps/uk` |
 | **US** | United States | USD (`$`) | `https://miroooo.us` | `apps/us` |
-| **CA** | Canada | CAD (`$`) | `https://miroooo.ca` | `apps/ca` |
-| **AU** | Australia | AUD (`$`) | `https://miroooo.com.au` | `apps/au` |
 
 ---
 
@@ -23,9 +21,7 @@ The monorepo contains four independent, localized storefront applications and sh
 miroooo/
 ├── apps/
 │   ├── uk/                 # UK Next.js 16 storefront (GBP £)
-│   ├── us/                 # US Next.js 16 storefront (USD $)
-│   ├── ca/                 # CA Next.js 16 storefront (CAD $)
-│   └── au/                 # AU Next.js 16 storefront (AUD $)
+│   └── us/                 # US Next.js 16 storefront (USD $)
 ├── packages/
 │   ├── shared/             # Typed schemas, product catalog, pricing, reviews & checkout logic
 │   ├── ui/                 # Reusable UI primitives, buttons, icons, and accessible components
@@ -107,8 +103,6 @@ Or run a specific regional storefront:
 ```bash
 pnpm dev:uk   # UK Storefront (port 3000)
 pnpm dev:us   # US Storefront (port 3001)
-pnpm dev:ca   # CA Storefront (port 3002)
-pnpm dev:au   # AU Storefront (port 3003)
 ```
 
 ### Production Build
@@ -122,8 +116,6 @@ Build a single regional app:
 ```bash
 pnpm build:uk
 pnpm build:us
-pnpm build:ca
-pnpm build:au
 ```
 
 ### Linting & Type Checking
