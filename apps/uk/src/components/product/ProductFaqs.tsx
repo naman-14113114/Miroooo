@@ -100,6 +100,85 @@ export function ProductFaqs({ isX2 = true }: ProductFaqsProps) {
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
+      <style>{`
+        .faq-accordion-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .faq-card {
+          background: #111111;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          overflow: hidden;
+          transition: background 0.25s ease, border-color 0.25s ease;
+        }
+        .faq-card:hover {
+          border-color: rgba(255, 255, 255, 0.16);
+        }
+        .faq-card.is-open {
+          background: #161616;
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+        .faq-card__button {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          padding: clamp(18px, 2.5vw, 24px) clamp(20px, 3vw, 28px);
+          background: transparent;
+          border: none;
+          color: #ffffff;
+          cursor: pointer;
+          text-align: left;
+          font-family: inherit;
+        }
+        .faq-card__question {
+          font-family: 'GFS Didot', 'Playfair Display', Georgia, serif;
+          font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+          font-weight: 600;
+          line-height: 1.35;
+          letter-spacing: 0.01em;
+          color: #ffffff;
+        }
+        .faq-card__badge {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.08);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          color: #ffffff;
+          transition: background 0.25s ease;
+        }
+        .faq-card:hover .faq-card__badge {
+          background: rgba(255, 255, 255, 0.16);
+        }
+        .faq-card.is-open .faq-card__badge {
+          background: #ffffff;
+          color: #000000;
+        }
+        .faq-card__panel {
+          padding: 0 clamp(20px, 3vw, 28px) clamp(18px, 2.5vw, 24px) clamp(20px, 3vw, 28px);
+        }
+        .faq-card__divider {
+          height: 1px;
+          background: rgba(255, 255, 255, 0.08);
+          margin-bottom: 16px;
+        }
+        .faq-card__answer p {
+          font-family: var(--font-body-family, 'Inter', sans-serif);
+          font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+          color: rgba(255, 255, 255, 0.75);
+          line-height: 1.65;
+          margin: 0;
+        }
+      `}</style>
       <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box', width: '100%' }}>
         {/* Title */}
         <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
@@ -162,21 +241,16 @@ export function ProductFaqs({ isX2 = true }: ProductFaqsProps) {
                     </svg>
                   </span>
                 </button>
-                <div
-                  className="faq-card__panel"
-                  style={{
-                    display: isOpen ? 'block' : 'none',
-                    opacity: isOpen ? 1 : 0,
-                    transition: 'opacity 0.3s ease',
-                  }}
-                >
-                  <div className="faq-card__panel-inner">
-                    <div className="faq-card__divider"></div>
-                    <div className="faq-card__answer">
-                      <p>{faq.answer}</p>
+                {isOpen && (
+                  <div className="faq-card__panel">
+                    <div className="faq-card__panel-inner">
+                      <div className="faq-card__divider"></div>
+                      <div className="faq-card__answer">
+                        <p>{faq.answer}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             );
           })}

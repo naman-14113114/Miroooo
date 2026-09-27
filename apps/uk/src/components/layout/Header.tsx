@@ -29,8 +29,11 @@ export function Header({ isTransparentHome = true }: { isTransparentHome?: boole
     <>
       <header
         className={`site-header ${isOverlay ? 'site-header--overlay' : ''} ${isScrolled ? 'is-scrolled' : ''}`}
+        style={{
+          minHeight: '60px',
+        }}
       >
-        <div className="site-header__inner">
+        <div className="site-header__inner" style={{ minHeight: '60px' }}>
           {/* Left: Mobile hamburger & Desktop Nav */}
           <div className="site-header__left flex items-center justify-start">
             <div className="header__icons header__icons--start lg:hidden flex items-center justify-start">
@@ -39,6 +42,7 @@ export function Header({ isTransparentHome = true }: { isTransparentHome?: boole
                   className="nav-toggle menu-drawer-button flex items-center justify-center lg:hidden"
                   type="button"
                   aria-expanded={isDrawerOpen}
+                  aria-controls="MenuDrawer"
                   aria-label="Open navigation menu"
                   onClick={() => setIsDrawerOpen(true)}
                   style={{
@@ -46,6 +50,12 @@ export function Header({ isTransparentHome = true }: { isTransparentHome?: boole
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    border: 'none',
+                    color: '#ffffff',
                   }}
                 >
                   <span className="sr-only">Navigation</span>
@@ -55,7 +65,7 @@ export function Header({ isTransparentHome = true }: { isTransparentHome?: boole
                     stroke="currentColor"
                     fill="none"
                     strokeWidth="2"
-                    style={{ width: '22px', height: '22px' }}
+                    style={{ width: '20px', height: '20px' }}
                   >
                     <path strokeLinecap="round" d="M3 6H21M3 12H11M3 18H16" />
                   </svg>
@@ -96,46 +106,73 @@ export function Header({ isTransparentHome = true }: { isTransparentHome?: boole
                       </span>
                     </button>
 
-                    {/* Shop Dropdown */}
+                    {/* Shop Mega Dropdown */}
                     <div
-                      className={`absolute top-full left-0 w-72 bg-[#080909]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-4 transition-all duration-200 origin-top-left z-50 ${
+                      className={`absolute top-full left-0 w-80 bg-[#0c0d0e]/98 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl p-4 transition-all duration-200 origin-top-left z-50 ${
                         isShopDropdownOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
                       }`}
                     >
                       <div className="mb-3">
-                        <span className="block text-[11px] font-bold uppercase tracking-widest text-white/40 mb-2 px-2">
-                          Brushes
+                        <span className="block text-[10.5px] font-bold uppercase tracking-widest text-white/40 mb-2 px-2">
+                          Sonic Brushes
                         </span>
                         <div className="space-y-1">
-                          <Link href="/products/miroooo-x" className="block p-2 rounded-xl hover:bg-white/10 transition-colors">
+                          <Link
+                            href="/products/miroooo-x"
+                            onClick={() => setIsShopDropdownOpen(false)}
+                            className="block p-2.5 rounded-xl hover:bg-white/10 transition-colors"
+                          >
                             <div className="flex items-center justify-between">
                               <span className="text-[13.5px] font-semibold text-white">Miroooo X1</span>
                               <span className="text-[9.5px] font-bold uppercase tracking-wider bg-white/10 text-white px-2 py-0.5 rounded-full">Classic</span>
                             </div>
-                            <p className="text-[11.5px] text-white/50 mt-0.5">Ultra-precise sonic vibration</p>
+                            <p className="text-[11.5px] text-white/50 mt-0.5">51g ultra-lightweight linear sonic motor</p>
                           </Link>
-                          <Link href="/products/miroooo-x2" className="block p-2 rounded-xl hover:bg-white/10 transition-colors">
+                          <Link
+                            href="/products/miroooo-x2"
+                            onClick={() => setIsShopDropdownOpen(false)}
+                            className="block p-2.5 rounded-xl hover:bg-white/10 transition-colors"
+                          >
                             <div className="flex items-center justify-between">
                               <span className="text-[13.5px] font-semibold text-white">Miroooo X2</span>
-                              <span className="text-[9.5px] font-bold uppercase tracking-wider bg-white/10 text-white px-2 py-0.5 rounded-full">Flagship</span>
+                              <span className="text-[9.5px] font-bold uppercase tracking-wider bg-white/15 text-white px-2 py-0.5 rounded-full">Flagship</span>
                             </div>
-                            <p className="text-[11.5px] text-white/50 mt-0.5">45° Bass sweep & pressure defense</p>
+                            <p className="text-[11.5px] text-white/50 mt-0.5">45° Bass sweep &amp; pressure defense</p>
                           </Link>
                         </div>
                       </div>
 
-                      <div>
-                        <span className="block text-[11px] font-bold uppercase tracking-widest text-white/40 mb-2 px-2">
-                          Accessories
+                      <div className="pt-2 border-t border-white/10">
+                        <span className="block text-[10.5px] font-bold uppercase tracking-widest text-white/40 mb-2 px-2">
+                          Brush Heads &amp; Accessories
                         </span>
                         <div className="space-y-1">
-                          <Link href="/products/miroooo-x1-heads" className="block p-2 rounded-xl hover:bg-white/10 transition-colors">
-                            <span className="text-[13.5px] font-medium text-white">Miroooo X1 Heads</span>
+                          <Link
+                            href="/products/miroooo-x1-heads"
+                            onClick={() => setIsShopDropdownOpen(false)}
+                            className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
+                          >
+                            <span className="text-[13px] font-medium text-white/90">Miroooo X1 Heads (2-Pack)</span>
                           </Link>
-                          <Link href="/products/miroooo-x2-heads" className="block p-2 rounded-xl hover:bg-white/10 transition-colors">
-                            <span className="text-[13.5px] font-medium text-white">Miroooo X2 Heads</span>
+                          <Link
+                            href="/products/miroooo-x2-heads"
+                            onClick={() => setIsShopDropdownOpen(false)}
+                            className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
+                          >
+                            <span className="text-[13px] font-medium text-white/90">Miroooo X2 Heads (2-Pack)</span>
                           </Link>
                         </div>
+                      </div>
+
+                      <div className="mt-3 pt-3 border-t border-white/10">
+                        <Link
+                          href="/shop"
+                          onClick={() => setIsShopDropdownOpen(false)}
+                          className="w-full py-2 px-3 rounded-lg bg-white/5 hover:bg-white/15 text-[12px] font-semibold text-white flex items-center justify-between transition-colors"
+                        >
+                          <span>Explore All Products</span>
+                          <span aria-hidden="true">→</span>
+                        </Link>
                       </div>
                     </div>
                   </li>
@@ -205,7 +242,16 @@ export function Header({ isTransparentHome = true }: { isTransparentHome?: boole
                 onClick={openCart}
                 className="site-actions__bag cart-drawer-button flex items-center justify-center relative cursor-pointer"
                 aria-label={`Shopping cart with ${totals.itemCount} items`}
-                style={{ border: 'none', background: 'transparent', padding: 0 }}
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                  padding: 0,
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
               >
                 <span className="sr-only">Cart</span>
                 <svg
@@ -227,8 +273,8 @@ export function Header({ isTransparentHome = true }: { isTransparentHome?: boole
                     className="cart-count count absolute text-xs"
                     style={{
                       position: 'absolute',
-                      top: '-6px',
-                      right: '-8px',
+                      top: '2px',
+                      right: '0px',
                       background: '#ffffff',
                       color: '#080909',
                       borderRadius: '999px',

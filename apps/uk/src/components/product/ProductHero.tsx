@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 
@@ -11,7 +10,7 @@ interface ProductHeroProps {
 }
 
 interface GallerySlide {
-  type: string;
+  type: 'image' | 'video';
   src?: string;
   alt: string;
   thumbImg: string;
@@ -26,24 +25,25 @@ interface GallerySlide {
 }
 
 export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroProps) {
-  const { addItem, addBundle } = useCart();
+  const { addItem, addBundle, openCart } = useCart();
   const isX2 = product.handle === 'miroooo-x2';
 
   // Active color & tier state
   const [selectedColor, setSelectedColor] = useState<string>(initialColor);
   const [selectedTier, setSelectedTier] = useState<'single' | 'bundle-2' | 'bundle-3'>('bundle-2');
-  
+
   // Color choices per tier
   const [singleColor, setSingleColor] = useState<string>(initialColor);
-  const [bundle2Colors, setBundle2Colors] = useState<[string, string]>(['Silver', 'Silver']);
-  const [bundle3Colors, setBundle3Colors] = useState<[string, string, string]>(['Silver', 'Grey', 'Pink']);
-  
+  const [bundle2Colors, setBundle2Colors] = useState<[string, string]>([initialColor, initialColor]);
+  const [bundle3Colors, setBundle3Colors] = useState<[string, string, string]>([initialColor, 'Grey', 'Pink']);
+
   // Addon checkbox for Buy 1 tier
   const [buy1HeadsChecked, setBuy1HeadsChecked] = useState(false);
 
-  // Gallery active index & media type
-  const [activeMediaIndex, setActiveMediaIndex] = useState(0); // 0 = upright grip
+  // Gallery active index & Lightbox state
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isLightboxZoomed, setIsLightboxZoomed] = useState(false);
   const [isShippingTooltipOpen, setIsShippingTooltipOpen] = useState(false);
   const [isStickyVisible, setIsStickyVisible] = useState(false);
 
@@ -54,13 +54,16 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
   const [deliveryDateStr, setDeliveryDateStr] = useState('Friday 21 Aug');
 
   const heroCtaRef = useRef<HTMLButtonElement | null>(null);
+  const navRef = useRef<HTMLDivElement | null>(null);
+  const touchStartXRef = useRef<number>(0);
+  const touchStartYRef = useRef<number>(0);
 
   // Calculate midnight countdown & delivery date
   useEffect(() => {
     const updateTimers = () => {
       const now = new Date();
-      
-      // Countdown to midnight UK time
+
+      // Countdown to midnight UK time (Europe/London)
       const midnight = new Date(now);
       midnight.setHours(24, 0, 0, 0);
       const diffMs = midnight.getTime() - now.getTime();
@@ -95,21 +98,13 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
     return () => clearInterval(interval);
   }, []);
 
-  // Sync standalone color with gallery & single tier
+  // Sync standalone color with gallery & tier choices
   const handleSelectStandaloneColor = (color: string) => {
     setSelectedColor(color);
     setSingleColor(color);
-    setBundle2Colors([color, color]);
-    setBundle3Colors([color, 'Grey', 'Pink']);
-
-    // Find matching gallery slide
-    if (color.toLowerCase() === 'pink') {
-      setActiveMediaIndex(isX2 ? 14 : 1);
-    } else if (color.toLowerCase() === 'grey') {
-      setActiveMediaIndex(isX2 ? 14 : 2);
-    } else {
-      setActiveMediaIndex(0);
-    }
+    setBundle2Colors([color, bundle2Colors[1]]);
+    setBundle3Colors([color, bundle3Colors[1], bundle3Colors[2]]);
+    setActiveMediaIndex(0);
   };
 
   // Sticky Bar Scroll Observer
@@ -124,20 +119,40 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close shipping tooltip on outside click or escape
+  // Keyboard navigation for Lightbox and Tooltip
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsShippingTooltipOpen(false);
         setIsLightboxOpen(false);
+        setIsLightboxZoomed(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // Scroll thumbnails into view when active index changes
+  useEffect(() => {
+    if (navRef.current) {
+      const activeThumb = navRef.current.children[activeMediaIndex] as HTMLElement;
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
+    }
+  }, [activeMediaIndex]);
+
+  // Thumbnail scrolling arrow handler
+  const scrollThumbnails = (dir: 'up' | 'down') => {
+    if (navRef.current) {
+      const offset = dir === 'up' ? -120 : 120;
+      navRef.current.scrollBy({ top: offset, left: offset, behavior: 'smooth' });
+    }
+  };
 
   // Pricing calculations
   const singlePrice = isX2 ? 69 : 59;
@@ -153,13 +168,6 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
       : selectedTier === 'bundle-2'
       ? bundle2Price
       : bundle3Price;
-
-  const currentCompare =
-    selectedTier === 'single'
-      ? singleCompare + (buy1HeadsChecked ? 10 : 0)
-      : selectedTier === 'bundle-2'
-      ? bundle2Compare
-      : bundle3Compare;
 
   // Add to Cart handler
   const handleAddToCart = () => {
@@ -181,172 +189,392 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
     } else {
       addBundle(product.handle, 3, bundle3Colors);
     }
+    openCart();
   };
 
-  // Gallery items for X2
-  const x2GallerySlides: GallerySlide[] = [
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Silver Upright Grip in Hand',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp',
-    },
-    {
-      type: 'video',
-      videoSrc: '/assets_ref/x2/vbj9qc-h264-hd.mp4',
-      poster: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-video-thumbnail.webp',
-      alt: 'Miroooo X2 Video Showcase',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-video-thumbnail.webp',
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
-      alt: 'Miroooo X2 Complete Set Presentation Packaging with Box, Travel Case and Accessories',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Wall-Mounted Storage Dock Cradle',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--top-left',
-        title: 'Free Wall-Mounted<br>Storage',
-        sub: 'Hygienic Magnetic<br>Floating Storage',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Luxury Travel Case Lifestyle Presentation',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
-        title: 'Ultra<br>Lightweight (51g)',
-        sub: 'Travel-Friendly Slim Case',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush IPX7 Full Immersion Waterproof Design',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--bottom-right',
-        title: 'IPX7 100% Waterproof',
-        sub: 'Shower-Safe & Fully Submersible',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-45-degree-bass-sweep-action.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush 45-Degree Bass Sweep Method Sonic Vibration',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-45-degree-bass-sweep-action.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--bottom-left',
-        title: '45° Bass Sweep<br>Motion',
-        sub: 'Dentist-Approved<br>Gumline Cleaning',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-usbc-fast-charging-port.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Concealed USB-C Fast Charging Port',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-usbc-fast-charging-port.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--top-right',
-        title: '90-Day Battery<br>Life',
-        sub: 'Universal USB-C<br>Fast Recharge',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-aerospace-aluminum-body.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Aerospace Grade Aluminum Alloy Finish',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-aerospace-aluminum-body.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
-        title: 'Aerospace<br>Aluminium Body',
-        sub: 'Precision CNC<br>Anodized Unibody',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Portable Luxury Travel Case in Handbag',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp',
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ventilated-travel-case.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Ventilated Protective Travel Case',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ventilated-travel-case.webp',
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Intelligent Microprocessor and Internal Circuitry',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--top-left',
-        title: 'Smart Pressure Sensor',
-        sub: 'Intelligent Microchip Protects Gums',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Precision DuPont Bristle Head and LED Halo Ring',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
-      isModesBadge: true,
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-dupont-bristle-head-macro.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush DuPont Multi-Action Replacement Bristle Head',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-dupont-bristle-head-macro.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--top-left',
-        title: 'DuPont™<br>Premium Bristles',
-        sub: 'End-Rounded For<br>Gentle Enamel Care',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-in-hand.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush Silver Dynamic Grip in Hand',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-in-hand.webp',
-      badge: {
-        pos: 'miroooo-infographic-badge--top-right',
-        title: 'Whisper-Quiet<br>Operation',
-        sub: 'Sub-45dB Acoustic<br>Sonic Motor',
-      },
-    },
-    {
-      type: 'image',
-      src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp',
-      alt: 'Miroooo X2 Sonic Electric Toothbrush and Smile Coach Companion App on Smartphone',
-      thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp',
-    },
-  ];
+  // Gallery items for X2 (dynamically reactive to selected color)
+  const getX2Slides = (): GallerySlide[] => {
+    const colorLower = selectedColor.toLowerCase();
+    const uprightGrip =
+      colorLower === 'pink'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp'
+        : colorLower === 'grey'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp'
+        : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp';
 
-  // For X1, fallback to product.galleryImages
-  const gallerySlides: GallerySlide[] = isX2
-    ? x2GallerySlides
-    : product.galleryImages.map((img) => ({
+    const inHandGrip =
+      colorLower === 'pink'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-in-hand.webp'
+        : colorLower === 'grey'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-in-hand.webp'
+        : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-in-hand.webp';
+
+    return [
+      {
         type: 'image',
-        src: img.src,
-        alt: img.alt,
-        thumbImg: img.src,
-      }));
+        src: uprightGrip,
+        alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Upright Grip in Hand`,
+        thumbImg: uprightGrip,
+      },
+      {
+        type: 'video',
+        videoSrc: '/assets_ref/x2/vbj9qc-h264-hd.mp4',
+        poster: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-video-thumbnail.webp',
+        alt: 'Miroooo X2 Video Showcase',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-video-thumbnail.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
+        alt: 'Miroooo X2 Complete Set Presentation Packaging with Box, Travel Case and Accessories',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Wall-Mounted Storage Dock Cradle',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--top-left',
+          title: 'Free Wall-Mounted<br>Storage',
+          sub: 'Hygienic Magnetic<br>Floating Storage',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Luxury Travel Case Lifestyle Presentation',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+          title: 'Ultra<br>Lightweight (51g)',
+          sub: 'Travel-Friendly Slim Case',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush IPX7 Full Immersion Waterproof Design',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--bottom-right',
+          title: 'IPX7 100% Waterproof',
+          sub: 'Shower-Safe & Fully Submersible',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-45-degree-bass-sweep-action.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush 45-Degree Bass Sweep Method Sonic Vibration',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-45-degree-bass-sweep-action.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--bottom-left',
+          title: '45° Bass Sweep<br>Motion',
+          sub: 'Dentist-Approved<br>Gumline Cleaning',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-usbc-fast-charging-port.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Concealed USB-C Fast Charging Port',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-usbc-fast-charging-port.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--top-right',
+          title: '90-Day Battery<br>Life',
+          sub: 'Universal USB-C<br>Fast Recharge',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-aerospace-aluminum-body.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Aerospace Grade Aluminum Alloy Finish',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-aerospace-aluminum-body.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+          title: 'Aerospace<br>Aluminium Body',
+          sub: 'Precision CNC<br>Anodized Unibody',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Portable Luxury Travel Case in Handbag',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ventilated-travel-case.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Ventilated Protective Travel Case',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ventilated-travel-case.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Intelligent Microprocessor and Internal Circuitry',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--top-left',
+          title: 'Smart Pressure Sensor',
+          sub: 'Intelligent Microchip Protects Gums',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Precision DuPont Bristle Head and LED Halo Ring',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
+        isModesBadge: true,
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-dupont-bristle-head-macro.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush DuPont Multi-Action Replacement Bristle Head',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-dupont-bristle-head-macro.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--top-left',
+          title: 'DuPont™<br>Premium Bristles',
+          sub: 'End-Rounded For<br>Gentle Enamel Care',
+        },
+      },
+      {
+        type: 'image',
+        src: inHandGrip,
+        alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Dynamic Grip in Hand`,
+        thumbImg: inHandGrip,
+        badge: {
+          pos: 'miroooo-infographic-badge--top-right',
+          title: 'Whisper-Quiet<br>Operation',
+          sub: 'Sub-45dB Acoustic<br>Sonic Motor',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush and Smile Coach Companion App on Smartphone',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp',
+      },
+    ];
+  };
 
+  // Gallery items for X1 (dynamically reactive to selected color)
+  const getX1Slides = (): GallerySlide[] => {
+    const colorLower = selectedColor.toLowerCase();
+
+    if (colorLower === 'pink') {
+      return [
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
+          alt: 'Miroooo X1 Sonic Electric Toothbrush Pink Upright Hand Grip',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
+        },
+        {
+          type: 'video',
+          videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
+          poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+          alt: 'Miroooo X1 Video Showcase',
+          thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Pink-2.webp',
+          alt: 'Miroooo X1 Pink Lifestyle In Hand View',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-2.webp',
+        },
+        {
+          type: 'video',
+          videoSrc: '/assets_ref/x/gallery/Miroooo_x_Pink-video.mp4',
+          poster: '/assets_ref/x/gallery/Miroooo_x_Pink-3.webp',
+          alt: 'Miroooo X1 Pink Feature Video',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-3.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Pink-4.webp',
+          alt: 'Miroooo X1 Pink Magnetic Travel Case',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-4.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Pink-5.webp',
+          alt: 'Miroooo X1 Pink IPX7 Full Submersion Waterproof',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-5.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Pink-6.webp',
+          alt: 'Miroooo X1 Pink DuPont Precision Bristles',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-6.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Pink-8.webp',
+          alt: 'Miroooo X1 Pink In Hand Precision Grip',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-8.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Silver-9.webp',
+          alt: 'Miroooo X1 Complete Set Presentation Packaging Box',
+          thumbImg: '/assets_ref/x/gallery/Silver-9.webp',
+        },
+      ];
+    }
+
+    if (colorLower === 'grey') {
+      return [
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp',
+          alt: 'Miroooo X1 Sonic Electric Toothbrush Grey Upright Hand Grip',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp',
+        },
+        {
+          type: 'video',
+          videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
+          poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+          alt: 'Miroooo X1 Video Showcase',
+          thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Grey-4.webp',
+          alt: 'Miroooo X1 Grey Magnetic Travel Case',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-4.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Grey-5.webp',
+          alt: 'Miroooo X1 Grey IPX7 Waterproof Submersion',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-5.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Grey-6.webp',
+          alt: 'Miroooo X1 Grey DuPont Precision Bristles',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-6.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Grey-7.webp',
+          alt: 'Miroooo X1 Grey USB-C Fast Recharge',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-7.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Miroooo_x_Grey-8.webp',
+          alt: 'Miroooo X1 Grey In Hand Precision Grip',
+          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-8.webp',
+        },
+        {
+          type: 'image',
+          src: '/assets_ref/x/gallery/Silver-9.webp',
+          alt: 'Miroooo X1 Complete Set Presentation Packaging Box',
+          thumbImg: '/assets_ref/x/gallery/Silver-9.webp',
+        },
+      ];
+    }
+
+    // Default: Silver
+    return [
+      {
+        type: 'image',
+        src: '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp',
+        alt: 'Miroooo X1 Sonic Electric Toothbrush Silver Upright Hand Grip',
+        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp',
+      },
+      {
+        type: 'video',
+        videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
+        poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+        alt: 'Miroooo X1 Video Showcase',
+        thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x/gallery/Miroooo_x_Silver-2.webp',
+        alt: 'Miroooo X1 Silver Lifestyle In Hand View',
+        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-2.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x/gallery/Miroooo_x_Silver-3.webp',
+        alt: 'Miroooo X1 Silver Magnetic Travel Case',
+        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-3.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x/gallery/Miroooo_x_Silver-4.webp',
+        alt: 'Miroooo X1 Silver IPX7 Full Submersion Waterproof',
+        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-4.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x/gallery/Miroooo_x_Silver-5.webp',
+        alt: 'Miroooo X1 Silver USB-C Fast Recharge',
+        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-5.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x/gallery/Silver-9.webp',
+        alt: 'Miroooo X1 Complete Set Presentation Packaging Box',
+        thumbImg: '/assets_ref/x/gallery/Silver-9.webp',
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x/gallery/Miroooo_x_Silver-11.webp',
+        alt: 'Miroooo X1 Silver In Hand Precision Grip',
+        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-11.webp',
+      },
+    ];
+  };
+
+  const gallerySlides = isX2 ? getX2Slides() : getX1Slides();
   const totalSlides = gallerySlides.length;
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      touchStartXRef.current = e.touches[0].clientX;
+      touchStartYRef.current = e.touches[0].clientY;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    const diffX = touch.clientX - touchStartXRef.current;
+    const diffY = touch.clientY - touchStartYRef.current;
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+      if (diffX < 0) {
+        // Swipe left -> next
+        setActiveMediaIndex((prev) => (prev + 1) % totalSlides);
+      } else {
+        // Swipe right -> prev
+        setActiveMediaIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+      }
+    }
+  };
+
+  // Helper to get checkout thumbnail image for sticky bar
+  const getColorThumbnail = (color: string) => {
+    const col = color.toLowerCase();
+    if (isX2) {
+      if (col === 'pink') return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp';
+      if (col === 'grey') return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp';
+      return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp';
+    } else {
+      if (col === 'pink') return '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp';
+      if (col === 'grey') return '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp';
+      return '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp';
+    }
+  };
 
   return (
     <div id="shopify-section-template--24203751129433__main-product" className="shopify-section">
       <div className="section section--padding section--rounded relative">
         <div className="page-width relative">
-          {/* SORA-INSPIRED URGENCY BANNER (MIROOOO X2) */}
+          {/* SORA-INSPIRED URGENCY BANNER (MIROOOO X2 & X1) */}
           <div id="miroooo-x2-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
             <div className="x2-urgency-banner__left">
               <span className="x2-urgency-banner__icon" aria-hidden="true">🔥</span>
@@ -379,21 +607,21 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
             {/* Left: Product Gallery */}
             <div className="product__gallery product__gallery--full_width block w-full relative" aria-label="Product Gallery">
               <div className="miroooo-minmun-gallery" id="MirooooMainGallery">
-                {/* Thumbnails Navigation */}
+                {/* Thumbnails Navigation Strip */}
                 <div className="miroooo-gallery__nav-wrap" aria-label="Product image thumbnails">
                   <button
                     type="button"
                     className="miroooo-gallery__nav-arrow miroooo-gallery__nav-arrow--prev"
                     id="MirooooGalleryNavPrev"
                     aria-label="Scroll thumbnails up"
-                    onClick={() => setActiveMediaIndex((prev) => (prev - 1 + totalSlides) % totalSlides)}
+                    onClick={() => scrollThumbnails('up')}
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="18 15 12 9 6 15"></polyline>
                     </svg>
                   </button>
 
-                  <div className="miroooo-gallery__nav" id="MirooooGalleryNav">
+                  <div className="miroooo-gallery__nav" id="MirooooGalleryNav" ref={navRef}>
                     {gallerySlides.map((slide, idx) => (
                       <button
                         key={idx}
@@ -423,7 +651,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     className="miroooo-gallery__nav-arrow miroooo-gallery__nav-arrow--next"
                     id="MirooooGalleryNavNext"
                     aria-label="Scroll thumbnails down"
-                    onClick={() => setActiveMediaIndex((prev) => (prev + 1) % totalSlides)}
+                    onClick={() => scrollThumbnails('down')}
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="6 9 12 15 18 9"></polyline>
@@ -431,9 +659,16 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   </button>
                 </div>
 
-                {/* Main 1:1 Stage */}
+                {/* Main 1:1 Featured Media Stage */}
                 <div className="miroooo-gallery__stage-wrap">
-                  <div className="miroooo-gallery__stage" id="MirooooGalleryStage" role="region" aria-label="Product media carousel">
+                  <div
+                    className="miroooo-gallery__stage"
+                    id="MirooooGalleryStage"
+                    role="region"
+                    aria-label="Product media carousel"
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                  >
                     <button
                       type="button"
                       className="miroooo-gallery__arrow miroooo-gallery__arrow--prev"
@@ -455,7 +690,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                             className="miroooo-gallery__slide is-active"
                             data-media-type={slide.type}
                             data-index={idx}
-                            onClick={() => setIsLightboxOpen(true)}
+                            onClick={() => {
+                              setIsLightboxOpen(true);
+                              setIsLightboxZoomed(false);
+                            }}
                             style={{ cursor: 'zoom-in' }}
                           >
                             {slide.type === 'video' ? (
@@ -546,7 +784,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
               id="ProductInfo-template--24203751129433__main-product-9593510658393"
               className="product__info block sticky w-full"
             >
-              {/* 1. Green Stars Rating */}
+              {/* 1. Green Stars Rating Badge */}
               <div className="product__title">
                 <a
                   href="#shopify-section-template--24203751129433__reviews"
@@ -587,10 +825,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
               <div className="product__price grid gap-2 mt-1" id="main-product-price-section">
                 <div className="flex flex-wrap items-baseline gap-2" style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                    £{singlePrice}
+                    £{singlePrice}.00
                   </span>
                   <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
-                    £{singleCompare}
+                    £{singleCompare}.00
                   </span>
                   <span
                     className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
@@ -609,19 +847,19 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
                     </span>
-                    <span><strong>Ultra Lightweight</strong> ergonomic aerospace-grade aluminium body.</span>
+                    <span><strong>Ultra Lightweight</strong> ergonomic aerospace-grade aluminium body (51g).</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><polyline points="11 9 9 12 12 12 10 15"></polyline></svg>
                     </span>
-                    <span>Brushes up to <strong>{isX2 ? '90 days' : '60 days'}</strong> on a single charge.</span>
+                    <span>Brushes up to <strong>{isX2 ? '90 days' : '60 days'}</strong> on a single 2-hour USB-C charge.</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"></rect><path d="M8 7V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3"></path><line x1="3" y1="13" x2="21" y2="13"></line></svg>
                     </span>
-                    <span>Includes <strong>free luxury travel case</strong>.</span>
+                    <span>Includes <strong>free luxury travel case</strong> {isX2 ? '& wall storage dock' : ''}.</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
@@ -632,7 +870,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 </ul>
               </div>
 
-              {/* Standalone 3-Color Selector */}
+              {/* Standalone 3-Color Selector (Silver, Pink, Grey) */}
               <div className="standalone-color-selector my-4" style={{ margin: '20px 0 16px 0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', fontSize: '14px' }}>
                   <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Color:</span>
@@ -643,7 +881,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     <button
                       key={col}
                       type="button"
-                      className={`standalone-swatch-btn ${selectedColor === col ? 'is-active' : ''}`}
+                      className={`standalone-swatch-btn swatch-${col.toLowerCase()} ${selectedColor === col ? 'is-active' : ''}`}
                       data-color={col}
                       onClick={() => handleSelectStandaloneColor(col)}
                       title={col}
@@ -682,10 +920,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-single-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            £{singlePrice}
+                            £{singlePrice}.00
                           </span>
-                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: '12px', color: '#777777' }}>
-                            £{singleCompare}
+                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                            £{singleCompare}.00
                           </span>
                         </div>
                         <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
@@ -696,7 +934,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   </button>
 
                   {/* Expanded Row (Tier 1) */}
-                  <div className="tier-expanded-panel" id="panel-single" style={{ display: selectedTier === 'single' ? 'block' : 'none' }}>
+                  <div className="tier-expanded-panel" id="panel-single" style={{ display: selectedTier === 'single' ? 'flex' : 'none' }}>
                     <div className="brush-selection-row">
                       <span className="text-xs sm:text-sm font-medium" style={{ color: '#444444' }}>Brush Color:</span>
                       <div className="brush-color-swatches" data-brush-index="0">
@@ -709,7 +947,6 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                             aria-label={col}
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSingleColor(col);
                               handleSelectStandaloneColor(col);
                             }}
                           ></button>
@@ -746,7 +983,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-addon-price-tag" id="tier-single-heads-price">+£10</span>
+                      <span className="tier-addon-price-tag" id="tier-single-heads-price">+£10.00</span>
                     </div>
                   </div>
                 </div>
@@ -773,22 +1010,22 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-extrabold text-sm sm:text-base uppercase tracking-tight" style={{ color: '#111111' }}>Buy 2</span>
-                          <span className="tier-badge-pill" id="tier-bundle-2-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£10 OFF</span>
+                          <span className="tier-badge-pill" id="tier-bundle-2-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£10.00 OFF</span>
                         </div>
                         <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>Includes 2 {product.name} sets</p>
                       </div>
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-bundle-2-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            £{bundle2Price}
+                            £{bundle2Price}.00
                           </span>
-                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-2-compare-price" style={{ fontSize: '12px', color: '#777777' }}>
-                            £{bundle2Compare}
+                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-2-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                            £{bundle2Compare}.00
                           </span>
                         </div>
                         <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                           <span className="font-bold text-xs sm:text-sm" id="tier-bundle-2-each-price" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                            (£{Math.round(bundle2Price / 2)} each)
+                            (£{Math.round(bundle2Price / 2)}.00 each)
                           </span>
                         </div>
                       </div>
@@ -796,7 +1033,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   </button>
 
                   {/* Expanded Rows (Tier 2) */}
-                  <div className="tier-expanded-panel" id="panel-bundle-2" style={{ display: selectedTier === 'bundle-2' ? 'block' : 'none' }}>
+                  <div className="tier-expanded-panel" id="panel-bundle-2" style={{ display: selectedTier === 'bundle-2' ? 'flex' : 'none' }}>
                     {/* Row 1 */}
                     <div className="brush-selection-row">
                       <span className="text-xs sm:text-sm font-medium" style={{ color: '#444444' }}>#1 Brush Color:</span>
@@ -852,7 +1089,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">£10</span>
+                      <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">£10.00</span>
                       <span className="tier-gift-free-badge">FREE</span>
                     </div>
                   </div>
@@ -875,22 +1112,22 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-extrabold text-sm sm:text-base uppercase tracking-tight" style={{ color: '#111111' }}>Buy 3</span>
-                          <span className="tier-badge-pill" id="tier-bundle-3-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£30 OFF</span>
+                          <span className="tier-badge-pill" id="tier-bundle-3-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£30.00 OFF</span>
                         </div>
                         <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>Includes 3 {product.name} sets</p>
                       </div>
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-bundle-3-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            £{bundle3Price}
+                            £{bundle3Price}.00
                           </span>
-                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-3-compare-price" style={{ fontSize: '12px', color: '#777777' }}>
-                            £{bundle3Compare}
+                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-3-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                            £{bundle3Compare}.00
                           </span>
                         </div>
                         <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                           <span className="font-bold text-xs sm:text-sm" id="tier-bundle-3-each-price" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                            (£{Math.round(bundle3Price / 3)} each)
+                            (£{Math.round(bundle3Price / 3)}.00 each)
                           </span>
                         </div>
                       </div>
@@ -898,7 +1135,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   </button>
 
                   {/* Expanded Rows (Tier 3) */}
-                  <div className="tier-expanded-panel" id="panel-bundle-3" style={{ display: selectedTier === 'bundle-3' ? 'block' : 'none' }}>
+                  <div className="tier-expanded-panel" id="panel-bundle-3" style={{ display: selectedTier === 'bundle-3' ? 'flex' : 'none' }}>
                     {/* Row 1 */}
                     <div className="brush-selection-row">
                       <span className="text-xs sm:text-sm font-medium" style={{ color: '#444444' }}>#1 Brush Color:</span>
@@ -970,10 +1207,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                           <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
                         </svg>
                       </span>
-                      <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
+                      <span className="tier-gift-strip-title">+ 4 Brush Heads (2 Sets)</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">£20</span>
+                      <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">£20.00</span>
                       <span className="tier-gift-free-badge">FREE</span>
                     </div>
                   </div>
@@ -1028,7 +1265,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                         </button>
                       </div>
                       <p style={{ fontSize: '11.5px', lineHeight: 1.5, margin: 0, color: 'rgba(255, 255, 255, 0.8)' }}>
-                        This is the estimated delivery timeframe based on 1–3 business days processing and 7–20 business days standard transit. For more information, please visit our <a href="/policies/shipping-policy" style={{ color: '#ffffff', textDecoration: 'underline' }}>shipping policy</a> page.
+                        This is the estimated delivery timeframe based on 1–3 business days processing and 7–20 business days standard transit across the UK. For more information, please visit our <a href="/policies/shipping-policy" style={{ color: '#ffffff', textDecoration: 'underline' }}>shipping policy</a> page.
                       </p>
                     </div>
                   )}
@@ -1050,7 +1287,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 >
                   <span className="btn-fill" data-fill></span>
                   <span className="btn-text" id="main-cta-text">
-                    Add to Cart {selectedTier !== 'single' ? `+ Free ${selectedTier === 'bundle-2' ? '2' : '4'} Brush Heads` : ''}
+                    Add to Cart {selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}
                   </span>
                 </button>
               </div>
@@ -1066,17 +1303,17 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                   <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" /></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>45° Bass<br />Sweep</span>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>{isX2 ? '45° Bass' : '32,000 VPM'}<br />{isX2 ? 'Sweep' : 'Sonic Clean'}</span>
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                   <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><rect x="1" y="3" width="15" height="13" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br />Shipping</span>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br />UK Shipping</span>
                 </div>
               </div>
 
               {/* Product Accordions */}
               <div className="product__accordions" style={{ display: 'flex', flexDirection: 'column', gap: 0, marginTop: '14px' }}>
-                {/* Accordion 1: Why Miroooo X2 */}
+                {/* Accordion 1: Why Miroooo */}
                 <details className="product__accordion details" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', padding: '8px 0', color: '#ffffff' }}>
                   <summary className="details__summary flex items-center justify-between gap-2 cursor-pointer" style={{ color: '#ffffff', listStyle: 'none', outline: 'none' }}>
                     <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -1097,7 +1334,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                         </span>
                         <div style={{ flex: 1 }}>
                           <strong style={{ color: '#ffffff', fontSize: '13.5px', display: 'block', marginBottom: '2px' }}>{isX2 ? '90+ Days' : '60+ Days'} on a Single Charge</strong>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>High-density power cell delivers over 3 months of twice-daily brushing on a single 2-hour USB-C fast charge.</span>
+                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>High-density power cell delivers over 2–3 months of twice-daily brushing on a single 2-hour USB-C fast charge.</span>
                         </div>
                       </li>
                       <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
@@ -1124,7 +1361,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                         </span>
                         <div style={{ flex: 1 }}>
                           <strong style={{ color: '#ffffff', fontSize: '13.5px', display: 'block', marginBottom: '2px' }}>Slim Travel Case &amp; Wall Storage</strong>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>Includes tailored hard-shell travel case and magnetic wall-mounted storage to keep bathroom counters clutter-free.</span>
+                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>Includes tailored hard-shell travel case {isX2 ? 'and magnetic wall-mounted storage' : ''} to keep bathroom counters clutter-free.</span>
                         </div>
                       </li>
                     </ul>
@@ -1257,9 +1494,17 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                         <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
                         <span><strong>RoHS Compliant</strong> — 100% Free of Toxic Heavy Metals</span>
                       </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                        <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
+                        <span><strong>IPX7 Waterproof</strong> — Certified Submersible Immersion Safe</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                        <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
+                        <span><strong>EMC Compliant</strong> — Zero Electromagnetic Interference</span>
+                      </li>
                       <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0' }}>
                         <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
-                        <span><strong>IPX7 Waterproof</strong> — Certified Submersible Safe</span>
+                        <span><strong>DuPont Food-Contact Material</strong> — BPA-Free Food-Safe Filaments</span>
                       </li>
                     </ul>
                   </div>
@@ -1273,41 +1518,129 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
             <div className="miroooo-sticky-pill">
               <div className="miroooo-sticky-left">
                 <div className="miroooo-sticky-img-stack" id="sticky-bar-img-stack" aria-hidden="true">
-                  <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
-                    <img
-                      src={isX2 ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp' : '/assets/miroooo-x-electric-toothbrushes-contact-support.webp'}
-                      alt={product.name}
-                      width="50"
-                      height="50"
-                      loading="eager"
-                      decoding="async"
-                    />
-                  </div>
-                  {selectedTier !== 'single' && (
-                    <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                      <img
-                        src={isX2 ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp' : '/assets/miroooo-x-electric-toothbrushes-contact-support.webp'}
-                        alt={product.name}
-                        width="50"
-                        height="50"
-                        loading="eager"
-                        decoding="async"
-                      />
-                    </div>
+                  {selectedTier === 'single' ? (
+                    <>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
+                        <img
+                          src={getColorThumbnail(singleColor)}
+                          alt={`${product.name} - ${singleColor}`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                      {buy1HeadsChecked && (
+                        <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
+                          <img
+                            src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'}
+                            alt={`${product.name} Heads`}
+                            width="50"
+                            height="50"
+                            loading="eager"
+                            decoding="async"
+                          />
+                        </div>
+                      )}
+                    </>
+                  ) : selectedTier === 'bundle-2' ? (
+                    <>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
+                        <img
+                          src={getColorThumbnail(bundle2Colors[0])}
+                          alt={`${product.name} - ${bundle2Colors[0]}`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
+                        <img
+                          src={getColorThumbnail(bundle2Colors[1])}
+                          alt={`${product.name} - ${bundle2Colors[1]}`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 3 }}>
+                        <img
+                          src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'}
+                          alt={`${product.name} Free Heads`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
+                        <img
+                          src={getColorThumbnail(bundle3Colors[0])}
+                          alt={`${product.name} - ${bundle3Colors[0]}`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
+                        <img
+                          src={getColorThumbnail(bundle3Colors[1])}
+                          alt={`${product.name} - ${bundle3Colors[1]}`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 3 }}>
+                        <img
+                          src={getColorThumbnail(bundle3Colors[2])}
+                          alt={`${product.name} - ${bundle3Colors[2]}`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 4 }}>
+                        <img
+                          src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'}
+                          alt={`${product.name} Free Heads`}
+                          width="50"
+                          height="50"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </div>
+                    </>
                   )}
                 </div>
                 <div className="miroooo-sticky-info">
                   <p className="miroooo-sticky-title" id="sticky-bar-title">
                     {selectedTier === 'single'
-                      ? `Buy 1 - ${product.name} (${singleColor})`
+                      ? `${product.name} - ${singleColor}${buy1HeadsChecked ? ' + Heads' : ''}`
                       : selectedTier === 'bundle-2'
                       ? `Buy 2 - ${product.name} (${bundle2Colors[0]} + ${bundle2Colors[1]})`
                       : `Buy 3 - ${product.name} (${bundle3Colors[0]} + ${bundle3Colors[1]} + ${bundle3Colors[2]})`}
                   </p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                     <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                      £{currentPrice}
+                      £{currentPrice}.00
                     </span>
+                    {selectedTier !== 'single' && (
+                      <>
+                        <span className="miroooo-sticky-bullet">·</span>
+                        <span className="miroooo-sticky-gifts-tag" style={{ color: '#22c55e', fontWeight: 600 }}>
+                          + Free {selectedTier === 'bundle-2' ? '2' : '4'} Brush Heads
+                        </span>
+                      </>
+                    )}
                   </p>
                 </div>
               </div>
@@ -1324,7 +1657,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     <svg className="icon-cart-bag miroooo-sticky-bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
                   </span>
                   <span id="sticky-bar-cta-text">
-                    Add to Cart {selectedTier !== 'single' ? `+ Free ${selectedTier === 'bundle-2' ? '2' : '4'} Brush Heads` : ''}
+                    Add to Cart {selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}
                   </span>
                 </span>
               </button>
@@ -1333,7 +1666,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
         </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Fullscreen Zoom Lightbox Modal */}
       {isLightboxOpen && (
         <div
           id="MirooooGalleryLightbox"
@@ -1343,14 +1676,24 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
           aria-label="Expanded Product Gallery"
           style={{ display: 'flex' }}
         >
-          <div className="miroooo-gallery-lightbox__backdrop" onClick={() => setIsLightboxOpen(false)} aria-hidden="true"></div>
+          <div
+            className="miroooo-gallery-lightbox__backdrop"
+            onClick={() => {
+              setIsLightboxOpen(false);
+              setIsLightboxZoomed(false);
+            }}
+            aria-hidden="true"
+          ></div>
 
           <button
             type="button"
             className="miroooo-gallery-lightbox__close"
             id="MirooooGalleryLightboxClose"
             aria-label="Close product gallery"
-            onClick={() => setIsLightboxOpen(false)}
+            onClick={() => {
+              setIsLightboxOpen(false);
+              setIsLightboxZoomed(false);
+            }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -1363,15 +1706,41 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
             className="miroooo-gallery-lightbox__arrow miroooo-gallery-lightbox__prev"
             id="MirooooGalleryLightboxPrev"
             aria-label="Previous product media"
-            onClick={() => setActiveMediaIndex((prev) => (prev - 1 + totalSlides) % totalSlides)}
+            onClick={() => {
+              setActiveMediaIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+              setIsLightboxZoomed(false);
+            }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
 
-          <div className="miroooo-gallery-lightbox__stage">
-            <div className="miroooo-gallery-lightbox__media-box" id="MirooooGalleryLightboxMediaBox">
+          <div
+            className="miroooo-gallery-lightbox__stage"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="miroooo-gallery-lightbox__media-box"
+              id="MirooooGalleryLightboxMediaBox"
+              style={{
+                cursor: gallerySlides[activeMediaIndex].type === 'image' ? (isLightboxZoomed ? 'zoom-out' : 'zoom-in') : 'default',
+                transform: isLightboxZoomed ? 'scale(1.75)' : 'scale(1)',
+                transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                maxWidth: '90vw',
+                maxHeight: '85vh',
+                position: 'relative',
+              }}
+              onClick={() => {
+                if (gallerySlides[activeMediaIndex].type === 'image') {
+                  setIsLightboxZoomed((z) => !z);
+                }
+              }}
+            >
               {gallerySlides[activeMediaIndex].type === 'video' ? (
                 <video
                   src={gallerySlides[activeMediaIndex].videoSrc}
@@ -1383,11 +1752,27 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain' }}
                 ></video>
               ) : (
-                <img
-                  src={gallerySlides[activeMediaIndex].src}
-                  alt={gallerySlides[activeMediaIndex].alt}
-                  style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain' }}
-                />
+                <>
+                  <img
+                    src={gallerySlides[activeMediaIndex].src}
+                    alt={gallerySlides[activeMediaIndex].alt}
+                    style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain', userSelect: 'none' }}
+                  />
+                  {gallerySlides[activeMediaIndex].badge && !isLightboxZoomed && (
+                    <div className={`miroooo-infographic-badge ${gallerySlides[activeMediaIndex].badge?.pos}`}>
+                      <div className="miroooo-infographic-badge__header">
+                        <span
+                          className="miroooo-infographic-badge__title"
+                          dangerouslySetInnerHTML={{ __html: gallerySlides[activeMediaIndex].badge?.title || '' }}
+                        ></span>
+                      </div>
+                      <span
+                        className="miroooo-infographic-badge__sub"
+                        dangerouslySetInnerHTML={{ __html: gallerySlides[activeMediaIndex].badge?.sub || '' }}
+                      ></span>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -1397,7 +1782,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
             className="miroooo-gallery-lightbox__arrow miroooo-gallery-lightbox__next"
             id="MirooooGalleryLightboxNext"
             aria-label="Next product media"
-            onClick={() => setActiveMediaIndex((prev) => (prev + 1) % totalSlides)}
+            onClick={() => {
+              setActiveMediaIndex((prev) => (prev + 1) % totalSlides);
+              setIsLightboxZoomed(false);
+            }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6"></polyline>

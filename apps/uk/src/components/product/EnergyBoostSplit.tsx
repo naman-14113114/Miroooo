@@ -5,9 +5,22 @@ import React from 'react';
 export function EnergyBoostSplit() {
   return (
     <div id="x2-section-energy-boost-split" className="shopify-section" style={{ background: '#000000', color: '#ffffff', width: '100%', padding: 'clamp(3.5rem, 6vw, 6rem) 0', boxSizing: 'border-box' }}>
+      <style>{`
+        #x2-section-energy-boost-split .split-section-grid {
+          display: flex;
+          flex-direction: column-reverse;
+          align-items: center;
+          gap: clamp(2rem, 4vw, 4.5rem);
+        }
+        @media (min-width: 1024px) {
+          #x2-section-energy-boost-split .split-section-grid {
+            flex-direction: row !important;
+          }
+        }
+      `}</style>
       <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
-        <div className="split-section-grid" style={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'center', gap: 'clamp(2rem, 4vw, 4.5rem)' }}>
-          {/* Text / Data Content */}
+        <div className="split-section-grid">
+          {/* Text / Data Content (Left on Desktop, Below on Phone) */}
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
             <h2 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, margin: '0 0 2rem 0', letterSpacing: '0.02em', textTransform: 'uppercase' }}>
               BUILT FOR TRAVEL
@@ -39,7 +52,7 @@ export function EnergyBoostSplit() {
             </ul>
           </div>
 
-          {/* Image */}
+          {/* Image (Right on Desktop, Top on Phone) */}
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
             <div className="desc-media-loading" style={{ position: 'relative', width: '100%', borderRadius: '20px', overflow: 'hidden', background: '#0d0d0d', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }}>
               <img

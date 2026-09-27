@@ -2498,4 +2498,6 @@
     scheduleInit();
   }
 
+  window.initProductReviews = initProductReviews;
+  window.initMirooooReviews = initProductReviews;
 })();

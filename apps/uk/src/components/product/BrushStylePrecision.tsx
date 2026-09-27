@@ -16,9 +16,42 @@ export function BrushStylePrecision() {
         boxSizing: 'border-box',
       }}
     >
+      <style>{`
+        .style-precision-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: clamp(2rem, 3.5vw, 4rem);
+          align-items: center;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .style-col-center {
+          order: -1;
+        }
+        .style-col-center img {
+          max-height: 380px;
+        }
+        @media (min-width: 900px) {
+          .style-precision-grid {
+            grid-template-columns: 1fr 1.15fr 1fr !important;
+          }
+          .style-col-center {
+            order: 0 !important;
+          }
+          .style-col-center img {
+            max-height: 580px !important;
+          }
+        }
+        .style-feature-card {
+          transition: transform 0.3s ease;
+        }
+        .style-feature-card:hover {
+          transform: translateY(-2px);
+        }
+      `}</style>
       <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 48px)', boxSizing: 'border-box', width: '100%' }}>
         {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 5.5vw, 5.5rem)', width: '100%', display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 5.5vw, 5.5rem)', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h2
             style={{
               fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
@@ -49,17 +82,7 @@ export function BrushStylePrecision() {
         </div>
 
         {/* 3-Column Grid: Left (2 Pointers) | Center (Hero Toothbrush) | Right (2 Pointers) */}
-        <div
-          className="style-precision-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 'clamp(2rem, 3.5vw, 4rem)',
-            alignItems: 'center',
-            width: '100%',
-            boxSizing: 'border-box',
-          }}
-        >
+        <div className="style-precision-grid">
           {/* Left Column: Pointers 1 & 2 */}
           <div className="style-col-left" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(2.5rem, 4.5vw, 4.5rem)', textAlign: 'center' }}>
             {/* Pointer 1: Long-Lasting Performance */}

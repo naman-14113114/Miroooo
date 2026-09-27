@@ -6,16 +6,16 @@ export function AnnouncementBar() {
   const tickerItemSet = (
     <>
       <div className="miroooo-ticker-item">
-        <span>Free tracked UK delivery</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
+        <span>FREE TRACKED UK DELIVERY</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
       <div className="miroooo-ticker-item">
-        <span>50% OFF Today</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
+        <span>60-DAY RISK-FREE TRIAL</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
       <div className="miroooo-ticker-item">
-        <span>Ultra Lightweight</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
+        <span>2-YEAR WARRANTY</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
       <div className="miroooo-ticker-item">
-        <span>4.9 Stars from 40,000+ Customers</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
+        <span>RATED 4.9/5 BY DENTISTS</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
     </>
   );

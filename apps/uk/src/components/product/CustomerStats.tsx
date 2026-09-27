@@ -39,9 +39,22 @@ export function CustomerStats() {
         borderTop: '1px solid rgba(255,255,255,0.06)',
       }}
     >
+      <style>{`
+        #x2-section-texture-split .split-section-grid {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: clamp(2rem, 4vw, 4.5rem);
+        }
+        @media (min-width: 1024px) {
+          #x2-section-texture-split .split-section-grid {
+            flex-direction: row !important;
+          }
+        }
+      `}</style>
       <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
-        <div className="split-section-grid" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(2rem, 4vw, 4.5rem)' }}>
-          {/* Image 2 (Left on Desktop, Top on Phone) */}
+        <div className="split-section-grid">
+          {/* Image (Left on Desktop, Top on Phone) */}
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
             <div
               className="desc-media-loading"
@@ -164,7 +177,7 @@ export function CustomerStats() {
                   </span>
                 </div>
                 <p style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
-                  Noticed visibly brighter, cleaner teeth and healthier gums within just 3 weeks of daily use.
+                  Noticed a visible improvement in tooth brightness after 14 days on Whitening mode.
                 </p>
               </div>
             </div>

@@ -82,25 +82,22 @@ export function ProductPage({ handle, searchParams }: ProductPageProps) {
           {/* 6. Stacking 3-Mode Cards */}
           <X2ModesSwipe />
 
-          {/* 7. 3 Brush Functions, 1 Effective Technology */}
-          <BrushFunctions />
-
-          {/* 8. Engineering Architecture Schematic */}
+          {/* 7. Engineering Architecture Schematic */}
           <ArchitectureCollage />
 
-          {/* 9. Verified Customer Reviews */}
+          {/* 8. Verified Customer Reviews */}
           <ProductReviews isX2={true} />
 
-          {/* 10. Competitor Comparison Table */}
+          {/* 9. Competitor Comparison Table */}
           <ComparisonTable isX2={true} />
 
-          {/* 11. Package Contents */}
+          {/* 10. Package Contents */}
           <PackageContents isX2={true} />
 
-          {/* 12. X2 vs X1 Comparison Table */}
+          {/* 11. X2 vs X1 Comparison Table */}
           <X2ComparisonTable />
 
-          {/* 13. Luxury FAQs Accordion */}
+          {/* 12. Luxury FAQs Accordion */}
           <ProductFaqs isX2={true} />
         </>
       ) : (
@@ -118,19 +115,22 @@ export function ProductPage({ handle, searchParams }: ProductPageProps) {
           {/* 6. Discover the Ultimate Travel-Ready Electric Toothbrush */}
           <DiscoverOralHygiene />
 
-          {/* 7. Luxurious Professionalism */}
+          {/* 7. 3 Brush Functions, 1 Effective Technology */}
+          <BrushFunctions isX2={false} />
+
+          {/* 8. Luxurious Professionalism */}
           <LuxuriousProfessionalism />
 
-          {/* 8. Verified Customer Reviews */}
+          {/* 9. Verified Customer Reviews */}
           <ProductReviews isX2={false} />
 
-          {/* 9. Competitor Comparison Table */}
+          {/* 10. Competitor Comparison Table */}
           <ComparisonTable isX2={false} />
 
-          {/* 10. Package Contents */}
+          {/* 11. Package Contents */}
           <PackageContents isX2={false} />
 
-          {/* 11. Luxury FAQs Accordion */}
+          {/* 12. Luxury FAQs Accordion */}
           <ProductFaqs isX2={false} />
         </>
       )}

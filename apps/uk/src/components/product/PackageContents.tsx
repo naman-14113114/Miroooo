@@ -28,8 +28,21 @@ export function PackageContents({ isX2 = true }: PackageContentsProps) {
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
+      <style>{`
+        #shopify-section-template--24203751129433__image-with-text-1 .split-section-grid {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: clamp(2rem, 4vw, 4.5rem);
+        }
+        @media (min-width: 1024px) {
+          #shopify-section-template--24203751129433__image-with-text-1 .split-section-grid {
+            flex-direction: row !important;
+          }
+        }
+      `}</style>
       <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
-        <div className="split-section-grid" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(2rem, 4vw, 4.5rem)' }}>
+        <div className="split-section-grid">
           {/* Image Left on Desktop, Top on Phone */}
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
             <div

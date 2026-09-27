@@ -11,8 +11,21 @@ export function ProductReviews({ isX2 = true }: ProductReviewsProps) {
     // Dynamic script loading for review engine
     const scriptSrc = isX2 ? '/assets_ref/miroooo-x2-reviews.js' : '/assets_ref/miroooo-reviews.js';
     
-    // Remove old instance if exists
-    const existing = document.getElementById('miroooo-reviews-runtime-script');
+    const runInit = () => {
+      if (isX2 && typeof (window as unknown as { initMirooooX2Reviews?: () => void }).initMirooooX2Reviews === 'function') {
+        (window as unknown as { initMirooooX2Reviews: () => void }).initMirooooX2Reviews();
+      } else if (!isX2 && typeof (window as unknown as { initProductReviews?: () => void }).initProductReviews === 'function') {
+        (window as unknown as { initProductReviews: () => void }).initProductReviews();
+      }
+    };
+
+    // Check if script is already present
+    const existing = document.getElementById('miroooo-reviews-runtime-script') as HTMLScriptElement | null;
+    if (existing && existing.src.includes(scriptSrc)) {
+      runInit();
+      return;
+    }
+
     if (existing) {
       existing.remove();
     }
@@ -21,10 +34,12 @@ export function ProductReviews({ isX2 = true }: ProductReviewsProps) {
     script.id = 'miroooo-reviews-runtime-script';
     script.src = scriptSrc;
     script.defer = true;
+    script.onload = () => {
+      runInit();
+    };
     document.body.appendChild(script);
 
     return () => {
-      // Cleanup script tag on unmount
       const s = document.getElementById('miroooo-reviews-runtime-script');
       if (s) s.remove();
     };

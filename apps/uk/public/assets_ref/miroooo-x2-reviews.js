@@ -1939,4 +1939,7 @@
   } else {
     scheduleInit();
   }
+
+  window.initMirooooX2Reviews = init;
+  window.initMirooooReviews = init;
 })();

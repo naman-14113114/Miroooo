@@ -106,9 +106,9 @@ export function X2ModesSwipe() {
           width: 100%;
           border-radius: inherit;
           overflow: hidden;
-          background: #0d0d0d;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px -10px var(--glow-color, rgba(255, 255, 255, 0.2));
+          background: #000000;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
         }
         .x2-mode-card-content {
           display: flex;
@@ -117,28 +117,31 @@ export function X2ModesSwipe() {
           height: auto;
           position: relative;
           z-index: 1;
+          background: #000000;
         }
         .x2-mode-card-glow {
           position: absolute;
-          width: 300px;
-          height: 300px;
+          width: clamp(240px, 35vw, 460px);
+          height: clamp(240px, 35vw, 460px);
           border-radius: 50%;
-          filter: blur(80px);
-          opacity: 0.22;
+          filter: blur(clamp(90px, 14vw, 175px));
+          opacity: 0.55;
           pointer-events: none;
           z-index: 0;
           background: var(--glow-color, #ffffff);
+          transform: translateZ(0);
         }
         .x2-mode-card-glow--top-right {
-          top: -100px;
-          right: -100px;
+          top: -12%;
+          right: -8%;
         }
         .x2-mode-card-glow--bottom-left {
-          bottom: -100px;
-          left: -100px;
+          bottom: -15%;
+          left: -10%;
+          opacity: 0.35;
         }
         .x2-mode-card-inner {
-          padding: clamp(24px, 4vw, 48px);
+          padding: clamp(28px, 4.5vw, 60px);
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -148,16 +151,16 @@ export function X2ModesSwipe() {
         }
         .x2-mode-brand-title {
           font-family: var(--font-body-family, 'Inter', sans-serif);
-          font-size: clamp(0.75rem, 1.2vw, 0.9rem);
-          font-weight: 700;
-          letter-spacing: 0.15em;
+          font-size: clamp(1rem, 1.5vw, 1.4rem);
+          font-weight: 600;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255, 255, 255, 0.65);
           margin: 0 0 8px 0;
         }
         .x2-mode-main-title {
           font-family: 'GFS Didot', 'Playfair Display', Georgia, serif;
-          font-size: clamp(1.8rem, 3.8vw, 3.2rem);
+          font-size: clamp(1.85rem, 3.8vw, 3.4rem);
           font-weight: 700;
           letter-spacing: 0.02em;
           text-transform: uppercase;
@@ -206,7 +209,7 @@ export function X2ModesSwipe() {
         }
       `}</style>
 
-      <div className="x2-modes-swipe-container" style={{ maxWidth: '1440px', margin: '0 auto', padding: 'clamp(3rem, 5vw, 5rem) clamp(16px, 4vw, 40px)', boxStyle: 'border-box' } as React.CSSProperties}>
+      <div className="x2-modes-swipe-container" style={{ maxWidth: '1440px', margin: '0 auto', padding: 'clamp(3rem, 5vw, 5rem) clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
         <div ref={wrapperRef} className="x2-modes-swipe-wrapper js-x2-modes-wrapper" style={{ '--numcards': 3 } as React.CSSProperties}>
           
           {/* Card 1: WHITENING MODE */}

@@ -8,7 +8,8 @@ export function LuxuriousProfessionalism() {
       id="shopify-section-template--miroooo-luxurious-professionalism"
       className="shopify-section"
       style={{
-        background: '#000000',
+        background: '#000000 !important',
+        backgroundColor: '#000000',
         color: '#ffffff',
         width: '100%',
         overflow: 'hidden',
@@ -16,19 +17,35 @@ export function LuxuriousProfessionalism() {
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
+      <style>{`
+        .luxurious-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          width: 100%;
+          background: #000000 !important;
+          align-items: stretch;
+        }
+        .luxurious-media {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 10;
+          overflow: hidden;
+          background: #000000 !important;
+        }
+        @media (min-width: 1024px) {
+          .luxurious-grid {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          .luxurious-media {
+            aspect-ratio: auto !important;
+            height: 100% !important;
+          }
+        }
+      `}</style>
       <div style={{ width: '100%', maxWidth: '1856px', margin: '0 auto' }}>
-        <div
-          className="luxurious-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            width: '100%',
-            background: '#000000',
-            alignItems: 'stretch',
-          }}
-        >
+        <div className="luxurious-grid">
           {/* Left Column: Video */}
-          <div className="luxurious-media" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: '#000000', minHeight: '380px' }}>
+          <div className="luxurious-media">
             <video
               id="luxurious-video"
               src="/assets_ref/x/miroooo-video-2s.mp4"

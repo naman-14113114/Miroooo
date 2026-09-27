@@ -1,8 +1,18 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
-const STORIES_DATA = [
+interface CustomerStory {
+  id: number;
+  author: string;
+  concern: string;
+  title: string;
+  quote: string;
+  image: string;
+  badge: string;
+}
+
+const STORIES_DATA: CustomerStory[] = [
   {
     id: 1,
     author: 'Eleanor H., 34 · London',
@@ -69,7 +79,7 @@ const STORIES_DATA = [
 ];
 
 export function CustomerStories() {
-  const [activeModalStory, setActiveModalStory] = useState<typeof STORIES_DATA[0] | null>(null);
+  const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
   const scrollPrev = () => {
@@ -81,6 +91,42 @@ export function CustomerStories() {
     if (!trackRef.current) return;
     trackRef.current.scrollBy({ left: 320, behavior: 'smooth' });
   };
+
+  const openModal = (index: number) => {
+    setActiveStoryIndex(index);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = useCallback(() => {
+    setActiveStoryIndex(null);
+    document.body.style.overflow = '';
+  }, []);
+
+  const modalPrev = useCallback(() => {
+    if (activeStoryIndex === null) return;
+    setActiveStoryIndex((prev) => (prev! > 0 ? prev! - 1 : STORIES_DATA.length - 1));
+  }, [activeStoryIndex]);
+
+  const modalNext = useCallback(() => {
+    if (activeStoryIndex === null) return;
+    setActiveStoryIndex((prev) => (prev! < STORIES_DATA.length - 1 ? prev! + 1 : 0));
+  }, [activeStoryIndex]);
+
+  // Keyboard controls for modal
+  useEffect(() => {
+    if (activeStoryIndex === null) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') modalPrev();
+      if (e.key === 'ArrowRight') modalNext();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeStoryIndex, closeModal, modalPrev, modalNext]);
+
+  const currentStory = activeStoryIndex !== null ? STORIES_DATA[activeStoryIndex] : null;
 
   return (
     <div
@@ -311,6 +357,167 @@ export function CustomerStories() {
         .x2-story-nav-btn:active {
           transform: scale(0.96);
         }
+
+        /* Modal / Fullscreen Story Lightbox */
+        .x2-story-modal {
+          position: fixed !important;
+          inset: 0 !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          height: 100dvh !important;
+          z-index: 999999999 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          background: rgba(0, 0, 0, 0.85) !important;
+          backdrop-filter: blur(16px) !important;
+          -webkit-backdrop-filter: blur(16px) !important;
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s ease !important;
+          user-select: none !important;
+          -webkit-user-select: none !important;
+          box-sizing: border-box !important;
+          padding: 20px;
+        }
+        .x2-story-modal.is-active {
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+        .x2-story-modal-backdrop {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          cursor: pointer !important;
+          z-index: 1 !important;
+        }
+        .x2-story-modal-card {
+          position: relative !important;
+          background: #e6e6e6 !important;
+          border-radius: 24px !important;
+          width: 100% !important;
+          max-width: 820px !important;
+          max-height: 90vh !important;
+          max-height: 90dvh !important;
+          overflow-y: auto !important;
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55) !important;
+          border: 1px solid rgba(0, 0, 0, 0.1) !important;
+          display: grid !important;
+          grid-template-columns: 1fr 1fr !important;
+          transform: scale(0.94);
+          opacity: 0;
+          transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+          color: #111111 !important;
+          z-index: 2 !important;
+          box-sizing: border-box !important;
+          pointer-events: auto !important;
+          touch-action: pan-y;
+        }
+        .x2-story-modal.is-active .x2-story-modal-card {
+          transform: scale(1);
+          opacity: 1;
+        }
+        .x2-story-modal-img-wrap {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          background: #d8d8d8;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          border-top-left-radius: 24px;
+          border-bottom-left-radius: 24px;
+        }
+        .x2-story-modal-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .x2-story-modal-body {
+          padding: clamp(20px, 3vw, 32px);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 16px;
+        }
+        .x2-story-modal-close {
+          position: fixed !important;
+          top: 24px !important;
+          right: 24px !important;
+          width: 46px !important;
+          height: 46px !important;
+          border-radius: 50% !important;
+          background: rgba(247, 241, 232, 0.94) !important;
+          color: #000000 !important;
+          border: 1px solid rgba(0, 0, 0, 0.15) !important;
+          cursor: pointer !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease !important;
+          z-index: 1000000001 !important;
+          padding: 0 !important;
+          outline: none !important;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+        }
+        .x2-story-modal-close:hover {
+          background: #ffffff !important;
+          transform: scale(1.08) !important;
+        }
+        .x2-story-modal-nav-btn {
+          position: fixed !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          width: 50px !important;
+          height: 50px !important;
+          border-radius: 50% !important;
+          background: rgba(247, 241, 232, 0.94) !important;
+          backdrop-filter: blur(8px) !important;
+          -webkit-backdrop-filter: blur(8px) !important;
+          color: #000000 !important;
+          border: 1px solid rgba(0, 0, 0, 0.15) !important;
+          cursor: pointer !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+          z-index: 1000000001 !important;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+        }
+        .x2-story-modal-nav-btn.x2-modal-prev {
+          left: 24px !important;
+        }
+        .x2-story-modal-nav-btn.x2-modal-next {
+          right: 24px !important;
+        }
+        .x2-story-modal-nav-btn:hover {
+          background: #ffffff !important;
+          transform: translateY(-50%) scale(1.08) !important;
+        }
+        @media (max-width: 680px) {
+          .x2-story-modal-card {
+            grid-template-columns: 1fr !important;
+            max-height: 85vh !important;
+            max-height: 85dvh !important;
+          }
+          .x2-story-modal-img-wrap {
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            border-bottom-left-radius: 0;
+          }
+          .x2-story-modal-nav-btn {
+            display: none !important;
+          }
+        }
       `}</style>
 
       <div style={{ maxWidth: '1320px', margin: '0 auto clamp(2rem, 3.5vw, 3rem) auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box', textAlign: 'center' }}>
@@ -328,12 +535,12 @@ export function CustomerStories() {
       {/* Carousel Track Wrap */}
       <div className="x2-stories-track-wrap" id="x2-stories-wrapper">
         <div ref={trackRef} className="x2-stories-track" id="x2-stories-track" aria-label="Real customer transformations">
-          {STORIES_DATA.map((story) => (
+          {STORIES_DATA.map((story, index) => (
             <article
               key={story.id}
               className="x2-story-card"
               data-story-id={story.id}
-              onClick={() => setActiveModalStory(story)}
+              onClick={() => openModal(index)}
             >
               <div className="x2-story-img-wrap">
                 <img src={story.image} alt={`Miroooo review by ${story.author}`} className="x2-story-img" loading="eager" decoding="async" />
@@ -375,31 +582,53 @@ export function CustomerStories() {
         </button>
       </div>
 
-      {/* Story Modal */}
-      {activeModalStory && (
-        <div className="x2-story-modal is-active" role="dialog" aria-modal="true" style={{ display: 'flex' }}>
-          <div className="x2-story-modal-backdrop" onClick={() => setActiveModalStory(null)}></div>
+      {/* Fullscreen Story Lightbox Modal */}
+      {currentStory && (
+        <div className="x2-story-modal is-active" role="dialog" aria-modal="true">
+          <div className="x2-story-modal-backdrop" onClick={closeModal}></div>
           <button
             type="button"
             className="x2-story-modal-close"
             aria-label="Close story"
-            onClick={() => setActiveModalStory(null)}
+            onClick={closeModal}
           >
-            ✕
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
+
+          <button
+            type="button"
+            className="x2-story-modal-nav-btn x2-modal-prev"
+            aria-label="Previous story"
+            onClick={modalPrev}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+
+          <button
+            type="button"
+            className="x2-story-modal-nav-btn x2-modal-next"
+            aria-label="Next story"
+            onClick={modalNext}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
           <div className="x2-story-modal-card">
             <div className="x2-story-modal-img-wrap">
-              <img src={activeModalStory.image} alt={activeModalStory.author} className="x2-story-modal-img" />
+              <img src={currentStory.image} alt={currentStory.author} className="x2-story-modal-img" />
+              <span className="x2-story-badge-overlay">{currentStory.badge}</span>
             </div>
             <div className="x2-story-modal-body">
-              <div className="x2-story-top-row">
-                <span className="x2-story-concern">{activeModalStory.concern}</span>
-                <span className="x2-story-score"><span className="x2-story-score-star">★</span> 5.0</span>
+              <div>
+                <div className="x2-story-top-row" style={{ marginBottom: '12px' }}>
+                  <span className="x2-story-concern">{currentStory.concern}</span>
+                  <span className="x2-story-score"><span className="x2-story-score-star">★</span> 5.0</span>
+                </div>
+                <h3 className="x2-story-title" style={{ marginBottom: '14px' }}>{currentStory.title}</h3>
+                <p className="x2-story-quote">{currentStory.quote}</p>
               </div>
-              <h3 className="x2-story-title">{activeModalStory.title}</h3>
-              <p className="x2-story-quote">{activeModalStory.quote}</p>
               <div className="x2-story-footer-row">
-                <span className="x2-story-author">{activeModalStory.author}</span>
+                <span className="x2-story-author">{currentStory.author}</span>
                 <span className="x2-story-verified">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="#15803d"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                   Verified Buyer
