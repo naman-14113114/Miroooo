@@ -1,0 +1,72 @@
+# Miroooo: Expanded Facts
+
+> This file summarises public information on www.trymiroooo.com for assistants and search systems. Product pages and checkout remain the authority for current price, stock and bundle contents.
+
+## Entity
+
+- Brand: Miroooo
+- Market and language: United Kingdom, English (en-GB)
+- Currency: GBP
+- Website: https://www.trymiroooo.com/
+- Customer support: support@trymiroooo.com
+- Postal address: 71-75 Shelton Street, London WC2H 9JQ, United Kingdom
+
+## Products
+
+### Miroooo X1
+
+- Canonical page: https://www.trymiroooo.com/products/miroooo-x
+- Type: sonic electric toothbrush
+- Public features: three brushing modes, travel case, and stated battery life of more than 60 days
+- Display price recorded on 1 September 2026: GBP 59; verify on the product page before quoting
+
+### Miroooo X2
+
+- Canonical page: https://www.trymiroooo.com/products/miroooo-x2
+- Type: guided sonic electric toothbrush
+- Public features: pressure feedback, IPX7 water resistance, travel case, USB-C charging, free Smile Coach access, and stated battery life of up to 90 days
+- Display price recorded on 2 September 2026: GBP 69; verify on the product page before quoting
+
+### Miroooo X1 Heads
+
+- Canonical page: https://www.trymiroooo.com/products/miroooo-x1-heads
+- Contents: two replacement heads made for Miroooo X1
+- Display price recorded on 2 September 2026: GBP 10; verify on the product page before quoting
+
+### Miroooo X2 Heads
+
+- Canonical page: https://www.trymiroooo.com/products/miroooo-x2-heads
+- Contents: two replacement heads made for Miroooo X2
+- Display price recorded on 1 September 2026: GBP 10; verify on the product page before quoting
+
+## Dental Care Quiz
+
+- Canonical page: https://www.trymiroooo.com/dentalcare-quiz
+- Interactive preference-matching tool covering sensitivity, routine goals, travel frequency and brushing style
+- Compares Miroooo X1 and Miroooo X2 and suggests a personalised daily brushing routine
+- Client-side calculation with zero sign-up required; responses stay private in the user's browser
+- Recommendations are general product guidance and do not replace clinical or dental diagnosis
+
+## Smile Coach
+
+- Canonical page: https://www.trymiroooo.com/smile-coach
+- Free browser-based companion with personalised 28-day routines, guided two-minute sessions, local progress tracking and brush-care reminders
+- Answers and progress stay in the user's browser; no account is required
+- The app does not connect to toothbrush sensors, diagnose conditions or replace a dental professional
+
+## Educational guidance
+
+- Hub: https://www.trymiroooo.com/guides
+- Sonic versus oscillating brushes: https://www.trymiroooo.com/guides/sonic-vs-oscillating-electric-toothbrush
+- Replacement-head timing: https://www.trymiroooo.com/guides/how-often-replace-electric-toothbrush-head
+- Electric-toothbrush travel guide: https://www.trymiroooo.com/guides/electric-toothbrush-travel-guide
+- Two-minute timer guide: https://www.trymiroooo.com/guides/how-to-use-two-minute-toothbrush-timer
+
+Guide health and safety claims are linked to primary or recognised sources including the NHS, American Dental Association, Cochrane, UK Civil Aviation Authority and IATA. Sources were last checked on 1 September 2026.
+
+## Commercial and safety boundaries
+
+- Product information is general and does not diagnose, treat or prevent dental conditions.
+- Battery duration depends on settings, frequency, battery age and starting charge.
+- Airline rules can change; travellers should check their airline before flying.
+- Current product pages and checkout control price, availability, delivery and bundle contents.

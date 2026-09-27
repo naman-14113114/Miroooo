@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+  <title>Miroooo Smile Coach | Your Personal Brushing Routine</title>
+  <meta name="description" content="Build a personalized 28-day brushing routine with guided two-minute sessions, progress tracking and brush-care reminders for Miroooo X and X2 owners.">
+  <link rel="canonical" href="https://www.trymiroooo.com/smile-coach">
+  <meta name="theme-color" content="#111311">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Smile Coach">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Miroooo">
+  <meta property="og:title" content="Miroooo Smile Coach">
+  <meta property="og:description" content="A free, personalized brushing companion for Miroooo customers.">
+  <meta property="og:url" content="https://www.trymiroooo.com/smile-coach">
+  <meta property="og:image" content="https://www.trymiroooo.com/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="manifest" href="/smile-coach.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/smile-coach.css?v=20260902">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Miroooo Smile Coach","url":"https://www.trymiroooo.com/smile-coach","description":"A free personalized 28-day brushing companion with guided two-minute sessions, progress tracking and brush-care reminders.","applicationCategory":"HealthApplication","operatingSystem":"Any modern web browser","browserRequirements":"Requires JavaScript and local storage","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Miroooo","url":"https://www.trymiroooo.com/"},"inLanguage":"en-US"}
+  </script>
+</head>
+<body data-page="smile-coach">
+  <a class="skip-link" href="#coach-main">Skip to your plan</a>
+
+  <header class="coach-topbar">
+    <a class="coach-brand" href="/" aria-label="Miroooo home">MIROOOO</a>
+    <div class="coach-topbar__actions">
+      <p class="coach-save-status" id="save-status" aria-live="polite">Saved on this device</p>
+      <button class="coach-button coach-button--quiet" id="install-app" type="button" hidden>Install app</button>
+      <a class="coach-store-link" href="/pages/dentalcare-quiz">Dental Care Quiz</a>
+      <a class="coach-store-link" href="/shop">Visit store</a>
+    </div>
+  </header>
+
+  <main id="coach-main">
+    <section class="coach-onboarding" id="coach-onboarding" aria-labelledby="onboarding-title">
+      <div class="onboarding-intro">
+        <p class="coach-eyebrow">FREE MIROOOO CUSTOMER APP</p>
+        <h1 id="onboarding-title">Your brushing plan should fit you.</h1>
+        <p>Tell us about your brush, goals and current routine. Smile Coach will shape a practical 28-day plan around your answers.</p>
+        <ul class="onboarding-proof" aria-label="What the app includes">
+          <li>Guided two-minute sessions</li>
+          <li>Morning and evening routine</li>
+          <li>Brush-head care reminders</li>
+        </ul>
+        <p class="coach-privacy-note">Your answers stay in this browser. No account is required.</p>
+      </div>
+
+      <form class="onboarding-form" id="onboarding-form" novalidate>
+        <div class="onboarding-progress" aria-label="Setup progress">
+          <span id="onboarding-step-label">Step 1 of 4</span>
+          <div class="onboarding-progress__track" aria-hidden="true"><span id="onboarding-progress-bar"></span></div>
+        </div>
+
+        <fieldset class="onboarding-step is-active" data-onboarding-step="1">
+          <legend>Which Miroooo do you use?</legend>
+          <p class="onboarding-step__lead">We will use your model throughout the experience.</p>
+          <div class="model-picker">
+            <label class="model-option">
+              <input type="radio" name="model" value="x" required>
+              <span class="model-option__media">
+                <img src="/assets_ref/x/gallery/Miroooo_x_Silver-1.webp" alt="Silver Miroooo X toothbrush and travel case" width="900" height="1200">
+              </span>
+              <span class="model-option__copy"><strong>Miroooo X</strong><small>Light, simple and travel ready</small></span>
+              <span class="model-option__check" aria-hidden="true">✓</span>
+            </label>
+            <label class="model-option">
+              <input type="radio" name="model" value="x2" checked required>
+              <span class="model-option__media">
+                <img src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp" alt="Silver Miroooo X2 toothbrush held upright" width="1000" height="1000">
+              </span>
+              <span class="model-option__copy"><strong>Miroooo X2</strong><small>Three modes and extended battery</small></span>
+              <span class="model-option__check" aria-hidden="true">✓</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="onboarding-step" data-onboarding-step="2" hidden>
+          <legend>What would make the biggest difference?</legend>
+          <p class="onboarding-step__lead">Choose up to three. Your plan will prioritize them.</p>
+          <label class="coach-field coach-field--name">
+            <span>First name</span>
+            <input id="profile-name" name="name" type="text" autocomplete="given-name" maxlength="24" placeholder="Your name" required>
+          </label>
+          <div class="goal-picker" data-max-selections="3">
+            <label class="goal-option"><input type="checkbox" name="goals" value="consistency"><span><strong>Stay consistent</strong><small>Build a reliable twice-daily habit</small></span></label>
+            <label class="goal-option"><input type="checkbox" name="goals" value="coverage"><span><strong>Better coverage</strong><small>Spend equal time across every zone</small></span></label>
+            <label class="goal-option"><input type="checkbox" name="goals" value="whitening"><span><strong>Whitening routine</strong><small>Use your whitening mode consistently</small></span></label>
+            <label class="goal-option"><input type="checkbox" name="goals" value="gentle"><span><strong>Gentler technique</strong><small>Slow down and avoid hard scrubbing</small></span></label>
+            <label class="goal-option"><input type="checkbox" name="goals" value="freshness"><span><strong>Fresher mouth</strong><small>Add tongue and between-teeth care</small></span></label>
+          </div>
+          <p class="field-message" id="goal-message" aria-live="polite"></p>
+        </fieldset>
+
+        <fieldset class="onboarding-step" data-onboarding-step="3" hidden>
+          <legend>How does brushing feel today?</legend>
+          <p class="onboarding-step__lead">There is no perfect answer. This sets your starting point.</p>
+          <div class="choice-group">
+            <p class="choice-group__label">How often do you usually brush?</p>
+            <div class="segmented-choice">
+              <label><input type="radio" name="frequency" value="irregular"><span>Irregularly</span></label>
+              <label><input type="radio" name="frequency" value="once" checked><span>Once daily</span></label>
+              <label><input type="radio" name="frequency" value="twice"><span>Twice daily</span></label>
+            </div>
+          </div>
+          <div class="choice-group">
+            <p class="choice-group__label">How often do you clean between your teeth?</p>
+            <div class="segmented-choice">
+              <label><input type="radio" name="interdental" value="rarely" checked><span>Rarely</span></label>
+              <label><input type="radio" name="interdental" value="some"><span>Some days</span></label>
+              <label><input type="radio" name="interdental" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+          <label class="switch-row">
+            <span><strong>My gums or teeth can feel sensitive</strong><small>We will favor calm technique cues.</small></span>
+            <input type="checkbox" name="sensitive">
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+        </fieldset>
+
+        <fieldset class="onboarding-step" data-onboarding-step="4" hidden>
+          <legend>When should Smile Coach help?</legend>
+          <p class="onboarding-step__lead">Set times that feel realistic. You can change them later.</p>
+          <div class="time-grid">
+            <label class="coach-field"><span>Morning brush</span><input type="time" name="morningTime" value="07:30" required></label>
+            <label class="coach-field"><span>Evening brush</span><input type="time" name="eveningTime" value="21:30" required></label>
+          </div>
+          <label class="coach-field">
+            <span>When did you fit this brush head?</span>
+            <input type="date" name="headInstalled">
+          </label>
+          <div class="plan-preview" id="plan-preview">
+            <span class="plan-preview__number">28</span>
+            <div><strong>Your Smile Reset</strong><p>Two guided sessions, one small care action and a weekly check-in.</p></div>
+          </div>
+        </fieldset>
+
+        <div class="onboarding-actions">
+          <button class="coach-button coach-button--quiet" id="onboarding-back" type="button" hidden>Back</button>
+          <button class="coach-button coach-button--primary" id="onboarding-next" type="button">Continue</button>
+          <button class="coach-button coach-button--primary" id="onboarding-finish" type="submit" hidden>Create my plan</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="coach-product" id="coach-product" hidden aria-label="Miroooo Smile Coach">
+      <aside class="coach-sidebar" aria-label="Smile Coach navigation">
+        <div class="coach-sidebar__profile">
+          <span class="coach-avatar" id="coach-avatar" aria-hidden="true">M</span>
+          <div><strong id="sidebar-name">My plan</strong><span id="sidebar-model">Miroooo X2</span></div>
+        </div>
+        <nav class="coach-nav">
+          <button class="coach-nav__item is-active" type="button" data-view-target="today" aria-current="page">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12 12 4l9 8v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Today</span>
+          </button>
+          <button class="coach-nav__item" type="button" data-view-target="progress">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg><span>Progress</span>
+          </button>
+          <button class="coach-nav__item" type="button" data-view-target="care">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-4 7-10V5l-7-3-7 3v6c0 6 7 10 7 10Z"/><path d="m9 11 2 2 4-5"/></svg><span>Brush care</span>
+          </button>
+          <button class="coach-nav__item" type="button" data-view-target="profile">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>My plan</span>
+          </button>
+        </nav>
+        <div class="coach-sidebar__note">
+          <strong>Private by design</strong>
+          <p>Your plan and progress are stored only on this device.</p>
+        </div>
+      </aside>
+
+      <div class="coach-workspace">
+        <section class="coach-view is-active" data-view="today" aria-labelledby="today-title">
+          <div class="view-heading">
+            <div><p class="coach-eyebrow" id="today-date"></p><h1 id="today-title">Good morning, <span data-profile-name>there</span>.</h1></div>
+            <button class="coach-button coach-button--quiet view-install-button" type="button" data-install-trigger hidden>Install app</button>
+          </div>
+
+          <div class="today-hero">
+            <div class="today-hero__content">
+              <p class="today-hero__status" id="plan-phase">DAY 1 · FOUNDATION</p>
+              <h2 id="daily-focus">Start with equal coverage.</h2>
+              <p id="daily-guidance">Let the brush do the work. Move slowly through all four zones for thirty seconds each.</p>
+              <button class="coach-button coach-button--primary coach-button--large" type="button" data-start-session="auto">
+                <span class="coach-button__play" aria-hidden="true">▶</span> Start guided brush
+              </button>
+              <p class="today-hero__mode" id="recommended-mode">Recommended today: Standard mode</p>
+            </div>
+            <div class="today-hero__product" aria-hidden="true">
+              <span class="product-orbit"></span>
+              <img id="today-model-image" src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp" alt="">
+            </div>
+          </div>
+
+          <section class="routine-section" aria-labelledby="routine-title">
+            <div class="section-heading-inline"><div><p class="coach-eyebrow">YOUR ROUTINE</p><h2 id="routine-title">Two moments, fully covered.</h2></div><p id="routine-summary">0 of 2 sessions completed</p></div>
+            <div class="routine-timeline" id="routine-timeline"></div>
+          </section>
+
+          <section class="care-actions" aria-labelledby="care-actions-title">
+            <div class="care-actions__intro"><p class="coach-eyebrow">SMALL ACTIONS</p><h2 id="care-actions-title">Complete your clean.</h2><p>Your plan changes these prompts around the goals you selected.</p></div>
+            <div class="care-actions__list" id="care-actions-list"></div>
+          </section>
+
+          <section class="plan-strip" aria-labelledby="plan-strip-title">
+            <div class="section-heading-inline"><div><p class="coach-eyebrow">28-DAY SMILE RESET</p><h2 id="plan-strip-title">Consistency, made visible.</h2></div><button class="text-button" type="button" data-view-target="progress">See full progress</button></div>
+            <div class="day-strip" id="day-strip" aria-label="28-day plan progress"></div>
+          </section>
+        </section>
+
+        <section class="coach-view" data-view="progress" aria-labelledby="progress-title" hidden>
+          <div class="view-heading"><div><p class="coach-eyebrow">YOUR PROGRESS</p><h1 id="progress-title">Every session adds up.</h1></div></div>
+          <div class="progress-overview">
+            <div class="progress-narrative"><p id="progress-message">Your first completed brush will begin your progress story.</p><div class="progress-bar-large" aria-hidden="true"><span id="plan-progress-bar"></span></div><small id="plan-progress-copy">Day 1 of 28</small></div>
+            <dl class="progress-stats">
+              <div><dt>Current streak</dt><dd id="streak-value">0 days</dd></div>
+              <div><dt>Guided sessions</dt><dd id="session-value">0</dd></div>
+              <div><dt>Two-brush days</dt><dd id="complete-days-value">0</dd></div>
+            </dl>
+          </div>
+          <section class="calendar-section" aria-labelledby="calendar-title"><div class="section-heading-inline"><div><p class="coach-eyebrow">PLAN CALENDAR</p><h2 id="calendar-title">Your 28 days.</h2></div><span class="calendar-legend"><i></i> Completed day</span></div><div class="plan-calendar" id="plan-calendar"></div></section>
+          <section class="history-section" aria-labelledby="history-title"><div class="section-heading-inline"><div><p class="coach-eyebrow">RECENT SESSIONS</p><h2 id="history-title">Brushing history.</h2></div></div><div class="session-history" id="session-history"></div></section>
+        </section>
+
+        <section class="coach-view" data-view="care" aria-labelledby="care-title" hidden>
+          <div class="view-heading"><div><p class="coach-eyebrow">BRUSH CARE</p><h1 id="care-title">Keep your Miroooo ready.</h1></div></div>
+          <div class="care-hero">
+            <div class="care-hero__image"><img id="care-model-image" src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-dupont-bristle-head-macro.webp" alt="Close view of the Miroooo X2 brush head" width="1000" height="1000"></div>
+            <div class="care-hero__content"><p class="coach-eyebrow">HEAD CHECK</p><h2 id="head-care-heading">Your current head is new.</h2><p id="head-care-copy">We will count from the installation date you provided.</p><div class="head-life-track" aria-hidden="true"><span id="head-life-progress"></span></div><div class="head-life-meta"><span id="head-days-used">0 days used</span><span>Check at 90 days</span></div><button class="coach-button coach-button--secondary" id="replace-head-now" type="button">I fitted a new head today</button></div>
+          </div>
+          <div class="care-guide">
+            <section><span class="care-guide__number">01</span><h3>Rinse after every use</h3><p>Rinse the head under running water and remove any visible toothpaste residue.</p></section>
+            <section><span class="care-guide__number">02</span><h3>Let it air dry</h3><p>Store the brush upright and uncovered so moisture can leave the bristles.</p></section>
+            <section><span class="care-guide__number">03</span><h3>Check the bristles</h3><p>Replace earlier if the bristles become visibly frayed, flattened or damaged.</p></section>
+          </div>
+          <aside class="health-boundary"><strong>Smile Coach supports your routine, not a diagnosis.</strong><p>Persistent pain, bleeding, swelling or sensitivity should be discussed with a dentist or dental hygienist.</p></aside>
+        </section>
+
+        <section class="coach-view" data-view="profile" aria-labelledby="profile-title" hidden>
+          <div class="view-heading"><div><p class="coach-eyebrow">MY PLAN</p><h1 id="profile-title">Make it work for real life.</h1></div></div>
+          <form class="profile-form" id="profile-form">
+            <section class="profile-section"><div><h2>About you</h2><p>Used in greetings and your daily plan.</p></div><div class="profile-fields"><label class="coach-field"><span>First name</span><input name="name" type="text" maxlength="24" required></label><label class="coach-field"><span>My brush</span><select name="model"><option value="x">Miroooo X</option><option value="x2">Miroooo X2</option></select></label></div></section>
+            <section class="profile-section"><div><h2>Reminder times</h2><p>Smile Coach shows these times in your routine.</p></div><div class="profile-fields profile-fields--two"><label class="coach-field"><span>Morning</span><input name="morningTime" type="time" required></label><label class="coach-field"><span>Evening</span><input name="eveningTime" type="time" required></label></div></section>
+            <section class="profile-section"><div><h2>Your priorities</h2><p>Choose up to three goals.</p></div><div class="profile-goals" id="profile-goals"></div></section>
+            <div class="profile-actions"><button class="coach-button coach-button--primary" type="submit">Save changes</button><button class="text-button text-button--danger" id="reset-plan" type="button">Reset my local plan</button></div>
+          </form>
+        </section>
+      </div>
+
+      <nav class="coach-bottom-nav" aria-label="Smile Coach navigation">
+        <button class="is-active" type="button" data-view-target="today" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12 12 4l9 8v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Today</span></button>
+        <button type="button" data-view-target="progress"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg><span>Progress</span></button>
+        <button type="button" data-view-target="care"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-4 7-10V5l-7-3-7 3v6c0 6 7 10 7 10Z"/><path d="m9 11 2 2 4-5"/></svg><span>Care</span></button>
+        <button type="button" data-view-target="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>My plan</span></button>
+      </nav>
+    </section>
+  </main>
+
+  <section class="session-takeover" id="session-takeover" hidden aria-labelledby="session-title">
+    <header class="session-header"><span class="coach-brand">MIROOOO</span><button class="session-close" id="session-close" type="button" aria-label="End guided session">End session</button></header>
+    <div class="session-layout">
+      <div class="session-copy"><p class="coach-eyebrow" id="session-slot">MORNING SESSION</p><h2 id="session-title">Ready when you are.</h2><p id="session-cue">Wet your brush, add fluoride toothpaste and place the bristles gently against your teeth.</p><div class="session-mode"><span>Selected mode</span><strong id="session-mode">Standard</strong></div></div>
+      <div class="session-timer-wrap">
+        <div class="session-ring" id="session-ring" style="--session-progress:0deg"><div><span id="session-time">2:00</span><small id="session-zone-label">Upper right</small></div></div>
+        <div class="mouth-map" aria-label="Four brushing zones">
+          <span data-zone="0">Upper right</span><span data-zone="1">Upper left</span><span data-zone="2">Lower left</span><span data-zone="3">Lower right</span>
+        </div>
+      </div>
+      <div class="session-controls"><button class="coach-button coach-button--primary coach-button--large" id="session-start" type="button">Start 2 minutes</button><button class="coach-button coach-button--secondary" id="session-pause" type="button" hidden>Pause</button></div>
+    </div>
+  </section>
+
+  <section class="session-complete" id="session-complete" hidden aria-labelledby="complete-title">
+    <div class="session-complete__mark" aria-hidden="true">✓</div><p class="coach-eyebrow">SESSION SAVED</p><h2 id="complete-title">Two minutes, fully covered.</h2><p id="complete-message">Your progress has been updated on this device.</p><button class="coach-button coach-button--primary" id="complete-return" type="button">Return to today</button>
+  </section>
+
+  <noscript><div class="noscript-message"><strong>Smile Coach needs JavaScript.</strong><p>Enable JavaScript to create and save your personalized routine on this device.</p></div></noscript>
+  <script src="/assets/smile-coach.js?v=20260902" defer></script>
+</body>
+</html>

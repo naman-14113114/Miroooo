@@ -1,0 +1,465 @@
+<!-- BEGIN sections: header-group -->
+<div id="shopify-section-sections--24203576967513__announcement-bar" class="shopify-section shopify-section-group-header-group topbar-section"><style>
+    :root {--topbar-height: auto;}
+
+    @media screen and (min-width: 1536px) {
+      :root {--topbar-height: auto;}
+    }
+
+    #shopify-section-sections--24203576967513__announcement-bar,
+    .topbar-section {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      --gradient-background: #e6e6e6;
+      --color-background: 230 230 230;
+      --color-foreground: 17 17 17;
+      --color-highlight: 17 17 17;
+      background: #e6e6e6 !important;
+      color: #111111 !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+      padding: 4px 0 !important;
+      overflow: hidden !important;
+    }
+    #shopify-section-sections--24203576967513__announcement-bar .topbar,
+    #shopify-section-sections--24203576967513__announcement-bar .announcement-bar,
+    #shopify-section-sections--24203576967513__announcement-bar .announcement-text,
+    #shopify-section-sections--24203576967513__announcement-bar .highlighted-text {
+      color: #111111 !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 0 !important;
+    }
+    #shopify-section-sections--24203576967513__announcement-bar svg {
+      stroke: #111111 !important;
+      color: #111111 !important;
+    }
+  </style><div class="topbar topbar--center topbar--only section relative flex py-0 w-full items-center" style="overflow: hidden; height: auto; min-height: 0; padding: 0;"><div class="announcement-bar flex items-center overflow-hidden relative" style="overflow: hidden; width: 100%; height: auto; min-height: 0; padding: 0;">
+        <div class="miroooo-announcement-ticker">
+          <div class="miroooo-ticker-item"><span>Free Shipping on all orders</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+          <div class="miroooo-ticker-item"><span>50% OFF Today</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+          <div class="miroooo-ticker-item"><span>Ultra Lightweight</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+          <div class="miroooo-ticker-item"><span>4.9 Stars from 40,000+ Customers</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+          <div class="miroooo-ticker-item"><span>Free Shipping on all orders</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+          <div class="miroooo-ticker-item"><span>50% OFF Today</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+          <div class="miroooo-ticker-item"><span>Ultra Lightweight</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+          <div class="miroooo-ticker-item"><span>4.9 Stars from 40,000+ Customers</span> <span class="miroooo-ticker-dot" aria-hidden="true"></span></div>
+        </div></div></div>
+</div><div id="shopify-section-sections--24203576967513__header" class="shopify-section shopify-section-group-header-group header-section"><style>
+  #shopify-section-sections--24203576967513__header {
+    position: relative !important;
+    --section-padding-top: 18px;
+    --section-padding-bottom: 16px;
+    --color-background: 0 0 0;
+    --color-foreground: 255 255 255;
+    --color-transparent: 0 0 0;
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  #shopify-section-sections--24203576967513__header header,
+  #shopify-section-sections--24203576967513__header .header {
+    position: relative !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    top: auto !important;
+  }
+  @media (max-width: 990px) {
+    #MenuDrawer,
+    menu-drawer#MenuDrawer,
+    .menu-drawer#MenuDrawer {
+      background: transparent !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+    #MenuDrawer .overlay,
+    #MenuDrawer overlay-element,
+    #MenuDrawer .fixed-modal,
+    #MenuDrawer overlay-element.overlay {
+      background: rgba(0, 0, 0, 0.7) !important;
+      background-color: rgba(0, 0, 0, 0.7) !important;
+      background-image: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    }
+    #MenuDrawer[active] > .overlay,
+    #MenuDrawer[active] > overlay-element,
+    html.js #MenuDrawer[active] > .overlay,
+    html.js #MenuDrawer[active] > overlay-element {
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: block !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+    }
+    #MenuDrawer .drawer__inner,
+    html.js #MenuDrawer .drawer__inner {
+      position: absolute !important;
+      top: 60px !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: calc(100% - 60px) !important;
+      border-radius: 20px 20px 0 0 !important;
+      background: #f5f5f7 !important;
+      background-color: #f5f5f7 !important;
+      color: #000000 !important;
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.25) !important;
+      transform: translate3d(0, 100%, 0) !important;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+      z-index: 10 !important;
+      pointer-events: auto !important;
+      inset-block-start: 60px !important;
+      inset-block-end: 0 !important;
+      overflow: hidden !important;
+      will-change: transform;
+    }
+    #MenuDrawer[active],
+    #MenuDrawer[open],
+    html.js #MenuDrawer[active],
+    html.js #MenuDrawer[open] {
+      display: block !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+    #MenuDrawer[active] .drawer__inner,
+    #MenuDrawer[active] > .drawer__inner,
+    html.js #MenuDrawer[active] .drawer__inner,
+    html.js #MenuDrawer[active] > .drawer__inner {
+      transform: translate3d(0, 0, 0) !important;
+    }
+    #MenuDrawer .drawer__header,
+    html.js #MenuDrawer .drawer__header {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative !important;
+      min-height: 48px !important;
+      padding: 24px 20px 12px !important;
+      border-bottom: none !important;
+      background: transparent !important;
+      transition: opacity 0.5s cubic-bezier(0.3, 1, 0.3, 1) 0.35s, visibility 0.5s cubic-bezier(0.3, 1, 0.3, 1) 0.35s !important;
+    }
+    #MenuDrawer .drawer__header:before,
+    html.js #MenuDrawer .drawer__header:before {
+      content: "" !important;
+      display: block !important;
+      width: 44px !important;
+      height: 5px !important;
+      border-radius: 9999px !important;
+      background: rgba(0, 0, 0, 0.2) !important;
+      position: absolute !important;
+      top: 12px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+    #MenuDrawer .drawer__close,
+    html.js #MenuDrawer .drawer__close,
+    #MenuDrawer button.drawer__close,
+    html.js #MenuDrawer button.drawer__close {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      clip: auto !important;
+      position: absolute !important;
+      top: 14px !important;
+      right: 16px !important;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 50% !important;
+      background: #000000 !important;
+      border: none !important;
+      color: #ffffff !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      z-index: 50 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      transition: background-color 0.2s ease, transform 0.2s ease !important;
+    }
+    #MenuDrawer .drawer__close:hover,
+    #MenuDrawer .drawer__close:active {
+      background: #262626 !important;
+      transform: scale(1.05) !important;
+    }
+    #MenuDrawer .drawer__close svg,
+    #MenuDrawer .drawer__close .icon {
+      width: 18px !important;
+      height: 18px !important;
+      stroke: #ffffff !important;
+      color: #ffffff !important;
+      stroke-width: 2.2px !important;
+      fill: none !important;
+      display: block !important;
+    }
+    #MenuDrawer .drawer__close svg path {
+      stroke: #ffffff !important;
+      stroke-width: 2.2px !important;
+    }
+    #MenuDrawer .drawer__content,
+    html.js #MenuDrawer .drawer__content {
+      display: flex !important;
+      flex-direction: column !important;
+      flex-grow: 1 !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      background: transparent !important;
+      padding: 8px 0 !important;
+      transition: opacity 0.5s cubic-bezier(0.3, 1, 0.3, 1) 0.35s, visibility 0.5s cubic-bezier(0.3, 1, 0.3, 1) 0.35s !important;
+    }
+    #MenuDrawer .drawer__menu {
+      padding: 8px 24px !important;
+      list-style: none !important;
+    }
+    #MenuDrawer .drawer__menu li {
+      padding: 0 !important;
+    }
+    #MenuDrawer .drawer__menu-item,
+    #MenuDrawer .drawer__menu > li > a {
+      color: #000000 !important;
+      font-size: 26px !important;
+      font-weight: 600 !important;
+      line-height: 1.25 !important;
+      letter-spacing: -0.03em !important;
+      padding: 10px 0 !important;
+      display: block !important;
+      text-decoration: none !important;
+      border-bottom: none !important;
+      transition: opacity 0.2s ease, transform var(--animation-primary) !important;
+    }
+    #MenuDrawer .drawer__menu-item:hover,
+    #MenuDrawer .drawer__menu > li > a:hover {
+      opacity: 0.7 !important;
+    }
+    #MenuDrawer .drawer__submenu-item {
+      display: flex !important;
+      flex-direction: column !important;
+      padding: 10px 18px !important;
+      padding-left: 18px !important;
+      background: rgba(0, 0, 0, 0.04) !important;
+      border-radius: 12px !important;
+      text-decoration: none !important;
+      font-size: 18px !important;
+    }
+    #MenuDrawer .drawer__footer {
+      background: transparent !important;
+      border-top: none !important;
+      padding: 16px 24px 32px !important;
+      margin-top: auto !important;
+    }
+    #MenuDrawer .drawer__footer-bottom {
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      background: transparent !important;
+    }
+    #MenuDrawer .drawer__footer-bottom a.button--primary,
+    #MenuDrawer .drawer__footer-bottom a {
+      background: #000000 !important;
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      border: none !important;
+      border-width: 0 !important;
+      outline: none !important;
+      outline-offset: 0 !important;
+      border-radius: 60px !important;
+      padding: 10px 20px !important;
+      width: 56px !important;
+      height: 36px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    #MenuDrawer .drawer__footer-bottom a:focus,
+    #MenuDrawer .drawer__footer-bottom a:focus-visible,
+    #MenuDrawer .drawer__footer-bottom a:active,
+    #MenuDrawer .drawer__footer-bottom a:hover,
+    #MenuDrawer .drawer__footer-bottom a.button--primary:focus,
+    #MenuDrawer .drawer__footer-bottom a.button--primary:focus-visible,
+    #MenuDrawer .drawer__footer-bottom a.button--primary:active,
+    #MenuDrawer .drawer__footer-bottom a.button--primary:hover {
+      outline: none !important;
+      outline-offset: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    #MenuDrawer .drawer__footer-bottom a::before,
+    #MenuDrawer .drawer__footer-bottom a::after,
+    #MenuDrawer .drawer__footer-bottom a.button::before,
+    #MenuDrawer .drawer__footer-bottom a.button::after {
+      display: none !important;
+      content: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+    #MenuDrawer .drawer__footer-bottom a svg {
+      stroke: #ffffff !important;
+      color: #ffffff !important;
+      width: 16px !important;
+      height: 17px !important;
+    }
+  }
+  @media (min-width: 991px) {
+    #MenuDrawer {
+      display: none !important;
+    }
+  }
+</style><menu-drawer id="MenuDrawer" class="menu-drawer drawer drawer--start z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none"
+  data-section-id="sections--24203576967513__header"
+  hidden
+>
+  <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="MenuDrawer" aria-expanded="false"></overlay-element>
+  <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
+    <gesture-element class="drawer__header flex items-center justify-between relative">
+      <span class="drawer__title heading lg:text-3xl text-2xl leading-none tracking-tight"></span>
+      <button class="button button--secondary button--close drawer__close flex items-center justify-center" type="button" is="hover-button" aria-controls="MenuDrawer" aria-expanded="false" aria-label="Close">
+        <span class="btn-fill" data-fill></span>
+        <span class="btn-text"><svg class="icon icon-close icon-sm" viewBox="0 0 20 20" stroke="#111111" fill="none" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15L15 5M5 5L15 15"></path>
+    </svg></span>
+      </button>
+    </gesture-element>
+    <div class="drawer__content opacity-0 invisible flex flex-col h-full grow shrink">
+      <nav class="relative grow overflow-hidden" role="navigation">
+        <ul class="drawer__scrollable drawer__menu relative w-full h-full" role="list" data-parent>
+          <li class="drawer__menu-item--group">
+            <div class="drawer__group-label">Shop</div>
+            <div class="drawer__subgroup-label">Brushes</div>
+            <ul class="drawer__submenu" role="list">
+              <li>
+                <a class="drawer__submenu-item flex flex-col" href="/products/miroooo-x">
+                  <span class="drawer__submenu-title">Miroooo X1</span>
+                </a>
+              </li>
+              <li>
+                <a class="drawer__submenu-item flex flex-col" href="/products/miroooo-x2">
+                  <span class="drawer__submenu-title">Miroooo X2</span>
+                </a>
+              </li>
+            </ul>
+            <div class="drawer__subgroup-label">Accessories</div>
+            <ul class="drawer__submenu" role="list">
+              <li>
+                <a class="drawer__submenu-item flex flex-col" href="/products/miroooo-x1-heads">
+                  <span class="drawer__submenu-title">Miroooo X1 Heads</span>
+                </a>
+              </li>
+              <li>
+                <a class="drawer__submenu-item flex flex-col" href="/products/miroooo-x2-heads">
+                  <span class="drawer__submenu-title">Miroooo X2 Heads</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="drawer__menu-item block heading text-2xl leading-none tracking-tight" href="/about-us">About Us</a></li>
+          <li><a class="drawer__menu-item block heading text-2xl leading-none tracking-tight" href="/dentalcare-quiz">Dental Care Quiz</a></li>
+          <li><a class="drawer__menu-item block heading text-2xl leading-none tracking-tight" href="/contact">Contact Us</a></li>
+          <li><a class="drawer__menu-item block heading text-2xl leading-none tracking-tight" href="/faq">FAQs</a></li>
+        </ul>
+      </nav>
+      <div class="drawer__footer grid w-full"><div class="drawer__footer-bottom flex items-center justify-between gap-6"><a href="/order-tracking" class="button button--primary icon-with-text" style="background-color: #000000 !important; border: none !important; outline: none !important; color: #ffffff !important; box-shadow: none !important;" is="hover-link" rel="nofollow" aria-label="Account">
+              <span class="btn-fill" data-fill></span>
+              <span class="btn-text"><svg class="icon icon-account-alt icon-xs" viewBox="0 0 16 17" stroke="#ffffff" fill="none" style="stroke: #ffffff !important; color: #ffffff !important;" xmlns="http://www.w3.org/2000/svg">
+      <rect width="6.5" height="6.5" x="4.75" y="1.917" rx="3.25" stroke="#ffffff"></rect>
+      <path stroke-linecap="round" stroke="#ffffff" d="M8 10.834c1 0 2.667.222 3 .333.333.11 2.467.533 3 1.333.667 1 .667 1.334.667 2.667M8 10.834c-1 0-2.667.222-3 .333-.333.11-2.467.533-3 1.333-.667 1-.667 1.334-.667 2.667"></path>
+    </svg></span>
+            </a></div>
+      </div>
+    </div>
+  </div>
+</menu-drawer>
+<header data-section-id="sections--24203576967513__header" class="header header--center-left mobile:header--center page-width page-width--full section section--padding grid items-center z-20 relative w-full" is="custom-header"><div class="header__icons header__icons--start lg:hidden flex justify-start z-2">
+  <div class="header__buttons flex items-center gap-1d5"><button class="menu-drawer-button lg:hidden flex items-center justify-center" type="button" is="magnet-button" aria-controls="MenuDrawer" aria-expanded="false">
+        <span class="sr-only">Navigation</span><svg class="icon icon-hamburger icon-lg" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" d="M3 6H21M3 12H11M3 18H16"></path>
+    </svg></button></div>
+</div>
+<div class="header__navigation hidden lg:flex lg:gap-5 lg:justify-start">
+    <nav class="header__menu site-nav hidden lg:flex" role="navigation" aria-label="Primary">
+      <ul class="flex flex-wrap list-menu with-block">
+        <li>
+          <button type="button" id="ShopDrawerTrigger" class="menu__item nav-link header__shop-drawer-btn flex items-center font-medium z-2 relative cursor-pointer" style="border: none; outline: none; box-shadow: none; background: transparent; background-color: transparent;" aria-haspopup="dialog" aria-expanded="false" aria-controls="ShopDrawer" aria-label="Open Shop drawer" is="magnet-link" data-magnet="0" aria-current="page">
+            <span class="btn-text flex items-center" data-text="Shop">Shop <svg class="dropdown-chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></span>
+            <span class="btn-text btn-duplicate flex items-center">Shop <svg class="dropdown-chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></span>
+          </button>
+        </li>
+        <li>
+          <a href="/about-us" class="menu__item text-sm-lg flex items-center font-medium z-2 relative cursor-pointer" is="magnet-link" data-magnet="0">
+            <span class="btn-text" data-text="About Us">About Us</span>
+            <span class="btn-text btn-duplicate">About Us</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dentalcare-quiz" class="menu__item text-sm-lg flex items-center font-medium z-2 relative cursor-pointer" is="magnet-link" data-magnet="0">
+            <span class="btn-text" data-text="Dental Care Quiz">Dental Care Quiz</span>
+            <span class="btn-text btn-duplicate">Dental Care Quiz</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div><div class="header__logo flex justify-center z-2" itemscope itemtype="http://schema.org/Organization">
+    <a href="/" itemprop="url" class="header__logo-link flex items-center relative" style="text-decoration: none;">
+      <span class="miroooo-brand-logo" style="font-family: 'Montserrat', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; font-size: clamp(1.35rem, 2vw, 1.65rem); font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; color: #ffffff; line-height: 1;">MIROOOO</span>
+    </a>
+  </div><div class="header__icons header__icons--end flex justify-end items-center z-2">
+  <div class="header__navigation header__navigation--right hidden lg:flex items-center">
+    <nav class="header__menu site-nav site-nav--right hidden lg:flex" role="navigation" aria-label="Secondary">
+      <ul class="flex flex-wrap list-menu with-block">
+        <li>
+          <a href="/contact" class="menu__item text-sm-lg flex items-center font-medium z-2 relative cursor-pointer" is="magnet-link" data-magnet="0">
+            <span class="btn-text" data-text="Contact Us">Contact Us</span>
+            <span class="btn-text btn-duplicate">Contact Us</span>
+          </a>
+        </li>
+        <li>
+          <a href="/faq" class="menu__item text-sm-lg flex items-center font-medium z-2 relative cursor-pointer" is="magnet-link" data-magnet="0">
+            <span class="btn-text" data-text="FAQs">FAQs</span>
+            <span class="btn-text btn-duplicate">FAQs</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="header__buttons flex items-center gap-1d5"><div class="header__dropdown header__account-dropdown relative" data-dropdown><button type="button" class="account-link header__dropdown-toggle flex items-center justify-center cursor-pointer" aria-expanded="false" aria-haspopup="true" is="magnet-button" aria-label="Account">
+        <span class="sr-only">Account</span><svg class="icon icon-account icon-lg" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="10.5" height="10.5" x="6.75" y="1.75" rx="5.25"></rect>
+      <path stroke-linecap="round" d="M12 15.5c1.5 0 4 .333 4.5.5.5.167 3.7.8 4.5 2 1 1.5 1 2 1 4m-10-6.5c-1.5 0-4 .333-4.5.5-.5.167-3.7.8-4.5 2-1 1.5-1 2-1 4"></path>
+    </svg></button><div class="dropdown-menu dropdown-menu--right" role="menu">
+      <div class="dropdown-menu__header">
+        <p class="dropdown-menu__eyebrow">MIROOOO ACCOUNT</p>
+        <p class="dropdown-menu__subtitle">Save profile and order history</p>
+      </div>
+      <div class="dropdown-menu__body">
+        <a href="https://miroooo.us/sign-in" class="dropdown-item" role="menuitem">
+          <svg class="dropdown-item__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <div class="dropdown-item__title">Sign in</div>
+        </a>
+        <a href="https://miroooo.us/sign-up" class="dropdown-item" role="menuitem">
+          <svg class="dropdown-item__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <div class="dropdown-item__title">Sign up</div>
+        </a>
+      </div>
+    </div></div><a href="/cart" class="cart-drawer-button flex items-center justify-center relative" is="magnet-link" aria-controls="CartDrawer" aria-expanded="false" data-no-instant aria-label="Cart">
+        <span class="sr-only">Cart</span><svg class="icon icon-cart icon-lg" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M1 1h.5v0c.226 0 .339 0 .44.007a3 3 0 0 1 2.62 1.976c.034.095.065.204.127.42l.17.597m0 0 1.817 6.358c.475 1.664.713 2.496 1.198 3.114a4 4 0 0 0 1.633 1.231c.727.297 1.592.297 3.322.297h2.285c1.75 0 2.626 0 3.359-.302a4 4 0 0 0 1.64-1.253c.484-.627.715-1.472 1.175-3.161l.06-.221c.563-2.061.844-3.092.605-3.906a3 3 0 0 0-1.308-1.713C19.92 4 18.853 4 16.716 4H4.857ZM12 20a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm8 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"></path>
+        </svg><cart-count class="count absolute top-0 right-0 text-xs" aria-label="0 items" hidden>0</cart-count>
+      </a></div>
+</div>
+<span class="header__cutout cutout opacity-0 absolute left-0 top-100 w-full pointer-events-none"></span></header><span class="overlay opacity-0 z-1 fixed left-0 w-full pointer-events-none"></span><script>
+  if (Shopify.designMode) {
+    document.documentElement.style.setProperty('--header-height', Math.round(document.getElementById('shopify-section-sections--24203576967513__header').clientHeight) + 'px');
+  }
+</script>
+
+
+</div>
+<!-- END sections: header-group -->

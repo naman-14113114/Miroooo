@@ -1,0 +1,33 @@
+{
+  "name": "Miroooo Smile Coach",
+  "short_name": "Smile Coach",
+  "description": "A personalised 28-day brushing companion for Miroooo X and X2 owners.",
+  "id": "/smile-coach",
+  "start_url": "/smile-coach",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#111311",
+  "theme_color": "#111311",
+  "lang": "en-GB",
+  "categories": ["health", "lifestyle"],
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start guided brush",
+      "short_name": "Start brush",
+      "url": "/smile-coach?start=session"
+    },
+    {
+      "name": "View progress",
+      "short_name": "Progress",
+      "url": "/smile-coach?view=progress"
+    }
+  ]
+}

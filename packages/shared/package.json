@@ -1,0 +1,26 @@
+{
+  "name": "@miroooo/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./products": "./src/products.ts",
+    "./market": "./src/market.ts",
+    "./xpage": "./src/xpage.ts",
+    "./reviews": "./src/reviews.ts",
+    "./attribution": "./src/attribution.ts",
+    "./guides": "./src/guides.ts"
+  },
+  "scripts": {
+    "lint": "eslint src --max-warnings=0",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@miroooo/eslint-config": "workspace:*",
+    "@miroooo/tsconfig": "workspace:*",
+    "eslint": "^9",
+    "typescript": "^5"
+  }
+}
+

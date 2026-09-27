@@ -1,0 +1,31 @@
+# Miroooo
+
+> Miroooo is a UK-focused electric toothbrush brand offering Miroooo X1, Miroooo X2, replacement heads and the free Smile Coach web app. The store uses UK English and displays prices in GBP.
+
+## Primary pages
+
+- [Homepage](https://www.trymiroooo.com/): Brand and product overview.
+- [Shop](https://www.trymiroooo.com/shop): Model comparison and buying routes.
+- [Miroooo X1](https://www.trymiroooo.com/products/miroooo-x): Lightweight model with three modes and 60+ days of battery life.
+- [Miroooo X2](https://www.trymiroooo.com/products/miroooo-x2): Guided model with pressure feedback, IPX7 water resistance and up to 90 days of battery life.
+- [Miroooo X1 Heads](https://www.trymiroooo.com/products/miroooo-x1-heads): A model-specific two-pack for Miroooo X1.
+- [Miroooo X2 Heads](https://www.trymiroooo.com/products/miroooo-x2-heads): A model-specific two-pack for Miroooo X2.
+- [Dental Care Quiz](https://www.trymiroooo.com/dentalcare-quiz): Free preference-based tool for comparing Miroooo X1 and Miroooo X2 and building a personalised two-minute routine; it is not a dental diagnostic tool.
+- [Smile Coach](https://www.trymiroooo.com/smile-coach): Free browser-based 28-day routine with guided two-minute sessions; it does not connect to brush sensors or diagnose dental conditions.
+- [Oral care guides](https://www.trymiroooo.com/guides): Source-backed educational content about electric toothbrushes, brush-head care, travel and two-minute brushing.
+- [FAQs](https://www.trymiroooo.com/faq): Product, care, delivery and return answers.
+- [Delivery and returns](https://www.trymiroooo.com/delivery-returns): UK fulfilment estimates and return procedures.
+- [Product Support & Care](https://www.trymiroooo.com/warranty): Care and maintenance guidelines for Miroooo X1 and Miroooo X2.
+- [About Miroooo](https://www.trymiroooo.com/about-us): Brand principles and company contact details.
+- [Contact](https://www.trymiroooo.com/contact): Customer-support routes and operating hours.
+
+## Important context
+
+- Product information supports general oral-care routines and does not replace advice from a dentist or hygienist.
+- Delivery dates and battery durations are estimates that vary with circumstances and use.
+- The final price, bundle contents and availability shown at checkout control an order.
+- Health-related guide passages cite their source pages and state when those sources were checked.
+
+## Additional machine-readable context
+
+- [Expanded Miroooo facts](https://www.trymiroooo.com/llms-full.txt)
