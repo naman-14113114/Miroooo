@@ -22,7 +22,6 @@ export function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
     } else {
       document.body.classList.remove('nav-open', 'has-modal-open');
       document.body.style.overflow = '';
-      setDragOffset(0);
     }
     return () => {
       document.body.classList.remove('nav-open', 'has-modal-open');

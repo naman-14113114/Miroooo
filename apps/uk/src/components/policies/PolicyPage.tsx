@@ -37,7 +37,7 @@ export function PolicyPage({ slug }: PolicyPageProps) {
                 {section.heading}
               </h2>
               <div
-                className="space-y-3 text-white/75 leading-relaxed [&_strong]:text-white [&_a]:text-white [&_a]:underline"
+                className="space-y-3 text-white/75 leading-relaxed [&_strong]:text-white [&_a]:text-white [&_a]:underline [&_h3]:pt-3 [&_h3]:font-bold [&_h3]:text-white [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-6"
                 dangerouslySetInnerHTML={{ __html: section.content }}
               />
             </section>
@@ -48,7 +48,7 @@ export function PolicyPage({ slug }: PolicyPageProps) {
         <div className="p-8 rounded-3xl bg-neutral-200 text-black border border-neutral-300 text-center space-y-3 shadow-2xl">
           <h3 className="text-xl font-bold text-black">Questions about our policies?</h3>
           <p className="text-sm text-neutral-700 max-w-lg mx-auto">
-            Our London UK customer care desk is available Monday through Friday, 9am to 5pm GMT to answer any queries regarding delivery, warranty, or returns.
+            Contact Miroooo support for help with delivery, product care, returns, or refunds.
           </p>
           <div className="pt-2">
             <Link

@@ -27,7 +27,7 @@ export function BrushFunctions({ isX2 = false }: BrushFunctionsProps) {
           id: 'deep-clean',
           name: 'DEEP CLEANSING',
           desc: 'Maximum power for an intensive plaque-removing clean, delivering a dentist-fresh feeling along the gumline and hard-to-reach areas.',
-          img: '/assets_ref/x2/modes/miroooo-x2-sonic-deep-clean-mode-blue-led.webp',
+          img: '/assets_ref/x2/modes/miroooo-x2-sonic-deep-cleansing-mode-blue-led.webp',
           alt: 'Miroooo X2 Deep Cleansing Mode',
         },
       ]

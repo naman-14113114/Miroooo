@@ -94,12 +94,12 @@ export function CustomerStories() {
 
   const openModal = (index: number) => {
     setActiveStoryIndex(index);
-    document.body.style.overflow = 'hidden';
+    document.body.style.setProperty('overflow', 'hidden');
   };
 
   const closeModal = useCallback(() => {
     setActiveStoryIndex(null);
-    document.body.style.overflow = '';
+    document.body.style.removeProperty('overflow');
   }, []);
 
   const modalPrev = useCallback(() => {

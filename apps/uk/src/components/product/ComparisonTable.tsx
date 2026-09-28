@@ -7,13 +7,12 @@ interface ComparisonTableProps {
 }
 
 export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
-  const currentPrice = isX2 ? '£69' : '£59';
-  const comparePrice = isX2 ? '£139' : '£119';
+  const currentPrice = '£69';
   const oldPrice = isX2 ? '£99' : '£89';
   const modelName = isX2 ? 'Miroooo X2' : 'Miroooo X1';
   const winnerImg = isX2
     ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp'
-    : '/assets_ref/x/gallery/miroooo-x-sonic-electric-toothbrush-silver.webp';
+    : '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp';
 
   return (
     <div
@@ -406,7 +405,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell--head">
                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>Oral-B iO6</div>
                 <div className="miroooo-comp-head-img-wrap">
-                  <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-oral-b-io6.webp" alt="Oral-B iO6" />
+                  <img src="/assets_ref/x/compare-oralb.webp" alt="Oral-B iO6" />
                 </div>
               </div>
               <div className="miroooo-comp-cell">
@@ -443,7 +442,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell--head">
                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>Philips 9000</div>
                 <div className="miroooo-comp-head-img-wrap">
-                  <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-philips-sonicare-diamondclean-9000.webp" alt="Philips Sonicare 9000" />
+                  <img src="/assets_ref/x/compare-philips.webp" alt="Philips Sonicare 9000" />
                 </div>
               </div>
               <div className="miroooo-comp-cell">
@@ -480,7 +479,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell--head">
                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>Suri 2.0</div>
                 <div className="miroooo-comp-head-img-wrap">
-                  <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-suri-sustainable-sonic-toothbrush.webp" alt="Suri 2.0" />
+                  <img src="/assets_ref/x/compare-suri.webp" alt="Suri 2.0" />
                 </div>
               </div>
               <div className="miroooo-comp-cell">
@@ -525,15 +524,15 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               </div>
               <div className="miroooo-comp-m-head-col">
                 <span className="miroooo-comp-m-brand-name">Oral-B iO6</span>
-                <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-oral-b-io6.webp" alt="Oral-B iO6" className="miroooo-comp-m-head-img" />
+                <img src="/assets_ref/x/compare-oralb.webp" alt="Oral-B iO6" className="miroooo-comp-m-head-img" />
               </div>
               <div className="miroooo-comp-m-head-col">
                 <span className="miroooo-comp-m-brand-name">Philips 9000</span>
-                <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-philips-sonicare-diamondclean-9000.webp" alt="Philips 9000" className="miroooo-comp-m-head-img" />
+                <img src="/assets_ref/x/compare-philips.webp" alt="Philips 9000" className="miroooo-comp-m-head-img" />
               </div>
               <div className="miroooo-comp-m-head-col">
                 <span className="miroooo-comp-m-brand-name">Suri 2.0</span>
-                <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-suri-sustainable-sonic-toothbrush.webp" alt="Suri 2.0" className="miroooo-comp-m-head-img" />
+                <img src="/assets_ref/x/compare-suri.webp" alt="Suri 2.0" className="miroooo-comp-m-head-img" />
               </div>
             </div>
 

@@ -4770,3 +4770,63 @@ div[class*="tawk"],
 }
 
 
+
+/* UK TSX product grid: match the live GoBrush inline section rules. */
+#shopify-section-template--24203751129433__main-product {
+  padding-top: 40px !important;
+  margin-top: 0;
+}
+.bundle-tier-card:not(.is-selected) .tier-expanded-panel {
+  display: none !important;
+}
+#shopify-section-template--24203751129433__main-product .section {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+@media (min-width: 1024px) {
+  #shopify-section-template--24203751129433__main-product .page-width {
+    width: min(1344px, calc(100% - 96px));
+    max-width: none;
+    margin-inline: auto;
+  }
+  #shopify-section-template--24203751129433__main-product {
+    --miroooo-product-column-gap: clamp(48px, 4.73vw, 92px);
+    --miroooo-gallery-rail-offset: 100px;
+  }
+  #shopify-section-template--24203751129433__main-product .featured-product.product {
+    display: grid !important;
+    grid-template-columns: minmax(0, calc((100% - var(--miroooo-product-column-gap) + var(--miroooo-gallery-rail-offset)) / 2)) minmax(0, calc((100% - var(--miroooo-product-column-gap) - var(--miroooo-gallery-rail-offset)) / 2)) !important;
+    column-gap: var(--miroooo-product-column-gap) !important;
+    align-items: start !important;
+  }
+  #shopify-section-template--24203751129433__main-product .product__gallery {
+    position: sticky !important;
+    top: clamp(20px, 2.5vw, 32px) !important;
+    align-self: start !important;
+    min-width: 0;
+  }
+  #shopify-section-template--24203751129433__main-product .product__info {
+    min-width: 0;
+  }
+}
+@media (max-width: 1023px) {
+  #shopify-section-template--24203751129433__main-product .page-width {
+    width: calc(100% - 40px) !important;
+    margin-inline: auto !important;
+    padding-inline: 0 !important;
+  }
+  #shopify-section-template--24203751129433__main-product .featured-product.product {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  #shopify-section-template--24203751129433__main-product .product__gallery,
+  #shopify-section-template--24203751129433__main-product .product__info {
+    position: static !important;
+    width: 100% !important;
+  }
+}
+@media (max-width: 480px) {
+  #main-product-title {
+    max-width: 320px;
+  }
+}

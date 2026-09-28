@@ -1,3 +1,5 @@
+import { PRODUCTS } from '@/data/products';
+
 export interface CartItem {
   id: string; // unique item id e.g. "miroooo-x2-Pink-0" or "miroooo-x2:Pink"
   productHandle: string;
@@ -42,6 +44,43 @@ export interface CartTotals {
 
 export const VALID_PROMO_CODES = ['MIROOOO', 'MIROOOO10'];
 
+/** Rebuild every cart line from the UK catalogue. Stored/requested prices are never trusted. */
+export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.flatMap((value, index): CartItem[] => {
+    if (!value || typeof value !== 'object') return [];
+    const line = value as Partial<CartItem>;
+    if (line.isFree || /(?:^|:)free(?:$|:)/i.test(String(line.id || ''))) return [];
+    const product = PRODUCTS[String(line.productHandle || '')];
+    const quantity = Number(line.quantity ?? 1);
+    if (!product || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 99) {
+      if (strict) throw new Error('Invalid checkout item.');
+      return [];
+    }
+    const variant = product.variants.find((item) => item.id === String(line.variantId || '')) ||
+      (!strict ? product.variants.find((item) => item.color.toLowerCase() === String(line.color || '').toLowerCase()) : undefined);
+    if (!variant) {
+      if (strict) throw new Error('Invalid checkout variant.');
+      return [];
+    }
+    const isBrush = product.handle === 'miroooo-x' || product.handle === 'miroooo-x2';
+    return [{
+      id: String(line.id || `${product.handle}-${variant.color}-${index}`),
+      productHandle: product.handle,
+      productId: product.plusBaseProductId,
+      variantId: variant.id,
+      title: isBrush ? `${product.name} (${variant.color})` : product.name,
+      subtitle: product.subtitle,
+      color: variant.color,
+      quantity,
+      unitPrice: product.price,
+      comparePrice: product.compareAt,
+      image: variant.image,
+      url: `/products/${product.handle}${isBrush ? `?color=${variant.color}` : ''}`,
+    }];
+  });
+}
+
 export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]): CartTotals {
   let x2Count = 0;
   let x1Count = 0;
@@ -69,13 +108,13 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
 
   // Compare At calculations
   const x2Compare = x2Count * 139;
-  const x1Compare = x1Count * 119;
+  const x1Compare = x1Count * 139;
   const x2HeadsCompare = x2HeadsCount * 10;
   const x1HeadsCompare = x1HeadsCount * 10;
   const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare;
 
   // Base 50% savings on brushes
-  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (119 - 59);
+  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (139 - 69);
 
   let x2BundlePromoDiscount = 0;
   let x2BundlePromoName = '';
@@ -119,7 +158,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   }
 
   const x2Net = x2Count * 69 - x2BundlePromoDiscount;
-  const x1Net = x1Count * 59 - x1BundleDiscount;
+  const x1Net = x1Count * 69 - x1BundleDiscount;
   const headsNet = x2HeadsCount * 10 + x1HeadsCount * 10;
   const brushSubtotal = Math.max(0, x2Net + x1Net);
   const subtotal = Math.max(0, brushSubtotal + headsNet);

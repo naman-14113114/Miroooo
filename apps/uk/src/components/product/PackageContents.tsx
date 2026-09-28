@@ -9,7 +9,7 @@ interface PackageContentsProps {
 export function PackageContents({ isX2 = true }: PackageContentsProps) {
   const imgSrc = isX2
     ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp'
-    : '/assets_ref/x/gallery/miroooo-x-sonic-electric-toothbrush-packaging.webp';
+    : '/assets_ref/x/miroooo-x-package-box.webp';
 
   const desc = isX2
     ? 'Miroooo X2 electric toothbrush in selected finish, 2x DuPont replacement brush heads, Luxury travel case, wall-mounted storage dock, and USB-C charging cable (adapter not included).'

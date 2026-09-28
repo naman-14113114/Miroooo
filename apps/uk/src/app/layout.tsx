@@ -80,14 +80,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" />
-        <link rel="stylesheet" href="/assets/site.css" />
-        <link rel="stylesheet" href="/assets_ref/theme.css" />
-        <link rel="stylesheet" href="/assets_ref/apps.css" />
-        <link rel="stylesheet" href="/assets/product-shell.css" />
-        <link rel="stylesheet" href="/assets_ref/miroooo-reviews.css" />
-        <link rel="stylesheet" href="/assets/dentalcare-quiz.css" />
-        <link rel="stylesheet" href="/assets/smile-coach.css" />
-        <link rel="stylesheet" href="/assets/guides.css" />
         <link rel="preconnect" href="https://embed.tawk.to" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://embed.tawk.to" />
       </head>

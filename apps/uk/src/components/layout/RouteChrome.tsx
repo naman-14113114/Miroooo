@@ -25,6 +25,7 @@ export function RouteChrome({
 
   return (
     <>
+      {!isCart && <link rel="stylesheet" href="/assets/site.css" />}
       <ClientInitializer />
       {isCart ? (
         cartHeader

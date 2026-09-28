@@ -16,6 +16,7 @@ export function CartDrawer() {
     totals,
     proceedToCheckout,
     isCheckoutLoading,
+    checkoutError,
   } = useCart();
 
   useEffect(() => {
@@ -182,7 +183,7 @@ export function CartDrawer() {
                 <div className="p-3.5 rounded-2xl bg-amber-950/30 border border-amber-500/30 flex gap-3.5 items-center">
                   <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-black flex-shrink-0 border border-amber-500/30">
                     <Image
-                      src="/assets_ref/x/heads/1.webp"
+                      src="/assets_ref/x/heads/B1.webp"
                       alt="Free X1 Replacement Heads"
                       fill
                       className="object-cover"
@@ -237,6 +238,7 @@ export function CartDrawer() {
               </div>
             </div>
 
+            {checkoutError && <p role="alert" className="rounded-xl border border-rose-500/40 bg-rose-500/10 p-3 text-sm text-rose-200">{checkoutError}</p>}
             <button
               type="button"
               disabled={isCheckoutLoading}

@@ -55,7 +55,7 @@ export function ShopPage() {
                   </Link>
                 </div>
                 <div className="price">
-                  <span>£59</span> <s>£119</s>
+                  <span>£69</span> <s>£139</s>
                 </div>
               </div>
             </article>
@@ -433,7 +433,7 @@ export function ShopPage() {
                 </tr>
                 <tr>
                   <th>Price</th>
-                  <td><span>£59</span></td>
+                  <td><span>£69</span></td>
                   <td>
                     <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '6px' }}>
                       <span style={{ color: 'var(--signal-dark, #15803d)', fontWeight: 800 }}>£69</span>
@@ -564,7 +564,7 @@ export function ShopPage() {
                       </div>
                     </div>
                     <div className="x2-comp-m-val-cell">
-                      <span className="x2-comp-m-price-standard">£59</span>
+                      <span className="x2-comp-m-price-standard">£69</span>
                     </div>
                   </div>
                 </div>

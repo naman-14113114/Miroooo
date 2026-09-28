@@ -6,6 +6,13 @@ import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { formatGBP } from '@/lib/cart';
 
+function DeliveryBanner() {
+  return <section aria-label="Delivery timeline and shipping guarantee" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 rounded-xl bg-[#ebebe9] px-5 py-4 text-center text-sm text-black sm:justify-between sm:text-left">
+    <span className="font-semibold">Free tracked UK delivery <span className="font-normal text-neutral-600">· Processing 1–3 business days, transit 7–20 business days</span></span>
+    <span className="rounded-full bg-black px-4 py-1.5 text-[10px] font-bold tracking-wide text-white">FREE TRACKED SHIPPING</span>
+  </section>;
+}
+
 export function CartPageContent() {
   const {
     items,
@@ -19,6 +26,7 @@ export function CartPageContent() {
     totals,
     proceedToCheckout,
     isCheckoutLoading,
+    checkoutError,
     addItem,
   } = useCart();
 
@@ -52,28 +60,21 @@ export function CartPageContent() {
 
   const upsellHandle = totals.x2Count > 0 ? 'miroooo-x2-heads' : 'miroooo-x1-heads';
   const upsellTitle = totals.x2Count > 0 ? 'Miroooo X2 Heads (2-Pack)' : 'Miroooo X1 Heads (2-Pack)';
-  const upsellImage = totals.x2Count > 0 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/1.webp';
+  const upsellImage = totals.x2Count > 0 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp';
 
   if (items.length === 0) {
     return (
-      <main className="cart-page bg-[#080909] text-white min-h-[70vh] flex items-center justify-center p-6">
-        <div className="max-w-md w-full text-center space-y-6 p-8 rounded-3xl bg-[#111213] border border-white/10 shadow-2xl">
-          <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto text-3xl">
-            🛒
-          </div>
-          <div>
-            <h1 className="text-2xl font-extrabold text-white mb-2">Your Cart is Empty</h1>
-            <p className="text-white/60 text-sm">
-              You currently have no items in your shopping cart. Discover our electric toothbrushes below.
-            </p>
-          </div>
-          <Link
-            href="/shop"
-            className="inline-block w-full py-4 rounded-full bg-white text-black font-extrabold text-sm hover:bg-neutral-200 transition-all shadow-xl"
-          >
-            Explore All Products
-          </Link>
-        </div>
+      <main id="main" className="cart-page min-h-[68vh] bg-[#080909] px-4 py-7 text-white sm:px-6">
+        <div className="mx-auto max-w-[1200px]"><DeliveryBanner /></div>
+        <section aria-live="polite" className="mx-auto max-w-[580px] px-2 pb-20 pt-20 text-center">
+          <svg className="mx-auto mb-5 h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <h1 className="mb-3 text-[2rem] font-extrabold">Your cart is empty.</h1>
+          <p className="mb-8 leading-relaxed text-[#888]">Add the Miroooo X1 or Miroooo X2 to unlock current bundle offers, complimentary DuPont brush heads, and free tracked UK delivery.</p>
+          <Link href="/shop" className="inline-flex min-h-[50px] items-center justify-center rounded-full bg-white px-9 font-bold text-black transition-colors hover:bg-neutral-200">Shop Miroooo</Link>
+          <p className="mt-6 text-sm leading-relaxed text-[#888]">Undecided which brush is right for you? <Link href="/pages/dentalcare-quiz" className="font-semibold text-white underline underline-offset-4">Take the Dental Care Quiz →</Link></p>
+        </section>
       </main>
     );
   }
@@ -82,24 +83,7 @@ export function CartPageContent() {
     <main className="cart-page bg-[#080909] text-white min-h-screen py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Top Delivery Banner */}
-        <div className="p-4 rounded-2xl bg-neutral-200 text-black flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center flex-shrink-0">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="1" y="3" width="15" height="13" />
-                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-                <circle cx="5.5" cy="18.5" r="2.5" />
-                <circle cx="18.5" cy="18.5" r="2.5" />
-              </svg>
-            </div>
-            <p className="text-[13.5px] leading-tight font-medium text-neutral-800">
-              <strong className="text-black font-bold">Free Tracked UK Delivery:</strong> Orders processed in 1–3 days. Tracked courier transit is 7–20 business days.
-            </p>
-          </div>
-          <span className="px-3.5 py-1 rounded-full bg-black text-white text-[11px] font-bold uppercase tracking-wider flex-shrink-0">
-            Complimentary
-          </span>
-        </div>
+        <DeliveryBanner />
 
         {/* 2-Column Main Cart Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -216,7 +200,7 @@ export function CartPageContent() {
                 <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 flex items-center gap-4 mt-4">
                   <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black flex-shrink-0 border border-amber-500/30">
                     <Image
-                      src="/assets_ref/x/heads/1.webp"
+                      src="/assets_ref/x/heads/B1.webp"
                       alt="Unlocked X1 Heads"
                       fill
                       className="object-cover"
@@ -441,6 +425,7 @@ export function CartPageContent() {
 
               {/* Checkout CTA Button */}
               <div className="pt-2">
+                {checkoutError && <p role="alert" className="mb-3 rounded-xl border border-rose-500/40 bg-rose-500/10 p-3 text-sm text-rose-200">{checkoutError}</p>}
                 <button
                   type="button"
                   disabled={isCheckoutLoading}

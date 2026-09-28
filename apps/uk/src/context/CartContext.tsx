@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
-import { CartItem, CartTotals, calculateTotals, VALID_PROMO_CODES } from '@/lib/cart';
+import { CartItem, CartTotals, calculateTotals, normalizeCartItems, VALID_PROMO_CODES } from '@/lib/cart';
 import { PRODUCTS } from '@/data/products';
 
 interface CartContextType {
@@ -10,6 +10,7 @@ interface CartContextType {
   giftMessage: string;
   isOpen: boolean;
   isCheckoutLoading: boolean;
+  checkoutError: string | null;
   totals: CartTotals;
   addItem: (item: Partial<CartItem> & { productHandle: string }) => void;
   addBundle: (productHandle: string, quantity: 1 | 2 | 3, colors: string[]) => void;
@@ -36,6 +37,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [giftMessage, setGiftMessage] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
 
   // Load cart state from localStorage on initial mount
@@ -62,7 +64,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (storedCart) {
         const parsed = JSON.parse(storedCart);
         if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
-          setItems(parsed.items);
+          setItems(normalizeCartItems(parsed.items));
         } else if (parsed && parsed.quantity > 0) {
           // Legacy format migration
           const pHandle = parsed.productId || 'miroooo-x2';
@@ -85,7 +87,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               url: `/products/${p.handle}?color=${col}`,
             };
           });
-          setItems(newItems);
+          setItems(normalizeCartItems(newItems));
         }
       }
     } catch (e) {
@@ -266,6 +268,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (items.length === 0 || isCheckoutLoading) return;
 
     setIsCheckoutLoading(true);
+    setCheckoutError(null);
 
     try {
       // Capture UTM & Ad Attribution
@@ -285,7 +288,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         const fromSession = JSON.parse(sessionStorage.getItem('miroooo_attribution') || '{}');
         const fromLocal = JSON.parse(localStorage.getItem('miroooo_attribution') || '{}');
         attribution = { ...fromLocal, ...fromSession };
-      } catch (_) {}
+      } catch {}
 
       if (typeof window !== 'undefined') {
         const currentParams = new URLSearchParams(window.location.search);
@@ -342,19 +345,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }),
       });
 
-      if (prepRes.ok) {
-        const data = await prepRes.json();
-        if (data && data.checkoutUrl) {
-          window.location.href = data.checkoutUrl;
-          return;
-        }
+      const data = await prepRes.json().catch(() => null);
+      if (prepRes.ok && data?.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+        return;
       }
-
-      // Fallback
-      window.location.href = '/cart';
+      setCheckoutError(data?.error || 'Secure checkout is temporarily unavailable. Please try again.');
     } catch (err) {
       console.error('Checkout error:', err);
-      alert('Unable to connect to checkout session. Please try again.');
+      setCheckoutError('Unable to connect to checkout. Please try again.');
     } finally {
       setIsCheckoutLoading(false);
     }
@@ -368,6 +367,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         giftMessage,
         isOpen,
         isCheckoutLoading,
+        checkoutError,
         totals,
         addItem,
         addBundle,

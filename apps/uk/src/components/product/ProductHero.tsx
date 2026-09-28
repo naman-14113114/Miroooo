@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 
@@ -155,12 +155,12 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
   };
 
   // Pricing calculations
-  const singlePrice = isX2 ? 69 : 59;
-  const singleCompare = isX2 ? 139 : 119;
-  const bundle2Price = isX2 ? 128 : 108;
-  const bundle2Compare = isX2 ? 278 : 238;
-  const bundle3Price = isX2 ? 177 : 147;
-  const bundle3Compare = isX2 ? 417 : 357;
+  const singlePrice = 69;
+  const singleCompare = 139;
+  const bundle2Price = 128;
+  const bundle2Compare = 278;
+  const bundle3Price = 177;
+  const bundle3Compare = 417;
 
   const currentPrice =
     selectedTier === 'single'
@@ -825,10 +825,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
               <div className="product__price grid gap-2 mt-1" id="main-product-price-section">
                 <div className="flex flex-wrap items-baseline gap-2" style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                    £{singlePrice}.00
+                    £{singlePrice}
                   </span>
                   <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
-                    £{singleCompare}.00
+                    £{singleCompare}
                   </span>
                   <span
                     className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
@@ -847,25 +847,25 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
                     </span>
-                    <span><strong>Ultra Lightweight</strong> ergonomic aerospace-grade aluminium body (51g).</span>
+                    <span>{isX2 ? <><strong>Ultra Lightweight</strong> ergonomic aerospace-grade aluminium body.</> : <><strong>Ultra Lightweight</strong> at only 51g for effortless daily handling.</>}</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><polyline points="11 9 9 12 12 12 10 15"></polyline></svg>
                     </span>
-                    <span>Brushes up to <strong>{isX2 ? '90 days' : '60 days'}</strong> on a single 2-hour USB-C charge.</span>
+                    <span>Brushes up to <strong>{isX2 ? '90 days' : '60 days'}</strong> on a single charge.</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"></rect><path d="M8 7V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3"></path><line x1="3" y1="13" x2="21" y2="13"></line></svg>
                     </span>
-                    <span>Includes <strong>free luxury travel case</strong> {isX2 ? '& wall storage dock' : ''}.</span>
+                    <span>{isX2 ? <>Includes <strong>free luxury travel case</strong>.</> : <>Includes free luxury <strong>Travel Case</strong>.</>}</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v4"></path><path d="M6 7v10"></path><path d="M10 4v16"></path><path d="M14 7v10"></path><path d="M18 10v4"></path><path d="M22 12v0"></path></svg>
                     </span>
-                    <span><strong>Whisper Quiet</strong> acoustic motor operating below 45 dB.</span>
+                    <span><strong>Whisper Quiet</strong> acoustic motor operating below {isX2 ? '45' : '50'} dB.</span>
                   </li>
                 </ul>
               </div>
@@ -920,10 +920,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-single-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            £{singlePrice}.00
+                            £{singlePrice}
                           </span>
                           <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
-                            £{singleCompare}.00
+                            £{singleCompare}
                           </span>
                         </div>
                         <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
@@ -1017,15 +1017,15 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-bundle-2-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            £{bundle2Price}.00
+                            £{bundle2Price}
                           </span>
                           <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-2-compare-price" style={{ fontSize: 12, color: '#777777' }}>
-                            £{bundle2Compare}.00
+                            £{bundle2Compare}
                           </span>
                         </div>
                         <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                           <span className="font-bold text-xs sm:text-sm" id="tier-bundle-2-each-price" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                            (£{Math.round(bundle2Price / 2)}.00 each)
+                            (£{Math.round(bundle2Price / 2)} each)
                           </span>
                         </div>
                       </div>
@@ -1119,15 +1119,15 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-bundle-3-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            £{bundle3Price}.00
+                            £{bundle3Price}
                           </span>
                           <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-3-compare-price" style={{ fontSize: 12, color: '#777777' }}>
-                            £{bundle3Compare}.00
+                            £{bundle3Compare}
                           </span>
                         </div>
                         <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                           <span className="font-bold text-xs sm:text-sm" id="tier-bundle-3-each-price" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                            (£{Math.round(bundle3Price / 3)}.00 each)
+                            (£{Math.round(bundle3Price / 3)} each)
                           </span>
                         </div>
                       </div>
@@ -1426,7 +1426,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                         <line x1="12" y1="22.08" x2="12" y2="12"></line>
                       </svg>
-                      <span className="text-sm-base font-medium leading-none" style={{ color: '#ffffff', fontSize: '15px', fontWeight: 600 }}>What's inside box</span>
+                      <span className="text-sm-base font-medium leading-none" style={{ color: '#ffffff', fontSize: '15px', fontWeight: 600 }}>What&apos;s inside box</span>
                     </div>
                     <svg className="icon icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '16px', height: '16px', flexShrink: 0 }}>
                       <polyline points="6 9 12 15 18 9"></polyline>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { BatteryCharging, Waves, BadgeCheck, Feather } from 'lucide-react';
 
 export function BrushStylePrecision() {
   return (
@@ -88,7 +89,7 @@ export function BrushStylePrecision() {
             {/* Pointer 1: Long-Lasting Performance */}
             <div className="style-feature-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.85rem' }}>
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
-                <img src="/assets_ref/x/themes/17866971910e251e78ab.png" alt="Battery Charging" style={{ width: '52px', height: '52px', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                <BatteryCharging size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
               <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Long-Lasting Performance
@@ -102,7 +103,7 @@ export function BrushStylePrecision() {
             {/* Pointer 2: Professional & Effortless Brushing */}
             <div className="style-feature-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.85rem' }}>
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
-                <img src="/assets_ref/x/themes/1786697231eb311edbde.png" alt="Acoustic Waves" style={{ width: '52px', height: '52px', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                <Waves size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
               <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Professional &amp; effortless brushing
@@ -134,7 +135,7 @@ export function BrushStylePrecision() {
             {/* Pointer 3: Premium Quality */}
             <div className="style-feature-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.85rem' }}>
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
-                <img src="/assets_ref/x/themes/17866972695acbc5e011.png" alt="Premium Quality Badge" style={{ width: '52px', height: '52px', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                <BadgeCheck size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
               <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Premium quality
@@ -148,7 +149,7 @@ export function BrushStylePrecision() {
             {/* Pointer 4: Compact & Lightweight */}
             <div className="style-feature-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.85rem' }}>
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
-                <img src="/assets_ref/x/themes/17866972585c5d9195cc.png" alt="Compact Lightweight" style={{ width: '52px', height: '52px', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                <Feather size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
               <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Compact &amp; lightweight

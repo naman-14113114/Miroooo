@@ -157,12 +157,12 @@ export function ProductReviews({ isX2 = true }: ProductReviewsProps) {
                 <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"/></svg>
               </button>
               <div className="miroooo-dropdown-menu" id="miroooo-star-menu" role="listbox">
-                <div className="miroooo-dropdown-item active" data-value="all" role="option">All stars (4,275)</div>
-                <div className="miroooo-dropdown-item" data-value="5" role="option">5 star (3,933)</div>
-                <div className="miroooo-dropdown-item" data-value="4" role="option">4 star (256)</div>
-                <div className="miroooo-dropdown-item" data-value="3" role="option">3 star (1)</div>
-                <div className="miroooo-dropdown-item" data-value="2" role="option">2 star (3)</div>
-                <div className="miroooo-dropdown-item" data-value="1" role="option">1 star (2)</div>
+                <div className="miroooo-dropdown-item active" data-value="all" role="option" aria-selected="true">All stars (4,275)</div>
+                <div className="miroooo-dropdown-item" data-value="5" role="option" aria-selected="false">5 star (3,933)</div>
+                <div className="miroooo-dropdown-item" data-value="4" role="option" aria-selected="false">4 star (256)</div>
+                <div className="miroooo-dropdown-item" data-value="3" role="option" aria-selected="false">3 star (1)</div>
+                <div className="miroooo-dropdown-item" data-value="2" role="option" aria-selected="false">2 star (3)</div>
+                <div className="miroooo-dropdown-item" data-value="1" role="option" aria-selected="false">1 star (2)</div>
               </div>
             </div>
 

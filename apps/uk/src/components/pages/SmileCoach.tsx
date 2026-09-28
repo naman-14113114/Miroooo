@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { QUADRANT_STAGES, SMILE_COACH_GOALS } from '@/data/smileCoach';
+import { SMILE_COACH_GOALS } from '@/data/smileCoach';
 
 interface SmileCoachProfile {
   model: 'x' | 'x2';
@@ -65,7 +65,7 @@ export function SmileCoach() {
           setHeadInstalledDate(parsed.headInstalledDate?.split('T')[0] || new Date().toISOString().split('T')[0]);
         }
       }
-    } catch (_) {}
+    } catch {}
   }, []);
 
   // Timer Tick
@@ -98,7 +98,7 @@ export function SmileCoach() {
         setProfile(updated);
         try {
           localStorage.setItem('miroooo_smile_coach_profile', JSON.stringify(updated));
-        } catch (_) {}
+        } catch {}
       }
     }
 
@@ -135,7 +135,7 @@ export function SmileCoach() {
     setIsOnboarding(false);
     try {
       localStorage.setItem('miroooo_smile_coach_profile', JSON.stringify(newProfile));
-    } catch (_) {}
+    } catch {}
   };
 
   const handleStartSession = () => {
@@ -162,9 +162,10 @@ export function SmileCoach() {
     setActiveTab('today');
   };
 
-  // Brush head days calculation
-  const installTime = profile?.headInstalledDate ? new Date(profile.headInstalledDate).getTime() : Date.now();
-  const daysUsed = Math.max(0, Math.floor((Date.now() - installTime) / (1000 * 60 * 60 * 24)));
+  // Keep the rendered day stable across rerenders.
+  const [todayMs] = useState(() => Date.now());
+  const installTime = profile?.headInstalledDate ? new Date(profile.headInstalledDate).getTime() : todayMs;
+  const daysUsed = Math.max(0, Math.floor((todayMs - installTime) / (1000 * 60 * 60 * 24)));
   const headLifePercent = Math.min(100, Math.round((daysUsed / 90) * 100));
 
   const modelImage =
