@@ -8,7 +8,7 @@ interface ComparisonTableProps {
 
 export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
   const currentPrice = '£69';
-  const oldPrice = isX2 ? '£99' : '£89';
+  const oldPrice = '£139';
   const modelName = isX2 ? 'Miroooo X2' : 'Miroooo X1';
   const winnerImg = isX2
     ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp'
@@ -17,7 +17,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
   return (
     <div
       id="shopify-section-template--miroooo-comparison"
-      className="shopify-section"
+      className={`shopify-section ${isX2 ? '' : 'x1-comparison'}`}
       style={{
         background: '#000000',
         color: '#ffffff',
@@ -348,12 +348,12 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               </div>
               <div className="miroooo-comp-cell">Ultra-Light Weight</div>
               <div className="miroooo-comp-cell">Battery Life</div>
-              <div className="miroooo-comp-cell">Luxury travel case</div>
+              <div className="miroooo-comp-cell">{isX2 ? 'Luxury travel case' : 'Free Travel Case'}</div>
               <div className="miroooo-comp-cell">Wall-mounted storage</div>
               <div className="miroooo-comp-cell">Miroooo dental care app</div>
               <div className="miroooo-comp-cell">Aluminium Alloy Body</div>
               <div className="miroooo-comp-cell">Free Extra Brush Heads</div>
-              <div className="miroooo-comp-cell">Whisper Quiet (&lt;45 dB)</div>
+              <div className="miroooo-comp-cell">Whisper Quiet (&lt;{isX2 ? '45' : '50'} dB)</div>
               <div className="miroooo-comp-cell">Free Tracked Delivery</div>
               <div className="miroooo-comp-cell miroooo-comp-cell--price" style={{ fontSize: '1rem', color: '#ffffff' }}>Price</div>
             </div>
@@ -568,7 +568,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
 
             {/* Feature: Luxury travel case */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">Luxury travel case</div>
+              <div className="miroooo-comp-m-feature-title">{isX2 ? 'Luxury travel case' : 'Free Travel Case'}</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -587,7 +587,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
 
             {/* Feature: Wall-mounted storage */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">Wall-mounted storage</div>
+              <div className="miroooo-comp-m-feature-title">{isX2 ? 'Wall-mounted storage' : 'Aluminium Alloy Body'}</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -625,7 +625,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
 
             {/* Feature: Whisper Quiet */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">Whisper Quiet (&lt;45 dB)</div>
+              <div className="miroooo-comp-m-feature-title">Whisper Quiet (&lt;{isX2 ? '45' : '50'} dB)</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>

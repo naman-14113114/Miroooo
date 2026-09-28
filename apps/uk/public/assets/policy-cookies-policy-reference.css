@@ -1,0 +1,211 @@
+
+    body[data-page="cookies-policy"] {
+      background-color: #080909;
+      color: #f4f4f1;
+    }
+
+    .policy-page-wrapper {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      padding: clamp(64px, 8vw, 100px) 20px clamp(80px, 10vw, 120px);
+      background-color: #080909;
+    }
+
+    /* Ambient Background Glows */
+    .policy-ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.15;
+    }
+
+    .policy-ambient-glow--1 {
+      top: 40px;
+      left: -120px;
+      width: 440px;
+      height: 440px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(80px);
+    }
+
+    .policy-ambient-glow--2 {
+      bottom: 80px;
+      right: -120px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(90px);
+    }
+
+    .policy-content-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 880px;
+      margin-inline: auto;
+    }
+
+    /* Header Section */
+    .policy-header {
+      text-align: center;
+      margin-bottom: clamp(40px, 6vw, 64px);
+    }
+
+    .policy-title {
+      font-size: clamp(34px, 5.5vw, 56px);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .policy-title em {
+      font-style: italic;
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    .policy-lead {
+      font-size: clamp(15px, 2vw, 17px);
+      line-height: 1.65;
+      color: #a1a1aa;
+      max-width: 640px;
+      margin: 0 auto;
+      font-weight: 350;
+    }
+
+    /* Content Card */
+    .policy-card {
+      border-radius: 24px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: #e6e6e6;
+      color: #111111;
+      padding: clamp(24px, 4vw, 48px);
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.75);
+    }
+
+    .policy-prose {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #111111;
+    }
+
+    .policy-prose h2 {
+      font-size: clamp(20px, 2.4vw, 24px);
+      font-weight: 700;
+      color: #111111;
+      margin-top: 36px;
+      margin-bottom: 14px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .policy-prose h2:first-child {
+      margin-top: 0;
+    }
+
+    .policy-prose h3 {
+      font-size: clamp(16px, 2vw, 18px);
+      font-weight: 650;
+      color: #111111;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .policy-prose p {
+      margin: 0 0 16px 0;
+      color: #111111;
+    }
+
+    .policy-prose p:last-child {
+      margin-bottom: 0;
+    }
+
+    .policy-prose ul {
+      margin: 12px 0 18px 0;
+      padding-left: 22px;
+      list-style: disc;
+    }
+
+    .policy-prose li {
+      margin-bottom: 8px;
+      color: #111111;
+      line-height: 1.7;
+    }
+
+    .policy-prose strong {
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .policy-prose a {
+      color: #111111;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      word-break: break-word;
+      transition: opacity 0.2s ease;
+    }
+
+    .policy-prose a:hover {
+      opacity: 0.75;
+    }
+
+    .policy-divider {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+      margin: 28px 0;
+    }
+
+    .policy-note-box {
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin: 20px 0;
+    }
+
+    .policy-note-box p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .policy-meta-footer {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      font-size: 13px;
+      color: #444444;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* Mobile Adaptations */
+    @media (max-width: 640px) {
+      .policy-card {
+        padding: 24px 20px;
+        border-radius: 20px;
+      }
+
+      .policy-prose {
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .policy-prose h2 {
+        font-size: 19px;
+        margin-top: 28px;
+      }
+
+      .policy-prose h3 {
+        font-size: 16px;
+      }
+    }
+  

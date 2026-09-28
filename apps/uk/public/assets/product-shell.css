@@ -4825,8 +4825,3 @@ div[class*="tawk"],
     width: 100% !important;
   }
 }
-@media (max-width: 480px) {
-  #main-product-title {
-    max-width: 320px;
-  }
-}

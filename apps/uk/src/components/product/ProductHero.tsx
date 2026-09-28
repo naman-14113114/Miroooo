@@ -60,37 +60,29 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
 
   // Calculate midnight countdown & delivery date
   useEffect(() => {
+    let deliverySeconds = 14 * 60 + 38;
     const updateTimers = () => {
       const now = new Date();
 
       // Countdown to midnight UK time (Europe/London)
-      const midnight = new Date(now);
-      midnight.setHours(24, 0, 0, 0);
-      const diffMs = midnight.getTime() - now.getTime();
-      const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diffMs / (1000 * 60)) % 60);
-      const seconds = Math.floor((diffMs / 1000) % 60);
+      const londonParts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+      }).formatToParts(now);
+      const londonValue = (type: string) => Number(londonParts.find((part) => part.type === type)?.value || 0);
+      const remaining = 86400 - ((londonValue('hour') % 24) * 3600 + londonValue('minute') * 60 + londonValue('second'));
+      const hours = Math.floor(remaining / 3600);
+      const minutes = Math.floor((remaining % 3600) / 60);
+      const seconds = remaining % 60;
       setUrgencyTime(
         `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
       );
 
-      // Delivery countdown (15:00 cutoff)
-      const cutoff = new Date(now);
-      cutoff.setHours(15, 0, 0, 0);
-      if (now > cutoff) {
-        cutoff.setDate(cutoff.getDate() + 1);
-      }
-      const cutoffDiff = cutoff.getTime() - now.getTime();
-      const dHours = Math.floor((cutoffDiff / (1000 * 60 * 60)) % 24);
-      const dMinutes = Math.floor((cutoffDiff / (1000 * 60)) % 60);
-      setDeliveryCountdown(`${String(dHours).padStart(2, '0')}:${String(dMinutes).padStart(2, '0')}`);
-
-      // Delivery target date (4 days ahead, skipping Sunday)
+      // The reference displays a repeating 14:38 delivery countdown and a date five days ahead.
+      setDeliveryCountdown(`${String(Math.floor(deliverySeconds / 60)).padStart(2, '0')}:${String(deliverySeconds % 60).padStart(2, '0')}`);
+      deliverySeconds = deliverySeconds > 0 ? deliverySeconds - 1 : 14 * 60 + 38;
       const targetDate = new Date(now);
-      targetDate.setDate(targetDate.getDate() + 4);
-      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      setDeliveryDateStr(`${days[targetDate.getDay()]} ${targetDate.getDate()} ${months[targetDate.getMonth()]}`);
+      targetDate.setDate(targetDate.getDate() + 5);
+      setDeliveryDateStr(targetDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' }).replace(',', ''));
     };
 
     updateTimers();
@@ -574,14 +566,13 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
     <div id="shopify-section-template--24203751129433__main-product" className="shopify-section">
       <div className="section section--padding section--rounded relative">
         <div className="page-width relative">
-          {/* SORA-INSPIRED URGENCY BANNER (MIROOOO X2 & X1) */}
-          <div id="miroooo-x2-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
+          {isX2 && <div id="miroooo-x2-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
             <div className="x2-urgency-banner__left">
               <span className="x2-urgency-banner__icon" aria-hidden="true">🔥</span>
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                 <strong className="x2-urgency-banner__headline">
-                  {isX2 ? 'Get X2 at price of X1 for today only' : 'Save 50% on Miroooo X1 Today'}
+                  Get X2 at price of X1 for today only
                 </strong>
               </div>
             </div>
@@ -601,7 +592,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 </span>
               </div>
             </div>
-          </div>
+          </div>}
 
           <div className="featured-product product product--columns flex flex-col items-start lg:grid gap-5 w-full relative">
             {/* Left: Product Gallery */}
@@ -1287,7 +1278,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 >
                   <span className="btn-fill" data-fill></span>
                   <span className="btn-text" id="main-cta-text">
-                    Add to Cart {selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}
+                    {isX2 ? `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim() : 'Add To Cart'}
                   </span>
                 </button>
               </div>

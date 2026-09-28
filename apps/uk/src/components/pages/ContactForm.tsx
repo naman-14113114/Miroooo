@@ -203,7 +203,7 @@ export function ContactForm() {
                   </svg>
                 </div>
                 <h3 className="contact-service-card__title">FAQs</h3>
-                <p className="contact-service-card__copy">Quick answers for delivery, returns, brush care, and order questions.</p>
+                <p className="contact-service-card__copy">Quick answers for shipping, returns, product use, and order questions.</p>
                 <div className="contact-service-card__action">
                   <span>Browse FAQs</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -212,27 +212,7 @@ export function ContactForm() {
                 </div>
               </Link>
 
-              {/* Card 2: Delivery & Returns */}
-              <Link className="contact-service-card reveal" href="/policies/delivery-returns">
-                <div className="contact-service-card__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <rect x="1" y="3" width="15" height="13" rx="2" />
-                    <polygon points="16 8 20 8 23 11 23 16 16 16 8" />
-                    <circle cx="5.5" cy="18.5" r="2.5" />
-                    <circle cx="18.5" cy="18.5" r="2.5" />
-                  </svg>
-                </div>
-                <h3 className="contact-service-card__title">Delivery &amp; returns</h3>
-                <p className="contact-service-card__copy">Learn about tracked UK shipping, dispatch times, and our 30-day return policy.</p>
-                <div className="contact-service-card__action">
-                  <span>Delivery details</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
-                </div>
-              </Link>
-
-              {/* Card 3: Support Email */}
+              {/* Card 2: Support Email */}
               <a className="contact-service-card reveal" href="mailto:support@trymiroooo.com">
                 <div className="contact-service-card__icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">

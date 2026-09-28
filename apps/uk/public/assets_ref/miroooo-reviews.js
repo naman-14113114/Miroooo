@@ -1640,8 +1640,8 @@
   let currentFilterRating = null; // null = all
   let currentWithPhotos = false;
   let currentVerifiedOnly = false;
-  let currentVisibleCount = 12;
-  const PAGE_SIZE = 12;
+  let currentVisibleCount = 24;
+  const PAGE_SIZE = 24;
 
   // Active Lightbox State
   let activeLightboxReview = null;

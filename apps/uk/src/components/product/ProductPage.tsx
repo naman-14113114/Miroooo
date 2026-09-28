@@ -35,19 +35,18 @@ export function ProductPage({ handle, searchParams }: ProductPageProps) {
 
   const isHeads = handle === 'miroooo-x1-heads' || handle === 'miroooo-x2-heads';
   const isX2 = handle === 'miroooo-x2';
-  const initialColor = searchParams?.color || 'Silver';
+  const initialColor = searchParams?.color || (isX2 ? 'Silver' : 'Pink');
 
   if (isHeads) {
     return (
-      <main className="product-page-root bg-[#080909] min-h-screen text-white">
+      <main className="product-page-root heads-product-page bg-[#080909] min-h-screen text-white">
         <HeadsProductHero product={product} />
-        <ProductFaqs isX2={handle === 'miroooo-x2-heads'} />
       </main>
     );
   }
 
   return (
-    <main className="product-page-root bg-[#080909] min-h-screen text-white">
+    <main className={`product-page-root ${isX2 ? 'x2-product-page' : 'x1-product-page'} bg-[#080909] min-h-screen text-white`}>
       {/* 1. Main Product Hero & Buy Box */}
       <ProductHero product={product} initialColor={initialColor} />
 

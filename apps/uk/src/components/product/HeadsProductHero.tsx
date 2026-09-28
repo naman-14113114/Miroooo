@@ -37,7 +37,6 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       ]
     : [
         { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Heads DuPont Pack' },
-        { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Heads Precision Bristles' },
       ];
 
   const basePrice = 10;
@@ -115,7 +114,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   };
 
   return (
-    <div id="shopify-section-template--heads-main-product" className="shopify-section">
+    <div id="shopify-section-template--24203751129433__main-product" className="shopify-section" style={{ paddingTop: 16, marginTop: 0, paddingBottom: 0, marginBottom: 0 }}>
       <div className="section section--padding section--rounded relative">
         <div className="page-width relative">
           <div className="featured-product product product--columns flex flex-col items-start lg:grid gap-5 w-full relative">
@@ -217,31 +216,18 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
             {/* Info / Buy Box */}
             <div className="product__info block sticky w-full">
               <div className="product__title">
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <img key={i} src="/assets/star.png" alt="★" width="16" height="15" style={{ width: '16px', height: '15px' }} />
-                    ))}
-                  </div>
-                  <span style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    4.9 · TRUSTED BY 40,000+ CUSTOMERS
-                  </span>
-                </div>
                 <h1
                   className="heading leading-none product-title-sm font-bold"
                   style={{ fontSize: '40px', fontWeight: 700, lineHeight: 1.08, color: '#ffffff', margin: '4px 0 2px 0', letterSpacing: '-0.03em' }}
                 >
-                  {product.name}
+                  Miroooo {isX2 ? 'X2' : 'X1'} Heads
                 </h1>
               </div>
 
               {/* Price */}
               <div className="product__price grid gap-2 mt-2" style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
                 <span className="text-3xl font-extrabold text-white" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                  £{totalPrice.toFixed(2)}
-                </span>
-                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '13px', fontWeight: 500 }}>
-                  (£{basePrice.toFixed(2)} per 2-head pack)
+                  £{Number(totalPrice.toFixed(2))}
                 </span>
               </div>
 
@@ -279,7 +265,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
               <div className="heads-quantity-selector my-4" style={{ margin: '20px 0 16px 0' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                   <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>QUANTITY:</span>
-                  <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '12px' }}>£{basePrice.toFixed(2)} per 2-head pack</span>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '12px' }}>£{basePrice} per 2-head pack</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111111', border: '1px solid rgba(255, 255, 255, 0.18)', borderRadius: '9999px', padding: '4px 8px', height: '50px', boxSizing: 'border-box' }}>
                   <button
@@ -411,7 +397,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   {openAccordion === 0 && (
                     <div className="details__content rte text-sm" style={{ marginTop: '12px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, fontSize: '13.5px' }}>
                       <p><strong>Micro-Diamond Rounded DuPont Bristles:</strong> Every bristle filament undergoes advanced micro-diamond tip polishing, eliminating sharp abrasive edges to safeguard gums while maximizing interdental plaque removal.</p>
-                      <p style={{ marginTop: '8px' }}><strong>Seamless Acoustic Motor Coupling:</strong> Custom-engineered mount securely locks with the high-frequency sonic motor for zero energy loss.</p>
+                      <p style={{ marginTop: '8px' }}><strong>{isX2 ? 'Seamless 45° Bass Sweep Coupling:' : 'Seamless 32,000 VPM Acoustic Motor Coupling:'}</strong> Custom-engineered mount securely locks with the high-frequency {isX2 ? 'Miroooo X2 acoustic magnetic motor' : 'Miroooo X1 acoustic sonic motor'} for zero energy loss.</p>
                       <p style={{ marginTop: '8px' }}><strong>Optimal 3-Month Replacement:</strong> Dentists recommend replacing toothbrush heads every 90 days to maintain peak hygiene and optimal plaque-sweeping performance.</p>
                     </div>
                   )}
@@ -483,13 +469,19 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
         </div>
       </div>
 
+      <div id="shopify-section-template--24203751129433__scrolling_text_P3gRex" className="shopify-section scrolling-text-section heads-marquee" aria-label="Free shipping on all orders">
+        <div className="heads-marquee__track" aria-hidden="true">
+          <span>Free shipping on all orders</span><span>Free shipping on all orders</span><span>Free shipping on all orders</span><span>Free shipping on all orders</span>
+        </div>
+      </div>
+
       {/* Exquisite Texture Split Section */}
-      <div id="x2-section-texture-split" className="shopify-section" style={{ background: '#000000', color: '#ffffff', width: '100%', padding: 'clamp(3.5rem, 6vw, 6rem) 0', boxSizing: 'border-box', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <div id={isX2 ? 'x2-section-texture-split' : 'x1-section-texture-split'} className="shopify-section" style={{ background: '#000000', color: '#ffffff', width: '100%', padding: 'clamp(3.5rem, 6vw, 6rem) 0', boxSizing: 'border-box', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
           <div className="split-section-grid" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(2rem, 4vw, 4.5rem)' }}>
             <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
               <div style={{ position: 'relative', width: '100%', borderRadius: '20px', overflow: 'hidden', background: '#0d0d0d', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }}>
-                <img src="/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head.webp" alt="Miroooo Precision DuPont Replacement Bristle Head" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} loading="lazy" decoding="async" />
+                <img src={isX2 ? '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head.webp' : '/assets_ref/x/heads/B1.webp'} alt={`Miroooo ${isX2 ? 'X2' : 'X1'} Precision DuPont Replacement Bristle Head`} style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} loading="lazy" decoding="async" />
               </div>
             </div>
 
@@ -512,8 +504,8 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                   <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
                   <div>
-                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>Gum Soothing Protection</strong>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>Anatomically contoured bristle layout hugs tooth surfaces for a soothing, non-abrasive gumline massage.</span>
+                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>{isX2 ? 'Gum Soothing Protection' : '32,000 VPM Acoustic Coupling'}</strong>
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>{isX2 ? 'Anatomically contoured bristle layout hugs tooth surfaces for a soothing, non-abrasive gumline massage.' : 'Custom-engineered precision shaft coupling transfers high-frequency sonic acoustic vibrations directly to bristle tips.'}</span>
                   </div>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
@@ -526,8 +518,8 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                   <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
                   <div>
-                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>Softer than Soft</strong>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>Dense, velvety bristle clustering delivers an unmatched, luxurious spa-grade brushing experience.</span>
+                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>{isX2 ? 'Softer than Soft' : 'Gentle Gumline Protection'}</strong>
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>{isX2 ? 'Dense, velvety bristle clustering delivers an unmatched, luxurious spa-grade brushing experience.' : 'Anatomically contoured bristle layout hugs tooth surfaces for a soothing, non-abrasive gumline massage.'}</span>
                   </div>
                 </li>
               </ul>

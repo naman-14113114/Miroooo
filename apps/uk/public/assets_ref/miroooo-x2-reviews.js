@@ -127,7 +127,7 @@
       variant: 'Grey / Single',
       title: '51g featherweight and whisper quiet vs heavy Philips',
       body: 'So light to use! Not like my previous Philips Sonicare which was heavy in the hand and so noisy as well. This Miroooo X2 is whisper quiet, lightweight at only 51g, and cleans effortlessly without vibrating your entire hand.',
-      images: ['/assets_ref/reviews/miroooo-x2-review-oliver-harrison.png'],
+      images: ['/assets_ref/reviews/miroooo-x2-customer-review-flush-capacitive-switch-led-halo.webp'],
       helpful: 58,
       verified: true
     },
@@ -239,7 +239,7 @@
       variant: 'Pink / Double Pack',
       title: '2-hour magnetic fast charge lasts for months',
       body: 'Charged it for 2 hours using my phone\'s USB-C cable when it arrived 10 weeks ago and haven\'t touched the dock since. The cobalt cell battery endurance is truly groundbreaking.',
-      images: ['/assets_ref/reviews/miroooo-x2-customer-review-flush-capacitive-switch-led-halo.webp'],
+      images: ['/assets_ref/reviews/miroooo-x2-review-oliver-harrison.png'],
       helpful: 31,
       verified: true
     },
@@ -987,8 +987,8 @@
   let currentWithPhotos = false;
   let currentVerifiedOnly = false;
   let currentSort = 'most-recent';
-  let currentVisibleCount = 12;
-  const PAGE_SIZE = 12;
+  let currentVisibleCount = 24;
+  const PAGE_SIZE = 24;
 
   // Active Lightbox State
   let activeLightboxReview = null;

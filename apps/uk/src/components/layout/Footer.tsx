@@ -4,8 +4,14 @@ import Link from 'next/link';
 export function Footer() {
   return (
     <footer className="footer-group block w-full">
-      {/* Customer Care / Service Strip (3 Items) */}
-      <aside className="service-strip" aria-label="Miroooo customer care" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+      <aside className="service-strip" aria-label="Miroooo customer care">
+        <div className="service-strip__item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="service-strip__icon" aria-hidden="true">
+            <path d="M4 14a8 8 0 0 1 16 0v4a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
+            <path d="M4 14v4a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H4" />
+          </svg>
+          <div><strong>Customer support</strong><span>Real help when you need it</span></div>
+        </div>
         <div className="service-strip__item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="service-strip__icon" aria-hidden="true">
             <rect x="1" y="5" width="15" height="13" rx="2" />
@@ -25,8 +31,8 @@ export function Footer() {
             <path d="m9 12 2 2 4-4" />
           </svg>
           <div>
-            <strong>2-Year Warranty</strong>
-            <span>Full peace of mind</span>
+            <strong>Secure checkout</strong>
+            <span>Encrypted &amp; protected</span>
           </div>
         </div>
 
@@ -35,8 +41,8 @@ export function Footer() {
             <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
           </svg>
           <div>
-            <strong>4.9/5 Rating</strong>
-            <span>Rated 4.9/5 by dentists</span>
+            <strong>Sonic technology</strong>
+            <span>Precision oral care</span>
           </div>
         </div>
       </aside>
@@ -75,11 +81,16 @@ export function Footer() {
           <div className="site-footer__column">
             <h4 className="site-footer__heading">SHOP</h4>
             <ul className="site-footer__links">
-              <li><Link href="/products/miroooo-x2">Miroooo X2</Link></li>
+              <li><Link href="/">Home</Link></li>
               <li><Link href="/products/miroooo-x">Miroooo X1</Link></li>
-              <li><Link href="/products/miroooo-x2-heads">Miroooo X2 Heads</Link></li>
+              <li><Link href="/products/miroooo-x2">Miroooo X2</Link></li>
               <li><Link href="/products/miroooo-x1-heads">Miroooo X1 Heads</Link></li>
-              <li><Link href="/shop">Shop All</Link></li>
+              <li><Link href="/products/miroooo-x2-heads">Miroooo X2 Heads</Link></li>
+              <li><Link href="/policies/privacy-policy">Privacy Policy</Link></li>
+              <li><Link href="/policies/return-policy">Return Policy</Link></li>
+              <li><Link href="/policies/shipping-policy">Shipping Policy</Link></li>
+              <li><Link href="/policies/refund-policy">Refund Policy</Link></li>
+              <li><Link href="/policies/terms-of-service">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -87,12 +98,13 @@ export function Footer() {
           <div className="site-footer__column">
             <h4 className="site-footer__heading">SUPPORT</h4>
             <ul className="site-footer__links">
-              <li><Link href="/pages/contact-us">Contact Us</Link></li>
-              <li><Link href="/pages/faqs">FAQs</Link></li>
+              <li><Link href="/pages/smile-coach">Free Smile Coach App</Link></li>
               <li><Link href="/pages/dentalcare-quiz">Dental Care Quiz</Link></li>
-              <li><Link href="/pages/smile-coach">Smile Coach</Link></li>
-              <li><Link href="/policies/shipping-policy">Shipping Policy</Link></li>
-              <li><Link href="/policies/return-policy">Returns &amp; Refund Policy</Link></li>
+              <li><Link href="/pages/contact-us">Contact Us</Link></li>
+              <li><Link href="/pages/about-us">About Us</Link></li>
+              <li><Link href="/guides">Oral Care Guides</Link></li>
+              <li><Link href="/pages/faqs">FAQs</Link></li>
+              <li><Link href="/policies/cookies-policy">Cookies Policy</Link></li>
             </ul>
           </div>
 
@@ -152,14 +164,7 @@ export function Footer() {
         {/* Bottom Bar: Copyright, Legal Links, 5 SVG Payment Badges */}
         <div className="site-footer__bottom">
           <div className="site-footer__copyright">
-            &copy; 2026 Miroooo. All rights reserved.
-          </div>
-
-          <div className="site-footer__legal flex flex-wrap gap-4 text-[11px]" style={{ textTransform: 'none' }}>
-            <Link href="/policies/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/policies/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link href="/policies/shipping-policy" className="hover:text-white transition-colors">Shipping Policy</Link>
-            <Link href="/policies/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link>
+            &copy; 2026 MIROOOO - ALL RIGHTS RESERVED
           </div>
 
           <ul className="site-footer__payments" aria-label="Accepted payment methods">

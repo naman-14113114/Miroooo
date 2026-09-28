@@ -1,99 +1,107 @@
 'use client';
 
-import React, { useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Volume2, VolumeX } from 'lucide-react';
 
-const REELS = [
-  {
-    id: 'reel-1',
-    title: '45° Bass Sweep Motion',
-    subtitle: 'Dynamic micro-oscillations',
-    videoSrc: 'https://miroooo-us.vercel.app/media/products/miroooo-electric-toothbrush-x2/videos/31-miroooo-electric-toothbrush-x2-demo-1.mp4',
-    poster: '/assets_ref/x2/gallery/hero-video-poster.webp',
-  },
-  {
-    id: 'reel-2',
-    title: 'IPX7 Shower Immersion',
-    subtitle: '100% waterproof unibody',
-    videoSrc: '/assets_ref/x2/vbj9qc-h264-hd.mp4',
-    poster: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp',
-  },
-  {
-    id: 'reel-3',
-    title: 'Modern Bathroom Ritual',
-    subtitle: 'Magnetic floating wall mount',
-    videoSrc: '/assets_ref/x/miroooo-feature-video.mp4',
-    poster: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
-  },
+const reelSources = [
+  '/assets_ref/x/reels/V5.mp4',
+  '/assets_ref/x/reels/miroooo-8.mp4',
+  '/assets_ref/x/reels/V4.mp4',
+  '/assets_ref/x/reels/miroooo-6.mp4',
+  '/assets_ref/x/reels/miroooo-5.mp4',
+  '/assets_ref/x/reels/V2.mp4',
 ];
 
 export function ReelsCarousel() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [unmutedIndex, setUnmutedIndex] = useState<number | null>(null);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const offset = direction === 'left' ? -320 : 320;
-      scrollContainerRef.current.scrollBy({ left: offset, behavior: 'smooth' });
-    }
+  const selectReel = useCallback((index: number, smooth = true) => {
+    const carousel = carouselRef.current;
+    const card = carousel?.children[index] as HTMLElement | undefined;
+    if (!carousel || !card) return;
+    carousel.scrollTo({
+      left: card.offsetLeft - (carousel.clientWidth - card.clientWidth) / 2,
+      behavior: smooth ? 'smooth' : 'instant',
+    });
+    setSelectedIndex(index);
+  }, []);
+
+  useEffect(() => {
+    selectReel(0, false);
+  }, [selectReel]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+      if (index === selectedIndex) video.play().catch(() => {});
+      else video.pause();
+    });
+  }, [selectedIndex]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      if (!carouselRef.current?.matches(':hover')) {
+        selectReel((selectedIndex + 1) % reelSources.length);
+      }
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [selectedIndex, selectReel]);
+
+  const onScroll = () => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    const center = carousel.scrollLeft + carousel.clientWidth / 2;
+    let closest = selectedIndex;
+    let distance = Infinity;
+    Array.from(carousel.children).forEach((child, index) => {
+      const card = child as HTMLElement;
+      const gap = Math.abs(card.offsetLeft + card.clientWidth / 2 - center);
+      if (gap < distance) {
+        closest = index;
+        distance = gap;
+      }
+    });
+    if (closest !== selectedIndex) setSelectedIndex(closest);
+  };
+
+  const toggleSound = (index: number) => {
+    const video = videoRefs.current[index];
+    if (!video) return;
+    video.muted = !video.muted;
+    setUnmutedIndex(video.muted ? null : index);
+    selectReel(index);
   };
 
   return (
-    <section className="reels-carousel-section py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white" aria-labelledby="reels-title">
-      <div className="flex items-end justify-between mb-8">
-        <div>
-          <span className="text-[11.5px] font-bold uppercase tracking-widest text-white/50 block mb-1">
-            See Miroooo In Motion
-          </span>
-          <h2 id="reels-title" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Daily Routine In Action
-          </h2>
-        </div>
-
-        {/* Arrow Navigation */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => scroll('left')}
-            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-            aria-label="Previous reel"
-          >
-            ‹
-          </button>
-          <button
-            type="button"
-            onClick={() => scroll('right')}
-            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-            aria-label="Next reel"
-          >
-            ›
-          </button>
-        </div>
-      </div>
-
-      <div
-        ref={scrollContainerRef}
-        className="flex gap-5 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory"
-      >
-        {REELS.map((reel) => (
+    <section id="shopify-section-template--miroshine-reels-container" className="shopify-section miroshine-reels-section" aria-label="Miroooo customer videos">
+      <div id="miroshine-reels-slider" ref={carouselRef} className="miroshine-reels-carousel" onScroll={onScroll}>
+        {reelSources.map((src, index) => (
           <div
-            key={reel.id}
-            className="w-[280px] sm:w-[320px] flex-shrink-0 aspect-[9/16] rounded-3xl overflow-hidden bg-[#111213] border border-white/10 relative shadow-2xl snap-start group"
+            key={src}
+            className={`reels-card-cell ${selectedIndex === index ? 'is-selected' : ''}`}
+            onClick={() => selectReel(index)}
           >
-            <video
-              src={reel.videoSrc}
-              poster={reel.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-white/70">
-                {reel.subtitle}
-              </span>
-              <strong className="text-[16px] font-bold text-white leading-tight">
-                {reel.title}
-              </strong>
+            <div className="reels-card-inner">
+              <video
+                ref={(element) => { videoRefs.current[index] = element; }}
+                className="reels-video"
+                src={src}
+                loop
+                muted
+                playsInline
+                preload="none"
+              />
+              <button
+                className={`reels-sound-btn ${unmutedIndex === index ? 'is-unmuted' : ''}`}
+                type="button"
+                aria-label={unmutedIndex === index ? 'Mute video' : 'Unmute video'}
+                onClick={(event) => { event.stopPropagation(); toggleSound(index); }}
+              >
+                {unmutedIndex === index ? <Volume2 size={20} strokeWidth={2} /> : <VolumeX size={20} strokeWidth={2} />}
+              </button>
             </div>
           </div>
         ))}

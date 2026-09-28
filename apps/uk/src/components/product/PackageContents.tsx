@@ -7,6 +7,32 @@ interface PackageContentsProps {
 }
 
 export function PackageContents({ isX2 = true }: PackageContentsProps) {
+  if (!isX2) {
+    return (
+      <div id="shopify-section-template--24203751129433__image-with-text-1" className="shopify-section x1-package" style={{ background: '#000', color: '#fff', borderTop: '1px solid rgba(255,255,255,.08)' }}>
+        <div className="section section--padding" style={{ background: '#000', paddingTop: 0, paddingBottom: 0 }}>
+          <div className="page-width relative">
+            <div className="image-with-text">
+              <div className="image-with-text__item">
+                <div className="image-with-text__media">
+                  <img src="/assets_ref/x/miroooo-x-package-box.webp" alt="Package Contents" width="1000" height="667" loading="lazy" decoding="async" />
+                </div>
+              </div>
+              <div className="image-with-text__item x1-package__text">
+                <div className="rich-text">
+                  <h2 className="heading leading-none title-sm"><em className="highlighted-text inline-block not-italic relative" style={{ color: '#fff', WebkitTextFillColor: '#fff' }}>Package Contents</em></h2>
+                  <div className="rte leading-normal body subtext-md text-opacity" style={{ color: 'rgba(255,255,255,.8)' }}>
+                    <p>Miroooo X1 electric toothbrush in chosen colour, brush heads, Travel case, and USB-C charging cable (adapter not included).</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const imgSrc = isX2
     ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp'
     : '/assets_ref/x/miroooo-x-package-box.webp';
