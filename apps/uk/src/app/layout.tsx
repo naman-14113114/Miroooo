@@ -14,13 +14,9 @@ const inter = localFont({
   variable: "--font-inter",
   display: "swap",
   src: [
-    { path: "../assets/fonts/inter-400.woff2", weight: "400", style: "normal" },
+    { path: "../../public/assets/fonts/inter-product-latin.woff2", weight: "100 900", style: "normal" },
     { path: "../assets/fonts/inter-400-italic.woff2", weight: "400", style: "italic" },
-    { path: "../assets/fonts/inter-500.woff2", weight: "500", style: "normal" },
-    { path: "../assets/fonts/inter-600.woff2", weight: "600", style: "normal" },
-    { path: "../assets/fonts/inter-700.woff2", weight: "700", style: "normal" },
     { path: "../assets/fonts/inter-700-italic.woff2", weight: "700", style: "italic" },
-    { path: "../assets/fonts/inter-800.woff2", weight: "800", style: "normal" },
   ],
 });
 

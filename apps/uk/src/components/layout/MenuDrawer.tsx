@@ -1,211 +1,278 @@
-'use client';
+"use client";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { useDrawer } from "./useDrawer";
 
-import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { DRAWER_MENU } from '@/data/navigation';
+const sections = [
+  {
+    title: "Brushes",
+    products: [
+      {
+        handle: "miroooo-x",
+        title: "Miroooo X1",
+        eyebrow: "The Essential",
+        image: "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
+        price: 69,
+      },
+      {
+        handle: "miroooo-x2",
+        title: "Miroooo X2",
+        eyebrow: "Flagship Pro",
+        image:
+          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-upright-grip.webp",
+        price: 69,
+      },
+    ],
+  },
+  {
+    title: "Accessories",
+    products: [
+      {
+        handle: "miroooo-x1-heads",
+        title: "Miroooo X1 Heads",
+        eyebrow: "Replacement",
+        image: "/assets_ref/x/heads/B1.webp",
+        price: 10,
+      },
+      {
+        handle: "miroooo-x2-heads",
+        title: "Miroooo X2 Heads",
+        eyebrow: "Replacement",
+        image: "/assets_ref/x2/heads/B1.webp",
+        price: 10,
+      },
+    ],
+  },
+];
+type DrawerProps = { isOpen: boolean; onClose: () => void };
+const CloseIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+  >
+    <path d="m18 6-12 12M6 6l12 12" />
+  </svg>
+);
 
-interface MenuDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
-  const drawerRef = useRef<HTMLDivElement>(null);
-  const [dragOffset, setDragOffset] = useState(0);
-  const touchStartY = useRef<number | null>(null);
-  const isDragging = useRef(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('nav-open', 'has-modal-open');
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.classList.remove('nav-open', 'has-modal-open');
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.classList.remove('nav-open', 'has-modal-open');
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-
-  // Touch Drag-to-Dismiss Physics
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-    isDragging.current = true;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging.current || touchStartY.current === null) return;
-    const currentY = e.touches[0].clientY;
-    const diff = currentY - touchStartY.current;
-    if (diff > 0) {
-      setDragOffset(diff);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (!isDragging.current) return;
-    isDragging.current = false;
-    if (dragOffset > 100) {
-      onClose();
-    }
-    setDragOffset(0);
-    touchStartY.current = null;
-  };
-
-  if (!isOpen) return null;
-
+export function ShopDrawer({ isOpen, onClose }: DrawerProps) {
+  const ref = useDrawer(isOpen, onClose, "shop-drawer-open");
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col justify-end lg:hidden"
+      ref={ref}
+      id="ShopDrawer"
+      className={`shop-drawer${isOpen ? " is-open" : ""}`}
       role="dialog"
       aria-modal="true"
-      aria-label="Mobile Navigation Menu"
+      aria-label="Shop oral care collection"
+      aria-hidden={!isOpen}
+      inert={!isOpen}
     >
-      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-md transition-opacity duration-300"
+        className="shop-drawer__overlay"
         onClick={onClose}
         aria-hidden="true"
-        style={{
-          opacity: dragOffset > 0 ? Math.max(0.2, 1 - dragOffset / 300) : 1,
-        }}
       />
-
-      {/* Bottom Sheet Drawer */}
-      <div
-        ref={drawerRef}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        className="relative z-10 w-full max-h-[88vh] bg-[#0c0d0e] text-white rounded-t-[28px] border-t border-white/10 shadow-2xl flex flex-col overflow-hidden transition-transform ease-out"
-        style={{
-          transform: dragOffset > 0 ? `translate3d(0, ${dragOffset}px, 0)` : 'translate3d(0, 0, 0)',
-          transitionDuration: dragOffset === 0 ? '0.35s' : '0s',
-          animation: dragOffset === 0 ? 'slideUpDrawer 0.4s cubic-bezier(0.16, 1, 0.3, 1)' : 'none',
-        }}
-      >
-        {/* Grab Bar & Top Controls */}
-        <div className="pt-3 pb-2 px-6 flex items-center justify-between border-b border-white/5 relative flex-shrink-0">
-          <div className="w-12 h-1 bg-white/25 rounded-full mx-auto absolute left-1/2 -translate-x-1/2 top-3" />
-          <span className="text-[13px] font-bold tracking-wider uppercase text-white/50 pt-2">
-            Navigation
-          </span>
+      <aside className="shop-drawer__inner">
+        <div className="shop-drawer__header">
+          <h2 className="shop-drawer__title">Shop</h2>
           <button
             type="button"
+            className="shop-drawer__close"
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
-            aria-label="Close menu"
+            aria-label="Close Shop drawer"
           >
-            <svg
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <CloseIcon />
           </button>
         </div>
-
-        {/* Scrollable Navigation Body */}
-        <nav className="p-6 overflow-y-auto space-y-6 flex-grow">
-          {/* Shop Section */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-white/40">
-                Sonic Brushes
+        <div className="shop-drawer__body">
+          {sections.map((section) => (
+            <div className="shop-drawer__section" key={section.title}>
+              <span className="shop-drawer__section-title">
+                {section.title}
               </span>
-              <span className="text-[10.5px] font-medium text-white/40">50% Off Today</span>
+              <ul className="shop-drawer__list">
+                {section.products.map((product) => (
+                  <li key={product.handle}>
+                    <Link
+                      className="shop-drawer__card"
+                      href={`/products/${product.handle}`}
+                      onClick={onClose}
+                    >
+                      <div className="shop-drawer__thumb">
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          width="140"
+                          height="140"
+                        />
+                      </div>
+                      <div className="shop-drawer__info">
+                        <span className="shop-drawer__eyebrow">
+                          {product.eyebrow}
+                        </span>
+                        <h3 className="shop-drawer__product-title">
+                          {product.title}
+                        </h3>
+                        <span className="shop-drawer__price">
+                          £{product.price}{" "}
+                          {product.price === 69 && (
+                            <s className="shop-drawer__compare">£139</s>
+                          )}
+                        </span>
+                      </div>
+                      <svg
+                        className="shop-drawer__arrow"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="m9 18 6-6-6-6" />
+                      </svg>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="grid grid-cols-2 gap-2.5">
-              {DRAWER_MENU.shop.brushes.map((b) => (
-                <Link
-                  key={b.label}
-                  href={b.href}
-                  onClick={onClose}
-                  className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/25 hover:bg-white/[0.08] transition-all block"
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[14.5px] font-semibold text-white">{b.label}</span>
-                    {b.badge && (
-                      <span className="text-[9px] font-bold uppercase tracking-wider bg-white/20 text-white px-2 py-0.5 rounded-full">
-                        {b.badge}
-                      </span>
-                    )}
+          ))}
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+export function MenuDrawer({ isOpen, onClose }: DrawerProps) {
+  const ref = useDrawer(isOpen, onClose, "nav-open");
+  const startY = useRef<number | null>(null);
+  const offset = useRef(0);
+  useEffect(() => {
+    const resize = () => {
+      if (window.innerWidth >= 1024 && isOpen) onClose();
+    };
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, [isOpen, onClose]);
+  return (
+    <div
+      ref={ref}
+      id="MenuDrawer"
+      className="menu-drawer drawer drawer--start"
+      {...(isOpen ? { open: true } : {})}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation"
+      aria-hidden={!isOpen}
+      inert={!isOpen}
+    >
+      <div
+        className="overlay fixed-modal"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div className="drawer__inner">
+        <div
+          className="drawer__header"
+          onTouchStart={(event) => {
+            startY.current = event.touches[0].clientY;
+          }}
+          onTouchMove={(event) => {
+            if (startY.current === null) return;
+            offset.current = Math.max(
+              0,
+              event.touches[0].clientY - startY.current,
+            );
+            const inner =
+              ref.current?.querySelector<HTMLElement>(".drawer__inner");
+            inner?.style.setProperty(
+              "transform",
+              `translate3d(0, ${offset.current}px, 0)`,
+              "important",
+            );
+            inner?.style.setProperty("transition", "none", "important");
+          }}
+          onTouchEnd={() => {
+            const inner =
+              ref.current?.querySelector<HTMLElement>(".drawer__inner");
+            inner?.style.removeProperty("transform");
+            inner?.style.removeProperty("transition");
+            if (offset.current > 100) onClose();
+            startY.current = null;
+            offset.current = 0;
+          }}
+        >
+          <span className="drawer__title" />
+          <button
+            className="button button--secondary button--close drawer__close mobile-panel__close"
+            type="button"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            <CloseIcon />
+          </button>
+        </div>
+        <div className="drawer__content flex flex-col h-full grow shrink">
+          <nav
+            className="relative grow overflow-hidden"
+            aria-label="Mobile navigation"
+          >
+            <ul className="drawer__scrollable drawer__menu relative w-full h-full">
+              <li className="drawer__menu-item--group">
+                <div className="drawer__group-label">Shop</div>
+                {sections.map((section) => (
+                  <div key={section.title}>
+                    <div className="drawer__subgroup-label">
+                      {section.title}
+                    </div>
+                    <ul className="drawer__submenu">
+                      {section.products.map((product) => (
+                        <li key={product.handle}>
+                          <Link
+                            className="drawer__submenu-item flex flex-col"
+                            href={`/products/${product.handle}`}
+                            onClick={onClose}
+                          >
+                            <span className="drawer__submenu-title">
+                              {product.title}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <span className="text-[11.5px] text-white/50 block">View details →</span>
-                </Link>
+                ))}
+              </li>
+              {[
+                ["about-us", "About Us"],
+                ["dentalcare-quiz", "Dental Care Quiz"],
+                ["contact-us", "Contact Us"],
+                ["faqs", "FAQs"],
+              ].map(([path, label]) => (
+                <li key={path}>
+                  <Link
+                    className="drawer__menu-item block heading text-2xl leading-none tracking-tight"
+                    href={`/pages/${path}`}
+                    onClick={onClose}
+                  >
+                    {label}
+                  </Link>
+                </li>
               ))}
-            </div>
-
-            <span className="block text-[11px] font-bold uppercase tracking-widest text-white/40 mt-4 mb-3">
-              Brush Heads &amp; Accessories
-            </span>
-            <div className="grid grid-cols-2 gap-2.5">
-              {DRAWER_MENU.shop.accessories.map((a) => (
-                <Link
-                  key={a.label}
-                  href={a.href}
-                  onClick={onClose}
-                  className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/25 hover:bg-white/[0.08] transition-all block"
-                >
-                  <span className="text-[13.5px] font-medium text-white/90 block mb-1">{a.label}</span>
-                  <span className="text-[11.5px] text-white/50 block">£10.00 / 2-Pack</span>
-                </Link>
-              ))}
-            </div>
+            </ul>
+          </nav>
+          <div className="drawer__footer grid w-full">
+            <div className="drawer__footer-bottom" />
           </div>
-
-          <div className="h-px bg-white/10" />
-
-          {/* Explore / Supporting Links */}
-          <div className="space-y-1">
-            <span className="block text-[11px] font-bold uppercase tracking-widest text-white/40 mb-2">
-              Explore
-            </span>
-            {DRAWER_MENU.pages.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={onClose}
-                className="flex items-center justify-between py-2.5 px-3 rounded-xl text-[16px] font-medium text-white/90 hover:bg-white/5 hover:text-white transition-colors"
-              >
-                <span>{item.label}</span>
-                <span className="text-white/30 text-[14px]">→</span>
-              </Link>
-            ))}
-          </div>
-
-          {/* Bottom CTA Button */}
-          <div className="pt-2 pb-4">
-            <Link
-              href="/shop"
-              onClick={onClose}
-              className="w-full py-3.5 px-6 rounded-full bg-white text-black font-bold text-[14px] flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors shadow-lg"
-            >
-              <span>Shop All Products</span>
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </nav>
+        </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slideUpDrawer {
-          from {
-            transform: translate3d(0, 100%, 0);
-          }
-          to {
-            transform: translate3d(0, 0, 0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

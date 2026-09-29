@@ -4,9 +4,10 @@ import React from 'react';
 
 interface BrushFunctionsProps {
   isX2?: boolean;
+  color?: string;
 }
 
-export function BrushFunctions({ isX2 = false }: BrushFunctionsProps) {
+export function BrushFunctions({ isX2 = false, color = 'Pink' }: BrushFunctionsProps) {
   const modes = isX2
     ? [
         {
@@ -36,21 +37,21 @@ export function BrushFunctions({ isX2 = false }: BrushFunctionsProps) {
           id: 'standard',
           name: 'STANDARD',
           desc: 'Gentle daily oral care designed for sensitive teeth and gums, providing a smooth, comfortable clean perfect for everyday brushing.',
-          img: '/assets_ref/x/G1.webp',
+          img: `/assets_ref/x/${color === 'Grey' ? 'G' : color === 'Silver' ? 'S' : 'P'}1.webp`,
           alt: 'Miroooo X1 Standard Mode',
         },
         {
           id: 'whitening',
           name: 'WHITENING',
           desc: 'Targeted high-frequency vibrations that effectively lift stubborn surface stains from coffee, tea, and food for a radiant smile.',
-          img: '/assets_ref/x/G2.webp',
+          img: `/assets_ref/x/${color === 'Grey' ? 'G' : color === 'Silver' ? 'S' : 'P'}2.webp`,
           alt: 'Miroooo X1 Whitening Mode',
         },
         {
           id: 'deep-clean',
           name: 'DEEP CLEANSING',
           desc: 'Maximum power for an intensive plaque-removing clean, delivering a dentist-fresh feeling along the gumline and hard-to-reach areas.',
-          img: '/assets_ref/x/G3.webp',
+          img: `/assets_ref/x/${color === 'Grey' ? 'G' : color === 'Silver' ? 'S' : 'P'}3.webp`,
           alt: 'Miroooo X1 Deep Cleansing Mode',
         },
       ];
@@ -111,7 +112,7 @@ export function BrushFunctions({ isX2 = false }: BrushFunctionsProps) {
         <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 4.5vw, 4rem)' }}>
           <h2
             style={{
-              fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+              fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
               fontSize: 'clamp(2rem, 3.5vw, 3.2rem)',
               fontWeight: 600,
               color: '#ffffff',
@@ -124,7 +125,7 @@ export function BrushFunctions({ isX2 = false }: BrushFunctionsProps) {
           </h2>
           <p
             style={{
-              fontFamily: "var(--font-body-family, 'Inter', sans-serif)",
+              fontFamily: "var(--font-body-family, var(--font-inter), sans-serif)",
               fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)',
               color: 'rgba(255, 255, 255, 0.7)',
               maxWidth: '680px',
@@ -152,7 +153,7 @@ export function BrushFunctions({ isX2 = false }: BrushFunctionsProps) {
               <div>
                 <h3
                   style={{
-                    fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                    fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                     fontSize: 'clamp(1.1rem, 1.4vw, 1.35rem)',
                     fontWeight: 600,
                     color: '#ffffff',
@@ -165,7 +166,7 @@ export function BrushFunctions({ isX2 = false }: BrushFunctionsProps) {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "var(--font-body-family, 'Inter', sans-serif)",
+                    fontFamily: "var(--font-body-family, var(--font-inter), sans-serif)",
                     fontSize: 'clamp(0.9rem, 1.05vw, 1.02rem)',
                     color: 'rgba(255, 255, 255, 0.7)',
                     lineHeight: 1.6,

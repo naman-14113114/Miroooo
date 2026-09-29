@@ -27,7 +27,7 @@ export function FeatureSplitSection({ data }: FeatureSplitSectionProps) {
               {data.heading}
             </h2>
             <div className="gb-video-feature-divider" />
-            <p className="gb-video-feature-lead">{data.lead}</p>
+            {data.lead && <p className="gb-video-feature-lead">{data.lead}</p>}
 
             <div className="gb-video-feature-list">
               {data.points.map((point) => (

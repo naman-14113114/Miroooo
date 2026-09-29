@@ -74,7 +74,7 @@ export function LuxuriousProfessionalism() {
           >
             <h2
               style={{
-                fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                 fontSize: 'clamp(1.75rem, 3.2vw, 2.75rem)',
                 fontWeight: 600,
                 letterSpacing: '0.05em',
@@ -91,7 +91,7 @@ export function LuxuriousProfessionalism() {
 
             <p
               style={{
-                fontFamily: "'GFS Didot', Georgia, serif",
+                fontFamily: "var(--font-didot), Georgia, serif",
                 fontSize: 'clamp(1rem, 1.25vw, 1.2rem)',
                 color: 'rgba(255, 255, 255, 0.75)',
                 lineHeight: 1.75,

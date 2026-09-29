@@ -151,3 +151,131 @@ This file is an append-only historical record for `E:\1st YEAR DTU\New folder\mi
 - Verification: `pnpm --filter @miroooo/uk build` completed an optimized Next.js 16.2.6 production build with TypeScript and 31 generated routes after the fix; its automatic frozen pnpm 11 workspace check passed. The isolated strict-CI pnpm 10 install passed with `esbuild` postinstall. `git diff --check` passed (only Windows LF-to-CRLF notices), and the final fetched upstream comparison remained `0/0`. The build regenerated tracked `apps/uk/next-env.d.ts`; because it was clean at task start and only changed its generated `.next` reference, it was restored to its original tracked content. No source or UI test was rerun beyond the necessary production build, because application code did not change.
 - Not tested/remaining uncertainty: no new Vercel deployment was created, so the remote build result after push is unverified. Vercel's exact pnpm version and full build log were not accessible through the available read-only connector; the pnpm 10 reproduction confirms the failure mechanism. No US production build, payment, checkout, contact submission, or live page visual check was performed. The root policy may also resolve the US installation failure, but US deployment success is not claimed.
 - Final Git and publication state: `main`/`origin/main` remain `bfa037c` at `0/0`, with only `package.json`, `pnpm-workspace.yaml`, and this append-only context entry modified locally and unstaged; no untracked repository file. No commit, push, branch, PR, deploy, promote, pull, merge, rebase, reset, stash, payment, order, or Vercel setting action occurred. The user can publish through the existing GitHub workflow; Vercel's next run should be checked after that push.
+
+## 2026-09-28 23:27:51 IST - Verified pushed Vercel UK deployment
+
+- Repository/deployment identity: `E:\1st YEAR DTU\New folder\miroooo`, remote `https://github.com/naman-14113114/Miroooo.git`, branch `main`, HEAD and fetched `origin/main` both `4feaf618e5eb2f8b25b2a706a9766ce758bc13f6`, ahead/behind `0/0`, clean at task start. UK public alias is `https://miroooo-uk-xi.vercel.app/`; GoBrush reference is `https://www.trymiroooo.com/`.
+- User request/practical meaning: after personally pushing the install-policy fix, ask what to do next; verify whether the new GitHub-triggered UK deployment published successfully and whether shoppers can reach the live site. Scope was read-only deployment and public route verification, plus this required append-only context entry. Protected areas: application code, UK/US storefront behavior, `apps/us`, GoBrush source, Vercel production settings, checkout, and further Git publishing.
+- Current remote state: the `miroooo-uk` production deployment `dpl_7pNcTM24MP2zER96ta3JiLSS59Li` for `4feaf61` is `READY`, source `git`, framework `nextjs`, with `aliasError: null`. Vercel lists `miroooo-uk-xi.vercel.app` among its aliases. Deployment inspector: `https://vercel.com/sahiljainsj49-4461s-projects/miroooo-uk/7pNcTM24MP2zER96ta3JiLSS59Li`. The prior `bfa037c` deployment remains `ERROR` historically; it was not deleted or rolled back.
+- Files/routes inspected: governing workspace `AGENTS.md`, full workspace and Miroooo `CONTEXT.md`, repository README/PRODUCT/DESIGN/DESIGN.json, Git status/remotes/fetched refs/recent commits/diffs/untracked inventory; Vercel UK deployment list and details; public `/`, `/products/miroooo-x`, and `/cart`; browser-rendered homepage and X1 product page. No application source file was edited. Changed files are this Miroooo `CONTEXT.md` append and the workspace `CONTEXT.md` append only.
+- Verification: `git status --short --branch`, `git remote -v`, `git fetch --all --prune`, `git rev-parse HEAD`, upstream and ahead/behind comparison, `git log -4`, and staged/unstaged/untracked inventory showed the pushed `4feaf61` locally and remotely with `0/0` and no pre-existing changes. Vercel connector showed production `READY` and the public alias. Direct HTTP GET returned 200 for `/`, `/products/miroooo-x`, and `/cart`, with the expected UK page titles. Chrome loaded the live homepage with the styled video hero and X1 product page with £69/£128/£177 bundle tiers and £139 compare price visible in its accessibility tree. No missing page or install error was observed in these checks.
+- Mistakes/corrections and limits: the general web reader still marked the Vercel URL inaccessible, but direct HTTP GET and Chrome rendering established that the site is public and responding; this was a reader limitation, not evidence of a failed deployment. The earlier Chrome tab had been cleaned up between turns, so a fresh tab was opened. No full mobile/route sweep, asset audit, console/runtime log analysis, live form submission, XPage quote, checkout, payment, order, or US deployment/build check was performed in this follow-up. The known external XPage penny mismatch may still block affected bundle checkouts; no provider offer was changed.
+- Final Git/publishing state: `main`/`origin/main` remain `4feaf61` at `0/0`. The only local repository change created by this task is this unstaged append-only `CONTEXT.md` entry; no code, asset, lockfile or configuration edit. The user had already committed/pushed `4feaf61` before this task; this agent made no commit, push, branch, PR, deploy, promotion, pull, merge, rebase, reset, stash, order, payment, or production-setting change. The Git-integrated Vercel deployment is live. Further work is needed only if the user wants broader live QA or provider checkout offer alignment.
+
+
+## 2026-09-29 - UK interaction and responsive reference parity; pre-publication verification
+
+### Request, authority, starting state and protected scope
+
+The user reported remaining differences in the header Shop menu and hover motion, phone sticky add-to-cart, add-to-cart opening a drawer instead of the cart page, cart layout, and static infographics. They requested a page-by-page/device-by-device comparison against their GoBrush storefront, fixing the root causes in Miroooo UK, then pushing clean code to GitHub once local checks pass. This supersedes the earlier local-only instruction for this task. No new branch, PR, manual deployment, external checkout configuration, or production setting change is requested.
+
+Target is E:\1st YEAR DTU\New folder\miroooo, branch main, remote https://github.com/naman-14113114/Miroooo.git, UK alias https://miroooo-uk-xi.vercel.app/. Starting/current pre-publication HEAD and fetched origin/main are 4feaf618e5eb2f8b25b2a706a9766ce758bc13f6, ahead/behind 0/0. A prior 10-line deployment-verification CONTEXT.md append was already present and preserved. The current UK implementation edits are this task's work, carried across continuation turns. No unrelated user edit was overwritten.
+
+GoBrush is E:\1st YEAR DTU\New folder\gobrush-product-page, public https://www.trymiroooo.com/. Its reference advanced during the task from 2610d07 to 922e47b646246c69ddc3954179652f5bc3f6b880 (including 39e28c1 review-date updates). Work stopped before incorporating the overlap; the user explicitly approved using the latest GoBrush changes. Latest fresh fetch confirms main/origin/main at 922e47b, 0/0, clean before the required source-context append. Application source in GoBrush, apps/us, shared packages, URL scheme, external XPage offers, analytics and third-party settings remain protected. Existing Next.js/React/TypeScript/Tailwind and TSX routes remain; no standalone HTML page was added.
+
+### Source inspection and root causes
+
+Read governing workspace/context/product/design documents and reconciled Git status, remotes, fetched refs, latest commits, staged/unstaged/untracked changes. Compared local production UK routes against current GoBrush source and live pages at 390, 820 and 1440 px, including scrolling, hover, galleries, drawers and populated carts. Inspected GoBrush index/shop/cart/product/head pages, shared site/product CSS/JS, source accordions, reviews, videos, bundle gift strips, mobile sticky cart and animation rules; no GoBrush application file was edited or rebuilt.
+
+Root causes included missing source spacing variables; conflicting legacy/global style layers; double desktop gallery padding after restoring tokens; nonmatching font files and fallback font names; simplified React markup that omitted source galleries/copy; cart context automatically opening its drawer; missing source motion behavior and review handlers; duplicate review script initialization and listeners persisting across client navigation. A source homepage video points to a retired US URL that returns 404. Source review media also has comma filenames that need URL encoding under Next.js.
+
+### Implementation
+
+- Restored the header roll-up label hover, original SVG controls, centred wordmark, desktop Shop sidebar, mobile bottom sheet, and four-product menu cards. Closed drawers remain inert. A React boolean open-attribute bug was corrected from an empty string to true. New useDrawer owns body locking, Escape, focus containment and focus restoration.
+- Added UK-scoped product tokens, source sticky purchase-bar rules and gallery animations. Corrected source layout dimensions and breakpoint padding for X1/X2/heads and tablet title spacing. Bundled the actual source Inter and Playfair faces locally and used the existing Didot variable, correcting title wrapping. The source's rendered bundle divider is 15px and Buy labels are normal-weight 13px on phones/15px above; explicit target classes now match that result.
+- Added full source X1 and X2 variant gallery data, thumbnail/zoom/keyboard/swipe/video behavior, source lower-section colour images and packaging. Source approved X1 paid-head and free-gift strips now display and link to the correct heads page. Selecting paid heads selects a single brush; switching bundle resets the paid add-on. The accurate triple gift label remains four heads/two sets rather than reproducing the reference's misleading two-head label.
+- All product/head/sticky/quiz add-to-cart paths now navigate to /cart. The header cart control still opens its deliberate cart drawer. Both cart views share canonical line rendering. Cart page now uses the source grey cards, delivery truck animation/countdown, quantity/remove controls, gift rows, add-on, discount details, promo entry, subtotal and gift-message layout, plus minimal header/footer. Price formatting removes unnecessary .00. Checkout errors use dark red text on the light cart card for contrast.
+- Restored scroll reveals with a streaming-aware observer and cleanup, desktop drag scrolling, source shipping marquee, count-up/ring infographic animation, looping reels/stories with source motion timing, story modal transitions, carousel controls, source FAQ open styles and transitions, and animated cart/truck icons with owned Lottie lifecycle. Reduced-motion and cleanup behavior retained.
+- Added complete static source product accordion data rendered in native TSX details components. Static trusted markup was checked for scripts and inline event handlers, with source contact/coach URLs mapped to preserved UK /pages/... paths. No raw HTML route was created.
+- Applied approved 39e28c1 review-date hunks while retaining React lifecycle fixes; encoded comma image URLs, added the missing X2 photo-filter toggle and write-review Escape handler, and removed duplicate event ownership. Review modal elements are retained for cleanup so leaving an open modal restores body scrolling even after React removes its DOM.
+- Contact checks trim required fields and validate email before sending. Smile Coach no longer accidentally submits when the last Continue button changes into a submit button; new profiles start with zero sessions/streak. Completion records calendar dates so repeated sessions do not invent extra daily streaks. Existing profile data remains supported.
+- Home feature copy now matches the source. Replaced the broken cross-country homepage video URL with existing local X2 demo /assets_ref/x2/vbj9qc-h264-hd.mp4; browser verification confirms it plays. Source code remains unchanged.
+
+Commerce remains the previously approved canonical UK contract: both brushes GBP69/128/177 for one/two/three, compare GBP139 per brush, paid heads GBP10, free one/two head sets for pair/triple. MIROOOO and MIROOOO10 apply 10% to the post-bundle brush subtotal, rounded to whole pounds (triple GBP159 after promo). Persisted cart prices are rebuilt canonically. UK server quote validation remains in force; live provider bundle amounts can differ by pennies (pair GBP128.01 versus GBP128), so mismatches/unavailable quotes block checkout without redirecting or creating an order. The shared helper and external XPage admin were not changed. Latest GoBrush provider-specific paid-head checkout configuration was not imported into shared code; target fails closed when a quote cannot be verified.
+
+### Verification and corrections
+
+UK lint, typecheck, all six commerce tests, and production build pass; build generates 31 routes. Root verifier passes 389 checks. git diff --check passes (Windows LF/CRLF informational warnings only). Six existing focused tests cover offers/gifts/promos, stale persisted carts, exact quote acceptance, legacy XPage shape, mismatch with no order POST, and unavailable quotes.
+
+The production route matrix is 26 routes x 390/820/1440 px: all 78 return 200, with zero horizontal overflow, zero loaded broken images, and zero application page exceptions. Source/target comparative matrix and full-page/focused screenshots are retained outside the repo at C:\Users\sahil\.codex\visualizations\2026\09\28\01a0e633-4846-7891-aafc-fedb2ac007d9. Routes: /, /shop, /cart, /products/miroooo-x, /products/miroooo-x2, both heads, /pages/about-us, contact-us, faqs, dentalcare-quiz, smile-coach, order-tracking; /policies/privacy-policy, return-policy, refund-policy, shipping-policy, terms-of-service, cookies-policy, warranty, delivery-returns; /guides and all four guide articles. Existing /pages/... and /policies/... URLs remain unchanged.
+
+Browser interaction sets passed 13 main checks, 19 extended checks and six supplemental checks: changed hover transform; Shop/sidebar Escape; phone menu navigation/close; X1 colour and lower media; phone sticky visibility and ATC to cart; GBP177 bundle/GBP159 promo/persistence; mocked mismatch stays on cart; X1 paid-head GBP79; Lottie SVG delivery icon; FAQ style; story carousel/modal/next/Escape; 24 reviews per load; photo filter/reset; write-review open/Escape; missing review-image checks; contact required validation; quiz result; coach onboarding/persistence and timer pause/resume; zero unearned session count; local homepage video playback; X2 variant media. Populated source/target pair carts were compared at all three sizes and display the same GBP128/GBP160-discount and free heads.
+
+Mistakes corrected during this task: several read/probe commands used a wrong working directory or unsupported PowerShell glob and were rerun, without changing application files; Python default codepage failed on Unicode and was switched to UTF-8. Timing-based checks falsely flagged sticky/story/review transitions and were replaced by waits for actual completion. A cart assertion initially inherited previous test items and was isolated with a clean browser test cart. Missing source variables first exposed double padding, which was corrected. An unused X2 modes colour prop was removed after checking that the source's dynamic colour section is hidden; the visible source modes were preserved. A hover assertion originally checked only a non-none transform; final verification compares before and after. The initial image audit missed a broken video URL; the later media check found and repaired it. Old reference X1 heads1.webp was broken and the target uses existing B1 artwork. The generated next-env.d.ts and tsconfig.tsbuildinfo are restored to their pre-task tracked content before publishing.
+
+No actual order/payment, contact email, submitted review, subscriber entry, external admin change, or ad-platform event was deliberately submitted. Third-party Tawk requests can report CORS/400 on localhost; those are outside the UK application and their integration was preserved. Source Klaviyo welcome popups are domain-dependent and can obscure live screenshots; no marketing settings were changed. The source quiz has a Shopify-not-defined error that was not copied. Dynamic video frames/timers/remote widgets are not deterministic pixel baselines. US build was conditional on shared changes; none occurred, and git diff for apps/us and packages is empty.
+
+### Publication checkpoint and follow-up
+
+At this entry, no commit or push has occurred for these changes. User authorization is to commit/push the verified UK work to main; no branch/PR/manual deployment or settings action will be taken. The final review-modal navigation edge check, clean commit/push, and GitHub-triggered UK Vercel status will be recorded in a subsequent append. Detailed changed-file inventory follows. GoBrush will receive only its separately authorized append-only context entry, left uncommitted.
+
+### Exact changed-file inventory (UK application only)
+
+- `apps/uk/public/assets/cart-reference.css`
+- `apps/uk/public/assets/fonts/inter-500.woff2`
+- `apps/uk/public/assets/fonts/inter-600.woff2`
+- `apps/uk/public/assets/fonts/inter-product-latin.woff2`
+- `apps/uk/public/assets/fonts/playfair-display-italic-latin.woff2`
+- `apps/uk/public/assets/gallery-motion.css`
+- `apps/uk/public/assets/product-shell.css`
+- `apps/uk/public/assets/product-sticky.css`
+- `apps/uk/public/assets/product-tokens.css`
+- `apps/uk/public/assets_ref/miroooo-reviews.js`
+- `apps/uk/public/assets_ref/miroooo-x2-reviews.js`
+- `apps/uk/src/app/layout.tsx`
+- `apps/uk/src/app/products/layout.tsx`
+- `apps/uk/src/app/products/miroooo-x/page.tsx`
+- `apps/uk/src/app/products/miroooo-x2/page.tsx`
+- `apps/uk/src/components/cart/CartDrawer.tsx`
+- `apps/uk/src/components/cart/CartLines.tsx`
+- `apps/uk/src/components/cart/CartPageContent.tsx`
+- `apps/uk/src/components/home/FeatureSplitSection.tsx`
+- `apps/uk/src/components/layout/CartMinimalFooter.tsx`
+- `apps/uk/src/components/layout/CartMinimalHeader.tsx`
+- `apps/uk/src/components/layout/ClientInitializer.tsx`
+- `apps/uk/src/components/layout/Header.tsx`
+- `apps/uk/src/components/layout/MenuDrawer.tsx`
+- `apps/uk/src/components/layout/RouteChrome.tsx`
+- `apps/uk/src/components/layout/useDrawer.ts`
+- `apps/uk/src/components/pages/ContactForm.tsx`
+- `apps/uk/src/components/pages/SmileCoach.tsx`
+- `apps/uk/src/components/product/BrushFunctions.tsx`
+- `apps/uk/src/components/product/BrushStylePrecision.tsx`
+- `apps/uk/src/components/product/CustomerStats.tsx`
+- `apps/uk/src/components/product/CustomerStories.tsx`
+- `apps/uk/src/components/product/EnergyBoostSplit.tsx`
+- `apps/uk/src/components/product/HeadsProductHero.tsx`
+- `apps/uk/src/components/product/LuxuriousProfessionalism.tsx`
+- `apps/uk/src/components/product/PackageContents.tsx`
+- `apps/uk/src/components/product/ProductAccordions.tsx`
+- `apps/uk/src/components/product/ProductFaqs.tsx`
+- `apps/uk/src/components/product/ProductHero.tsx`
+- `apps/uk/src/components/product/ProductPage.tsx`
+- `apps/uk/src/components/product/ProductReviews.tsx`
+- `apps/uk/src/components/product/ReelsCarousel.tsx`
+- `apps/uk/src/components/product/ShippingMarquee.tsx`
+- `apps/uk/src/components/product/StickyBuyBox.tsx`
+- `apps/uk/src/components/product/X1TriCleaningModes.tsx`
+- `apps/uk/src/components/product/X2ModesSwipe.tsx`
+- `apps/uk/src/components/product/useLoopingCarousel.ts`
+- `apps/uk/src/components/quiz/DentalQuiz.tsx`
+- `apps/uk/src/components/ui/AnimatedIcon.tsx`
+- `apps/uk/src/context/CartContext.tsx`
+- `apps/uk/src/data/home.ts`
+- `apps/uk/src/data/productAccordions.ts`
+- `apps/uk/src/data/x1Gallery.ts`
+- `apps/uk/src/data/x2Gallery.ts`
+- `apps/uk/src/lib/cart.ts`
+- `apps/uk/src/styles/globals.css`
+
+Only the repository CONTEXT.md is changed outside this UK file list. Existing history is preserved. Record written 2026-09-29 19:14:44 IST.
+
+
+## 2026-09-29 19:19:41 IST - Final UK edge checks and clean-publication gate
+
+- This continues the detailed UK parity task immediately above. Repository Miroooo, main, HEAD/fetched origin/main4feaf618e5eb2f8b25b2a706a9766ce758bc13f6, ahead/behind0/0. User authorization remains UK-only fixes followed by clean GitHub push. UK public alias https://miroooo-uk-xi.vercel.app/; GoBrush reference main922e47b at https://www.trymiroooo.com/. No source/US/shared code change.
+- Additional inspected/changed files: ProductHero.tsx and HeadsProductHero.tsx had gallery lightbox class is-active while product-shell.css expects is-open; both now use is-open. ProductReviews.tsx retains references to modal DOM elements for route-unmount overflow cleanup. Source application remains untouched. The full exact file inventory and route scope remain in the preceding entry.
+- Correction to earlier incomplete checks: the lightbox failure was a real CSS-state mismatch, not merely an animation wait. The completion-wait diagnostic proved computed visibility hidden/opacity0 on an active modal; correcting both shared product components fixes all four pages. A cart test initially matched both the visible page and inert drawer gift text; scoping to main corrected the test without code changes.
+- Verification: final production build passes31routes. Final-edge browser script passed24checks: review modal open then client-side back restores scrolling; X1/X2/both heads open galleries and Escape close at390and1440; ArrowRight changes media where multiple images exist; infographic0percent values count up to95/98/91 on scroll. Final-cart script passed5checks for increase toGBP128/free gift, decrease toGBP69/no gift, explicit header cart drawer, removal to empty and Escape. Earlier78route checks and13+19+6interaction checks remain valid; together67interaction assertions pass. UK lint/typecheck/build/six commerce tests/verifier389 and git diff --check passed; last two code changes are only the gallery class strings and subsequent build/TypeScript passed.
+- Generated next-env.d.ts and tsconfig.tsbuildinfo restored again after final build to original tracked content; their substantive Git diff is empty. No apps/us or packages diff. No real order/payment/contact/review submission or external offer change; provider quote mismatch limitation remains as described above.
+- State/action: all UK changes and append-only context are ready for the explicitly authorized main commit/push. No commit/push has yet occurred at this timestamp; no branch/PR/manual deployment/settings action. The automatic GitHub-triggered Vercel deployment will be observed and recorded after push. Full updated context reread and byte-prefix history preservation verified after append.

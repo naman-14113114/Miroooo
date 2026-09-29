@@ -1,12 +1,18 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { AnimatedIcon } from '@/components/ui/AnimatedIcon';
+import { x1Gallery } from '@/data/x1Gallery';
+import { x2Gallery } from '@/data/x2Gallery';
+import { ProductAccordions } from './ProductAccordions';
 import { Product } from '@/data/products';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 
 interface ProductHeroProps {
   product: Product;
   initialColor?: string;
+  onColorChange?: (color: string) => void;
 }
 
 interface GallerySlide {
@@ -24,8 +30,9 @@ interface GallerySlide {
   isModesBadge?: boolean;
 }
 
-export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroProps) {
-  const { addItem, addBundle, openCart } = useCart();
+export function ProductHero({ product, initialColor = 'Silver', onColorChange }: ProductHeroProps) {
+  const router = useRouter();
+  const { addItem, addBundle } = useCart();
   const isX2 = product.handle === 'miroooo-x2';
 
   // Active color & tier state
@@ -34,8 +41,8 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
 
   // Color choices per tier
   const [singleColor, setSingleColor] = useState<string>(initialColor);
-  const [bundle2Colors, setBundle2Colors] = useState<[string, string]>([initialColor, initialColor]);
-  const [bundle3Colors, setBundle3Colors] = useState<[string, string, string]>([initialColor, 'Grey', 'Pink']);
+  const [bundle2Colors, setBundle2Colors] = useState<[string, string]>([initialColor, isX2 ? initialColor : 'Grey']);
+  const [bundle3Colors, setBundle3Colors] = useState<[string, string, string]>([initialColor, 'Grey', isX2 ? 'Pink' : 'Silver']);
 
   // Addon checkbox for Buy 1 tier
   const [buy1HeadsChecked, setBuy1HeadsChecked] = useState(false);
@@ -93,6 +100,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
   // Sync standalone color with gallery & tier choices
   const handleSelectStandaloneColor = (color: string) => {
     setSelectedColor(color);
+    onColorChange?.(color);
     setSingleColor(color);
     setBundle2Colors([color, bundle2Colors[1]]);
     setBundle3Colors([color, bundle3Colors[1], bundle3Colors[2]]);
@@ -115,18 +123,21 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Keyboard navigation for Lightbox and Tooltip
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsShippingTooltipOpen(false);
-        setIsLightboxOpen(false);
-        setIsLightboxZoomed(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+    const videos = document.querySelectorAll<HTMLVideoElement>('#MirooooGallerySlides video');
+    videos.forEach((video) => {
+      if (video.closest('.is-active')) video.play().catch(() => {});
+      else video.pause();
+    });
+  }, [activeMediaIndex]);
+
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('gallery-open');
+    return () => { document.body.style.overflow = overflow; document.body.classList.remove('gallery-open'); };
+  }, [isLightboxOpen]);
 
   // Scroll thumbnails into view when active index changes
   useEffect(() => {
@@ -181,7 +192,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
     } else {
       addBundle(product.handle, 3, bundle3Colors);
     }
-    openCart();
+    router.push('/cart');
   };
 
   // Gallery items for X2 (dynamically reactive to selected color)
@@ -201,7 +212,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
         ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-in-hand.webp'
         : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-in-hand.webp';
 
-    return [
+    const slides: GallerySlide[] = [
       {
         type: 'image',
         src: uprightGrip,
@@ -346,183 +357,47 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
         thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp',
       },
     ];
+    const variant = x2Gallery[selectedColor as keyof typeof x2Gallery] || x2Gallery.Silver;
+    let imageIndex = 0;
+    return slides.map((slide) => {
+      if (slide.type === 'video') return slide;
+      const index = imageIndex++;
+      return { ...slide, src: variant.images[index], thumbImg: variant.thumbnails[index], alt: variant.alts[index] };
+    });
   };
 
-  // Gallery items for X1 (dynamically reactive to selected color)
   const getX1Slides = (): GallerySlide[] => {
-    const colorLower = selectedColor.toLowerCase();
-
-    if (colorLower === 'pink') {
-      return [
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
-          alt: 'Miroooo X1 Sonic Electric Toothbrush Pink Upright Hand Grip',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
-        },
-        {
-          type: 'video',
-          videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
-          poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-          alt: 'Miroooo X1 Video Showcase',
-          thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Pink-2.webp',
-          alt: 'Miroooo X1 Pink Lifestyle In Hand View',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-2.webp',
-        },
-        {
-          type: 'video',
-          videoSrc: '/assets_ref/x/gallery/Miroooo_x_Pink-video.mp4',
-          poster: '/assets_ref/x/gallery/Miroooo_x_Pink-3.webp',
-          alt: 'Miroooo X1 Pink Feature Video',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-3.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Pink-4.webp',
-          alt: 'Miroooo X1 Pink Magnetic Travel Case',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-4.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Pink-5.webp',
-          alt: 'Miroooo X1 Pink IPX7 Full Submersion Waterproof',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-5.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Pink-6.webp',
-          alt: 'Miroooo X1 Pink DuPont Precision Bristles',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-6.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Pink-8.webp',
-          alt: 'Miroooo X1 Pink In Hand Precision Grip',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Pink-8.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Silver-9.webp',
-          alt: 'Miroooo X1 Complete Set Presentation Packaging Box',
-          thumbImg: '/assets_ref/x/gallery/Silver-9.webp',
-        },
-      ];
-    }
-
-    if (colorLower === 'grey') {
-      return [
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp',
-          alt: 'Miroooo X1 Sonic Electric Toothbrush Grey Upright Hand Grip',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp',
-        },
-        {
-          type: 'video',
-          videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
-          poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-          alt: 'Miroooo X1 Video Showcase',
-          thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Grey-4.webp',
-          alt: 'Miroooo X1 Grey Magnetic Travel Case',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-4.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Grey-5.webp',
-          alt: 'Miroooo X1 Grey IPX7 Waterproof Submersion',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-5.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Grey-6.webp',
-          alt: 'Miroooo X1 Grey DuPont Precision Bristles',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-6.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Grey-7.webp',
-          alt: 'Miroooo X1 Grey USB-C Fast Recharge',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-7.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Miroooo_x_Grey-8.webp',
-          alt: 'Miroooo X1 Grey In Hand Precision Grip',
-          thumbImg: '/assets_ref/x/gallery/Miroooo_x_Grey-8.webp',
-        },
-        {
-          type: 'image',
-          src: '/assets_ref/x/gallery/Silver-9.webp',
-          alt: 'Miroooo X1 Complete Set Presentation Packaging Box',
-          thumbImg: '/assets_ref/x/gallery/Silver-9.webp',
-        },
-      ];
-    }
-
-    // Default: Silver
-    return [
-      {
-        type: 'image',
-        src: '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp',
-        alt: 'Miroooo X1 Sonic Electric Toothbrush Silver Upright Hand Grip',
-        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp',
-      },
-      {
-        type: 'video',
-        videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
-        poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-        alt: 'Miroooo X1 Video Showcase',
-        thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x/gallery/Miroooo_x_Silver-2.webp',
-        alt: 'Miroooo X1 Silver Lifestyle In Hand View',
-        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-2.webp',
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x/gallery/Miroooo_x_Silver-3.webp',
-        alt: 'Miroooo X1 Silver Magnetic Travel Case',
-        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-3.webp',
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x/gallery/Miroooo_x_Silver-4.webp',
-        alt: 'Miroooo X1 Silver IPX7 Full Submersion Waterproof',
-        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-4.webp',
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x/gallery/Miroooo_x_Silver-5.webp',
-        alt: 'Miroooo X1 Silver USB-C Fast Recharge',
-        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-5.webp',
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x/gallery/Silver-9.webp',
-        alt: 'Miroooo X1 Complete Set Presentation Packaging Box',
-        thumbImg: '/assets_ref/x/gallery/Silver-9.webp',
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x/gallery/Miroooo_x_Silver-11.webp',
-        alt: 'Miroooo X1 Silver In Hand Precision Grip',
-        thumbImg: '/assets_ref/x/gallery/Miroooo_x_Silver-11.webp',
-      },
-    ];
+    const variant = x1Gallery[selectedColor as keyof typeof x1Gallery] || x1Gallery.Pink;
+    return [{
+      type: 'video', videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
+      poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+      alt: 'Miroooo X1 Video Showcase', thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
+    }, ...variant.images.map((src, index): GallerySlide => ({
+      type: src.endsWith('.mp4') ? 'video' : 'image',
+      ...(src.endsWith('.mp4') ? { videoSrc: src, poster: variant.thumbnails[index] } : { src }),
+      thumbImg: variant.thumbnails[index], alt: `Miroooo X1 ${selectedColor} product view ${index + 1}`,
+    }))];
   };
 
   const gallerySlides = isX2 ? getX2Slides() : getX1Slides();
   const totalSlides = gallerySlides.length;
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsShippingTooltipOpen(false);
+        setIsLightboxOpen(false);
+        setIsLightboxZoomed(false);
+      }
+      if (!isLightboxOpen || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      setIsLightboxZoomed(false);
+      setActiveMediaIndex((index) => (index + (event.key === 'ArrowRight' ? 1 : totalSlides - 1)) % totalSlides);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isLightboxOpen, totalSlides]);
+
 
   // Touch handlers for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -674,11 +549,12 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
 
                     <div className="miroooo-gallery__slides" id="MirooooGallerySlides">
                       {gallerySlides.map((slide, idx) => {
-                        if (activeMediaIndex !== idx) return null;
                         return (
                           <div
                             key={idx}
-                            className="miroooo-gallery__slide is-active"
+                            className={`miroooo-gallery__slide ${activeMediaIndex === idx ? 'is-active' : ''}`}
+                            aria-hidden={activeMediaIndex !== idx}
+                            inert={activeMediaIndex !== idx}
                             data-media-type={slide.type}
                             data-index={idx}
                             onClick={() => {
@@ -885,7 +761,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
               {/* Bundle Divider */}
               <div className="bundle-header-divider flex items-center gap-3 my-4">
                 <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
-                <span className="text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest" style={{ letterSpacing: '0.12em', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <span className="font-bold uppercase" style={{ fontSize: 15, lineHeight: 'normal', letterSpacing: '0.12em', color: 'rgba(255, 255, 255, 0.7)' }}>
                   BUNDLE &amp; SAVE + FREE SHIPPING
                 </span>
                 <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
@@ -904,7 +780,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-extrabold text-sm sm:text-base uppercase tracking-tight" style={{ color: '#111111' }}>Buy 1</span>
+                          <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 1</span>
                         </div>
                         <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555' }}>Includes 1 {product.name} set</p>
                       </div>
@@ -952,7 +828,8 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     id="buy1-heads-addon-strip"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setBuy1HeadsChecked((prev) => !prev);
+                      setBuy1HeadsChecked(selectedTier !== 'single' || !buy1HeadsChecked);
+                      setSelectedTier('single');
                     }}
                     title="Add 2 Brush Heads"
                   >
@@ -963,7 +840,8 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                           id="buy1-heads-checkbox"
                           className="tier-addon-checkbox"
                           checked={buy1HeadsChecked}
-                          onChange={(e) => setBuy1HeadsChecked(e.target.checked)}
+                          onChange={(e) => { setBuy1HeadsChecked(e.target.checked); setSelectedTier('single'); }}
+                          aria-label="Add 2 brush heads"
                         />
                         <span className="tier-addon-custom-check" aria-hidden="true">
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
@@ -974,7 +852,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-addon-price-tag" id="tier-single-heads-price">+£10.00</span>
+                      <span className="tier-addon-price-tag" id="tier-single-heads-price">+£10</span>
                     </div>
                   </div>
                 </div>
@@ -983,7 +861,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 <div
                   className={`bundle-tier-card has-top-badge ${selectedTier === 'bundle-2' ? 'is-selected' : ''}`}
                   data-tier="bundle-2"
-                  onClick={() => setSelectedTier('bundle-2')}
+                  onClick={() => { setSelectedTier('bundle-2'); setBuy1HeadsChecked(false); }}
                 >
                   <div className="tier-popular-badge-wrap badge-popular">
                     <div className="tier-popular-seal">
@@ -1000,8 +878,8 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-extrabold text-sm sm:text-base uppercase tracking-tight" style={{ color: '#111111' }}>Buy 2</span>
-                          <span className="tier-badge-pill" id="tier-bundle-2-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£10.00 OFF</span>
+                          <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 2</span>
+                          <span className="tier-badge-pill" id="tier-bundle-2-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£10 OFF</span>
                         </div>
                         <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>Includes 2 {product.name} sets</p>
                       </div>
@@ -1066,7 +944,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   </div>
 
                   {/* Free Gift Strip (Buy 2) */}
-                  <div className="tier-gift-strip">
+                  <a className="tier-gift-strip" href={isX2 ? '/products/miroooo-x2-heads' : '/products/miroooo-x1-heads'} onClick={(event) => event.stopPropagation()}>
                     <div className="tier-gift-strip-left">
                       <span className="tier-gift-strip-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1080,17 +958,17 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">£10.00</span>
+                      <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">£10</span>
                       <span className="tier-gift-free-badge">FREE</span>
                     </div>
-                  </div>
+                  </a>
                 </div>
 
                 {/* Tier 3: Buy 3 (Best Value) */}
                 <div
                   className={`bundle-tier-card has-top-badge ${selectedTier === 'bundle-3' ? 'is-selected' : ''}`}
                   data-tier="bundle-3"
-                  onClick={() => setSelectedTier('bundle-3')}
+                  onClick={() => { setSelectedTier('bundle-3'); setBuy1HeadsChecked(false); }}
                 >
                   <div className="tier-best-value-wrap badge-value">
                     <div className="tier-best-value-ribbon">
@@ -1102,8 +980,8 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                     <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-extrabold text-sm sm:text-base uppercase tracking-tight" style={{ color: '#111111' }}>Buy 3</span>
-                          <span className="tier-badge-pill" id="tier-bundle-3-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£30.00 OFF</span>
+                          <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 3</span>
+                          <span className="tier-badge-pill" id="tier-bundle-3-discount-badge" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>£30 OFF</span>
                         </div>
                         <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>Includes 3 {product.name} sets</p>
                       </div>
@@ -1187,7 +1065,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   </div>
 
                   {/* Free Gift Strip (Buy 3) */}
-                  <div className="tier-gift-strip">
+                  <a className="tier-gift-strip" href={isX2 ? '/products/miroooo-x2-heads' : '/products/miroooo-x1-heads'} onClick={(event) => event.stopPropagation()}>
                     <div className="tier-gift-strip-left">
                       <span className="tier-gift-strip-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1201,10 +1079,10 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                       <span className="tier-gift-strip-title">+ 4 Brush Heads (2 Sets)</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">£20.00</span>
+                      <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">£20</span>
                       <span className="tier-gift-free-badge">FREE</span>
                     </div>
-                  </div>
+                  </a>
                 </div>
               </div>
 
@@ -1278,7 +1156,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 >
                   <span className="btn-fill" data-fill></span>
                   <span className="btn-text" id="main-cta-text">
-                    {isX2 ? `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim() : 'Add To Cart'}
+                    {`Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim()}
                   </span>
                 </button>
               </div>
@@ -1294,213 +1172,15 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                   <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" /></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>{isX2 ? '45° Bass' : '32,000 VPM'}<br />{isX2 ? 'Sweep' : 'Sonic Clean'}</span>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>{isX2 ? '45° Bass' : 'Aerospace'}<br />{isX2 ? 'Sweep' : 'Aluminium'}</span>
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                   <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><rect x="1" y="3" width="15" height="13" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br />UK Shipping</span>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br />Shipping</span>
                 </div>
               </div>
 
-              {/* Product Accordions */}
-              <div className="product__accordions" style={{ display: 'flex', flexDirection: 'column', gap: 0, marginTop: '14px' }}>
-                {/* Accordion 1: Why Miroooo */}
-                <details className="product__accordion details" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', padding: '8px 0', color: '#ffffff' }}>
-                  <summary className="details__summary flex items-center justify-between gap-2 cursor-pointer" style={{ color: '#ffffff', listStyle: 'none', outline: 'none' }}>
-                    <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <svg className="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px', flexShrink: 0 }}>
-                        <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
-                      </svg>
-                      <span className="text-sm font-semibold leading-none" style={{ color: '#ffffff', fontSize: '15px', fontWeight: 600 }}>Why {product.name}?</span>
-                    </div>
-                    <svg className="icon icon-chevron icon-xs flex-auto" viewBox="0 0 24 24" stroke="#ffffff" fill="none" strokeWidth="2" style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </summary>
-                  <div className="details__content text-sm" style={{ marginTop: '12px', color: 'rgba(255, 255, 255, 0.85)', fontSize: '13.5px', lineHeight: 1.6 }}>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 0 }}>
-                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)', marginTop: '1px' }}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><polyline points="11 9 9 12 12 12 10 15"></polyline></svg>
-                        </span>
-                        <div style={{ flex: 1 }}>
-                          <strong style={{ color: '#ffffff', fontSize: '13.5px', display: 'block', marginBottom: '2px' }}>{isX2 ? '90+ Days' : '60+ Days'} on a Single Charge</strong>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>High-density power cell delivers over 2–3 months of twice-daily brushing on a single 2-hour USB-C fast charge.</span>
-                        </div>
-                      </li>
-                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)', marginTop: '1px' }}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
-                        </span>
-                        <div style={{ flex: 1 }}>
-                          <strong style={{ color: '#ffffff', fontSize: '13.5px', display: 'block', marginBottom: '2px' }}>Aerospace CNC Aluminium (51g)</strong>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>Precision-milled aerospace aluminium unibody weighs just 51 grams—preventing wrist fatigue with effortless daily handling.</span>
-                        </div>
-                      </li>
-                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)', marginTop: '1px' }}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                        </span>
-                        <div style={{ flex: 1 }}>
-                          <strong style={{ color: '#ffffff', fontSize: '13.5px', display: 'block', marginBottom: '2px' }}>Whisper-Quiet Operation (&lt;45 dB)</strong>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>Acoustic magnetic motor operates below 45dB with virtually zero handle vibration for a soothing, silent clean.</span>
-                        </div>
-                      </li>
-                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0' }}>
-                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)', marginTop: '1px' }}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        </span>
-                        <div style={{ flex: 1 }}>
-                          <strong style={{ color: '#ffffff', fontSize: '13.5px', display: 'block', marginBottom: '2px' }}>Slim Travel Case &amp; Wall Storage</strong>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '12.5px', lineHeight: 1.5, display: 'block' }}>Includes tailored hard-shell travel case {isX2 ? 'and magnetic wall-mounted storage' : ''} to keep bathroom counters clutter-free.</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </details>
-
-                {/* Accordion 2: Specifications */}
-                <details className="product__accordion details" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', padding: '8px 0', color: '#ffffff' }}>
-                  <summary className="details__summary flex items-center justify-between gap-2 cursor-pointer" style={{ color: '#ffffff', listStyle: 'none', outline: 'none' }}>
-                    <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <svg className="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px', flexShrink: 0 }}>
-                        <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line>
-                      </svg>
-                      <span className="text-sm-base font-medium leading-none" style={{ color: '#ffffff', fontSize: '15px', fontWeight: 600 }}>Specifications</span>
-                    </div>
-                    <svg className="icon icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </summary>
-                  <div className="details__content text-sm" style={{ marginTop: '12px', color: 'rgba(255, 255, 255, 0.85)', fontSize: '13.5px', lineHeight: 1.6 }}>
-                    <dl style={{ display: 'flex', flexDirection: 'column', gap: 0, margin: 0, padding: 0 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', margin: 0 }}>
-                        <dt style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '13.5px', fontWeight: 500 }}>Weight</span>
-                        </dt>
-                        <dd style={{ color: '#ffffff', fontSize: '13.5px', fontWeight: 600, textAlign: 'right', margin: 0 }}>Ultra-Lightweight 51g Handle</dd>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', margin: 0 }}>
-                        <dt style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '13.5px', fontWeight: 500 }}>Acoustic Vibrations</span>
-                        </dt>
-                        <dd style={{ color: '#ffffff', fontSize: '13.5px', fontWeight: 600, textAlign: 'right', margin: 0 }}>{isX2 ? '40,000' : '32,000'} Vibrations / Min</dd>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', margin: 0 }}>
-                        <dt style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '13.5px', fontWeight: 500 }}>Battery Life</span>
-                        </dt>
-                        <dd style={{ color: '#ffffff', fontSize: '13.5px', fontWeight: 600, textAlign: 'right', margin: 0 }}>{isX2 ? '90+ Days' : '60+ Days'}</dd>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', margin: 0 }}>
-                        <dt style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '13.5px', fontWeight: 500 }}>Waterproof Rating</span>
-                        </dt>
-                        <dd style={{ color: '#ffffff', fontSize: '13.5px', fontWeight: 600, textAlign: 'right', margin: 0 }}>IPX7 Full Submersible</dd>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', margin: 0 }}>
-                        <dt style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.72)', fontSize: '13.5px', fontWeight: 500 }}>Material</span>
-                        </dt>
-                        <dd style={{ color: '#ffffff', fontSize: '13.5px', fontWeight: 600, textAlign: 'right', margin: 0 }}>Aerospace-Grade Aluminium</dd>
-                      </div>
-                    </dl>
-                  </div>
-                </details>
-
-                {/* Accordion 3: What's inside box */}
-                <details className="product__accordion details" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', padding: '8px 0', color: '#ffffff' }}>
-                  <summary className="details__summary flex items-center justify-between gap-2 cursor-pointer" style={{ color: '#ffffff', listStyle: 'none', outline: 'none' }}>
-                    <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <svg className="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px', flexShrink: 0 }}>
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                      </svg>
-                      <span className="text-sm-base font-medium leading-none" style={{ color: '#ffffff', fontSize: '15px', fontWeight: 600 }}>What&apos;s inside box</span>
-                    </div>
-                    <svg className="icon icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </summary>
-                  <div className="details__content text-sm" style={{ marginTop: '12px', color: 'rgba(255, 255, 255, 0.78)', lineHeight: 1.65, fontSize: '13.5px' }}>
-                    <ul style={{ margin: 0, paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <li style={{ margin: 0 }}>1x {product.name} electric toothbrush</li>
-                      <li style={{ margin: 0 }}>2x Replacement DuPont brush heads</li>
-                      <li style={{ margin: 0 }}>1x Luxury hard travel case</li>
-                      {isX2 && <li style={{ margin: 0 }}>1x Wall-mounted magnetic storage cradle</li>}
-                      <li style={{ margin: 0 }}>1x USB-C fast charging cable</li>
-                      <li style={{ margin: 0 }}>1x Luxury gift box &amp; user manual</li>
-                    </ul>
-                  </div>
-                </details>
-
-                {/* Accordion 4: Smile Coach App */}
-                <details className="product__accordion details" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', padding: '8px 0', color: '#ffffff' }}>
-                  <summary className="details__summary flex items-center justify-between gap-2 cursor-pointer" style={{ color: '#ffffff', listStyle: 'none', outline: 'none' }}>
-                    <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <svg className="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px', flexShrink: 0 }}>
-                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line>
-                      </svg>
-                      <span className="text-sm-base font-medium leading-none" style={{ color: '#ffffff', fontSize: '15px', fontWeight: 600 }}>Miroooo Smile Coach App</span>
-                    </div>
-                    <svg className="icon icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </summary>
-                  <div className="details__content text-sm" style={{ marginTop: '12px', color: 'rgba(255, 255, 255, 0.85)', fontSize: '13.5px', lineHeight: 1.6 }}>
-                    <p style={{ margin: '0 0 10px 0', color: 'rgba(255, 255, 255, 0.85)' }}>
-                      Miroooo Smile Coach is your free, browser-based personal brushing companion designed specifically for Miroooo sonic toothbrushes.
-                    </p>
-                    <div style={{ marginTop: '14px' }}>
-                      <a href="/pages/smile-coach" className="button button--primary smile-coach-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                        <span className="btn-fill" data-fill></span>
-                        <span className="btn-text">Open Smile Coach →</span>
-                      </a>
-                    </div>
-                  </div>
-                </details>
-
-                {/* Accordion 5: Certifications */}
-                <details className="product__accordion details" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', padding: '8px 0', color: '#ffffff' }}>
-                  <summary className="details__summary flex items-center justify-between gap-2 cursor-pointer" style={{ color: '#ffffff', listStyle: 'none', outline: 'none' }}>
-                    <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <svg className="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px', flexShrink: 0 }}>
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        <polyline points="9 12 11 14 15 10"></polyline>
-                      </svg>
-                      <span className="text-sm-base font-medium leading-none" style={{ color: '#ffffff', fontSize: '15px', fontWeight: 600 }}>Certifications</span>
-                    </div>
-                    <svg className="icon icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '16px', height: '16px', flexShrink: 0 }}>
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </summary>
-                  <div className="details__content text-sm" style={{ marginTop: '12px', color: 'rgba(255, 255, 255, 0.85)', fontSize: '13.5px', lineHeight: 1.6 }}>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 0 }}>
-                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
-                        <span><strong>CE Certified</strong> — European Health &amp; Safety Standard</span>
-                      </li>
-                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
-                        <span><strong>RoHS Compliant</strong> — 100% Free of Toxic Heavy Metals</span>
-                      </li>
-                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
-                        <span><strong>IPX7 Waterproof</strong> — Certified Submersible Immersion Safe</span>
-                      </li>
-                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
-                        <span><strong>EMC Compliant</strong> — Zero Electromagnetic Interference</span>
-                      </li>
-                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0' }}>
-                        <span style={{ color: '#ffffff', fontWeight: 700 }}>✓</span>
-                        <span><strong>DuPont Food-Contact Material</strong> — BPA-Free Food-Safe Filaments</span>
-                      </li>
-                    </ul>
-                  </div>
-                </details>
-              </div>
+              <ProductAccordions model={isX2 ? 'x2' : 'x1'} />
             </div>
           </div>
 
@@ -1509,107 +1189,15 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
             <div className="miroooo-sticky-pill">
               <div className="miroooo-sticky-left">
                 <div className="miroooo-sticky-img-stack" id="sticky-bar-img-stack" aria-hidden="true">
-                  {selectedTier === 'single' ? (
-                    <>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
-                        <img
-                          src={getColorThumbnail(singleColor)}
-                          alt={`${product.name} - ${singleColor}`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                      {buy1HeadsChecked && (
-                        <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                          <img
-                            src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'}
-                            alt={`${product.name} Heads`}
-                            width="50"
-                            height="50"
-                            loading="eager"
-                            decoding="async"
-                          />
-                        </div>
-                      )}
-                    </>
-                  ) : selectedTier === 'bundle-2' ? (
-                    <>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
-                        <img
-                          src={getColorThumbnail(bundle2Colors[0])}
-                          alt={`${product.name} - ${bundle2Colors[0]}`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                        <img
-                          src={getColorThumbnail(bundle2Colors[1])}
-                          alt={`${product.name} - ${bundle2Colors[1]}`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 3 }}>
-                        <img
-                          src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'}
-                          alt={`${product.name} Free Heads`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
-                        <img
-                          src={getColorThumbnail(bundle3Colors[0])}
-                          alt={`${product.name} - ${bundle3Colors[0]}`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                        <img
-                          src={getColorThumbnail(bundle3Colors[1])}
-                          alt={`${product.name} - ${bundle3Colors[1]}`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 3 }}>
-                        <img
-                          src={getColorThumbnail(bundle3Colors[2])}
-                          alt={`${product.name} - ${bundle3Colors[2]}`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 4 }}>
-                        <img
-                          src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'}
-                          alt={`${product.name} Free Heads`}
-                          width="50"
-                          height="50"
-                          loading="eager"
-                          decoding="async"
-                        />
-                      </div>
-                    </>
+                  {(selectedTier === 'single' ? [singleColor] : selectedTier === 'bundle-2' ? bundle2Colors : bundle3Colors).map((color, index) => (
+                    <div className="miroooo-sticky-img-thumb" key={index} style={{ zIndex: index + 1 }}>
+                      <img src={getColorThumbnail(color)} alt={`${product.name} - ${color}`} width="50" height="50" decoding="async" />
+                    </div>
+                  ))}
+                  {selectedTier === 'single' && buy1HeadsChecked && (
+                    <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
+                      <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
+                    </div>
                   )}
                 </div>
                 <div className="miroooo-sticky-info">
@@ -1622,16 +1210,9 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
                   </p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                     <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                      £{currentPrice}.00
+                      £{currentPrice}
                     </span>
-                    {selectedTier !== 'single' && (
-                      <>
-                        <span className="miroooo-sticky-bullet">·</span>
-                        <span className="miroooo-sticky-gifts-tag" style={{ color: '#22c55e', fontWeight: 600 }}>
-                          + Free {selectedTier === 'bundle-2' ? '2' : '4'} Brush Heads
-                        </span>
-                      </>
-                    )}
+
                   </p>
                 </div>
               </div>
@@ -1644,9 +1225,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
               >
                 <span className="btn-fill" data-fill></span>
                 <span className="btn-text">
-                  <span className="miroooo-lottie-cart" data-lottie-cart aria-hidden="true">
-                    <svg className="icon-cart-bag miroooo-sticky-bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
-                  </span>
+                  <AnimatedIcon kind="cart" className="miroooo-lottie-cart" />
                   <span id="sticky-bar-cta-text">
                     Add to Cart {selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}
                   </span>
@@ -1661,7 +1240,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
       {isLightboxOpen && (
         <div
           id="MirooooGalleryLightbox"
-          className="miroooo-gallery-lightbox is-active"
+          className="miroooo-gallery-lightbox is-open"
           role="dialog"
           aria-modal="true"
           aria-label="Expanded Product Gallery"
@@ -1715,6 +1294,7 @@ export function ProductHero({ product, initialColor = 'Silver' }: ProductHeroPro
             <div
               className="miroooo-gallery-lightbox__media-box"
               id="MirooooGalleryLightboxMediaBox"
+              key={activeMediaIndex}
               style={{
                 cursor: gallerySlides[activeMediaIndex].type === 'image' ? (isLightboxZoomed ? 'zoom-out' : 'zoom-in') : 'default',
                 transform: isLightboxZoomed ? 'scale(1.75)' : 'scale(1)',

@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Product } from '@/data/products';
+import { ShippingMarquee } from './ShippingMarquee';
+import { AnimatedIcon } from '@/components/ui/AnimatedIcon';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 
 interface HeadsProductHeroProps {
@@ -10,7 +13,8 @@ interface HeadsProductHeroProps {
 }
 
 export function HeadsProductHero({ product }: HeadsProductHeroProps) {
-  const { addItem, openCart } = useCart();
+  const router = useRouter();
+  const { addItem } = useCart();
   const isX2 = product.handle === 'miroooo-x2-heads';
 
   const [quantity, setQuantity] = useState(1);
@@ -42,22 +46,16 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   const basePrice = 10;
   const totalPrice = basePrice * quantity;
 
-  // Timers
+  // Match the reference delivery estimate and countdown.
   useEffect(() => {
+    let deliverySeconds = 14 * 60 + 38;
     const updateTimers = () => {
       const now = new Date();
-      const cutoff = new Date(now);
-      cutoff.setHours(15, 0, 0, 0);
-      if (now > cutoff) {
-        cutoff.setDate(cutoff.getDate() + 1);
-      }
-      const diffMs = cutoff.getTime() - now.getTime();
-      const dHours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
-      const dMinutes = Math.floor((diffMs / (1000 * 60)) % 60);
-      setDeliveryCountdown(`${String(dHours).padStart(2, '0')}:${String(dMinutes).padStart(2, '0')}`);
+      setDeliveryCountdown(`${String(Math.floor(deliverySeconds / 60)).padStart(2, '0')}:${String(deliverySeconds % 60).padStart(2, '0')}`);
+      deliverySeconds = deliverySeconds > 0 ? deliverySeconds - 1 : 15 * 60 + 59;
 
       const targetDate = new Date(now);
-      targetDate.setDate(targetDate.getDate() + 4);
+      targetDate.setDate(targetDate.getDate() + 5);
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       setDeliveryDateStr(`${days[targetDate.getDay()]} ${targetDate.getDate()} ${months[targetDate.getMonth()]}`);
@@ -86,16 +84,32 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
 
   // Keyboard navigation for Lightbox
   useEffect(() => {
+    if (!isLightboxOpen) return;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('gallery-open');
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.classList.remove('gallery-open');
+    };
+  }, [isLightboxOpen]);
+
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsLightboxOpen(false);
         setIsLightboxZoomed(false);
         setIsShippingTooltipOpen(false);
       }
+      if (isLightboxOpen && ['ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+        setIsLightboxZoomed(false);
+        setActiveMediaIndex((index) => (index + 1) % (isX2 ? 2 : 1));
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isLightboxOpen, isX2]);
 
   const handleAddToCart = () => {
     addItem({
@@ -103,7 +117,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       color: 'Default',
       quantity,
     });
-    openCart();
+    router.push('/cart');
   };
 
   const scrollThumbnails = (dir: 'up' | 'down') => {
@@ -352,7 +366,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   onClick={handleAddToCart}
                 >
                   <span className="btn-fill" data-fill></span>
-                  <span className="btn-text">Add to Cart</span>
+                  <span className="btn-text">Add to cart</span>
                 </button>
               </div>
 
@@ -371,7 +385,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                   <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br/>UK Delivery</span>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br/>Shipping</span>
                 </div>
               </div>
 
@@ -458,9 +472,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
               >
                 <span className="btn-fill" data-fill></span>
                 <span className="btn-text">
-                  <span className="miroooo-lottie-cart" data-lottie-cart aria-hidden="true">
-                    <svg className="icon-cart-bag miroooo-sticky-bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
-                  </span>
+                  <AnimatedIcon kind="cart" className="miroooo-lottie-cart" />
                   <span id="sticky-bar-cta-text">Add to cart</span>
                 </span>
               </button>
@@ -469,11 +481,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
         </div>
       </div>
 
-      <div id="shopify-section-template--24203751129433__scrolling_text_P3gRex" className="shopify-section scrolling-text-section heads-marquee" aria-label="Free shipping on all orders">
-        <div className="heads-marquee__track" aria-hidden="true">
-          <span>Free shipping on all orders</span><span>Free shipping on all orders</span><span>Free shipping on all orders</span><span>Free shipping on all orders</span>
-        </div>
-      </div>
+      <ShippingMarquee />
 
       {/* Exquisite Texture Split Section */}
       <div id={isX2 ? 'x2-section-texture-split' : 'x1-section-texture-split'} className="shopify-section" style={{ background: '#000000', color: '#ffffff', width: '100%', padding: 'clamp(3.5rem, 6vw, 6rem) 0', boxSizing: 'border-box', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
@@ -531,7 +539,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       {/* Lightbox Modal */}
       {isLightboxOpen && (
         <div
-          className="miroooo-gallery-lightbox is-active"
+          className="miroooo-gallery-lightbox is-open"
           role="dialog"
           aria-modal="true"
           style={{ display: 'flex' }}

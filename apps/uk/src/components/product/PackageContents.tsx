@@ -1,12 +1,14 @@
 'use client';
 
+import { x2Gallery } from '@/data/x2Gallery';
 import React from 'react';
 
 interface PackageContentsProps {
   isX2?: boolean;
+  color?: string;
 }
 
-export function PackageContents({ isX2 = true }: PackageContentsProps) {
+export function PackageContents({ isX2 = true, color = 'Silver' }: PackageContentsProps) {
   if (!isX2) {
     return (
       <div id="shopify-section-template--24203751129433__image-with-text-1" className="shopify-section x1-package" style={{ background: '#000', color: '#fff', borderTop: '1px solid rgba(255,255,255,.08)' }}>
@@ -34,7 +36,7 @@ export function PackageContents({ isX2 = true }: PackageContentsProps) {
   }
 
   const imgSrc = isX2
-    ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp'
+    ? (x2Gallery[color as keyof typeof x2Gallery] || x2Gallery.Silver).packagingImage
     : '/assets_ref/x/miroooo-x-package-box.webp';
 
   const desc = isX2
@@ -99,7 +101,7 @@ export function PackageContents({ isX2 = true }: PackageContentsProps) {
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
             <h2
               style={{
-                fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                 fontSize: 'clamp(2rem, 3.5vw, 3.2rem)',
                 fontWeight: 700,
                 color: '#ffffff',
@@ -111,7 +113,7 @@ export function PackageContents({ isX2 = true }: PackageContentsProps) {
             >
               Package Contents
             </h2>
-            <div style={{ color: 'rgba(255, 255, 255, 0.85)', fontFamily: "'Inter', sans-serif", fontSize: 'clamp(1rem, 1.2vw, 1.15rem)', lineHeight: 1.65 }}>
+            <div style={{ color: 'rgba(255, 255, 255, 0.85)', fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(1rem, 1.2vw, 1.15rem)', lineHeight: 1.65 }}>
               <p style={{ margin: 0 }}>{desc}</p>
             </div>
           </div>

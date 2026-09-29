@@ -22,7 +22,7 @@ export function EnergyBoostSplit() {
         <div className="split-section-grid">
           {/* Text / Data Content (Left on Desktop, Below on Phone) */}
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
-            <h2 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, margin: '0 0 2rem 0', letterSpacing: '0.02em', textTransform: 'uppercase' }}>
+            <h2 style={{ fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif", fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, margin: '0 0 2rem 0', letterSpacing: '0.02em', textTransform: 'uppercase' }}>
               BUILT FOR TRAVEL
             </h2>
 

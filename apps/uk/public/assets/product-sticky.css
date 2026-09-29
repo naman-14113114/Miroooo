@@ -1,0 +1,283 @@
+.miroooo-sticky-cart-wrap {
+        position: fixed !important;
+        bottom: 14px !important;
+        left: 12px !important;
+        right: 12px !important;
+        z-index: 40 !important;
+        pointer-events: none !important;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
+        transform: translateY(calc(100% + 2rem)) !important;
+        opacity: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+      }
+      body.overflow-hidden .miroooo-sticky-cart-wrap,
+      body.cart-drawer-open .miroooo-sticky-cart-wrap,
+      body.nav-open .miroooo-sticky-cart-wrap {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateY(calc(100% + 2rem)) !important;
+      }
+      .miroooo-sticky-cart-wrap.is-visible {
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+      }
+      .miroooo-sticky-pill {
+        pointer-events: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 16px !important;
+        width: 100% !important;
+        max-width: 850px !important;
+        min-height: 72px !important;
+        padding: 8px 12px 8px 16px !important;
+        border-radius: 9999px !important;
+        background: rgba(14, 15, 15, 0.94) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.16) !important;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+        box-sizing: border-box !important;
+      }
+      .miroooo-sticky-left {
+        display: flex !important;
+        align-items: center !important;
+        gap: 14px !important;
+        min-width: 0 !important;
+      }
+      .miroooo-sticky-img-wrap {
+        width: 54px !important;
+        height: 54px !important;
+        border-radius: 50% !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+        background: #1c1c1c !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .miroooo-sticky-img-wrap img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+      }
+      .miroooo-sticky-img-stack {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+      }
+      .miroooo-sticky-img-thumb {
+        position: relative !important;
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 50% !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+        border: 2px solid #0e0f0f !important;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+        background: #1c1c1c !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease !important;
+      }
+      .miroooo-sticky-img-thumb:not(:first-child) {
+        margin-left: -16px !important;
+      }
+      .miroooo-sticky-img-thumb img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+      }
+      .miroooo-sticky-info {
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+      }
+      .miroooo-sticky-title {
+        font-size: 0.98rem !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        margin: 0 !important;
+        line-height: 1.25 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+      .miroooo-sticky-sub {
+        font-size: 0.84rem !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        margin: 3px 0 0 0 !important;
+        line-height: 1.2 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+      @keyframes miroooo-cart-bounce {
+        0%, 100% {
+          transform: scale(1) translateY(0) rotate(0deg);
+        }
+        15% {
+          transform: scale(1.16) translateY(-2px) rotate(-8deg);
+        }
+        30% {
+          transform: scale(1.14) translateY(-1px) rotate(6deg);
+        }
+        45% {
+          transform: scale(1.06) translateY(0) rotate(-3deg);
+        }
+        60% {
+          transform: scale(1) translateY(0) rotate(0deg);
+        }
+      }
+      .miroooo-sticky-btn,
+      #sticky-bar-cta-btn {
+        position: relative !important;
+        overflow: hidden !important;
+        isolation: isolate !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 48px !important;
+        padding: 0 28px !important;
+        border-radius: 9999px !important;
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        border: 2px solid #ffffff !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15) !important;
+        text-decoration: none !important;
+        font-family: inherit !important;
+      }
+      .miroooo-sticky-btn .btn-fill,
+      #sticky-bar-cta-btn .btn-fill {
+        position: absolute !important;
+        border-radius: 50% !important;
+        width: 150% !important;
+        height: 200% !important;
+        inset-block-start: -50% !important;
+        top: -50% !important;
+        inset-inline-start: -25% !important;
+        left: -25% !important;
+        background-color: #000000 !important;
+        background: #000000 !important;
+        pointer-events: none !important;
+        z-index: 1 !important;
+        transform: translate3d(0, 76%, 0) !important;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .miroooo-sticky-btn:hover .btn-fill,
+      .miroooo-sticky-btn:focus-visible .btn-fill,
+      #sticky-bar-cta-btn:hover .btn-fill,
+      #sticky-bar-cta-btn:focus-visible .btn-fill {
+        transform: translate3d(0, 0%, 0) !important;
+      }
+      .miroooo-sticky-btn::after,
+      #sticky-bar-cta-btn::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent calc(50% - 70px), rgba(0, 0, 0, 0.16) 50%, transparent calc(50% + 35px)) !important;
+        transform: skewX(-30deg) translateX(-150%) !important;
+        animation: proxy-bundle-shine 4s infinite ease-in-out !important;
+        z-index: 2 !important;
+        pointer-events: none !important;
+      }
+      .miroooo-sticky-btn:hover::after,
+      #sticky-bar-cta-btn:hover::after {
+        background: linear-gradient(90deg, transparent calc(50% - 70px), rgba(255, 255, 255, 0.3) 50%, transparent calc(50% + 35px)) !important;
+      }
+      .miroooo-sticky-btn .btn-text,
+      #sticky-bar-cta-btn .btn-text {
+        position: relative !important;
+        z-index: 2 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        color: #000000 !important;
+        transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        pointer-events: none !important;
+      }
+      .miroooo-sticky-btn:hover .btn-text,
+      .miroooo-sticky-btn:focus-visible .btn-text,
+      #sticky-bar-cta-btn:hover .btn-text,
+      #sticky-bar-cta-btn:focus-visible .btn-text {
+        color: #ffffff !important;
+      }
+      .miroooo-sticky-btn .miroooo-lottie-cart svg path,
+      #sticky-bar-cta-btn .miroooo-lottie-cart svg path {
+        stroke: #000000 !important;
+        transition: stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .miroooo-sticky-btn:hover .miroooo-lottie-cart svg path,
+      .miroooo-sticky-btn:focus-visible .miroooo-lottie-cart svg path,
+      #sticky-bar-cta-btn:hover .miroooo-lottie-cart svg path,
+      #sticky-bar-cta-btn:focus-visible .miroooo-lottie-cart svg path {
+        stroke: #ffffff !important;
+      }
+      .miroooo-sticky-btn,
+      .miroooo-sticky-btn:hover,
+      .miroooo-sticky-btn:focus,
+      .miroooo-sticky-btn:active,
+      #sticky-bar-cta-btn,
+      #sticky-bar-cta-btn:hover,
+      #sticky-bar-cta-btn:focus,
+      #sticky-bar-cta-btn:active {
+        transform: none !important;
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+        border-color: #ffffff !important;
+      }
+      .miroooo-sticky-bag-icon {
+        flex-shrink: 0 !important;
+        width: 18px !important;
+        height: 18px !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+        color: currentColor !important;
+        animation: miroooo-cart-bounce 3.5s ease-in-out infinite !important;
+        transform-origin: center bottom !important;
+        transition: color 0.25s ease, transform 0.25s ease !important;
+      }
+      .miroooo-sticky-btn:hover .miroooo-sticky-bag-icon,
+      #sticky-bar-cta-btn:hover .miroooo-sticky-bag-icon {
+        animation: miroooo-cart-bounce 1.6s ease-in-out infinite !important;
+      }
+      @media (max-width: 640px) {
+        .miroooo-sticky-cart-wrap {
+          bottom: 8px !important;
+          left: 8px !important;
+          right: 8px !important;
+        }
+        .miroooo-sticky-pill {
+          min-height: 52px !important;
+          padding: 6px 8px !important;
+          border-radius: 9999px !important;
+        }
+        .miroooo-sticky-left {
+          display: none !important;
+        }
+        .miroooo-sticky-btn {
+          width: 100% !important;
+          min-height: 44px !important;
+          padding: 0 16px !important;
+          font-size: 0.9rem !important;
+        }
+      }

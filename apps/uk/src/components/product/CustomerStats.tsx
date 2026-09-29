@@ -6,23 +6,26 @@ export function CustomerStats() {
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
+  const [values, setValues] = useState([0, 0, 0]);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setInView(true);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
+    let frame = 0;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = [95, 98, 91];
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect(); setInView(true);
+      const start = performance.now();
+      const step = (now: number) => {
+        setValues(targets.map((target, index) => {
+          const progress = reduced ? 1 : Math.max(0, Math.min(1, (now - start - index * 180) / 1200));
+          return Math.round(target * (1 - Math.pow(1 - progress, 3)));
+        }));
+        if (!reduced && now - start < 1560) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    }, { threshold: .1, rootMargin: '50px 0px' });
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
   }, []);
 
   return (
@@ -82,7 +85,7 @@ export function CustomerStats() {
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
             <h2
               style={{
-                fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                 fontSize: 'clamp(2rem, 3.5vw, 3.2rem)',
                 fontWeight: 700,
                 color: '#ffffff',
@@ -116,11 +119,11 @@ export function CustomerStats() {
                       style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
                     />
                   </svg>
-                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "'Inter', sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
-                    {inView ? '95%' : '0%'}
+                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
+                    {values[0]}%
                   </span>
                 </div>
-                <p style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
+                <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
                   Found brushing significantly gentler on gums while cleaning deeper than their previous electric brush.
                 </p>
               </div>
@@ -144,11 +147,11 @@ export function CustomerStats() {
                       style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
                     />
                   </svg>
-                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "'Inter', sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
-                    {inView ? '98%' : '0%'}
+                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
+                    {values[1]}%
                   </span>
                 </div>
-                <p style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
+                <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
                   Reported a tidier, clutter-free bathroom sink thanks to the magnetic wall dock and compact design.
                 </p>
               </div>
@@ -172,12 +175,12 @@ export function CustomerStats() {
                       style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
                     />
                   </svg>
-                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "'Inter', sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
-                    {inView ? '91%' : '0%'}
+                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
+                    {values[2]}%
                   </span>
                 </div>
-                <p style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
-                  Noticed a visible improvement in tooth brightness after 14 days on Whitening mode.
+                <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
+                  Noticed visibly brighter, cleaner teeth and healthier gums within just 3 weeks of daily use.
                 </p>
               </div>
             </div>

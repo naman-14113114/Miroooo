@@ -34,7 +34,7 @@ export function RouteChrome({
   const isCart = pathname === '/cart';
   const isHome = pathname === '/';
   const isCoach = pathname === '/pages/smile-coach';
-  const referenceStyle = isHome
+  const referenceStyle = isCart ? '/assets/cart-reference.css' : isHome
     ? '/assets/home-reference.css'
     : pathname === '/about-us' || pathname === '/pages/about-us'
       ? '/assets/about-reference.css'
@@ -44,7 +44,7 @@ export function RouteChrome({
 
   return (
     <>
-      {!isCart && !isCoach && <link rel="stylesheet" href="/assets/site.css" />}
+      {!isCoach && <link rel="stylesheet" href="/assets/site.css" />}
       {referenceStyle && <link rel="stylesheet" href={referenceStyle} />}
       <ClientInitializer />
       {isCoach ? null : isCart ? (

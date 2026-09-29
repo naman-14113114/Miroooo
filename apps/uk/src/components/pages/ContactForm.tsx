@@ -31,9 +31,15 @@ export function ContactForm() {
       return;
     }
 
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.message.trim()) {
       setStatus('error');
       setFeedbackMsg('Please fill in all required fields marked with *.');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      setStatus('error');
+      setFeedbackMsg('Please enter a valid email address.');
       return;
     }
 

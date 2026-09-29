@@ -203,5 +203,5 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
 }
 
 export function formatGBP(amount: number): string {
-  return `£${(Number(amount) || 0).toFixed(2)}`;
+  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(Number(amount) || 0);
 }

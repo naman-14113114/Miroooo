@@ -46,8 +46,7 @@ export const HOME_HERO_DATA: HomeHeroData = {
   ctaPrimaryHref: '/products/miroooo-x2',
   ctaSecondaryText: 'Dental Care Quiz',
   ctaSecondaryHref: '/pages/dentalcare-quiz',
-  videoSrc:
-    'https://miroooo-us.vercel.app/media/products/miroooo-electric-toothbrush-x2/videos/31-miroooo-electric-toothbrush-x2-demo-1.mp4',
+  videoSrc: '/assets_ref/x2/vbj9qc-h264-hd.mp4',
   posterSrc: '/assets_ref/x2/gallery/hero-video-poster.webp',
 };
 
@@ -172,7 +171,7 @@ export const X2_FEATURE_SECTION: FeatureSplitSectionData = {
     },
     {
       title: 'IPX7 Immersion Waterproof',
-      description: 'Fully submersible unibody aluminium chassis safe for shower routines.',
+      description: 'Fully submersible unibody aluminium chassis.',
     },
   ],
 };
@@ -181,7 +180,7 @@ export const X1_FEATURE_SECTION: FeatureSplitSectionData = {
   id: 'ritual-features',
   kicker: 'The Miroooo Standard',
   heading: 'Engineered For The Modern Ritual',
-  lead: 'Extended battery intervals for Miroooo X1 and Miroooo X2, eliminating bulky charging stands and daily clutter around your sink.',
+  lead: '',
   ctaText: 'Shop Miroooo X1',
   ctaHref: '/products/miroooo-x',
   videoSrc: '/assets_ref/x/miroooo-feature-video.mp4',
@@ -190,7 +189,7 @@ export const X1_FEATURE_SECTION: FeatureSplitSectionData = {
   points: [
     {
       title: '60+ / 90 Days Battery Life',
-      description: 'Extended battery intervals eliminating bulky charging stands and daily clutter around your sink.',
+      description: 'Extended battery intervals for Miroooo X1 and Miroooo X2, eliminating bulky charging stands and daily clutter around your sink.',
     },
     {
       title: 'Guidance That Earns Its Place',

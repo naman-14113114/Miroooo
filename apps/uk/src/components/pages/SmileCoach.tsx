@@ -17,6 +17,8 @@ interface SmileCoachProfile {
   streak: number;
   completedDays: number[];
   sessionsCompleted: number;
+  startedOn?: string;
+  completedDates?: string[];
 }
 
 export function SmileCoach() {
@@ -87,11 +89,19 @@ export function SmileCoach() {
 
       // Update streak
       if (profile) {
-        const todayDayNum = Math.min(28, (profile.completedDays?.length || 0) + 1);
+        const today = new Date();
+        const todayKey = today.toLocaleDateString('en-CA');
+        const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
+        const dates = profile.completedDates || [];
+        const alreadyCompletedToday = dates.includes(todayKey);
+        const started = new Date(`${profile.startedOn || todayKey}T00:00:00`);
+        const todayDayNum = Math.max(1, Math.min(28, Math.round((new Date(`${todayKey}T00:00:00`).getTime() - started.getTime()) / 86400000) + 1));
         const updatedDays = Array.from(new Set([...(profile.completedDays || []), todayDayNum]));
         const updated: SmileCoachProfile = {
           ...profile,
-          streak: (profile.streak || 0) + 1,
+          streak: alreadyCompletedToday ? profile.streak : dates.includes(yesterday.toLocaleDateString('en-CA')) ? (profile.streak || 0) + 1 : 1,
+          startedOn: profile.startedOn || todayKey,
+          completedDates: Array.from(new Set([...dates, todayKey])),
           sessionsCompleted: (profile.sessionsCompleted || 0) + 1,
           completedDays: updatedDays,
         };
@@ -127,9 +137,11 @@ export function SmileCoach() {
       morningTime,
       eveningTime,
       headInstalledDate: new Date(headInstalledDate).toISOString(),
-      streak: 1,
-      completedDays: [1],
-      sessionsCompleted: 1,
+      streak: 0,
+      completedDays: [],
+      sessionsCompleted: 0,
+      startedOn: new Date().toLocaleDateString('en-CA'),
+      completedDates: [],
     };
     setProfile(newProfile);
     setIsOnboarding(false);
@@ -443,7 +455,7 @@ export function SmileCoach() {
                     className="coach-button coach-button--primary"
                     id="onboarding-next"
                     type="button"
-                    onClick={() => setStep((s) => s + 1)}
+                    onClick={(event) => { event.preventDefault(); setStep((s) => s + 1); }}
                   >
                     Continue
                   </button>

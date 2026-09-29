@@ -3,7 +3,7 @@
 import React from 'react';
 import { BatteryCharging, Waves, BadgeCheck, Feather } from 'lucide-react';
 
-export function BrushStylePrecision() {
+export function BrushStylePrecision({ color = 'Pink' }: { color?: string }) {
   return (
     <div
       id="shopify-section-template--miroooo-brush-style-precision"
@@ -55,7 +55,7 @@ export function BrushStylePrecision() {
         <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 5.5vw, 5.5rem)', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h2
             style={{
-              fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+              fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
               fontSize: 'clamp(1.85rem, 3.4vw, 3rem)',
               fontWeight: 600,
               color: '#111111',
@@ -70,7 +70,7 @@ export function BrushStylePrecision() {
           </h2>
           <p
             style={{
-              fontFamily: "'GFS Didot', Georgia, serif",
+              fontFamily: "var(--font-didot), Georgia, serif",
               fontSize: 'clamp(1.05rem, 1.3vw, 1.25rem)',
               color: '#555555',
               fontStyle: 'italic',
@@ -91,7 +91,7 @@ export function BrushStylePrecision() {
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
                 <BatteryCharging size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
-              <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
+              <h3 style={{ fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Long-Lasting Performance
               </h3>
               <div style={{ fontFamily: "var(--font-body-family, sans-serif)", fontSize: 'clamp(0.92rem, 1.08vw, 1.05rem)', color: '#444444', lineHeight: 1.65 }}>
@@ -105,7 +105,7 @@ export function BrushStylePrecision() {
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
                 <Waves size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
-              <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
+              <h3 style={{ fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Professional &amp; effortless brushing
               </h3>
               <div style={{ fontFamily: "var(--font-body-family, sans-serif)", fontSize: 'clamp(0.92rem, 1.08vw, 1.05rem)', color: '#444444', lineHeight: 1.65 }}>
@@ -121,7 +121,7 @@ export function BrushStylePrecision() {
             <div style={{ maxWidth: '340px', width: '100%', position: 'relative', display: 'flex', justifyContent: 'center' }}>
               <img
                 id="brush-with-style-img"
-                src="/assets_ref/x/gray_brush_with_style.webp"
+                src={`/assets_ref/x/${color === 'Grey' ? 'gray' : color.toLowerCase()}_brush_with_style.webp`}
                 alt="Miroooo X1 Electric Toothbrush"
                 style={{ maxHeight: '600px', width: '100%', objectFit: 'contain', background: '#e6e6e6', display: 'block' }}
                 loading="lazy"
@@ -137,7 +137,7 @@ export function BrushStylePrecision() {
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
                 <BadgeCheck size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
-              <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
+              <h3 style={{ fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Premium quality
               </h3>
               <div style={{ fontFamily: "var(--font-body-family, sans-serif)", fontSize: 'clamp(0.92rem, 1.08vw, 1.05rem)', color: '#444444', lineHeight: 1.65 }}>
@@ -151,7 +151,7 @@ export function BrushStylePrecision() {
               <div style={{ width: '58px', height: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.25rem' }}>
                 <Feather size={52} strokeWidth={1.5} aria-hidden="true" />
               </div>
-              <h3 style={{ fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
+              <h3 style={{ fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif", fontSize: 'clamp(1.2rem, 1.55vw, 1.45rem)', fontWeight: 600, color: '#111111', margin: 0 }}>
                 Compact &amp; lightweight
               </h3>
               <div style={{ fontFamily: "var(--font-body-family, sans-serif)", fontSize: 'clamp(0.92rem, 1.08vw, 1.05rem)', color: '#444444', lineHeight: 1.65 }}>

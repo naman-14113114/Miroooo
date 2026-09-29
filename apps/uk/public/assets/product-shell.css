@@ -4786,6 +4786,7 @@ div[class*="tawk"],
 @media (min-width: 1024px) {
   #shopify-section-template--24203751129433__main-product .page-width {
     width: min(1344px, calc(100% - 96px));
+    padding-inline: 0 !important;
     max-width: none;
     margin-inline: auto;
   }
@@ -4824,4 +4825,29 @@ div[class*="tawk"],
     position: static !important;
     width: 100% !important;
   }
+}
+/* Complete the source template's phone spacing after the shared theme rules. */
+@media (max-width: 1023px) {
+  #shopify-section-template--24203751129433__main-product { padding-top: 28px !important; }
+  .product-page-root .miroooo-gallery__nav { padding: 2px 2px 4px !important; }
+}
+
+@media (max-width: 1023px) {
+  .x2-product-page #shopify-section-template--24203751129433__main-product { padding-top: 35px !important; }
+  .x2-product-page .miroooo-gallery__nav { padding-bottom: 6px !important; }
+}
+
+/* Preserve the source tablet gap and distinct head-product desktop grid. */
+body:has(.product-page-root) .site-header,
+body:has(.product-page-root) .site-header__inner { background-color: #000 !important; }
+body:has(.product-page-root) .site-header .count { color: #000 !important; }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product-page-root #shopify-section-template--24203751129433__main-product { padding-top: 32px !important; }
+  .x2-product-page #shopify-section-template--24203751129433__main-product { padding-top: 40px !important; }
+  #shopify-section-template--24203751129433__main-product .featured-product.product { row-gap: 64px !important; }
+}
+@media (min-width: 1024px) {
+  .x1-product-page #shopify-section-template--24203751129433__main-product,
+  .heads-product-page #shopify-section-template--24203751129433__main-product { padding-top: 32px !important; }
+  .heads-product-page #shopify-section-template--24203751129433__main-product { --miroooo-product-column-gap: 42px; }
 }

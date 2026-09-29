@@ -165,7 +165,7 @@ export function X2ModesSwipe() {
       box-sizing: border-box;
     }
     .x2-mode-brand-title {
-      font-family: var(--font-body-family, 'Inter', sans-serif);
+      font-family: var(--font-body-family, var(--font-inter), sans-serif);
       font-size: clamp(1.2rem, 1.8vw, 1.85rem);
       font-weight: 400;
       color: #ffffff;
@@ -174,7 +174,7 @@ export function X2ModesSwipe() {
       line-height: 1.1;
     }
     .x2-mode-main-title {
-      font-family: 'Poppins', var(--font-heading-family, 'Inter', sans-serif);
+      font-family: 'Poppins', var(--font-heading-family, var(--font-inter), sans-serif);
       font-size: clamp(1.85rem, 3.8vw, 3.4rem);
       font-weight: 800;
       color: #ffffff;
@@ -187,7 +187,7 @@ export function X2ModesSwipe() {
       margin-top: 4px;
     }
     .x2-mode-desc p {
-      font-family: var(--font-body-family, 'Inter', sans-serif);
+      font-family: var(--font-body-family, var(--font-inter), sans-serif);
       font-size: clamp(1rem, 1.2vw, 1.18rem);
       color: rgba(255, 255, 255, 0.82);
       line-height: 1.65;

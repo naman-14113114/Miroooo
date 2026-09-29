@@ -176,7 +176,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...currentItems, newItem];
     });
 
-    setIsOpen(true);
   }, []);
 
   const addBundle = useCallback((productHandle: string, quantity: 1 | 2 | 3, colors: string[]) => {
@@ -215,7 +214,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...withoutProduct, ...newItems];
     });
 
-    setIsOpen(true);
   }, []);
 
   const updateQuantity = useCallback((id: string, quantity: number) => {

@@ -8,40 +8,31 @@ interface ProductReviewsProps {
 
 export function ProductReviews({ isX2 = true }: ProductReviewsProps) {
   useEffect(() => {
-    // Dynamic script loading for review engine
-    const scriptSrc = isX2 ? '/assets_ref/miroooo-x2-reviews.js' : '/assets_ref/miroooo-reviews.js';
-    
-    const runInit = () => {
-      if (isX2 && typeof (window as unknown as { initMirooooX2Reviews?: () => void }).initMirooooX2Reviews === 'function') {
-        (window as unknown as { initMirooooX2Reviews: () => void }).initMirooooX2Reviews();
-      } else if (!isX2 && typeof (window as unknown as { initProductReviews?: () => void }).initProductReviews === 'function') {
-        (window as unknown as { initProductReviews: () => void }).initProductReviews();
-      }
+    let active = true;
+    let dispose: (() => void) | undefined;
+    const modals = Array.from(document.querySelectorAll('.miroooo-modal-backdrop'));
+    const runtime = window as unknown as {
+      initProductReviews?: () => void;
+      initMirooooX2Reviews?: () => void;
+      disposeMirooooReviews?: () => void;
     };
-
-    // Check if script is already present
-    const existing = document.getElementById('miroooo-reviews-runtime-script') as HTMLScriptElement | null;
-    if (existing && existing.src.includes(scriptSrc)) {
-      runInit();
-      return;
-    }
-
-    if (existing) {
-      existing.remove();
-    }
-
     const script = document.createElement('script');
-    script.id = 'miroooo-reviews-runtime-script';
-    script.src = scriptSrc;
-    script.defer = true;
+    script.src = isX2 ? '/assets_ref/miroooo-x2-reviews.js' : '/assets_ref/miroooo-reviews.js';
     script.onload = () => {
-      runInit();
+      if (!active) return;
+      (isX2 ? runtime.initMirooooX2Reviews : runtime.initProductReviews)?.();
+      dispose = runtime.disposeMirooooReviews;
     };
     document.body.appendChild(script);
-
     return () => {
-      const s = document.getElementById('miroooo-reviews-runtime-script');
-      if (s) s.remove();
+      active = false;
+      script.onload = null;
+      script.remove();
+      dispose?.();
+      if (modals.some((modal) => modal.classList.contains('is-open'))) {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      }
     };
   }, [isX2]);
 

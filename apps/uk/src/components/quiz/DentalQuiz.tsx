@@ -2,13 +2,15 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { QUIZ_STEPS } from '@/data/quiz';
 import { PRODUCTS } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { formatGBP } from '@/lib/cart';
 
 export function DentalQuiz() {
-  const { addItem, openCart } = useCart();
+  const { addItem } = useCart();
+  const router = useRouter();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isCompleted, setIsCompleted] = useState(false);
@@ -265,7 +267,7 @@ export function DentalQuiz() {
                             color: recommendedColor,
                             quantity: isBundle ? 2 : 1,
                           });
-                          openCart();
+                          router.push('/cart');
                         }}
                         style={{ width: '100%', padding: '12px 20px', fontSize: '14px' }}
                       >
