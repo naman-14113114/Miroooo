@@ -203,6 +203,7 @@ export function ProductReviews({ isX2 = true }: ProductReviewsProps) {
           {/* 5. Load More Pagination Container */}
           <div className="miroooo-pagination-container" id="miroooo-pagination-container">
             <button type="button" className="miroooo-btn-load-more" id="miroooo-load-more-btn">
+              <span className="btn-fill" aria-hidden="true" />
               <span className="btn-text">
                 <span>Load More Reviews</span>
                 <span className="miroooo-load-count" id="miroooo-load-count">(Showing 12 of 4,275)</span>

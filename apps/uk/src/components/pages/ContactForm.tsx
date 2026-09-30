@@ -494,7 +494,7 @@ export function ContactForm() {
               )}
 
               <button
-                className="button button--primary contact-form-submit"
+                className="button button--dark contact-form-submit"
                 id="contact-submit-btn"
                 type="submit"
                 disabled={status === 'submitting'}

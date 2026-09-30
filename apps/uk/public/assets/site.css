@@ -1784,6 +1784,12 @@ html.js #MenuDrawer button.drawer__close,
   right: 16px !important;
   width: 36px !important;
   height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1;
+  flex: none !important;
   border-radius: 50% !important;
   background: #000000 !important;
   border: none !important;
@@ -2288,6 +2294,22 @@ html.js #MenuDrawer[active] .drawer__menu > li {
   opacity: 1;
   transform: scale(1.35);
   box-shadow: 0 0 0 1px #080909;
+}
+
+.gb-product-card__media .flickity-page-dots { gap: 0; bottom: 0; }
+.gallery-dot-button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.gallery-dot-button:focus-visible { outline: 2px solid #080909; outline-offset: -4px; border-radius: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .gb-product-card__track { transition: none; }
 }
 
 /* Badges: Save 28% (Top-Left) and Rating (Top-Right) */
@@ -6465,6 +6487,10 @@ body.nav-open .miroooo-sticky-cart-wrap {
   color: #ffffff !important;
   stroke: #ffffff !important;
   transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1), fill 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.button--outline .btn-text svg path {
+  stroke: currentColor !important;
 }
 
 .button--outline:hover .btn-text,

@@ -40,7 +40,19 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
 
   return (
     <article className="gb-product-card reveal">
-      <div className="gb-product-card__media" data-slide-gallery>
+      <div
+        className="gb-product-card__media"
+        data-slide-gallery
+        onPointerMove={(event) => {
+          if (event.pointerType === 'touch' || (event.target as Element).closest('.flickity-page-dots')) return;
+          const bounds = event.currentTarget.getBoundingClientRect();
+          const position = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
+          setSlideIndex(Math.min(Math.floor(position * totalSlides), totalSlides - 1));
+        }}
+        onPointerLeave={(event) => {
+          if (event.pointerType !== 'touch') setSlideIndex(0);
+        }}
+      >
         <Link
           className="gb-product-card__media-link"
           href={`/products/${finish.handle}?color=${finish.color}`}
@@ -59,8 +71,7 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
             className="gb-product-card__track"
             style={{
               width: `${totalSlides * 100}%`,
-              transform: `translateX(-${(slideIndex * 100) / totalSlides}%)`,
-              transition: 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)',
+              transform: `translate3d(-${(slideIndex * 100) / totalSlides}%, 0, 0)`,
             }}
           >
             {images.map((imgSrc, idx) => (
@@ -81,30 +92,29 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
               </div>
             ))}
           </div>
-
-          {totalSlides > 1 && (
-            <div
-              className="flickity-page-dots"
-              aria-hidden="true"
-              style={{ pointerEvents: 'auto' }}
-            >
-              {images.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setSlideIndex(dotIdx);
-                  }}
-                  className={`dot ${slideIndex === dotIdx ? 'is-selected' : ''}`}
-                  aria-label={`View slide ${dotIdx + 1}`}
-                  style={{ border: 'none', cursor: 'pointer', padding: 0 }}
-                />
-              ))}
-            </div>
-          )}
         </Link>
+
+        {totalSlides > 1 && (
+          <div
+            className="flickity-page-dots"
+            role="group"
+            aria-label={`${finish.name} images`}
+            style={{ pointerEvents: 'auto' }}
+          >
+            {images.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                type="button"
+                onClick={() => setSlideIndex(dotIdx)}
+                className="gallery-dot-button"
+                aria-label={`View slide ${dotIdx + 1}`}
+                aria-pressed={slideIndex === dotIdx}
+              >
+                <span className={`dot ${slideIndex === dotIdx ? 'is-selected' : ''}`} />
+              </button>
+            ))}
+          </div>
+        )}
 
         <Link
           href={`/products/${finish.handle}?color=${finish.color}`}

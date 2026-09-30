@@ -3,34 +3,36 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 export function CustomerStats() {
-  const [inView, setInView] = useState(false);
-  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const statRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [values, setValues] = useState([0, 0, 0]);
   useEffect(() => {
-    let frame = 0;
+    const frames = new Map<number, number>();
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const targets = [95, 98, 91];
+    // Observe each row, not the preceding photo; keep it clear of the sticky cart.
     const observer = new IntersectionObserver((entries) => {
-      if (!entries.some((entry) => entry.isIntersecting)) return;
-      observer.disconnect(); setInView(true);
-      const start = performance.now();
-      const step = (now: number) => {
-        setValues(targets.map((target, index) => {
-          const progress = reduced ? 1 : Math.max(0, Math.min(1, (now - start - index * 180) / 1200));
-          return Math.round(target * (1 - Math.pow(1 - progress, 3)));
-        }));
-        if (!reduced && now - start < 1560) frame = requestAnimationFrame(step);
-      };
-      frame = requestAnimationFrame(step);
-    }, { threshold: .1, rootMargin: '50px 0px' });
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.65) return;
+        const index = statRefs.current.indexOf(entry.target as HTMLDivElement);
+        if (index < 0) return;
+        observer.unobserve(entry.target);
+        const start = performance.now();
+        const step = (now: number) => {
+          const progress = reduced ? 1 : Math.min(1, (now - start) / 1400);
+          const value = targets[index] * (1 - Math.pow(1 - progress, 3));
+          setValues((previous) => previous.map((current, i) => i === index ? value : current));
+          if (progress < 1) frames.set(index, requestAnimationFrame(step));
+        };
+        frames.set(index, requestAnimationFrame(step));
+      });
+    }, { threshold: 0.65, rootMargin: '0px 0px -72px 0px' });
+    statRefs.current.forEach((row) => { if (row) observer.observe(row); });
+    return () => { observer.disconnect(); frames.forEach(cancelAnimationFrame); };
   }, []);
 
   return (
     <div
-      ref={sectionRef}
       id="x2-section-texture-split"
       className="shopify-section"
       style={{
@@ -101,7 +103,7 @@ export function CustomerStats() {
             {/* Percentage Statistics List */}
             <div className="miroooo-stats-list" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(1.75rem, 2.8vw, 2.25rem)' }}>
               {/* Stat 1: 95% */}
-              <div className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
+              <div ref={(row) => { statRefs.current[0] = row; }} className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
                 <div className="miroooo-stat-circle" style={{ position: 'relative', width: '68px', height: '68px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg viewBox="0 0 68 68" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
                     <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3.5" />
@@ -115,12 +117,11 @@ export function CustomerStats() {
                       strokeWidth="3.5"
                       strokeLinecap="round"
                       strokeDasharray="176"
-                      strokeDashoffset={inView ? 8.8 : 176}
-                      style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                      strokeDashoffset={176 * (1 - values[0] / 100)}
                     />
                   </svg>
                   <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
-                    {values[0]}%
+                    {Math.round(values[0])}%
                   </span>
                 </div>
                 <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
@@ -129,7 +130,7 @@ export function CustomerStats() {
               </div>
 
               {/* Stat 2: 98% */}
-              <div className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
+              <div ref={(row) => { statRefs.current[1] = row; }} className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
                 <div className="miroooo-stat-circle" style={{ position: 'relative', width: '68px', height: '68px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg viewBox="0 0 68 68" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
                     <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3.5" />
@@ -143,12 +144,11 @@ export function CustomerStats() {
                       strokeWidth="3.5"
                       strokeLinecap="round"
                       strokeDasharray="176"
-                      strokeDashoffset={inView ? 3.5 : 176}
-                      style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                      strokeDashoffset={176 * (1 - values[1] / 100)}
                     />
                   </svg>
                   <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
-                    {values[1]}%
+                    {Math.round(values[1])}%
                   </span>
                 </div>
                 <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
@@ -157,7 +157,7 @@ export function CustomerStats() {
               </div>
 
               {/* Stat 3: 91% */}
-              <div className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
+              <div ref={(row) => { statRefs.current[2] = row; }} className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
                 <div className="miroooo-stat-circle" style={{ position: 'relative', width: '68px', height: '68px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg viewBox="0 0 68 68" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
                     <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3.5" />
@@ -171,12 +171,11 @@ export function CustomerStats() {
                       strokeWidth="3.5"
                       strokeLinecap="round"
                       strokeDasharray="176"
-                      strokeDashoffset={inView ? 15.8 : 176}
-                      style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                      strokeDashoffset={176 * (1 - values[2] / 100)}
                     />
                   </svg>
                   <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
-                    {values[2]}%
+                    {Math.round(values[2])}%
                   </span>
                 </div>
                 <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
