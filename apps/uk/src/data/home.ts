@@ -46,8 +46,8 @@ export const HOME_HERO_DATA: HomeHeroData = {
   ctaPrimaryHref: '/products/miroooo-x2',
   ctaSecondaryText: 'Dental Care Quiz',
   ctaSecondaryHref: '/pages/dentalcare-quiz',
-  videoSrc: '/assets_ref/x2/vbj9qc-h264-hd.mp4',
-  posterSrc: '/assets_ref/x2/gallery/hero-video-poster.webp',
+  videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
+  posterSrc: '/assets/home/hero-video-poster.webp',
 };
 
 export const X2_FINISHES: ShowcaseProductFinish[] = [

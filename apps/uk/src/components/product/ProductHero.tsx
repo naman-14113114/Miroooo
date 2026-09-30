@@ -172,6 +172,8 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
       ? bundle2Price
       : bundle3Price;
 
+  const addToCartLabel = `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
+
   // Add to Cart handler
   const handleAddToCart = () => {
     if (selectedTier === 'single') {
@@ -1156,7 +1158,7 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                 >
                   <span className="btn-fill" data-fill></span>
                   <span className="btn-text" id="main-cta-text">
-                    {`Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim()}
+                    {addToCartLabel}
                   </span>
                 </button>
               </div>
@@ -1226,10 +1228,9 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                 <span className="btn-fill" data-fill></span>
                 <span className="btn-text">
                   <AnimatedIcon kind="cart" className="miroooo-lottie-cart" />
-                  <span id="sticky-bar-cta-text" className="sticky-cart-label-desktop">
-                    Add to Cart {selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}
+                  <span id="sticky-bar-cta-text">
+                    {addToCartLabel}
                   </span>
-                  <span className="sticky-cart-label-mobile">Add to cart</span>
                 </span>
               </button>
             </div>

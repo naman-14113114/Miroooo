@@ -260,7 +260,6 @@
       #sticky-bar-cta-btn:hover .miroooo-sticky-bag-icon {
         animation: miroooo-cart-bounce 1.6s ease-in-out infinite !important;
       }
-      .sticky-cart-label-mobile { display: none; }
       @media (max-width: 640px) {
         .miroooo-sticky-cart-wrap {
           bottom: 8px !important;
@@ -281,9 +280,7 @@
           min-width: 0 !important;
           flex: 1 1 auto !important;
           min-height: 44px !important;
-          padding: 0 16px !important;
-          font-size: 0.9rem !important;
+          padding: 0 8px !important;
+          font-size: clamp(0.7rem, 3.2vw, 0.9rem) !important;
         }
-        #sticky-bar-cta-btn .sticky-cart-label-desktop { display: none; }
-        #sticky-bar-cta-btn .sticky-cart-label-mobile { display: inline; }
       }
