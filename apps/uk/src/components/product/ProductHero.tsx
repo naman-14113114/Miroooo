@@ -13,6 +13,7 @@ interface ProductHeroProps {
   product: Product;
   initialColor?: string;
   onColorChange?: (color: string) => void;
+  isSimpleBuybox?: boolean;
 }
 
 interface GallerySlide {
@@ -30,7 +31,12 @@ interface GallerySlide {
   isModesBadge?: boolean;
 }
 
-export function ProductHero({ product, initialColor = 'Silver', onColorChange }: ProductHeroProps) {
+export function ProductHero({
+  product,
+  initialColor = 'Silver',
+  onColorChange,
+  isSimpleBuybox = false,
+}: ProductHeroProps) {
   const router = useRouter();
   const { addItem, addBundle } = useCart();
   const isX2 = product.handle === 'miroooo-x2';
@@ -38,6 +44,7 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
   // Active color & tier state
   const [selectedColor, setSelectedColor] = useState<string>(initialColor);
   const [selectedTier, setSelectedTier] = useState<'single' | 'bundle-2' | 'bundle-3'>('bundle-2');
+  const [quantity, setQuantity] = useState(1);
 
   // Color choices per tier
   const [singleColor, setSingleColor] = useState<string>(initialColor);
@@ -172,10 +179,22 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
       ? bundle2Price
       : bundle3Price;
 
-  const addToCartLabel = `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
+  const addToCartLabel = isSimpleBuybox
+    ? `Add to Cart — £${(singlePrice * quantity).toFixed(2)}`
+    : `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
 
   // Add to Cart handler
   const handleAddToCart = () => {
+    if (isSimpleBuybox) {
+      addItem({
+        productHandle: product.handle,
+        color: selectedColor,
+        quantity,
+      });
+      router.push('/cart');
+      return;
+    }
+
     if (selectedTier === 'single') {
       addItem({
         productHandle: product.handle,
@@ -760,8 +779,93 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                 </div>
               </div>
 
-              {/* Bundle Divider */}
-              <div className="bundle-header-divider flex items-center gap-3 my-4">
+              {/* Quantity Selector Bar for Simple Buybox */}
+              {isSimpleBuybox && (
+                <div className="quantity-selector-container my-4" style={{ margin: '18px 0 16px 0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Quantity:</span>
+                  </div>
+                  <div
+                    className="inline-flex items-center"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      border: '1px solid rgba(255, 255, 255, 0.18)',
+                      borderRadius: '9999px',
+                      padding: '4px 6px',
+                      gap: '8px',
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                      disabled={quantity <= 1}
+                      aria-label="Decrease quantity"
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        color: '#ffffff',
+                        border: 'none',
+                        cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
+                        opacity: quantity <= 1 ? 0.4 : 1,
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </button>
+                    <span
+                      style={{
+                        minWidth: '32px',
+                        textAlign: 'center',
+                        fontWeight: 700,
+                        fontSize: '15px',
+                        color: '#ffffff',
+                        userSelect: 'none',
+                      }}
+                      aria-live="polite"
+                      aria-atomic="true"
+                    >
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((prev) => prev + 1)}
+                      aria-label="Increase quantity"
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        color: '#ffffff',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {!isSimpleBuybox && (
+                <>
+                  {/* Bundle Divider */}
+                  <div className="bundle-header-divider flex items-center gap-3 my-4">
                 <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
                 <span className="font-bold uppercase" style={{ fontSize: 15, lineHeight: 'normal', letterSpacing: '0.12em', color: 'rgba(255, 255, 255, 0.7)' }}>
                   BUNDLE &amp; SAVE + FREE SHIPPING
@@ -1087,6 +1191,8 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                   </a>
                 </div>
               </div>
+              </>
+              )}
 
               {/* Delivery Countdown Timer Box */}
               <div
@@ -1163,6 +1269,30 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                 </button>
               </div>
 
+              {isSimpleBuybox && (
+                <div
+                  className="gift-incentive-banner"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '11px 15px',
+                    borderRadius: '12px',
+                    background: 'rgba(34, 197, 94, 0.1)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)',
+                    color: '#86efac',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    marginBottom: '20px',
+                    lineHeight: 1.45,
+                  }}
+                >
+                  <span>
+                    🎁 Includes £65 in Free Gifts: Travel Case, {isX2 ? '90-Day' : '60-Day'} Battery, 2x Brush Heads
+                  </span>
+                </div>
+              )}
+
               {/* Trust Badges Strip */}
               <div
                 className="grid grid-cols-3 gap-2 py-3 px-1 mb-6 text-center"
@@ -1191,30 +1321,48 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
             <div className="miroooo-sticky-pill">
               <div className="miroooo-sticky-left">
                 <div className="miroooo-sticky-img-stack" id="sticky-bar-img-stack" aria-hidden="true">
-                  {(selectedTier === 'single' ? [singleColor] : selectedTier === 'bundle-2' ? bundle2Colors : bundle3Colors).map((color, index) => (
-                    <div className="miroooo-sticky-img-thumb" key={index} style={{ zIndex: index + 1 }}>
-                      <img src={getColorThumbnail(color)} alt={`${product.name} - ${color}`} width="50" height="50" decoding="async" />
+                  {isSimpleBuybox ? (
+                    <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
+                      <img src={getColorThumbnail(selectedColor)} alt={`${product.name} - ${selectedColor}`} width="50" height="50" decoding="async" />
                     </div>
-                  ))}
-                  {selectedTier === 'single' && buy1HeadsChecked && (
-                    <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                      <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
-                    </div>
+                  ) : (
+                    <>
+                      {(selectedTier === 'single' ? [singleColor] : selectedTier === 'bundle-2' ? bundle2Colors : bundle3Colors).map((color, index) => (
+                        <div className="miroooo-sticky-img-thumb" key={index} style={{ zIndex: index + 1 }}>
+                          <img src={getColorThumbnail(color)} alt={`${product.name} - ${color}`} width="50" height="50" decoding="async" />
+                        </div>
+                      ))}
+                      {selectedTier === 'single' && buy1HeadsChecked && (
+                        <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
+                          <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
                 <div className="miroooo-sticky-info">
                   <p className="miroooo-sticky-title" id="sticky-bar-title">
-                    {selectedTier === 'single'
+                    {isSimpleBuybox
+                      ? `${product.name} - ${selectedColor}`
+                      : selectedTier === 'single'
                       ? `${product.name} - ${singleColor}${buy1HeadsChecked ? ' + Heads' : ''}`
                       : selectedTier === 'bundle-2'
                       ? `Buy 2 - ${product.name} (${bundle2Colors[0]} + ${bundle2Colors[1]})`
                       : `Buy 3 - ${product.name} (${bundle3Colors[0]} + ${bundle3Colors[1]} + ${bundle3Colors[2]})`}
                   </p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
-                    <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                      £{currentPrice}
-                    </span>
-
+                    {isSimpleBuybox ? (
+                      <>
+                        <span style={{ marginRight: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>Qty: {quantity}</span>
+                        <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
+                          £{singlePrice * quantity}
+                        </span>
+                      </>
+                    ) : (
+                      <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
+                        £{currentPrice}
+                      </span>
+                    )}
                   </p>
                 </div>
               </div>

@@ -22,13 +22,15 @@ import { X1TriCleaningModes } from './X1TriCleaningModes';
 import { BrushStylePrecision } from './BrushStylePrecision';
 import { DiscoverOralHygiene } from './DiscoverOralHygiene';
 import { LuxuriousProfessionalism } from './LuxuriousProfessionalism';
+import { FreeGiftsSection } from './FreeGiftsSection';
 
 interface ProductPageProps {
   handle: string;
   searchParams?: { color?: string };
+  isSimpleBuybox?: boolean;
 }
 
-export function ProductPage({ handle, searchParams }: ProductPageProps) {
+export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: ProductPageProps) {
   const defaultColor = handle === 'miroooo-x2' ? 'Silver' : 'Pink';
   const initialColor = ['Silver', 'Grey', 'Pink'].find((color) => color.toLowerCase() === searchParams?.color?.toLowerCase()) || defaultColor;
   const [selectedColor, setSelectedColor] = useState(initialColor);
@@ -51,9 +53,16 @@ export function ProductPage({ handle, searchParams }: ProductPageProps) {
   return (
     <main className={`product-page-root ${isX2 ? 'x2-product-page' : 'x1-product-page'} bg-[#080909] min-h-screen text-white`}>
       {/* 1. Main Product Hero & Buy Box */}
-      <ProductHero product={product} initialColor={initialColor} onColorChange={setSelectedColor} />
+      <ProductHero
+        product={product}
+        initialColor={initialColor}
+        onColorChange={setSelectedColor}
+        isSimpleBuybox={isSimpleBuybox}
+      />
 
       <ShippingMarquee />
+
+      {isSimpleBuybox && <FreeGiftsSection isX2={isX2} />}
 
       {isX2 ? (
         /* Miroooo X2 Complete Section Sequence */

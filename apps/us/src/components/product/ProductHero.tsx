@@ -14,6 +14,7 @@ interface ProductHeroProps {
   product: Product;
   initialColor?: string;
   onColorChange?: (color: string) => void;
+  isSimpleBuybox?: boolean;
 }
 
 interface GallerySlide {
@@ -31,7 +32,12 @@ interface GallerySlide {
   isModesBadge?: boolean;
 }
 
-export function ProductHero({ product, initialColor = 'Silver', onColorChange }: ProductHeroProps) {
+export function ProductHero({
+  product,
+  initialColor = 'Silver',
+  onColorChange,
+  isSimpleBuybox = false,
+}: ProductHeroProps) {
   const router = useRouter();
   const { addItem, addBundle } = useCart();
   const isX2 = product.handle === 'miroooo-x2';
@@ -39,6 +45,7 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
   // Active color & tier state
   const [selectedColor, setSelectedColor] = useState<string>(initialColor);
   const [selectedTier, setSelectedTier] = useState<'single' | 'bundle-2' | 'bundle-3'>('bundle-2');
+  const [quantity, setQuantity] = useState<number>(1);
 
   // Color choices per tier
   const [singleColor, setSingleColor] = useState<string>(initialColor);
@@ -167,17 +174,30 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
   const bundle3Compare = product.compareAt * 3;
   const headsPrice = PRODUCTS[isX2 ? "miroooo-x2-heads" : "miroooo-x1-heads"].price;
 
-  const currentPrice =
-    selectedTier === 'single'
-      ? singlePrice + (buy1HeadsChecked ? headsPrice : 0)
-      : selectedTier === 'bundle-2'
-      ? bundle2Price
-      : bundle3Price;
+  const currentPrice = isSimpleBuybox
+    ? singlePrice * quantity
+    : selectedTier === 'single'
+    ? singlePrice + (buy1HeadsChecked ? headsPrice : 0)
+    : selectedTier === 'bundle-2'
+    ? bundle2Price
+    : bundle3Price;
 
-  const addToCartLabel = `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
+  const addToCartLabel = isSimpleBuybox
+    ? `Add to Cart — $${(singlePrice * quantity).toFixed(2)}`
+    : `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
 
   // Add to Cart handler
   const handleAddToCart = () => {
+    if (isSimpleBuybox) {
+      addItem({
+        productHandle: product.handle,
+        color: selectedColor,
+        quantity,
+      });
+      router.push('/cart');
+      return;
+    }
+
     if (selectedTier === 'single') {
       addItem({
         productHandle: product.handle,
@@ -762,8 +782,92 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                 </div>
               </div>
 
-              {/* Bundle Divider */}
-              <div className="bundle-header-divider flex items-center gap-3 my-4">
+              {/* Simple Quantity Selector for single-purchase buybox */}
+              {isSimpleBuybox && (
+                <div className="simple-quantity-container my-4" style={{ margin: '20px 0 16px 0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Quantity:</span>
+                  </div>
+                  <div
+                    className="simple-quantity-bar"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      border: '1px solid rgba(255, 255, 255, 0.18)',
+                      borderRadius: '10px',
+                      padding: '4px',
+                    }}
+                  >
+                    <button
+                      type="button"
+                      id="simple-qty-decrement"
+                      aria-label="Decrease quantity"
+                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                      disabled={quantity <= 1}
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'transparent',
+                        border: 'none',
+                        color: quantity <= 1 ? 'rgba(255, 255, 255, 0.3)' : '#ffffff',
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
+                        borderRadius: '6px',
+                        transition: 'background 0.15s ease',
+                      }}
+                    >
+                      −
+                    </button>
+                    <span
+                      id="simple-qty-value"
+                      aria-live="polite"
+                      style={{
+                        minWidth: '44px',
+                        textAlign: 'center',
+                        fontSize: '16px',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}
+                    >
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      id="simple-qty-increment"
+                      aria-label="Increase quantity"
+                      onClick={() => setQuantity((q) => q + 1)}
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'transparent',
+                        border: 'none',
+                        color: '#ffffff',
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        borderRadius: '6px',
+                        transition: 'background 0.15s ease',
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {!isSimpleBuybox && (
+                <>
+                  {/* Bundle Divider */}
+                  <div className="bundle-header-divider flex items-center gap-3 my-4">
                 <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
                 <span className="font-bold uppercase" style={{ fontSize: 15, lineHeight: 'normal', letterSpacing: '0.12em', color: 'rgba(255, 255, 255, 0.7)' }}>
                   BUNDLE &amp; SAVE + FREE SHIPPING
@@ -1089,6 +1193,8 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                   </a>
                 </div>
               </div>
+            </>
+          )}
 
               {/* Delivery Countdown Timer Box */}
               <div
@@ -1163,6 +1269,31 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                     {addToCartLabel}
                   </span>
                 </button>
+
+                {isSimpleBuybox && (
+                  <div
+                    className="simple-gift-incentive-banner"
+                    style={{
+                      marginTop: '12px',
+                      padding: '10px 14px',
+                      borderRadius: '10px',
+                      background: 'rgba(34, 197, 94, 0.1)',
+                      border: '1px solid rgba(34, 197, 94, 0.25)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      color: '#4ade80',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    <span style={{ fontSize: '15px' }} aria-hidden="true">🎁</span>
+                    <span>
+                      Includes $86 in Free Gifts: Travel Case, {isX2 ? '90-Day' : '60-Day'} Battery, 2x Brush Heads
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Trust Badges Strip */}
@@ -1193,12 +1324,18 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
             <div className="miroooo-sticky-pill">
               <div className="miroooo-sticky-left">
                 <div className="miroooo-sticky-img-stack" id="sticky-bar-img-stack" aria-hidden="true">
-                  {(selectedTier === 'single' ? [singleColor] : selectedTier === 'bundle-2' ? bundle2Colors : bundle3Colors).map((color, index) => (
-                    <div className="miroooo-sticky-img-thumb" key={index} style={{ zIndex: index + 1 }}>
-                      <img src={getColorThumbnail(color)} alt={`${product.name} - ${color}`} width="50" height="50" decoding="async" />
+                  {isSimpleBuybox ? (
+                    <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
+                      <img src={getColorThumbnail(selectedColor)} alt={`${product.name} - ${selectedColor}`} width="50" height="50" decoding="async" />
                     </div>
-                  ))}
-                  {selectedTier === 'single' && buy1HeadsChecked && (
+                  ) : (
+                    (selectedTier === 'single' ? [singleColor] : selectedTier === 'bundle-2' ? bundle2Colors : bundle3Colors).map((color, index) => (
+                      <div className="miroooo-sticky-img-thumb" key={index} style={{ zIndex: index + 1 }}>
+                        <img src={getColorThumbnail(color)} alt={`${product.name} - ${color}`} width="50" height="50" decoding="async" />
+                      </div>
+                    ))
+                  )}
+                  {!isSimpleBuybox && selectedTier === 'single' && buy1HeadsChecked && (
                     <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
                       <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
                     </div>
@@ -1206,7 +1343,9 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                 </div>
                 <div className="miroooo-sticky-info">
                   <p className="miroooo-sticky-title" id="sticky-bar-title">
-                    {selectedTier === 'single'
+                    {isSimpleBuybox
+                      ? `${product.name} - ${selectedColor} · Qty: ${quantity}`
+                      : selectedTier === 'single'
                       ? `${product.name} - ${singleColor}${buy1HeadsChecked ? ' + Heads' : ''}`
                       : selectedTier === 'bundle-2'
                       ? `Buy 2 - ${product.name} (${bundle2Colors[0]} + ${bundle2Colors[1]})`
@@ -1214,9 +1353,8 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                   </p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                     <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                      {formatUSD(currentPrice)}
+                      {isSimpleBuybox ? `$${(singlePrice * quantity).toFixed(2)}` : formatUSD(currentPrice)}
                     </span>
-
                   </p>
                 </div>
               </div>
