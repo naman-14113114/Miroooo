@@ -195,9 +195,8 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     </button>
 
                     <div
-                      className="miroooo-gallery__slide is-active"
+                      className="miroooo-gallery__slide gallery-zoom-cursor is-active"
                       onClick={() => setIsLightboxOpen(true)}
-                      style={{ cursor: 'zoom-in' }}
                     >
                       <img
                         src={images[activeMediaIndex].src}
@@ -579,7 +578,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
           <div
             className="miroooo-gallery-lightbox__stage"
             onClick={() => setIsLightboxZoomed((prev) => !prev)}
-            style={{ cursor: isLightboxZoomed ? 'zoom-out' : 'zoom-in' }}
+            style={{ cursor: isLightboxZoomed ? 'zoom-out' : 'url("/cursor-zoom-in.svg") 20 20, zoom-in' }}
           >
             <img
               src={images[activeMediaIndex].src}

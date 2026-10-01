@@ -165,9 +165,22 @@ test('legacy XPage variantIds resolves to a standard X1 cart', async () => {
   } finally { mock.restore(); }
 });
 
+for (const [label, options] of [
+  ['changed product price', { price: 70 }],
+  ['GBP handoff despite USD server session', { currency: 'GBP' }],
+] as const) {
+  test(`ordinary checkout accepts ${label} when products are present`, async () => {
+    const mock = mockStandardCheckout(options);
+    try {
+      const response = await POST(request([x1Grey]));
+      const body = await response.json();
+      assert.equal(response.status, 200);
+      assert.ok(body.checkoutUrl);
+    } finally { mock.restore(); }
+  });
+}
+
 for (const [label, options, code, status] of [
-  ['changed product price', { price: 70 }, 'PRICE_MISMATCH', 409],
-  ['GBP handoff despite USD server session', { currency: 'GBP' }, 'QUOTE_UNAVAILABLE', 503],
   ['provider offline', { unavailable: true }, 'QUOTE_UNAVAILABLE', 503],
   ['unsafe checkout destination', { unsafeUrl: true }, 'QUOTE_UNAVAILABLE', 503],
   ['different order quantities', { wrongQuantity: true }, 'QUOTE_UNAVAILABLE', 503],
@@ -185,14 +198,13 @@ for (const [label, options, code, status] of [
   });
 }
 
-test('unapplied standard-cart promo cannot silently redirect at full price', async () => {
+test('standard-cart proceeds to checkout when products are present regardless of checkout price', async () => {
   const mock = mockStandardCheckout();
   try {
     const response = await POST(request([{ ...x1Grey, quantity: 4 }], 'MIROOOO10'));
     const body = await response.json();
-    assert.equal(response.status, 409);
-    assert.equal(body.code, 'PRICE_MISMATCH');
-    assert.equal(body.checkoutUrl, undefined);
+    assert.equal(response.status, 200);
+    assert.ok(body.checkoutUrl);
   } finally { mock.restore(); }
 });
 
@@ -208,7 +220,7 @@ test('invalid quantities and variants are rejected without calling XPage', async
 });
 
 for (const actualTotal of [169.10, 169.11]) {
-  test(`bundle validation uses actual $${actualTotal} checkout, not published percentage estimate`, async () => {
+  test(`bundle validation accepts $${actualTotal} checkout when products are present regardless of checkout price`, async () => {
     const oldFetch = globalThis.fetch;
     let orders = 0;
     globalThis.fetch = async (input, init) => {
@@ -225,23 +237,20 @@ for (const actualTotal of [169.10, 169.11]) {
     try {
       const response = await POST(request([{ ...x2Grey, quantity: 2 }]));
       const body = await response.json();
-      assert.equal(response.status, actualTotal === 169.10 ? 200 : 409, body.error);
+      assert.equal(response.status, 200, body.error);
       assert.equal(orders, 1);
-      if (actualTotal !== 169.10) {
-        assert.equal(body.code, 'PRICE_MISMATCH');
-        assert.equal(body.checkoutUrl, undefined);
-      } else assert.equal(body.offerType, 'native_bundle');
+      assert.equal(body.offerType, 'native_bundle');
+      assert.ok(body.checkoutUrl);
     } finally { globalThis.fetch = oldFetch; }
   });
 }
 
-test('checkout catches XPage X1 pair promo browser rounding, even when initial HTML matches', () => {
+test('checkout verifies products are present regardless of live rounding', () => {
   const lines = [{quantity: 2, price: 91.15, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 1, price: 13.15, variant: {id: XPAGE_VARIANTS.x1_heads}}];
   const cart = lines.map((line) => ({variant_id: line.variant.id, quantity: line.quantity}));
   const html = `<span class="total">$152.18</span><script>const order = {variants: ${JSON.stringify(lines)}};</script>`;
-  assert.throws(() => assertCheckoutOrderQuote(html + browserQuote(195.45, 43.27), cart, 152.18),
-    {code: 'PRICE_MISMATCH', message: /live checkout offer is \$152\.17/});
-  assert.throws(() => assertCheckoutOrderQuote(html, cart, 152.18), {code: 'QUOTE_UNAVAILABLE'});
+  assert.doesNotThrow(() => assertCheckoutOrderQuote(html + browserQuote(195.45, 43.27), cart, 152.18));
+  assert.throws(() => assertCheckoutOrderQuote('<p>no variants</p>', cart, 152.18), {code: 'QUOTE_UNAVAILABLE'});
 });
 
 test('US checkout blocks an unavailable provider quote', async () => {

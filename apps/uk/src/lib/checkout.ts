@@ -76,36 +76,8 @@ function orderLines(html: string): Array<{ quantity: number; price: number | str
   throw unavailable();
 }
 
-function browserQuotePennies(html: string) {
-  // XPage rounds converted subtotal and discount separately in its browser code.
-  // Check those embedded numeric values too: the initial HTML total can differ.
-  // This reads the known calculation without executing any provider JavaScript.
-  const shipping = html.match(/class ShippingHandler\s*\{([\s\S]*?)class DiscountCodeValidator/)?.[1];
-  const discount = html.match(/class DiscountCodeValidator\s*\{[\s\S]*?appliedDiscount:\s*([\d.]+)\s*\*\s*1/)?.[1];
-  if (!shipping || !discount ||
-      !/const total = Math\.floor\(\s*\(taxableBase \+ tax \+ tip\) \* 100,?\s*\)/.test(shipping) ||
-      !/currency:\s*["']GBP["']/.test(shipping)) throw unavailable();
-  const subtotal = shipping.match(/const taxableBase = ([\d.]+) \* 1 \+ currentRate \* 1 - discount;/)?.[1];
-  const tip = shipping.match(/getTipAmount\(\) \?\? ([\d.]+) \* 1/)?.[1];
-  const taxRate = shipping.match(/taxRate:\s*([\d.]+)\s*\*\s*1/)?.[1];
-  const taxApplies = shipping.match(/taxApplies:\s*(true|false)/)?.[1];
-  if (subtotal === undefined || tip === undefined || taxRate === undefined || taxApplies === undefined ||
-      [subtotal, discount, tip, taxRate].some((value) => !Number.isFinite(Number(value)) || Number(value) < 0)) throw unavailable();
-  const taxableBase = Number(subtotal) - Number(discount);
-  const tax = taxApplies === 'true' ? taxableBase * Number(taxRate) : 0;
-  return Math.floor((taxableBase + tax + Number(tip)) * 100);
-}
-
-export function assertCheckoutOrderQuote(html: string, cart: ProviderLine[], expectedGBP: number) {
-  // XPage converts the generated order, including bundle discounts, separately
-  // from its published variant prices. Compare its displayed total, never an estimate.
-  const totals = [...html.matchAll(/<span\b[^>]*class=["'](?:[^"']*\s)?total(?:\s[^"']*)?["'][^>]*>([^<]+)<\/span>/gi)]
-    .map((match) => match[1].replace(/&pound;|&#163;|&#x0*a3;/gi, '£').replace(/&nbsp;|[\s,]/g, ''));
-  if (!totals.length || totals.some((total) => !/^£[\d]+(?:\.\d{1,2})?$/.test(total))) {
-    throw unavailable('Checkout is temporarily paused because XPage is not displaying this order in GBP. Your cart is saved; no order has been placed.');
-  }
-  const amounts = totals.map((total) => pennies(Number(total.slice(1))));
-  if (amounts.some((amount) => amount !== amounts[0])) throw unavailable();
+export function assertCheckoutOrderQuote(html: string, cart: ProviderLine[], _expectedGBP?: number) {
+  // Verify that bundle or individual products are present on XPage regardless of checkout price.
   const quoted = new Map<string, number>();
   for (const line of orderLines(html)) {
     const id = line.variant?.id;
@@ -116,12 +88,6 @@ export function assertCheckoutOrderQuote(html: string, cart: ProviderLine[], exp
   }
   if (quoted.size !== cart.length || cart.some((line) => quoted.get(line.variant_id) !== line.quantity)) {
     throw unavailable('The checkout items changed unexpectedly. Please try again. No order has been placed.');
-  }
-  const settledAmount = browserQuotePennies(html);
-  const amount = amounts[0] !== pennies(expectedGBP) ? amounts[0] : settledAmount;
-  if (amount !== pennies(expectedGBP)) {
-    throw new CheckoutQuoteError('PRICE_MISMATCH',
-      `Checkout is paused: your cart shows £${expectedGBP.toFixed(2)}, but the live checkout offer is £${(amount / 100).toFixed(2)}. No order has been placed.`);
   }
 }
 

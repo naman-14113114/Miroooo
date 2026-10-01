@@ -199,3 +199,22 @@ body:has(.product-page-root) .site-header { background: #000 !important; }
 .site-header__inner > .site-header__center { justify-self: center !important; }
 body:has(.product-page-root) .site-header__right { min-width: 24px; }
 body:has(.product-page-root) .site-header__right .header__buttons { margin: 0 !important; }
+
+.gallery-zoom-cursor,
+.miroooo-gallery__stage,
+.miroooo-gallery__stage .miroooo-gallery__slides,
+.miroooo-gallery__stage .miroooo-gallery__slide,
+.miroooo-gallery__stage .miroooo-gallery__slide img,
+.product-gallery__mosaic > button,
+.product-gallery__stage {
+  cursor: url("/cursor-zoom-in.svg") 20 20, zoom-in !important;
+}
+.miroooo-gallery__nav-wrap button,
+.miroooo-gallery__arrow,
+.miroooo-gallery__thumb,
+.miroooo-gallery__thumb-btn,
+.product__thumbnails-list button,
+.product__thumbnails-list .product__thumbnail {
+  cursor: pointer !important;
+}
+

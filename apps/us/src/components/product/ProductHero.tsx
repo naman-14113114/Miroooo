@@ -556,7 +556,7 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                         return (
                           <div
                             key={idx}
-                            className={`miroooo-gallery__slide ${activeMediaIndex === idx ? 'is-active' : ''}`}
+                            className={`miroooo-gallery__slide gallery-zoom-cursor ${activeMediaIndex === idx ? 'is-active' : ''}`}
                             aria-hidden={activeMediaIndex !== idx}
                             inert={activeMediaIndex !== idx}
                             data-media-type={slide.type}
@@ -565,7 +565,6 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                               setIsLightboxOpen(true);
                               setIsLightboxZoomed(false);
                             }}
-                            style={{ cursor: 'zoom-in' }}
                           >
                             {slide.type === 'video' ? (
                               <div className="video-wrapper">
@@ -1301,7 +1300,7 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
               id="MirooooGalleryLightboxMediaBox"
               key={activeMediaIndex}
               style={{
-                cursor: gallerySlides[activeMediaIndex].type === 'image' ? (isLightboxZoomed ? 'zoom-out' : 'zoom-in') : 'default',
+                cursor: gallerySlides[activeMediaIndex].type === 'image' ? (isLightboxZoomed ? 'zoom-out' : 'url("/cursor-zoom-in.svg") 20 20, zoom-in') : 'default',
                 transform: isLightboxZoomed ? 'scale(1.75)' : 'scale(1)',
                 transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                 display: 'flex',

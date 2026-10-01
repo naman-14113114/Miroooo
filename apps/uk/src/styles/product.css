@@ -7,13 +7,13 @@
 .product-hero { display: grid; grid-template-columns: minmax(0, 1.16fr) minmax(430px, 1fr); gap: clamp(36px, 4.7vw, 68px); width: min(1344px, calc(100% - 96px)); margin: 0 auto; padding: 32px 0 90px; background: #000; }
 .product-gallery { min-width: 0; }
 .product-gallery__mosaic { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.product-gallery__mosaic > button { position: relative; aspect-ratio: 1; overflow: hidden; padding: 0; border: 0; border-radius: 8px; background: #121212; cursor: zoom-in; }
+.product-gallery__mosaic > button { position: relative; aspect-ratio: 1; overflow: hidden; padding: 0; border: 0; border-radius: 8px; background: #121212; cursor: url("/cursor-zoom-in.svg") 20 20, zoom-in !important; }
 .product-gallery__mosaic > button:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
 .product-gallery__mosaic img,
 .product-gallery__mosaic video { width: 100%; height: 100%; object-fit: cover; }
 .product-gallery__mosaic .product-gallery__expand { opacity: 0; transition: opacity .2s ease; }
 .product-gallery__mosaic button:hover .product-gallery__expand { opacity: 1; }
-.product-gallery__stage { position: relative; display: none; width: 100%; aspect-ratio: 1 / 1; place-items: center; overflow: hidden; padding: 0; border: 0; background: #121212; cursor: zoom-in; }
+.product-gallery__stage { position: relative; display: none; width: 100%; aspect-ratio: 1 / 1; place-items: center; overflow: hidden; padding: 0; border: 0; background: #121212; cursor: url("/cursor-zoom-in.svg") 20 20, zoom-in !important; }
 .product-gallery__stage img,
 .product-gallery__stage video { width: 100%; height: 100%; object-fit: cover; }
 .product-gallery__stage video { background: #0b0b0b; }

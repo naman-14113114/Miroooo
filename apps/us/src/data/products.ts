@@ -440,6 +440,8 @@ export const PRODUCTS: Record<string, Product> = {
 };
 
 export function getProduct(handle: string): Product | undefined {
+  if (handle === 'miroooo_x1') return PRODUCTS['miroooo-x'];
+  if (handle === 'miroooo_x2') return PRODUCTS['miroooo-x2'];
   return PRODUCTS[handle];
 }
 
