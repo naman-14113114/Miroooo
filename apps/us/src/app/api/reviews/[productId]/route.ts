@@ -13,7 +13,7 @@ export function GET(request: NextRequest, { params }: { params: Promise<{ produc
     const offset = Math.max(0, Number(request.nextUrl.searchParams.get("offset") || 0));
     const limit = Math.min(24, Math.max(1, Number(request.nextUrl.searchParams.get("limit") || 6)));
     const requestedSort = request.nextUrl.searchParams.get("sort");
-    const sort: ReviewSort = sorts.includes(requestedSort as ReviewSort) ? (requestedSort as ReviewSort) : "most-recent";
+    const sort: ReviewSort = sorts.includes(requestedSort as ReviewSort) ? requestedSort as ReviewSort : "most-recent";
     const photos = request.nextUrl.searchParams.get("photos") === "true";
     const verified = request.nextUrl.searchParams.get("verified") === "true";
     let filtered = rating >= 1 && rating <= 5 ? source.filter((review) => review.rating === rating) : [...source];

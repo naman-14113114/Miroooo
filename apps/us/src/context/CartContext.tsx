@@ -1,32 +1,28 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
-import { CartItem, CartTotals, calculateTotals, VALID_PROMO_CODES } from '@/lib/cart';
+import React, { createContext, useContext, useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { CartItem, CartTotals, calculateTotals, normalizeCartItems, VALID_PROMO_CODES } from '@/lib/cart';
 import { PRODUCTS } from '@/data/products';
 
 interface CartContextType {
   items: CartItem[];
-  rawItems: CartItem[];
   appliedPromoCodes: string[];
-  promoCode: string;
   giftMessage: string;
   isOpen: boolean;
   isCheckoutLoading: boolean;
-  isCheckingOut: boolean;
+  checkoutError: string | null;
   totals: CartTotals;
-  addItem: (item: Partial<CartItem> & { productHandle?: string; productId?: string }) => void;
+  addItem: (item: Partial<CartItem> & { productHandle: string }) => void;
   addBundle: (productHandle: string, quantity: 1 | 2 | 3, colors: string[]) => void;
   updateQuantity: (id: string, quantity: number) => void;
   removeItem: (id: string) => void;
-  clearCart: () => void;
-  applyPromoCode: (code: string) => boolean | { success: boolean; message: string };
-  removePromoCode: (code?: string) => void;
+  applyPromoCode: (code: string) => { success: boolean; message: string };
+  removePromoCode: (code: string) => void;
   saveGiftMessage: (msg: string) => void;
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
   proceedToCheckout: () => Promise<void>;
-  handleCheckout: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -41,7 +37,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [giftMessage, setGiftMessage] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
+  const checkoutRequest = useRef<AbortController | null>(null);
+  const invalidateCheckout = useCallback(() => {
+    checkoutRequest.current?.abort();
+    checkoutRequest.current = null;
+    setIsCheckoutLoading(false);
+    setCheckoutError(null);
+  }, []);
+
+  useEffect(() => () => checkoutRequest.current?.abort(), []);
 
   // Load cart state from localStorage on initial mount
   useEffect(() => {
@@ -67,7 +73,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (storedCart) {
         const parsed = JSON.parse(storedCart);
         if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
-          setItems(parsed.items);
+          setItems(normalizeCartItems(parsed.items));
         } else if (parsed && parsed.quantity > 0) {
           // Legacy format migration
           const pHandle = parsed.productId || 'miroooo-x2';
@@ -90,7 +96,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               url: `/products/${p.handle}?color=${col}`,
             };
           });
-          setItems(newItems);
+          setItems(normalizeCartItems(newItems));
         }
       }
     } catch (e) {
@@ -115,7 +121,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         const payload = {
           version: 2,
           items,
-          productId: primaryItem?.productHandle || primaryItem?.productId || 'miroooo-x2',
+          productId: primaryItem?.productHandle || 'miroooo-x2',
           quantity: totalQty,
           colors: allColors,
         };
@@ -140,17 +146,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const totals = useMemo(() => calculateTotals(items, appliedPromoCodes), [items, appliedPromoCodes]);
 
-  const addItem = useCallback((itemData: Partial<CartItem> & { productHandle?: string; productId?: string }) => {
-    const handle = itemData.productHandle || itemData.productId || 'miroooo-x2';
-    const product = PRODUCTS[handle] || PRODUCTS['miroooo-x2'];
+  const addItem = useCallback((itemData: Partial<CartItem> & { productHandle: string }) => {
+    invalidateCheckout();
+    const product = PRODUCTS[itemData.productHandle] || PRODUCTS['miroooo-x2'];
     const color = itemData.color || 'Silver';
     const variant = product.variants.find((v) => v.color.toLowerCase() === color.toLowerCase()) || product.variants[0];
-    const isBrush = handle === 'miroooo-x2' || handle === 'miroooo-x' || handle === 'miroooo-x1';
+    const isBrush = itemData.productHandle === 'miroooo-x2' || itemData.productHandle === 'miroooo-x';
 
     setItems((currentItems) => {
       // If item with same product & color exists, increment quantity
       const existingIndex = currentItems.findIndex(
-        (i) => (i.productHandle === handle || i.productId === handle) && i.color === color
+        (i) => i.productHandle === itemData.productHandle && i.color === color
       );
 
       if (existingIndex > -1) {
@@ -163,34 +169,33 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
 
       const newItem: CartItem = {
-        id: `${handle}-${color}-${Date.now()}`,
-        productHandle: product.handle,
+        id: `${itemData.productHandle}-${color}-${Date.now()}`,
+        productHandle: itemData.productHandle,
         productId: product.plusBaseProductId,
-        variantId: variant ? variant.id : (itemData.variantId || product.plusBaseProductId),
+        variantId: variant.id,
         title: isBrush ? `${product.name} (${color})` : product.name,
         subtitle: product.subtitle,
         color,
         quantity: itemData.quantity || 1,
         unitPrice: product.price,
         comparePrice: product.compareAt,
-        image: variant?.image || product.galleryImages[0]?.src || itemData.image || '',
+        image: variant.image || product.galleryImages[0]?.src || '',
         url: `/products/${product.handle}${isBrush ? `?color=${color}` : ''}`,
       };
 
       return [...currentItems, newItem];
     });
 
-    setIsOpen(true);
-  }, []);
+  }, [invalidateCheckout]);
 
   const addBundle = useCallback((productHandle: string, quantity: 1 | 2 | 3, colors: string[]) => {
-    const handle = productHandle === 'miroooo-x1' ? 'miroooo-x' : productHandle;
-    const product = PRODUCTS[handle] || PRODUCTS['miroooo-x2'];
-    const isBrush = handle === 'miroooo-x2' || handle === 'miroooo-x';
+    invalidateCheckout();
+    const product = PRODUCTS[productHandle] || PRODUCTS['miroooo-x2'];
+    const isBrush = productHandle === 'miroooo-x2' || productHandle === 'miroooo-x';
 
     setItems((currentItems) => {
       // Remove previous brushes of same model if replacing bundle
-      const withoutProduct = currentItems.filter((i) => i.productHandle !== handle && i.productId !== handle);
+      const withoutProduct = currentItems.filter((i) => i.productHandle !== productHandle);
 
       // Create line items for each selected brush color
       const newItems: CartItem[] = [];
@@ -202,17 +207,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       Object.entries(colorCounts).forEach(([col, count]) => {
         const variant = product.variants.find((v) => v.color.toLowerCase() === col.toLowerCase()) || product.variants[0];
         newItems.push({
-          id: `${handle}-${col}-${Date.now()}`,
-          productHandle: handle,
+          id: `${productHandle}-${col}-${Date.now()}`,
+          productHandle,
           productId: product.plusBaseProductId,
-          variantId: variant ? variant.id : product.plusBaseProductId,
+          variantId: variant.id,
           title: isBrush ? `${product.name} (${col})` : product.name,
           subtitle: product.subtitle,
           color: col as 'Grey' | 'Pink' | 'Silver',
           quantity: count,
           unitPrice: product.price,
           comparePrice: product.compareAt,
-          image: variant?.image || product.galleryImages[0]?.src || '',
+          image: variant.image || product.galleryImages[0]?.src || '',
           url: `/products/${product.handle}${isBrush ? `?color=${col}` : ''}`,
         });
       });
@@ -220,31 +225,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...withoutProduct, ...newItems];
     });
 
-    setIsOpen(true);
-  }, []);
+  }, [invalidateCheckout]);
 
   const updateQuantity = useCallback((id: string, quantity: number) => {
+    invalidateCheckout();
     setItems((currentItems) => {
       if (quantity <= 0) {
         return currentItems.filter((i) => i.id !== id);
       }
       return currentItems.map((i) => (i.id === id ? { ...i, quantity } : i));
     });
-  }, []);
+  }, [invalidateCheckout]);
 
   const removeItem = useCallback((id: string) => {
+    invalidateCheckout();
     setItems((currentItems) => currentItems.filter((i) => i.id !== id));
-  }, []);
-
-  const clearCart = useCallback(() => {
-    setItems([]);
-  }, []);
+  }, [invalidateCheckout]);
 
   const applyPromoCode = useCallback((code: string) => {
     const formatted = code.trim().toUpperCase();
     if (!formatted) return { success: false, message: 'Please enter a promo code.' };
 
     if (VALID_PROMO_CODES.includes(formatted)) {
+      invalidateCheckout();
       setAppliedPromoCodes((current) => {
         const filtered = current.filter((c) => !VALID_PROMO_CODES.includes(c));
         return [...filtered, formatted];
@@ -253,15 +256,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
 
     return { success: false, message: 'Invalid promo code.' };
-  }, []);
+  }, [invalidateCheckout]);
 
-  const removePromoCode = useCallback((code?: string) => {
-    if (!code) {
-      setAppliedPromoCodes([]);
-      return;
-    }
+  const removePromoCode = useCallback((code: string) => {
+    invalidateCheckout();
     setAppliedPromoCodes((current) => current.filter((c) => c !== code));
-  }, []);
+  }, [invalidateCheckout]);
 
   const saveGiftMessage = useCallback((msg: string) => {
     const trimmed = msg.trim();
@@ -278,9 +278,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const toggleCart = useCallback(() => setIsOpen((prev) => !prev), []);
 
   const proceedToCheckout = useCallback(async () => {
-    if (items.length === 0 || isCheckoutLoading) return;
+    if (items.length === 0 || checkoutRequest.current) return;
+    const controller = new AbortController();
+    checkoutRequest.current = controller;
 
     setIsCheckoutLoading(true);
+    setCheckoutError(null);
 
     try {
       // Capture UTM & Ad Attribution
@@ -300,7 +303,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         const fromSession = JSON.parse(sessionStorage.getItem('miroooo_attribution') || '{}');
         const fromLocal = JSON.parse(localStorage.getItem('miroooo_attribution') || '{}');
         attribution = { ...fromLocal, ...fromSession };
-      } catch (_) {}
+      } catch {}
 
       if (typeof window !== 'undefined') {
         const currentParams = new URLSearchParams(window.location.search);
@@ -313,8 +316,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       // Build items payload
       const checkoutItems = items.map((item) => ({
         id: item.id,
-        productHandle: item.productHandle || item.productId,
-        title: item.title || item.name || '',
+        productHandle: item.productHandle,
+        title: item.title,
         productId: item.productId,
         variantId: item.variantId,
         color: item.color,
@@ -347,6 +350,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const validDiscountCodes = appliedPromoCodes.filter((c) => VALID_PROMO_CODES.includes(c));
 
       const prepRes = await fetch('/api/checkout/prepare', {
+        signal: controller.signal,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -357,41 +361,39 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }),
       });
 
-      if (prepRes.ok) {
-        const data = await prepRes.json();
-        if (data && data.checkoutUrl) {
-          window.location.href = data.checkoutUrl;
-          return;
-        }
+      const data = await prepRes.json().catch(() => null);
+      if (checkoutRequest.current !== controller) return;
+      if (prepRes.ok && data?.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+        return;
       }
-
-      // Fallback
-      window.location.href = '/cart';
+      setCheckoutError(data?.error || 'Secure checkout is temporarily unavailable. Please try again.');
     } catch (err) {
+      if (checkoutRequest.current !== controller) return;
       console.error('Checkout error:', err);
-      alert('Unable to connect to checkout session. Please try again.');
+      setCheckoutError('Unable to connect to checkout. Please try again.');
     } finally {
-      setIsCheckoutLoading(false);
+      if (checkoutRequest.current === controller) {
+        checkoutRequest.current = null;
+        setIsCheckoutLoading(false);
+      }
     }
-  }, [items, isCheckoutLoading, totals, appliedPromoCodes]);
+  }, [items, totals, appliedPromoCodes]);
 
   return (
     <CartContext.Provider
       value={{
         items,
-        rawItems: items,
         appliedPromoCodes,
-        promoCode: appliedPromoCodes.join(','),
         giftMessage,
         isOpen,
         isCheckoutLoading,
-        isCheckingOut: isCheckoutLoading,
+        checkoutError,
         totals,
         addItem,
         addBundle,
         updateQuantity,
         removeItem,
-        clearCart,
         applyPromoCode,
         removePromoCode,
         saveGiftMessage,
@@ -399,7 +401,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         closeCart,
         toggleCart,
         proceedToCheckout,
-        handleCheckout: proceedToCheckout,
       }}
     >
       {children}

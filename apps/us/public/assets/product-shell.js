@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  document.documentElement.lang = "en-US";
+  document.documentElement.lang = "en-GB";
 
   const main = document.getElementById("MainContent");
   if (main && !document.querySelector(".miroooo-skip")) {

@@ -1,158 +1,273 @@
 "use client";
-
-import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { ArrowRight, ShoppingBag, X } from "lucide-react";
-import { mobileShopLinks, mobileToolsLinks, secondaryNavigation } from "@/data/navigation";
+import Link from "next/link";
+import { useDrawer } from "./useDrawer";
+import { PRODUCTS } from "@/data/products";
 
-interface MenuDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+const sections = [
+  {
+    title: "Brushes",
+    products: [
+      {
+        handle: "miroooo-x",
+        title: "Miroooo X1",
+        eyebrow: "The Essential",
+        image: "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
+      },
+      {
+        handle: "miroooo-x2",
+        title: "Miroooo X2",
+        eyebrow: "Flagship Pro",
+        image:
+          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-upright-grip.webp",
+      },
+    ],
+  },
+  {
+    title: "Accessories",
+    products: [
+      {
+        handle: "miroooo-x1-heads",
+        title: "Miroooo X1 Heads",
+        eyebrow: "Replacement",
+        image: "/assets_ref/x/heads/B1.webp",
+      },
+      {
+        handle: "miroooo-x2-heads",
+        title: "Miroooo X2 Heads",
+        eyebrow: "Replacement",
+        image: "/assets_ref/x2/heads/B1.webp",
+      },
+    ],
+  },
+];
+type DrawerProps = { isOpen: boolean; onClose: () => void };
+const CloseIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+  >
+    <path d="m18 6-12 12M6 6l12 12" />
+  </svg>
+);
 
-export function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
-  const drawerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === "Escape") onClose();
-      };
-      window.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.body.style.overflow = "";
-        window.removeEventListener("keydown", handleKeyDown);
-      };
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
+export function ShopDrawer({ isOpen, onClose }: DrawerProps) {
+  const ref = useDrawer(isOpen, onClose, "shop-drawer-open");
   return (
     <div
-      className="fixed inset-0 z-[6000] flex flex-col justify-end bg-black/60 backdrop-blur-sm transition-opacity duration-300"
-      onClick={onClose}
-      aria-modal="true"
+      ref={ref}
+      id="ShopDrawer"
+      className={`shop-drawer${isOpen ? " is-open" : ""}`}
       role="dialog"
+      aria-modal="true"
+      aria-label="Shop oral care collection"
+      aria-hidden={!isOpen}
+      inert={!isOpen}
     >
       <div
-        ref={drawerRef}
-        className="w-full max-h-[88vh] overflow-y-auto bg-[#141515] border-t border-[rgba(255,255,255,0.12)] rounded-t-[32px] text-white shadow-2xl p-6 md:p-8 transform transition-transform duration-300 ease-out"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Grab bar indicator */}
-        <div className="w-12 h-1.5 bg-neutral-600 rounded-full mx-auto mb-6" />
-
-        {/* Header row */}
-        <div className="flex items-center justify-between pb-5 border-b border-[rgba(255,255,255,0.08)]">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight">MIROOOO</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-400 font-mono">
-              US Store · USD
-            </span>
-          </div>
+        className="shop-drawer__overlay"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <aside className="shop-drawer__inner">
+        <div className="shop-drawer__header">
+          <h2 className="shop-drawer__title">Shop</h2>
           <button
             type="button"
+            className="shop-drawer__close"
             onClick={onClose}
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-neutral-800 text-neutral-300 hover:text-white hover:bg-neutral-700 transition"
-            aria-label="Close navigation drawer"
+            aria-label="Close Shop drawer"
           >
-            <X size={18} />
+            <CloseIcon />
           </button>
         </div>
+        <div className="shop-drawer__body">
+          {sections.map((section) => (
+            <div className="shop-drawer__section" key={section.title}>
+              <span className="shop-drawer__section-title">
+                {section.title}
+              </span>
+              <ul className="shop-drawer__list">
+                {section.products.map((product) => (
+                  <li key={product.handle}>
+                    <Link
+                      className="shop-drawer__card"
+                      href={`/products/${product.handle}`}
+                      onClick={onClose}
+                    >
+                      <div className="shop-drawer__thumb">
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          width="140"
+                          height="140"
+                        />
+                      </div>
+                      <div className="shop-drawer__info">
+                        <span className="shop-drawer__eyebrow">
+                          {product.eyebrow}
+                        </span>
+                        <h3 className="shop-drawer__product-title">
+                          {product.title}
+                        </h3>
+                        <span className="shop-drawer__price">
+                          {PRODUCTS[product.handle].formattedPrice}{" "}
+                          {!product.handle.endsWith('-heads') && (
+                            <s className="shop-drawer__compare">{PRODUCTS[product.handle].formattedCompareAt}</s>
+                          )}
+                        </span>
+                      </div>
+                      <svg
+                        className="shop-drawer__arrow"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="m9 18 6-6-6-6" />
+                      </svg>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </div>
+  );
+}
 
-        {/* Section: Shop Products */}
-        <div className="py-6 border-b border-[rgba(255,255,255,0.08)]">
-          <p className="text-xs font-semibold tracking-wider text-neutral-400 uppercase mb-4">
-            Electric Toothbrushes & Heads
-          </p>
-          <div className="grid grid-cols-1 gap-3">
-            {mobileShopLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className="flex items-center justify-between p-3 rounded-2xl bg-neutral-900/60 hover:bg-neutral-800 border border-[rgba(255,255,255,0.04)] transition group"
-              >
-                <div className="flex items-center gap-3">
-                  {item.image && (
-                    <div className="w-12 h-12 rounded-xl bg-neutral-950 overflow-hidden flex-shrink-0 flex items-center justify-center p-1">
-                      <Image
-                        src={item.image}
-                        alt={item.label}
-                        width={48}
-                        height={48}
-                        className="object-contain w-full h-full"
-                      />
+export function MenuDrawer({ isOpen, onClose }: DrawerProps) {
+  const ref = useDrawer(isOpen, onClose, "nav-open");
+  const startY = useRef<number | null>(null);
+  const offset = useRef(0);
+  useEffect(() => {
+    const resize = () => {
+      if (window.innerWidth >= 1024 && isOpen) onClose();
+    };
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, [isOpen, onClose]);
+  return (
+    <div
+      ref={ref}
+      id="MenuDrawer"
+      className="menu-drawer drawer drawer--start"
+      {...(isOpen ? { open: true } : {})}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation"
+      aria-hidden={!isOpen}
+      inert={!isOpen}
+    >
+      <div
+        className="overlay fixed-modal"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div className="drawer__inner">
+        <div
+          className="drawer__header"
+          onTouchStart={(event) => {
+            startY.current = event.touches[0].clientY;
+          }}
+          onTouchMove={(event) => {
+            if (startY.current === null) return;
+            offset.current = Math.max(
+              0,
+              event.touches[0].clientY - startY.current,
+            );
+            const inner =
+              ref.current?.querySelector<HTMLElement>(".drawer__inner");
+            inner?.style.setProperty(
+              "transform",
+              `translate3d(0, ${offset.current}px, 0)`,
+              "important",
+            );
+            inner?.style.setProperty("transition", "none", "important");
+          }}
+          onTouchEnd={() => {
+            const inner =
+              ref.current?.querySelector<HTMLElement>(".drawer__inner");
+            inner?.style.removeProperty("transform");
+            inner?.style.removeProperty("transition");
+            if (offset.current > 100) onClose();
+            startY.current = null;
+            offset.current = 0;
+          }}
+        >
+          <span className="drawer__title" />
+          <button
+            className="button button--secondary button--close drawer__close mobile-panel__close"
+            type="button"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            <CloseIcon />
+          </button>
+        </div>
+        <div className="drawer__content flex flex-col h-full grow shrink">
+          <nav
+            className="relative grow overflow-hidden"
+            aria-label="Mobile navigation"
+          >
+            <ul className="drawer__scrollable drawer__menu relative w-full h-full">
+              <li className="drawer__menu-item--group">
+                <div className="drawer__group-label">Shop</div>
+                {sections.map((section) => (
+                  <div key={section.title}>
+                    <div className="drawer__subgroup-label">
+                      {section.title}
                     </div>
-                  )}
-                  <div>
-                    <span className="font-medium text-sm text-neutral-100 group-hover:text-white">
-                      {item.label}
-                    </span>
-                    {item.badge && (
-                      <span className="ml-2 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-white text-black">
-                        {item.badge}
-                      </span>
-                    )}
+                    <ul className="drawer__submenu">
+                      {section.products.map((product) => (
+                        <li key={product.handle}>
+                          <Link
+                            className="drawer__submenu-item flex flex-col"
+                            href={`/products/${product.handle}`}
+                            onClick={onClose}
+                          >
+                            <span className="drawer__submenu-title">
+                              {product.title}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-                <ArrowRight
-                  size={16}
-                  className="text-neutral-500 group-hover:text-white transform group-hover:translate-x-1 transition"
-                />
-              </Link>
-            ))}
+                ))}
+              </li>
+              {[
+                ["about-us", "About Us"],
+                ["dentalcare-quiz", "Dental Care Quiz"],
+                ["contact-us", "Contact Us"],
+                ["faqs", "FAQs"],
+              ].map(([path, label]) => (
+                <li key={path}>
+                  <Link
+                    className="drawer__menu-item block heading text-2xl leading-none tracking-tight"
+                    href={`/pages/${path}`}
+                    onClick={onClose}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="drawer__footer grid w-full">
+            <div className="drawer__footer-bottom" />
           </div>
-        </div>
-
-        {/* Section: Routine Tools & Discover */}
-        <div className="py-6 border-b border-[rgba(255,255,255,0.08)]">
-          <p className="text-xs font-semibold tracking-wider text-neutral-400 uppercase mb-4">
-            Interactive Tools
-          </p>
-          <div className="grid grid-cols-1 gap-2">
-            {mobileToolsLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className="flex items-center justify-between py-2.5 px-3 rounded-xl text-sm text-neutral-300 hover:text-white hover:bg-neutral-900 transition"
-              >
-                <span>{item.label}</span>
-                <ArrowRight size={14} className="text-neutral-600" />
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Section: Help & Support */}
-        <div className="py-6">
-          <p className="text-xs font-semibold tracking-wider text-neutral-400 uppercase mb-4">
-            Help & Information
-          </p>
-          <div className="grid grid-cols-2 gap-2 text-sm text-neutral-400">
-            {secondaryNavigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className="py-2 hover:text-white transition"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Footer info strip */}
-        <div className="pt-4 border-t border-[rgba(255,255,255,0.08)] flex flex-col gap-1 text-xs text-neutral-500">
-          <p>Delaware entity: xPage Drop LLC</p>
-          <p>Support: support@trymiroooo.com · Mon-Fri 9am-5pm EST</p>
         </div>
       </div>
     </div>

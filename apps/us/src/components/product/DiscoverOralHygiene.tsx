@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ViewportVideo } from '@/components/media/ViewportVideo';
 
 export function DiscoverOralHygiene() {
   return (
@@ -16,18 +17,37 @@ export function DiscoverOralHygiene() {
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
+      <style>{`
+        .oral-hygiene-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          width: 100%;
+          min-height: 520px;
+          background: #000000;
+          align-items: stretch;
+        }
+        .oral-hygiene-media {
+          order: -1;
+          position: relative;
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          overflow: hidden;
+          background: #000000;
+        }
+        @media (min-width: 1024px) {
+          .oral-hygiene-grid {
+            grid-template-columns: 1fr 1fr !important;
+            min-height: 600px !important;
+          }
+          .oral-hygiene-media {
+            order: 2 !important;
+            aspect-ratio: auto !important;
+            height: 100% !important;
+          }
+        }
+      `}</style>
       <div style={{ width: '100%', maxWidth: '1856px', margin: '0 auto' }}>
-        <div
-          className="oral-hygiene-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            width: '100%',
-            minHeight: '600px',
-            background: '#000000',
-            alignItems: 'stretch',
-          }}
-        >
+        <div className="oral-hygiene-grid">
           {/* Left Column: Typography & Feature Bullets */}
           <div
             className="oral-hygiene-content"
@@ -75,7 +95,7 @@ export function DiscoverOralHygiene() {
                 }}
               >
                 <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#ffffff', flexShrink: 0 }}></span>
-                <span>Slim, protective travel case included (fits seamlessly into your carry-on, dopp kit, or handbag without taking up space)</span>
+                <span>Slim, protective travel case included (fits seamlessly into your carry-on, wash bag, or handbag without taking up space)</span>
               </li>
               <li
                 style={{
@@ -90,7 +110,7 @@ export function DiscoverOralHygiene() {
                 }}
               >
                 <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#ffffff', flexShrink: 0 }}></span>
-                <span>60+ days of long-lasting battery life (no need to hunt for chargers or carry cables on trips)</span>
+                <span>60+ days of long-lasting battery life (no need to hunt for chargers or carry cables on holidays)</span>
               </li>
               <li
                 style={{
@@ -111,8 +131,8 @@ export function DiscoverOralHygiene() {
           </div>
 
           {/* Right Column: Demo Video */}
-          <div className="oral-hygiene-media" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: '#000000', minHeight: '380px' }}>
-            <video
+          <div className="oral-hygiene-media">
+            <ViewportVideo
               id="oral-hygiene-video"
               src="/assets_ref/x/miroooo-video-3.mp4"
               autoPlay
@@ -121,7 +141,7 @@ export function DiscoverOralHygiene() {
               playsInline
               preload="none"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000', pointerEvents: 'none' }}
-            ></video>
+            ></ViewportVideo>
           </div>
         </div>
       </div>

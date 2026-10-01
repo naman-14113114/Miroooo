@@ -1,5 +1,6 @@
 'use client';
 
+import { PRODUCTS } from '@/data/products';
 import React from 'react';
 
 interface ComparisonTableProps {
@@ -7,18 +8,18 @@ interface ComparisonTableProps {
 }
 
 export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
-  const currentPrice = isX2 ? '$89.70' : '$76.70';
-  const comparePrice = isX2 ? '$180.70' : '$154.70';
-  const oldPrice = isX2 ? '$180.70' : '$154.70';
+  const product = PRODUCTS[isX2 ? 'miroooo-x2' : 'miroooo-x'];
+  const currentPrice = product.formattedPrice;
+  const oldPrice = product.formattedCompareAt;
   const modelName = isX2 ? 'Miroooo X2' : 'Miroooo X1';
   const winnerImg = isX2
     ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp'
-    : '/assets_ref/x/gallery/miroooo-x-sonic-electric-toothbrush-silver.webp';
+    : '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp';
 
   return (
     <div
       id="shopify-section-template--miroooo-comparison"
-      className="shopify-section"
+      className={`shopify-section ${isX2 ? '' : 'x1-comparison'}`}
       style={{
         background: '#000000',
         color: '#ffffff',
@@ -349,13 +350,13 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               </div>
               <div className="miroooo-comp-cell">Ultra-Light Weight</div>
               <div className="miroooo-comp-cell">Battery Life</div>
-              <div className="miroooo-comp-cell">Luxury travel case</div>
+              <div className="miroooo-comp-cell">{isX2 ? 'Luxury travel case' : 'Free Travel Case'}</div>
               <div className="miroooo-comp-cell">Wall-mounted storage</div>
               <div className="miroooo-comp-cell">Miroooo dental care app</div>
-              <div className="miroooo-comp-cell">Aluminum Alloy Body</div>
+              <div className="miroooo-comp-cell">Aluminium Alloy Body</div>
               <div className="miroooo-comp-cell">Free Extra Brush Heads</div>
-              <div className="miroooo-comp-cell">Whisper Quiet (&lt;45 dB)</div>
-              <div className="miroooo-comp-cell">Free Tracked US Delivery</div>
+              <div className="miroooo-comp-cell">Whisper Quiet (&lt;{isX2 ? '45' : '50'} dB)</div>
+              <div className="miroooo-comp-cell">Free Tracked Delivery</div>
               <div className="miroooo-comp-cell miroooo-comp-cell--price" style={{ fontSize: '1rem', color: '#ffffff' }}>Price</div>
             </div>
 
@@ -406,7 +407,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell--head">
                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>Oral-B iO6</div>
                 <div className="miroooo-comp-head-img-wrap">
-                  <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-oral-b-io6.webp" alt="Oral-B iO6" />
+                  <img src="/assets_ref/x/compare-oralb.webp" alt="Oral-B iO6" />
                 </div>
               </div>
               <div className="miroooo-comp-cell">
@@ -435,7 +436,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
               <div className="miroooo-comp-cell miroooo-comp-cell--price">
-                <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>$149</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>£149 (UK)</span>
               </div>
             </div>
 
@@ -443,7 +444,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell--head">
                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>Philips 9000</div>
                 <div className="miroooo-comp-head-img-wrap">
-                  <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-philips-sonicare-diamondclean-9000.webp" alt="Philips Sonicare 9000" />
+                  <img src="/assets_ref/x/compare-philips.webp" alt="Philips Sonicare 9000" />
                 </div>
               </div>
               <div className="miroooo-comp-cell">
@@ -472,7 +473,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
               <div className="miroooo-comp-cell miroooo-comp-cell--price">
-                <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>$219</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>£219 (UK)</span>
               </div>
             </div>
 
@@ -480,7 +481,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell--head">
                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '8px' }}>Suri 2.0</div>
                 <div className="miroooo-comp-head-img-wrap">
-                  <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-suri-sustainable-sonic-toothbrush.webp" alt="Suri 2.0" />
+                  <img src="/assets_ref/x/compare-suri.webp" alt="Suri 2.0" />
                 </div>
               </div>
               <div className="miroooo-comp-cell">
@@ -509,7 +510,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
               <div className="miroooo-comp-cell miroooo-comp-cell--price">
-                <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>$95</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>£85 (UK)</span>
               </div>
             </div>
           </div>
@@ -525,15 +526,15 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               </div>
               <div className="miroooo-comp-m-head-col">
                 <span className="miroooo-comp-m-brand-name">Oral-B iO6</span>
-                <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-oral-b-io6.webp" alt="Oral-B iO6" className="miroooo-comp-m-head-img" />
+                <img src="/assets_ref/x/compare-oralb.webp" alt="Oral-B iO6" className="miroooo-comp-m-head-img" />
               </div>
               <div className="miroooo-comp-m-head-col">
                 <span className="miroooo-comp-m-brand-name">Philips 9000</span>
-                <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-philips-sonicare-diamondclean-9000.webp" alt="Philips 9000" className="miroooo-comp-m-head-img" />
+                <img src="/assets_ref/x/compare-philips.webp" alt="Philips 9000" className="miroooo-comp-m-head-img" />
               </div>
               <div className="miroooo-comp-m-head-col">
                 <span className="miroooo-comp-m-brand-name">Suri 2.0</span>
-                <img src="/assets_ref/competitors/miroooo-x2-comparison-competitor-suri-sustainable-sonic-toothbrush.webp" alt="Suri 2.0" className="miroooo-comp-m-head-img" />
+                <img src="/assets_ref/x/compare-suri.webp" alt="Suri 2.0" className="miroooo-comp-m-head-img" />
               </div>
             </div>
 
@@ -569,7 +570,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
 
             {/* Feature: Luxury travel case */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">Luxury travel case</div>
+              <div className="miroooo-comp-m-feature-title">{isX2 ? 'Luxury travel case' : 'Free Travel Case'}</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -588,7 +589,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
 
             {/* Feature: Wall-mounted storage */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">Wall-mounted storage</div>
+              <div className="miroooo-comp-m-feature-title">{isX2 ? 'Wall-mounted storage' : 'Aluminium Alloy Body'}</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -626,7 +627,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
 
             {/* Feature: Whisper Quiet */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">Whisper Quiet (&lt;45 dB)</div>
+              <div className="miroooo-comp-m-feature-title">Whisper Quiet (&lt;{isX2 ? '45' : '50'} dB)</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -643,9 +644,9 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               </div>
             </div>
 
-            {/* Feature: Free Tracked US Delivery */}
+            {/* Feature: Free Tracked Delivery */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">Free Tracked US Delivery</div>
+              <div className="miroooo-comp-m-feature-title">Free Tracked Delivery</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -676,13 +677,13 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
                   </div>
                 </div>
                 <div className="miroooo-comp-m-val-cell">
-                  <span className="miroooo-comp-m-price-competitor">$149</span>
+                  <span className="miroooo-comp-m-price-competitor">£149 (UK)</span>
                 </div>
                 <div className="miroooo-comp-m-val-cell">
-                  <span className="miroooo-comp-m-price-competitor">$219</span>
+                  <span className="miroooo-comp-m-price-competitor">£219 (UK)</span>
                 </div>
                 <div className="miroooo-comp-m-val-cell">
-                  <span className="miroooo-comp-m-price-competitor">$95</span>
+                  <span className="miroooo-comp-m-price-competitor">£85 (UK)</span>
                 </div>
               </div>
             </div>

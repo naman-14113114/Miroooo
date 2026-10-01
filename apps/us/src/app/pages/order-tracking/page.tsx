@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { OrderTracking } from "@/components/pages/OrderTracking";
+import { PolicyPage } from "@/components/policies/PolicyPage";
 
 export const metadata: Metadata = {
-  title: "Track Your Order | Miroooo US Delivery Portal",
+  title: "Shipping and Delivery Policy | Miroooo US",
   description:
-    "Track the delivery status and courier transit of your Miroooo electric toothbrush order across the US.",
+    "Read processing, delivery and tracking guidance for Miroooo US orders.",
   alternates: { canonical: "https://miroooo.us/pages/order-tracking" },
 };
 
 export default function Page() {
-  return <OrderTracking />;
+  return <PolicyPage slug="shipping-policy" />;
 }

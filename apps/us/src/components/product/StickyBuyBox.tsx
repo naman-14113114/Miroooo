@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Product } from '@/data/products';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 
 interface StickyBuyBoxProps {
@@ -9,7 +10,8 @@ interface StickyBuyBoxProps {
 }
 
 export function StickyBuyBox({ product }: StickyBuyBoxProps) {
-  const { addItem, openCart } = useCart();
+  const router = useRouter();
+  const { addItem } = useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export function StickyBuyBox({ product }: StickyBuyBoxProps) {
               productHandle: product.handle,
               quantity: 1,
             });
-            openCart();
+            router.push('/cart');
           }}
           className="px-6 py-2.5 rounded-full bg-white text-black font-extrabold text-[13.5px] hover:bg-neutral-200 active:scale-95 transition-all shadow-lg flex-shrink-0"
         >

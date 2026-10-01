@@ -1,0 +1,190 @@
+
+    body[data-page="refund-policy"] {
+      background-color: #080909;
+      color: #f4f4f1;
+    }
+
+    .policy-page-wrapper {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      padding: clamp(64px, 8vw, 100px) 20px clamp(80px, 10vw, 120px);
+      background-color: #080909;
+    }
+
+    /* Ambient Background Glows */
+    .policy-ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.12;
+    }
+
+    .policy-ambient-glow--1 {
+      top: 40px;
+      left: -120px;
+      width: 440px;
+      height: 440px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(80px);
+    }
+
+    .policy-ambient-glow--2 {
+      bottom: 80px;
+      right: -120px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(90px);
+    }
+
+    .policy-content-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin-inline: auto;
+    }
+
+    /* Header */
+    .policy-header {
+      text-align: center;
+      margin-bottom: clamp(36px, 5vw, 56px);
+    }
+
+    .policy-title {
+      font-size: clamp(34px, 5.5vw, 54px);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .policy-title em {
+      font-style: italic;
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    .policy-subtitle {
+      font-size: clamp(15px, 2vw, 17px);
+      line-height: 1.65;
+      color: #a1a1aa;
+      max-width: 620px;
+      margin: 0 auto;
+      font-weight: 350;
+    }
+
+    /* Content Card */
+    .policy-card {
+      border-radius: 24px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: #e6e6e6;
+      color: #111111;
+      padding: clamp(24px, 4vw, 48px);
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    .policy-body {
+      color: #111111;
+      font-size: clamp(15px, 1.05vw, 16px);
+      line-height: 1.75;
+      font-weight: 400;
+    }
+
+    .policy-meta-group {
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .policy-meta {
+      font-size: 0.875rem;
+      color: #666666;
+      margin-bottom: 0.25rem;
+      line-height: 1.5;
+    }
+
+    .policy-body h2 {
+      font-size: clamp(18px, 2.2vw, 21px);
+      font-weight: 700;
+      color: #111111;
+      margin-top: 2.25rem;
+      margin-bottom: 0.85rem;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 0.4rem;
+    }
+
+    .policy-body h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .policy-body h3 {
+      font-size: clamp(15px, 1.1vw, 16.5px);
+      font-weight: 600;
+      color: #111111;
+      margin-top: 1.25rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .policy-body p {
+      font-size: clamp(15px, 1.05vw, 16px);
+      line-height: 1.75;
+      color: #111111;
+      margin-bottom: 1.25rem;
+      font-weight: 400;
+    }
+
+    .policy-body ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      color: #111111;
+    }
+
+    .policy-body ol {
+      list-style-type: decimal;
+      padding-left: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      color: #111111;
+    }
+
+    .policy-body li {
+      font-size: clamp(15px, 1.05vw, 16px);
+      line-height: 1.75;
+      color: #111111;
+      margin-bottom: 0.65rem;
+    }
+
+    .policy-body strong {
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .policy-body a {
+      color: #111111;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+    }
+
+    .policy-body a:hover {
+      opacity: 0.75;
+    }
+
+    .policy-footer-note {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      font-size: 13.5px;
+      color: #444444;
+    }

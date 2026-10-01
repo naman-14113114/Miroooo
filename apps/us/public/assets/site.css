@@ -1784,6 +1784,12 @@ html.js #MenuDrawer button.drawer__close,
   right: 16px !important;
   width: 36px !important;
   height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1;
+  flex: none !important;
   border-radius: 50% !important;
   background: #000000 !important;
   border: none !important;
@@ -2288,6 +2294,22 @@ html.js #MenuDrawer[active] .drawer__menu > li {
   opacity: 1;
   transform: scale(1.35);
   box-shadow: 0 0 0 1px #080909;
+}
+
+.gb-product-card__media .flickity-page-dots { gap: 0; bottom: 0; }
+.gallery-dot-button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.gallery-dot-button:focus-visible { outline: 2px solid #080909; outline-offset: -4px; border-radius: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .gb-product-card__track { transition: none; }
 }
 
 /* Badges: Save 28% (Top-Left) and Rating (Top-Right) */
@@ -5048,7 +5070,7 @@ body[data-page="contact"] .site-header {
 
 .contact-help-cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   margin-bottom: 36px;
 }
@@ -6467,6 +6489,10 @@ body.nav-open .miroooo-sticky-cart-wrap {
   transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1), fill 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+.button--outline .btn-text svg path {
+  stroke: currentColor !important;
+}
+
 .button--outline:hover .btn-text,
 .button--outline:focus-visible .btn-text {
   color: #000000 !important;
@@ -6507,31 +6533,26 @@ body.nav-open .miroooo-sticky-cart-wrap {
 
 @media (max-width: 640px) {
   .miroooo-sticky-cart-wrap {
-    bottom: max(8px, env(safe-area-inset-bottom, 8px)) !important;
-    left: 8px !important;
-    right: 8px !important;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
   }
 
   .miroooo-sticky-pill {
-    min-height: 52px !important;
-    padding: 6px 8px !important;
-    border-radius: 9999px !important;
+    min-height: 52px;
+    padding: 6px 8px;
+    border-radius: 9999px;
   }
 
   .miroooo-sticky-left {
-    display: none !important;
+    display: none;
   }
 
-  .miroooo-sticky-pill .miroooo-sticky-btn,
-  .miroooo-sticky-pill #sticky-bar-cta-btn,
-  .miroooo-sticky-btn,
-  #sticky-bar-cta-btn {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 100% !important;
-    min-height: 44px !important;
-    padding: 0 16px !important;
-    font-size: 0.9rem !important;
+  .miroooo-sticky-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 0.9rem;
   }
 }
 
@@ -7869,18 +7890,5 @@ button[style*="background: #ffffff"] .miroooo-button-click-loader {
   display: block !important;
 }
 
-/* Suppress any third-party floating loaders or bottom-right chat indicators */
-iframe[src*="tawk.to"],
-iframe[title*="chat widget"],
-div[id*="tawk"],
-div[class*="tawk"],
-.widget-visible,
-#tawk-default-container {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
 
-
-
+\n

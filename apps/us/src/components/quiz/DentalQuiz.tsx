@@ -2,28 +2,41 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { QUIZ_STEPS } from '@/data/quiz';
 import { PRODUCTS } from '@/data/products';
 import { useCart } from '@/context/CartContext';
+import { formatUSD } from '@/lib/cart';
 
 export function DentalQuiz() {
-  const { addItem, openCart } = useCart();
+  const { addItem } = useCart();
+  const router = useRouter();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isCompleted, setIsCompleted] = useState(false);
 
   const step = QUIZ_STEPS[currentStepIndex];
-  const progressPercent = Math.round(((currentStepIndex + 1) / QUIZ_STEPS.length) * 100);
+  const totalSteps = QUIZ_STEPS.length;
+  const progressPercent = Math.round(((currentStepIndex + 1) / totalSteps) * 100);
+
+  const currentSelection = answers[step?.name] || '';
 
   const handleSelectOption = (value: string) => {
-    const updated = { ...answers, [step.name]: value };
-    setAnswers(updated);
+    setAnswers((prev) => ({ ...prev, [step.name]: value }));
+  };
 
-    if (currentStepIndex < QUIZ_STEPS.length - 1) {
+  const handleNext = () => {
+    if (!currentSelection) return;
+    if (currentStepIndex < totalSteps - 1) {
       setCurrentStepIndex((prev) => prev + 1);
     } else {
       setIsCompleted(true);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentStepIndex > 0) {
+      setCurrentStepIndex((prev) => prev - 1);
     }
   };
 
@@ -43,206 +56,253 @@ export function DentalQuiz() {
     answers.lifestyle === 'shower-brushing';
 
   const recommendedProduct = isX2Recommended ? PRODUCTS['miroooo-x2'] : PRODUCTS['miroooo-x'];
+  const isBundle = answers.finish === 'bundle-two';
   const recommendedColor =
     answers.finish === 'pink' ? 'Pink' : answers.finish === 'grey' ? 'Grey' : 'Silver';
 
+  const productImage =
+    recommendedProduct.variants.find((v) => v.color.toLowerCase() === recommendedColor.toLowerCase())
+      ?.image || recommendedProduct.galleryImages[0]?.src || '';
+
   return (
-    <div className="dental-quiz-container max-w-3xl mx-auto px-4 sm:px-6 py-12 text-white">
-      {/* Header */}
-      <div className="text-center space-y-3 mb-10">
-        <span className="text-[11px] font-bold uppercase tracking-widest text-white/50 px-3 py-1 rounded-full bg-white/10 border border-white/10">
-          Personalized Oral Care
-        </span>
-        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-          Find Your Exact Miroooo Routine
-        </h1>
-        <p className="text-[14.5px] text-white/70 max-w-xl mx-auto">
-          In 60 seconds, compare Miroooo X1 and X2 and match a two-minute routine tailored to your brushing habits.
-        </p>
-      </div>
+    <main id="main">
+      {/* Hero Header */}
+      <header className="quiz-hero">
+        <div className="site-shell">
+          <p className="eyebrow">PERSONALISED ORAL CARE</p>
+          <h1>Find your exact Miroooo routine.</h1>
+          <p className="lead">
+            In 60 seconds, compare Miroooo X1 and X2 and build a two-minute routine around your preferences.
+          </p>
+          <p className="quiz-health-note" role="note">
+            This tool provides general product and routine guidance, not a dental diagnosis. Persistent bleeding,
+            pain, swelling or sensitivity should be discussed with a dentist.
+          </p>
+        </div>
+      </header>
 
-      {!isCompleted ? (
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#111213] border border-white/10 shadow-2xl space-y-6">
-          {/* Progress Meta */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-[12px] font-bold uppercase tracking-wider text-white/60">
-              <span>
-                Step {step.step} of {QUIZ_STEPS.length}
-              </span>
-              <div className="flex items-center gap-4">
-                <span>{progressPercent}% Completed</span>
-                <button
-                  type="button"
-                  onClick={handleReset}
-                  className="hover:text-white transition-colors"
-                >
-                  ↺ Reset
-                </button>
-              </div>
-            </div>
+      {/* Quiz Flow Section */}
+      <section className="quiz-section" id="quiz-main" aria-label="Personalised Dental Care Routine Quiz">
+        <div className="site-shell">
+          <div className="quiz-card-container" id="quiz-card-container">
+            {!isCompleted ? (
+              <>
+                {/* Interactive Progress Bar */}
+                <div className="quiz-progress" id="quiz-progress-wrapper" aria-label="Quiz progress">
+                  <div className="quiz-progress-meta">
+                    <span className="quiz-step-indicator" id="quiz-step-label">
+                      Step {currentStepIndex + 1} of {totalSteps}
+                    </span>
+                    <div className="quiz-progress-meta-actions">
+                      <span className="quiz-progress-percent" id="quiz-progress-percent">
+                        {progressPercent}% Completed
+                      </span>
+                      <button
+                        type="button"
+                        className="quiz-reset-btn"
+                        id="quiz-reset-btn"
+                        onClick={handleReset}
+                        aria-label="Reset Quiz"
+                        title="Reset quiz and start over"
+                      >
+                        ↺ Reset Quiz
+                      </button>
+                    </div>
+                  </div>
+                  <div className="quiz-progress-track" aria-hidden="true">
+                    <div
+                      className="quiz-progress-bar"
+                      id="quiz-progress-bar"
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
+                </div>
 
-            {/* Progress Track */}
-            <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-              <div
-                className="h-full bg-white transition-all duration-300 rounded-full"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-          </div>
+                {/* Form Step */}
+                <form id="quiz-form" noValidate onSubmit={(e) => e.preventDefault()}>
+                  <fieldset className="quiz-step is-active" data-step={currentStepIndex + 1}>
+                    <legend>{step.legend}</legend>
+                    <p className="quiz-step-desc">{step.description}</p>
 
-          {/* Question Body */}
-          <div className="space-y-2 pt-2">
-            <h2 className="text-xl sm:text-2xl font-bold text-white">
-              {step.legend}
-            </h2>
-            <p className="text-[13.5px] text-white/60">
-              {step.description}
-            </p>
-          </div>
+                    <div className="quiz-options-grid" role="radiogroup" aria-label={step.legend}>
+                      {step.options.map((opt) => {
+                        const isSelected = currentSelection === opt.value;
+                        return (
+                          <label
+                            key={opt.id}
+                            className={`quiz-option ${isSelected ? 'is-selected' : ''}`}
+                            data-option-id={opt.id}
+                            onClick={() => handleSelectOption(opt.value)}
+                          >
+                            <input
+                              type="radio"
+                              name={step.name}
+                              value={opt.value}
+                              checked={isSelected}
+                              onChange={() => handleSelectOption(opt.value)}
+                              required
+                            />
+                            <span className="quiz-option-radio-visual" aria-hidden="true">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5">
+                                <polyline points="20 6 9 17 4 12" />
+                              </svg>
+                            </span>
+                            <div className="quiz-option-content">
+                              <span className="quiz-option-title">{opt.title}</span>
+                              <span className="quiz-option-subtitle">{opt.subtitle}</span>
+                            </div>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
 
-          {/* Options Grid */}
-          <div className="space-y-3 pt-2">
-            {step.options.map((opt) => {
-              const isSelected = answers[step.name] === opt.value;
-              return (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => handleSelectOption(opt.value)}
-                  className={`w-full p-4 rounded-2xl border text-left flex items-start gap-4 transition-all ${
-                    isSelected
-                      ? 'border-white bg-white/10 ring-2 ring-white/20'
-                      : 'border-white/10 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.05]'
-                  }`}
-                >
+                  {/* Navigation Controls */}
+                  <div className="quiz-controls" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px', paddingTop: '16px', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+                    {currentStepIndex > 0 ? (
+                      <button
+                        type="button"
+                        className="button button--secondary"
+                        onClick={handlePrev}
+                        style={{ padding: '10px 20px', fontSize: '13.5px' }}
+                      >
+                        <span className="btn-text">← Previous</span>
+                      </button>
+                    ) : (
+                      <span />
+                    )}
+
+                    <button
+                      type="button"
+                      className="button button--primary"
+                      onClick={handleNext}
+                      disabled={!currentSelection}
+                      style={{ padding: '10px 24px', fontSize: '14px', opacity: currentSelection ? 1 : 0.4 }}
+                    >
+                      <span className="btn-fill" data-fill />
+                      <span className="btn-text">
+                        {currentStepIndex === totalSteps - 1 ? 'See Recommended Routine →' : 'Continue →'}
+                      </span>
+                    </button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              /* Results Card */
+              <div className="quiz-results-card" style={{ padding: '28px 24px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
                   <span
-                    className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${
-                      isSelected ? 'border-white bg-white' : 'border-white/30'
-                    }`}
+                    style={{
+                      display: 'inline-block',
+                      padding: '4px 14px',
+                      borderRadius: '999px',
+                      background: 'var(--signal-dark, #15803d)',
+                      color: '#ffffff',
+                      fontSize: '11px',
+                      fontWeight: 800,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      marginBottom: '10px',
+                    }}
                   >
-                    {isSelected && <span className="w-2 h-2 rounded-full bg-black" />}
+                    Your Personal Match
                   </span>
+                  <h2 style={{ fontSize: '26px', fontWeight: 800, color: '#111111', margin: '0 0 8px 0', lineHeight: 1.2 }}>
+                    We recommend the {recommendedProduct.name}
+                  </h2>
+                  <p style={{ fontSize: '14px', color: '#555555', margin: 0 }}>
+                    Matched to your brushing preferences, sensitivity level, and {recommendedColor} finish.
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                    gap: '24px',
+                    alignItems: 'center',
+                    background: '#ffffff',
+                    padding: '24px',
+                    borderRadius: '18px',
+                    border: '1px solid rgba(0,0,0,0.08)',
+                    marginBottom: '24px',
+                  }}
+                >
+                  <div style={{ textAlign: 'center' }}>
+                    <img
+                      src={productImage}
+                      alt={recommendedProduct.name}
+                      style={{ width: '100%', maxHeight: '220px', objectFit: 'contain', margin: '0 auto 12px' }}
+                    />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                      <strong style={{ fontSize: '22px', fontWeight: 900, color: '#111111' }}>
+                        {formatUSD(isBundle ? recommendedProduct.bundles[1].price : recommendedProduct.price)}
+                      </strong>
+                      <s style={{ fontSize: '14px', color: '#888888' }}>
+                        {formatUSD(isBundle ? recommendedProduct.compareAt * 2 : recommendedProduct.compareAt)}
+                      </s>
+                      <span style={{ fontSize: '12px', fontWeight: 800, color: '#15803d', background: 'rgba(21,128,61,0.1)', padding: '2px 8px', borderRadius: '4px' }}>
+                        Save {Math.round((1 - (isBundle ? recommendedProduct.bundles[1].price / 2 : recommendedProduct.price) / recommendedProduct.compareAt) * 100)}%
+                      </span>
+                    </div>
+                  </div>
 
                   <div>
-                    <strong className="block text-[14.5px] font-semibold text-white">
-                      {opt.title}
-                    </strong>
-                    <span className="text-[12.5px] text-white/60 block mt-0.5">
-                      {opt.subtitle}
-                    </span>
+                    <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#111111', margin: '0 0 10px 0' }}>
+                      Key Tailored Highlights
+                    </h3>
+                    <ul style={{ margin: '0 0 16px 0', paddingLeft: '20px', fontSize: '13.5px', color: '#444444', lineHeight: 1.7 }}>
+                      {recommendedProduct.highlights.map((h) => (
+                        <li key={h}>{h}</li>
+                      ))}
+                    </ul>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <button
+                        type="button"
+                        className="button button--primary"
+                        onClick={() => {
+                          addItem({
+                            productHandle: recommendedProduct.handle,
+                            color: recommendedColor,
+                            quantity: isBundle ? 2 : 1,
+                          });
+                          router.push('/cart');
+                        }}
+                        style={{ width: '100%', padding: '12px 20px', fontSize: '14px' }}
+                      >
+                        <span className="btn-fill" data-fill />
+                        <span className="btn-text">
+                          Add {isBundle ? 'Bundle (2x Brushes + Free Heads)' : 'to Cart'} ({formatUSD(isBundle ? recommendedProduct.bundles[1].price : recommendedProduct.price)}) <span aria-hidden="true">↗</span>
+                        </span>
+                      </button>
+
+                      <Link
+                        href={`/products/${recommendedProduct.handle}?color=${recommendedColor}`}
+                        className="button button--secondary"
+                        style={{ width: '100%', padding: '10px 20px', fontSize: '13.5px', textAlign: 'center' }}
+                      >
+                        <span className="btn-fill" data-fill />
+                        <span className="btn-text">View Product Page</span>
+                      </Link>
+                    </div>
                   </div>
-                </button>
-              );
-            })}
-          </div>
+                </div>
 
-          {/* Back Button */}
-          {currentStepIndex > 0 && (
-            <div className="pt-4 border-t border-white/5">
-              <button
-                type="button"
-                onClick={() => setCurrentStepIndex((prev) => prev - 1)}
-                className="text-[13px] text-white/60 hover:text-white font-medium"
-              >
-                ← Previous Question
-              </button>
-            </div>
-          )}
-        </div>
-      ) : (
-        /* Results Card */
-        <div className="p-6 sm:p-10 rounded-3xl bg-[#111213] border border-white/10 shadow-2xl space-y-8 animate-fade-in">
-          <div className="text-center space-y-2">
-            <span className="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/30">
-              Your Perfect Match
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              We recommend the {recommendedProduct.name}
-            </h2>
-            <p className="text-[14px] text-white/70 max-w-lg mx-auto">
-              Based on your brushing priorities, sensitivity level, and daily routine habits.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-white/[0.02] p-6 rounded-2xl border border-white/5">
-            <div className="md:col-span-5 relative aspect-square rounded-2xl overflow-hidden bg-black border border-white/10">
-              <Image
-                src={recommendedProduct.galleryImages[0]?.src || ''}
-                alt={recommendedProduct.name}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 40vw"
-              />
-            </div>
-
-            <div className="md:col-span-7 space-y-4">
-              <div>
-                <h3 className="text-xl font-bold text-white">
-                  {recommendedProduct.name} ({recommendedColor} Finish)
-                </h3>
-                <p className="text-[13.5px] text-white/70 mt-1">
-                  {recommendedProduct.description}
-                </p>
+                <div style={{ textAlign: 'center' }}>
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    style={{ background: 'none', border: 'none', color: '#666666', fontSize: '13px', textDecoration: 'underline', cursor: 'pointer' }}
+                  >
+                    ↺ Retake Quiz with Different Preferences
+                  </button>
+                </div>
               </div>
-
-              <div className="flex items-baseline gap-3">
-                <span className="text-2xl font-extrabold text-white">
-                  {recommendedProduct.formattedPrice}
-                </span>
-                <s className="text-sm text-white/40">
-                  {recommendedProduct.formattedCompareAt}
-                </s>
-                <span className="text-rose-400 font-bold text-xs uppercase">
-                  Save 50%
-                </span>
-              </div>
-
-              <ul className="space-y-1.5 text-[13px] text-white/80">
-                {recommendedProduct.highlights.map((h) => (
-                  <li key={h} className="flex items-center gap-2">
-                    <span className="text-emerald-400">✓</span>
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    addItem({
-                      productHandle: recommendedProduct.handle,
-                      color: recommendedColor,
-                      quantity: 1,
-                    });
-                    openCart();
-                  }}
-                  className="px-6 py-3 rounded-full bg-white text-black font-extrabold text-[14px] hover:bg-neutral-200 transition-all shadow-lg flex-1 text-center"
-                >
-                  Add To Cart ({recommendedProduct.formattedPrice})
-                </button>
-
-                <Link
-                  href={`/products/${recommendedProduct.handle}?color=${recommendedColor}`}
-                  className="px-6 py-3 rounded-full bg-white/10 text-white font-bold text-[14px] hover:bg-white/20 transition-all border border-white/15 text-center"
-                >
-                  View Product
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center pt-2">
-            <button
-              type="button"
-              onClick={handleReset}
-              className="text-[13px] text-white/50 hover:text-white underline"
-            >
-              Take the quiz again
-            </button>
+            )}
           </div>
         </div>
-      )}
-    </div>
+      </section>
+    </main>
   );
 }

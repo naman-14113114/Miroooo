@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const queryCountry = url.searchParams.get("country") || "";
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const queryCountry = searchParams.get("country") || "";
   const headerCountry =
     req.headers.get("x-vercel-ip-country") ||
     req.headers.get("cf-ipcountry") ||
@@ -24,13 +24,10 @@ export async function GET(req: Request) {
       redirectUrl: null,
     },
     {
+      status: 200,
       headers: {
         "Cache-Control": "no-store, max-age=0",
       },
     }
   );
-}
-
-export async function POST(req: Request) {
-  return GET(req);
 }

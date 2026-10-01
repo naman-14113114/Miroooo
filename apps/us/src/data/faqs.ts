@@ -1,92 +1,141 @@
-export interface FAQItem {
+export interface FaqItem {
+  id: string;
   question: string;
   answer: string;
   category?: string;
 }
 
-export const generalFaqs: FAQItem[] = [
+export const FAQS_GENERAL: FaqItem[] = [
   {
-    category: "Product & Technology",
-    question: "What is the difference between Miroooo X1 and Miroooo X2?",
+    id: 'return-policy',
+    category: 'Returns & Orders',
+    question: 'What is your return policy?',
     answer:
-      "The Miroooo X1 is our ultra-portable sonic electric toothbrush with 32,000 vibrations per minute, 3 brushing modes, and 60+ days of battery life in a 51g unibody design. The Miroooo X2 is our flagship model featuring an upgraded 40,000 VPM motor, dynamic 45° Bass Method oscillating sweep, 360° red halo pressure sensor with auto-throttle, 90-day battery life, and an included floating magnetic charging dock.",
+      'Returns may be requested within 30 days of delivery for damaged, defective, incorrect, or missing items. Please contact our support team at support@trymiroooo.com with your order details and photo/video evidence to receive written return authorization before sending any item back.',
   },
   {
-    category: "Product & Technology",
-    question: "How does the 45° Bass Method sweep work on the Miroooo X2?",
+    id: 'shipping-policy',
+    category: 'Shipping & Delivery',
+    question: 'What is the US shipping policy and delivery timeframe?',
     answer:
-      "Dentists globally recommend the Modified Bass Technique, which angles bristles at 45 degrees towards the gumline to sweep plaque from the gingival sulcus. The Miroooo X2 incorporates a micro-mechanical oscillating linkage that automatically sweeps DuPont filaments in this exact 45° motion, giving you a clinically superior clean without harsh scrubbing.",
+      'We provide free tracked US delivery on qualifying orders. Orders are processed within 1 to 3 business days, and standard tracked delivery transit takes 7 to 20 business days. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel.',
   },
   {
-    category: "Product & Technology",
-    question: "How does the smart red halo pressure sensor protect my gums?",
+    id: 'choosing-brush',
+    category: 'Products',
+    question: 'How do I know which Miroooo toothbrush is right for me?',
     answer:
-      "When you press too hard against your teeth or enamel, the 360° light ring around the neck of the Miroooo X2 illuminates in crimson red and automatically throttles motor amplitude down to prevent enamel abrasion and gum recession.",
+      'Miroooo X1 offers a lightweight, minimalist sonic routine (51g unibody, 3 modes, 60-day battery), while Miroooo X2 is our flagship model adding dynamic 45° Bass sweep vibration, smart red halo pressure defense, 90-day battery life, and floating magnetic wall mount. Take our interactive Dental Care Quiz to find your exact match.',
   },
   {
-    category: "Product & Technology",
-    question: "Is the Miroooo electric toothbrush waterproof?",
+    id: 'ordering',
+    category: 'Returns & Orders',
+    question: 'How do I place my order?',
     answer:
-      "Yes. Both the Miroooo X1 and Miroooo X2 are IPX7 rated and fully submersible up to 1 meter in water for 30 minutes. You can safely rinse the unibody handle under running tap water or use it in the shower.",
+      'Simply choose your preferred model, colour, and bundle tier in our shop or product page, click Add to Cart, and complete checkout through our secure payment gateway.',
   },
   {
-    category: "Battery & Charging",
-    question: "How long does the battery last and how do I recharge it?",
+    id: 'shipping-costs',
+    category: 'Shipping & Delivery',
+    question: 'What are the shipping costs?',
     answer:
-      "The Miroooo X1 delivers over 60 days of battery life on a single 2-hour charge, while the Miroooo X2 provides 90+ days. Both recharge via universal USB-C. The Miroooo X2 also includes a magnetic contact dock for effortless bathroom counter storage.",
+      'Standard tracked shipping is 100% free across the United States with no hidden fees or surprise handling charges.',
   },
   {
-    category: "Brush Heads",
-    question: "How often should I replace my Miroooo brush head?",
+    id: 'care-maintenance',
+    category: 'Care & Battery',
+    question: 'How do I care for and maintain my Miroooo toothbrush?',
     answer:
-      "Dental associations recommend replacing your toothbrush head every 3 months, or sooner if filaments appear frayed or discolored. Genuine Miroooo replacement heads feature DuPont™ Tynex® bristles with end-rounded filaments to ensure maximum plaque removal while remaining gentle on enamel.",
+      'To keep your toothbrush in optimal condition, rinse the brush head thoroughly under running water after each use and allow it to air-dry upright. Wipe the aerospace aluminium handle with a damp cloth as needed and recharge via USB-C when the battery indicator signals low power.',
   },
   {
-    category: "Shipping & Delivery",
-    question: "How long does shipping take within the United States?",
+    id: 'head-replacement',
+    category: 'Care & Battery',
+    question: 'How often should I change brush heads?',
     answer:
-      "Orders are processed within 1–3 business days. Once dispatched via USPS Priority or FedEx Ground, transit across the US typically takes 7–20 business days. You will receive an automated tracking link by email as soon as your parcel ships.",
+      'Dentists recommend replacing brush heads every 3 months or sooner if the bristles appear splayed or frayed. We offer convenient 2-packs for both Miroooo X1 and Miroooo X2 with DuPont precision filaments.',
   },
   {
-    category: "Warranty & Guarantee",
-    question: "What is your warranty and 90-day home trial policy?",
+    id: 'waterproof',
+    category: 'Products',
+    question: 'Is the toothbrush waterproof and can I use it in the shower?',
     answer:
-      "Every Miroooo toothbrush comes with a 90-day risk-free home trial. If you are not completely satisfied, contact our support team. Additionally, all Miroooo devices are backed by a comprehensive 2-year manufacturer replacement warranty covering mechanical and electronic defects.",
+      'Yes! Both the Miroooo X1 and Miroooo X2 feature full IPX7 immersion waterproofing, allowing you to comfortably brush in the shower and safely rinse the entire device under running water. Always ensure the handle base and charging connection are dry before connecting to the USB-C charging cable.',
+  },
+  {
+    id: 'tracking-issue',
+    category: 'Shipping & Delivery',
+    question: "My tracking number isn't updating yet",
+    answer:
+      'Tracking links usually take 24 to 72 hours after carrier handover to update in courier systems. If no scan update appears after this timeframe, reach out to our US support desk at support@trymiroooo.com and we will investigate immediately.',
+  },
+  {
+    id: 'payment-methods',
+    category: 'Payments & Security',
+    question: 'What types of payment do you accept?',
+    answer:
+      'We accept Visa, Mastercard, American Express, Maestro, JCB, PayPal, Apple Pay, and Google Pay in USD.',
+  },
+  {
+    id: 'security',
+    category: 'Payments & Security',
+    question: 'How secure is my personal and payment information?',
+    answer:
+      'All transactions are secured with 256-bit SSL encryption and processed via certified PCI-DSS Level 1 compliant gateways. We never store raw payment card data.',
+  },
+  {
+    id: 'contact-support',
+    category: 'Returns & Orders',
+    question: 'How can I contact customer service?',
+    answer:
+      'Reach our US support desk at support@trymiroooo.com or via our Contact Us page. Our hours are Monday through Friday, 9:00 AM to 5:00 PM Eastern Time.',
   },
 ];
 
-export const x1Faqs: FAQItem[] = [
+export const PRODUCT_FAQS_X2: FaqItem[] = [
   {
-    question: "How quiet is the Miroooo X1 linear sonic motor?",
+    id: 'x2-bass-motion',
+    question: 'What makes the 45° Bass sweep movement different?',
     answer:
-      "The acoustic magnetic levitation motor in the Miroooo X1 operates below 50 decibels—significantly quieter than traditional oscillating electric toothbrushes. You experience a smooth, high-frequency micro-vibration without harsh buzzing.",
+      'Unlike simple vibration toothbrushes, Miroooo X2 features a dynamic 45° oscillating drive shaft that replicates the dentist-recommended Bass method, sweeping along the gumline to lift plaque out of gingival pockets without aggressive manual scrubbing.',
   },
   {
-    question: "What modes are available on the Miroooo X1?",
+    id: 'x2-pressure-sensor',
+    question: 'How does the 360° Red Halo Pressure Defense work?',
     answer:
-      "The Miroooo X1 features 3 tailored brushing modes: Clean (everyday thorough plaque removal), Soft (sensitive gums and enamel protection), and White (enhanced stain lifting and surface polishing).",
+      'A built-in optical sensor constantly monitors force. If you apply excessive pressure against your enamel or gums, the 360° halo ring at the neck immediately illuminates red and automatically throttles motor amplitude to protect delicate gum tissue.',
   },
   {
-    question: "Is the travel case included with the Miroooo X1?",
+    id: 'x2-battery',
+    question: 'How long does the battery last on a single charge?',
     answer:
-      "Yes, every Miroooo X1 includes a slim magnetic protective travel case that accommodates the toothbrush unibody handle and one brush head, keeping it clean and protected wherever you go.",
+      'The Miroooo X2 high-density lithium battery delivers up to 90 days of daily brushing (2 minutes twice daily) on a single 2-hour USB-C charge. No bulky charging cradles required.',
+  },
+  {
+    id: 'x2-contents',
+    question: 'What is included in the box?',
+    answer:
+      'Each Miroooo X2 includes the CNC anodized aluminium handle, 1x DuPont™ Bass-sweep brush head, 1x luxury magnetic wall & mirror dock, 1x slim magnetic travel case, 1x USB-C fast charging cable, and a 2-year warranty card.',
   },
 ];
 
-export const x2Faqs: FAQItem[] = [
+export const PRODUCT_FAQS_X1: FaqItem[] = [
   {
-    question: "Why is the 45° Bass sweep mechanism better than normal sonic vibration?",
+    id: 'x1-motor',
+    question: 'How powerful is the linear sonic motor in Miroooo X1?',
     answer:
-      "Standard sonic toothbrushes vibrate in place, relying entirely on user manual angle guidance. The Miroooo X2 combines high-frequency acoustic micro-vibrations (40,000 VPM) with a physical 45° wide-angle sweep that mimics the recommended dental Bass technique automatically.",
+      'Miroooo X1 features a 32,000 micro-vibrations per minute linear acoustic motor that creates micro-bubbles in toothpaste fluids to dislodge plaque between tight teeth while remaining whisper-quiet (<50 dB).',
   },
   {
-    question: "What comes included in the Miroooo X2 box?",
+    id: 'x1-modes',
+    question: 'What are the 3 brushing modes?',
     answer:
-      "Each Miroooo X2 set includes the CNC anodized aluminum handle, 2x DuPont™ precision Bass-sweep brush heads, the luxury magnetic floating counter dock, a hard-shell protective travel case, a braided USB-C charging cable, and the Smile Coach setup card.",
+      'Clean mode (daily balanced plaque removal), Soft mode (for sensitive gums or new electric toothbrush users), and White mode (high frequency polish for surface stains).',
   },
   {
-    question: "Can I use X1 brush heads on the Miroooo X2?",
+    id: 'x1-battery',
+    question: 'How long does the Miroooo X1 battery last?',
     answer:
-      "No. The Miroooo X2 uses an engineered oscillating drive shaft tailored for the 45° Bass sweep, requiring genuine Miroooo X2 replacement heads with the matched coupling mechanism.",
+      'Miroooo X1 delivers 60+ days of standard brushing on a single USB-C charge.',
   },
 ];

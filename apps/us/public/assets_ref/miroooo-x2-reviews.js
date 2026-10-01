@@ -7,6 +7,19 @@
 (function () {
   'use strict';
 
+  // React owns this runtime and disposes its listeners on route changes.
+  const listeners = [];
+  let initializedRoot = null;
+  function listen(target, type, handler, options) {
+    target.addEventListener(type, handler, options);
+    listeners.push(() => target.removeEventListener(type, handler, options));
+  }
+  function dispose() {
+    listeners.splice(0).forEach(remove => remove());
+    initializedRoot = null;
+  }
+
+
   // Master Archive Metadata
   const REVIEWS_SUMMARY = {
     total: 4275,
@@ -48,8 +61,8 @@
       name: 'Amanda R.',
       country: 'Denver, USA',
       rating: 5,
-      date: '2026-09-24',
-      displayDate: '24 September 2026',
+      date: '2026-09-28',
+      displayDate: '28 September 2026',
       variant: 'Pink / Single',
       title: 'Best travel setup ever—worth every penny',
       body: 'Everything about this package is top notch. The magnetic box it comes in is super clean, and the included travel capsule fits right into my makeup bag without taking up space. The USB-C charging means I don\'t have to carry a separate brick when I go on trips. Used the Miroooo X2 by Miroooo this morning and my teeth feel polished. You get way more value here than buying the overpriced brand names.',
@@ -66,8 +79,8 @@
       name: 'Marcus Sterling',
       country: 'London, UK',
       rating: 5,
-      date: '2026-09-24',
-      displayDate: '24 September 2026',
+      date: '2026-09-28',
+      displayDate: '28 September 2026',
       variant: 'Silver / Single',
       title: 'Silent power upgrade from my loud Oral-B iO6',
       body: 'I was using the Oral-B iO6 earlier, but after using this Miroooo X2 by Miroooo for the last few months I can completely see a change on my teeth. They feel way cleaner throughout the day, and the best part is that this brush is so silent! It doesn\'t cause that awful rattling noise like my old Oral-B.',
@@ -80,8 +93,8 @@
       name: 'Elena Rostova',
       country: 'Manchester, UK',
       rating: 5,
-      date: '2026-09-23',
-      displayDate: '23 September 2026',
+      date: '2026-09-27',
+      displayDate: '27 September 2026',
       variant: 'Grey / Single',
       title: '90+ day battery life & USB-C make trips effortless',
       body: 'With the massive 90+ days battery life and standard Type-C charging, I don\'t have to worry about anything. I just put the brush into the slim travel case and went on a month-long trip without packing a single charger or worrying about battery life. Totally recommend to all!',
@@ -94,8 +107,8 @@
       name: 'David K. Thornton',
       country: 'Bristol, UK',
       rating: 5,
-      date: '2026-09-23',
-      displayDate: '23 September 2026',
+      date: '2026-09-27',
+      displayDate: '27 September 2026',
       variant: 'Silver / Single',
       title: 'Upgraded from Miroooo X1 at the same price—huge jump',
       body: 'I\'ve been using the Miroooo X1 for the last few months, but got their new Miroooo X2 now on this deal at the same price. Must say the upgrade is immediately visible. The X2 45-degree sweep is way better than X1, definitely recommend buying now before the offer ends!',
@@ -108,8 +121,8 @@
       name: 'Sophie Chen',
       country: 'Oxford, UK',
       rating: 5,
-      date: '2026-09-22',
-      displayDate: '22 September 2026',
+      date: '2026-09-26',
+      displayDate: '26 September 2026',
       variant: 'Silver / Triple Pack',
       title: 'Definitely recommend getting the Buy 3 bundle',
       body: 'Recommend to buy 3! We got one in Silver, Grey, and Pink for the whole family with the free replacement heads included. The aerospace aluminium unibody feels ultra luxury and getting the bonus DuPont brush heads makes the 3-pack bundle the best value deal around.',
@@ -122,12 +135,12 @@
       name: 'Oliver Harrison',
       country: 'Cambridge, UK',
       rating: 5,
-      date: '2026-09-22',
-      displayDate: '22 September 2026',
+      date: '2026-09-26',
+      displayDate: '26 September 2026',
       variant: 'Grey / Single',
       title: '51g featherweight and whisper quiet vs heavy Philips',
       body: 'So light to use! Not like my previous Philips Sonicare which was heavy in the hand and so noisy as well. This Miroooo X2 is whisper quiet, lightweight at only 51g, and cleans effortlessly without vibrating your entire hand.',
-      images: ['/assets_ref/reviews/miroooo-x2-review-oliver-harrison.png'],
+      images: ['/assets_ref/reviews/miroooo-x2-customer-review-flush-capacitive-switch-led-halo.webp'],
       helpful: 58,
       verified: true
     },
@@ -136,8 +149,8 @@
       name: 'Hannah Wright',
       country: 'Leeds, UK',
       rating: 5,
-      date: '2026-09-21',
-      displayDate: '21 September 2026',
+      date: '2026-09-25',
+      displayDate: '25 September 2026',
       variant: 'Pink / Single',
       title: '45° Bass sweep reversed yellowing and healed my gums',
       body: 'My gum health has never been better! The 45-degree Bass sweep feature cleans every single corner of my teeth without any bleeding. It improved my yellowing teeth from morning coffee and now my smile is right back to natural bright white.',
@@ -150,8 +163,8 @@
       name: 'Liam Gallagher',
       country: 'Glasgow, UK',
       rating: 5,
-      date: '2026-09-21',
-      displayDate: '21 September 2026',
+      date: '2026-09-25',
+      displayDate: '25 September 2026',
       variant: 'Grey / Single',
       title: 'Wall mounted magnetic dock keeps sink spotless',
       body: 'No more worrying about where to store your toothbrush on crowded counters—the magnetic wall mount comes included right in the box. It holds the Miroooo X2 upright seamlessly and keeps the whole bathroom looking super sleek and hygienic.',
@@ -164,8 +177,8 @@
       name: 'Claire Beauchamp',
       country: 'Bath, UK',
       rating: 5,
-      date: '2026-09-20',
-      displayDate: '20 September 2026',
+      date: '2026-09-24',
+      displayDate: '24 September 2026',
       variant: 'Silver / Single',
       title: 'Luxury Apple-grade unboxing and packaging',
       body: 'The presentation packaging is pure luxury. Opening the magnetic box and seeing the aluminum unibody nestled with the travel case felt like unboxing a £300 designer gadget. Made an unforgettable gift.',
@@ -178,12 +191,12 @@
       name: 'Thomas Brauer',
       country: 'Belfast, UK',
       rating: 5,
-      date: '2026-09-20',
-      displayDate: '20 September 2026',
+      date: '2026-09-24',
+      displayDate: '24 September 2026',
       variant: 'Grey / Double Pack',
       title: 'Feels so premium—worth buying even if it cost £99',
       body: 'The build quality feels so remarkably premium that even if they sold it for £99 or more, I would still buy it in a heartbeat. It\'s easily worth double the cost compared to the cheap plastic brushes on high street shelves.',
-      images: ['/assets_ref/reviews/ChatGPT Image Aug 29, 2026, 11_46_13 PM.webp'],
+      images: ['/assets_ref/reviews/ChatGPT Image Aug 29%2C 2026%2C 11_46_13 PM.webp'],
       helpful: 42,
       verified: true
     },
@@ -192,8 +205,8 @@
       name: 'Jessica Taylor',
       country: 'York, UK',
       rating: 5,
-      date: '2026-09-19',
-      displayDate: '19 September 2026',
+      date: '2026-09-23',
+      displayDate: '23 September 2026',
       variant: 'Pink / Single',
       title: 'Smart red halo pressure sensor stopped gum irritation',
       body: 'I used to press too hard without realizing it. The smart red halo ring flashes immediately when you apply excessive pressure and softens the sweep rhythm. My gums haven\'t bled once since switching.',
@@ -206,8 +219,8 @@
       name: 'Benjamin Cox',
       country: 'Cardiff, UK',
       rating: 5,
-      date: '2026-09-19',
-      displayDate: '19 September 2026',
+      date: '2026-09-23',
+      displayDate: '23 September 2026',
       variant: 'Silver / Single',
       title: 'DuPont micro-diamond rounded bristles protect enamel',
       body: 'The DuPont rounded bristles are firm on plaque but incredibly smooth across sensitive enamel. They slide right into interdental gaps without causing any scratching or sensitivity.',
@@ -220,8 +233,8 @@
       name: 'Emma Lindqvist',
       country: 'Newcastle, UK',
       rating: 5,
-      date: '2026-09-18',
-      displayDate: '18 September 2026',
+      date: '2026-09-22',
+      displayDate: '22 September 2026',
       variant: 'Grey / Single',
       title: 'True IPX7 waterproof unibody for morning shower brushing',
       body: 'I love brushing my teeth in the hot shower every morning. The seamless unibody metal casing has zero cutouts or rubber seals to harbor mold, making it 100% waterproof and easy to rinse under running water.',
@@ -234,12 +247,12 @@
       name: 'Sarah M. Jenkins',
       country: 'London, UK',
       rating: 5,
-      date: '2026-09-18',
-      displayDate: '18 September 2026',
+      date: '2026-09-22',
+      displayDate: '22 September 2026',
       variant: 'Pink / Double Pack',
       title: '2-hour magnetic fast charge lasts for months',
       body: 'Charged it for 2 hours using my phone\'s USB-C cable when it arrived 10 weeks ago and haven\'t touched the dock since. The cobalt cell battery endurance is truly groundbreaking.',
-      images: ['/assets_ref/reviews/miroooo-x2-customer-review-flush-capacitive-switch-led-halo.webp'],
+      images: ['/assets_ref/reviews/miroooo-x2-review-oliver-harrison.png'],
       helpful: 31,
       verified: true
     },
@@ -248,8 +261,8 @@
       name: 'Alexander Wright',
       country: 'Surrey, UK',
       rating: 5,
-      date: '2026-09-17',
-      displayDate: '17 September 2026',
+      date: '2026-09-21',
+      displayDate: '21 September 2026',
       variant: 'Silver / Single',
       title: '3 Halo LED modes give a customized clean',
       body: 'The 3 halo light modes are super intuitive. Mode 2 Whitening with the green halo ring has noticeably lifted tea stains, while Mode 1 is gentle enough for everyday freshness.',
@@ -262,8 +275,8 @@
       name: 'Fiona MacLeod',
       country: 'Aberdeen, UK',
       rating: 5,
-      date: '2026-09-16',
-      displayDate: '16 September 2026',
+      date: '2026-09-20',
+      displayDate: '20 September 2026',
       variant: 'Silver / Single',
       title: 'Dental hygienist was amazed at my plaque reduction',
       body: 'Went for my 6-month dental hygiene checkup and my dentist asked what I was using because there was almost zero tartar along my lower incisors. The 45° Bass angle does all the hard work.',
@@ -276,8 +289,8 @@
       name: 'Ryan Gallagher',
       country: 'Belfast, UK',
       rating: 5,
-      date: '2026-09-16',
-      displayDate: '16 September 2026',
+      date: '2026-09-20',
+      displayDate: '20 September 2026',
       variant: 'Grey / Single',
       title: 'Ergonomic slim neck reaches posterior wisdom teeth',
       body: 'Standard round electric brushes always made me gag trying to reach my back wisdom teeth. The slim aerospace neck on the X2 maneuvers into deep posterior angles with zero effort.',
@@ -290,8 +303,8 @@
       name: 'Charlotte Dupont',
       country: 'London, UK',
       rating: 5,
-      date: '2026-09-15',
-      displayDate: '15 September 2026',
+      date: '2026-09-19',
+      displayDate: '19 September 2026',
       variant: 'Pink / Single',
       title: 'Flush capacitive power switch solves hygiene issues',
       body: 'Traditional electric brushes get that nasty black sludge around the rubber power button. The capacitive button on the X2 is completely flush and wipes clean with a cloth in two seconds.',
@@ -304,8 +317,8 @@
       name: 'Kieran Patel',
       country: 'Leicester, UK',
       rating: 5,
-      date: '2026-09-14',
-      displayDate: '14 September 2026',
+      date: '2026-09-18',
+      displayDate: '18 September 2026',
       variant: 'Grey / Single',
       title: 'Slim ventilated travel case protects bristles in luggage',
       body: 'The magnetic travel case is rigid, compact, and features built-in ventilation channels so the brush head dries naturally without getting musty inside a washbag.',
@@ -318,8 +331,8 @@
       name: 'Isabella Rossi',
       country: 'Brighton, UK',
       rating: 5,
-      date: '2026-09-14',
-      displayDate: '14 September 2026',
+      date: '2026-09-18',
+      displayDate: '18 September 2026',
       variant: 'Silver / Double Pack',
       title: 'Whisper-quiet acoustic motor doesn\'t wake my partner',
       body: 'My old electric brush sounded like a power tool in the morning. Miroooo X2 produces a quiet, soothing acoustic hum that doesn\'t disturb anyone early in the morning.',
@@ -332,8 +345,8 @@
       name: 'Henry C. Miller',
       country: 'Norwich, UK',
       rating: 5,
-      date: '2026-09-13',
-      displayDate: '13 September 2026',
+      date: '2026-09-17',
+      displayDate: '17 September 2026',
       variant: 'Grey / Single',
       title: 'Cyan blue deep clean mode leaves teeth glassy smooth',
       body: 'Mode 3 Deep Clean with the cyan blue halo ring gives that ultra-smooth \'just left the hygienist\' feeling. My teeth stay completely smooth until bedtime.',
@@ -346,8 +359,8 @@
       name: 'Amelia Hughes',
       country: 'Chester, UK',
       rating: 5,
-      date: '2026-09-12',
-      displayDate: '12 September 2026',
+      date: '2026-09-16',
+      displayDate: '16 September 2026',
       variant: 'Pink / Double Pack',
       title: 'Buy 3 family pack is unbeatable value',
       body: 'Ordered the Buy 3 bundle for our family in Silver, Grey, and Pink. Getting the free DuPont heads bundle and individual travel cases made this an absolute bargain.',
@@ -360,8 +373,8 @@
       name: 'Sebastian Cole',
       country: 'Warwick, UK',
       rating: 5,
-      date: '2026-09-12',
-      displayDate: '12 September 2026',
+      date: '2026-09-16',
+      displayDate: '16 September 2026',
       variant: 'Grey / Single',
       title: '30-second quad-pacer builds perfect brushing habits',
       body: 'The gentle haptic pulse every 30 seconds ensures I give equal attention to all four quadrants of my mouth. 2 minutes fly by effortlessly.',
@@ -374,8 +387,8 @@
       name: 'Mia Robertson',
       country: 'Inverness, UK',
       rating: 5,
-      date: '2026-09-11',
-      displayDate: '11 September 2026',
+      date: '2026-09-15',
+      displayDate: '15 September 2026',
       variant: 'Silver / Single',
       title: 'Lightweight 51g design is easy on arthritic hands',
       body: 'Heavy vibrating toothbrushes used to give me wrist fatigue. At only 51g, the X2 is perfectly balanced and featherweight in the hand.',
@@ -388,8 +401,8 @@
       name: 'Daniel O\'Sullivan',
       country: 'Manchester, UK',
       rating: 5,
-      date: '2026-09-10',
-      displayDate: '10 September 2026',
+      date: '2026-09-14',
+      displayDate: '14 September 2026',
       variant: 'Grey / Double Pack',
       title: 'Smooth tongue-test polish all day long',
       body: 'When you run your tongue across your teeth after brushing, they feel like polished glass. Even hours after eating, plaque struggles to stick to the enamel.',
@@ -402,8 +415,8 @@
       name: 'Victoria Sinclair',
       country: 'Bath, UK',
       rating: 5,
-      date: '2026-09-10',
-      displayDate: '10 September 2026',
+      date: '2026-09-14',
+      displayDate: '14 September 2026',
       variant: 'Pink / Single',
       title: 'Matte aerospace aluminium finish elevates the bathroom',
       body: 'No cheap shiny plastic or tacky logos. The brushed matte aluminium body looks stunning mounted on our bathroom tile.',
@@ -416,8 +429,8 @@
       name: 'Lucas Weber',
       country: 'Edinburgh, UK',
       rating: 5,
-      date: '2026-09-09',
-      displayDate: '9 September 2026',
+      date: '2026-09-13',
+      displayDate: '13 September 2026',
       variant: 'Grey / Single',
       title: 'Gentle standard mode is perfect for sensitive gums',
       body: 'If you have receding gums or sensitive teeth, Mode 1 Standard Clean delivers thorough plaque removal without that aggressive jarring feeling.',
@@ -430,8 +443,8 @@
       name: 'Freya Lindholm',
       country: 'Oxford, UK',
       rating: 5,
-      date: '2026-09-09',
-      displayDate: '9 September 2026',
+      date: '2026-09-13',
+      displayDate: '13 September 2026',
       variant: 'Silver / Double Pack',
       title: 'Fast express delivery and pristine packaging',
       body: 'Ordered on Monday and it was on my doorstep by Wednesday morning in a reinforced carton. Superb customer experience from start to finish.',
@@ -444,8 +457,8 @@
       name: 'Oscar Bradley',
       country: 'London, UK',
       rating: 5,
-      date: '2026-09-08',
-      displayDate: '8 September 2026',
+      date: '2026-09-12',
+      displayDate: '12 September 2026',
       variant: 'Grey / Single',
       title: 'Effective interdental cleaning without dental floss pain',
       body: 'The micro-sweeping motion cleans right into the gaps between crowded teeth where conventional vibrating bristles simply bounce off.',
@@ -458,8 +471,8 @@
       name: 'Natalie Vance',
       country: 'Sheffield, UK',
       rating: 5,
-      date: '2026-09-06',
-      displayDate: '6 September 2026',
+      date: '2026-09-10',
+      displayDate: '10 September 2026',
       variant: 'Silver / Single',
       title: 'Perfect companion for long-haul international flights',
       body: 'I travel internationally for business every month. Slipping the Miroooo X2 into my briefcase without carrying chargers is the ultimate convenience.',
@@ -472,8 +485,8 @@
       name: 'George M. Davies',
       country: 'Liverpool, UK',
       rating: 5,
-      date: '2026-09-04',
-      displayDate: '4 September 2026',
+      date: '2026-09-08',
+      displayDate: '8 September 2026',
       variant: 'Grey / Single',
       title: 'Toothpaste residue rinses off effortlessly',
       body: 'Because there are no seams, ridges, or rubber grips on the unibody handle, toothpaste residue washes away under the tap without leaving dried white crust.',
@@ -486,8 +499,8 @@
       name: 'Zoe Jenkins',
       country: 'Exeter, UK',
       rating: 5,
-      date: '2026-09-02',
-      displayDate: '2 September 2026',
+      date: '2026-09-06',
+      displayDate: '6 September 2026',
       variant: 'Pink / Single',
       title: 'Better performance than my £250 high-end brush',
       body: 'Replaced my top-tier branded smart brush with the Miroooo X2. It\'s lighter, quieter, battery lasts 4x longer, and the 45-degree sweep cleans significantly deeper.',
@@ -500,8 +513,8 @@
       name: 'Callum MacIntyre',
       country: 'Glasgow, UK',
       rating: 5,
-      date: '2026-08-31',
-      displayDate: '31 August 2026',
+      date: '2026-09-04',
+      displayDate: '4 September 2026',
       variant: 'Silver / Single',
       title: 'Noticeable whitening results within two weeks',
       body: 'After 14 days on Mode 2 with my regular fluoride paste, yellow coffee stains along my smile line have visibly faded. Very impressed!',
@@ -514,8 +527,8 @@
       name: 'Rachel Thornton',
       country: 'York, UK',
       rating: 5,
-      date: '2026-08-29',
-      displayDate: '29 August 2026',
+      date: '2026-09-02',
+      displayDate: '2 September 2026',
       variant: 'Grey / Single',
       title: 'Gifted to my partner who loves tech gadgets',
       body: 'Bought the Silver variant as a gift for my partner. He loved the minimalist metallic design and how silent the motor is compared to his previous brush.',
@@ -528,8 +541,8 @@
       name: 'Edward Sterling',
       country: 'Birmingham, UK',
       rating: 5,
-      date: '2026-08-26',
-      displayDate: '26 August 2026',
+      date: '2026-08-30',
+      displayDate: '30 August 2026',
       variant: 'Silver / Double Pack',
       title: 'Durable DuPont bristles maintain shape after months',
       body: 'Been using the first brush head for nearly 3 months and the DuPont bristles are still perfectly aligned with zero fraying. Exceptional longevity.',
@@ -542,8 +555,8 @@
       name: 'Holly Sanderson',
       country: 'Bristol, UK',
       rating: 5,
-      date: '2026-08-24',
-      displayDate: '24 August 2026',
+      date: '2026-08-28',
+      displayDate: '28 August 2026',
       variant: 'Pink / Single',
       title: 'Flawless weight balance and non-slip grip',
       body: 'The unibody cylinder feels solid and ergonomic. Despite the sleek metal finish, it sits securely in the hand even when wet.',
@@ -556,8 +569,8 @@
       name: 'Simon Fletcher',
       country: 'Southampton, UK',
       rating: 4,
-      date: '2026-08-23',
-      displayDate: '23 August 2026',
+      date: '2026-08-27',
+      displayDate: '27 August 2026',
       variant: 'Grey / Single',
       title: 'Solid performance and sleek metallic finish',
       body: 'The unibody aluminium handle feels great to hold and the battery has lasted weeks without recharging. Leaves teeth feeling super clean.',
@@ -570,8 +583,8 @@
       name: 'Beatrice Ward',
       country: 'Nottingham, UK',
       rating: 4,
-      date: '2026-08-16',
-      displayDate: '16 August 2026',
+      date: '2026-08-20',
+      displayDate: '20 August 2026',
       variant: 'Silver / Single',
       title: 'Totally recommend to anyone wanting a quiet brush',
       body: 'Super quiet motor and impressive battery life. Very pleased with how lightweight it is compared to my old clunky electric toothbrush.',
@@ -584,8 +597,8 @@
       name: 'Matthew Crawford',
       country: 'Leeds, UK',
       rating: 4,
-      date: '2026-08-12',
-      displayDate: '12 August 2026',
+      date: '2026-08-16',
+      displayDate: '16 August 2026',
       variant: 'Pink / Single',
       title: 'Happy I bought X2 instead of X1',
       body: 'Upgraded from the earlier model and the 45 degree sweeping action feels much more thorough on the gumline. Clean packaging too.',
@@ -598,8 +611,8 @@
       name: 'Lucy Higgins',
       country: 'Cardiff, UK',
       rating: 4,
-      date: '2026-08-08',
-      displayDate: '8 August 2026',
+      date: '2026-08-12',
+      displayDate: '12 August 2026',
       variant: 'Grey / Double Pack',
       title: 'Free and fast shipping to Cardiff',
       body: 'Arrived within two days in pristine condition. The build quality of the brush is exceptional and teeth feel polished after every brush.',
@@ -612,8 +625,8 @@
       name: 'Dominic Rhodes',
       country: 'London, UK',
       rating: 4,
-      date: '2026-08-04',
-      displayDate: '4 August 2026',
+      date: '2026-08-08',
+      displayDate: '8 August 2026',
       variant: 'Silver / Single',
       title: 'Best electric toothbrush I have owned so far',
       body: 'Much better than traditional round heads. The magnetic travel capsule is very well made and protects the brush head in my gym bag.',
@@ -626,8 +639,8 @@
       name: 'Abigail Foster',
       country: 'Newcastle, UK',
       rating: 4,
-      date: '2026-07-31',
-      displayDate: '31 July 2026',
+      date: '2026-08-04',
+      displayDate: '4 August 2026',
       variant: 'Pink / Single',
       title: 'Red pressure ring helped my sensitive gums',
       body: 'Leaves teeth super clean and the red pressure sensor ring is a great reminder not to push too hard against the gumline.',
@@ -640,8 +653,8 @@
       name: 'Lewis Armstrong',
       country: 'Belfast, UK',
       rating: 4,
-      date: '2026-07-27',
-      displayDate: '27 July 2026',
+      date: '2026-07-31',
+      displayDate: '31 July 2026',
       variant: 'Grey / Single',
       title: 'Universal USB-C charging makes travel painless',
       body: 'Very happy with the overall cleaning performance. Standard USB-C charging means one less proprietary cord in my travel kit.',
@@ -654,8 +667,8 @@
       name: 'Eleanor Sharp',
       country: 'Edinburgh, UK',
       rating: 4,
-      date: '2026-07-21',
-      displayDate: '21 July 2026',
+      date: '2026-07-25',
+      displayDate: '25 July 2026',
       variant: 'Silver / Single',
       title: 'Totally recommend if you hate noisy toothbrushes',
       body: 'Brushing is whisper quiet compared to my previous brush. Looks very minimalist and modern on the bathroom shelf.',
@@ -668,8 +681,8 @@
       name: 'Connor Buckley',
       country: 'Manchester, UK',
       rating: 4,
-      date: '2026-07-15',
-      displayDate: '15 July 2026',
+      date: '2026-07-19',
+      displayDate: '19 July 2026',
       variant: 'Grey / Double Pack',
       title: 'Seamless metal handle stays clean easily',
       body: 'The unibody metal feels premium in the hand and rinses clean under the tap without trapping any toothpaste gunk in seams.',
@@ -682,8 +695,8 @@
       name: 'Jasmine Patel',
       country: 'Leicester, UK',
       rating: 4,
-      date: '2026-07-09',
-      displayDate: '9 July 2026',
+      date: '2026-07-13',
+      displayDate: '13 July 2026',
       variant: 'Pink / Single',
       title: 'Great interdental reach along back molars',
       body: 'Noticeable improvement in plaque removal along the back molars. High quality DuPont bristle heads that do not fray.',
@@ -696,8 +709,8 @@
       name: 'Arthur Pendelton',
       country: 'Bath, UK',
       rating: 4,
-      date: '2026-07-03',
-      displayDate: '3 July 2026',
+      date: '2026-07-07',
+      displayDate: '7 July 2026',
       variant: 'Silver / Double Pack',
       title: 'Bought the 2-pack bundle and both work brilliantly',
       body: 'Bought the 2-pack for myself and my son. Both arrived well packaged, look fantastic in Silver and Grey, and clean thoroughly.',
@@ -710,8 +723,8 @@
       name: 'Chloe Davenport',
       country: 'Oxford, UK',
       rating: 4,
-      date: '2026-06-26',
-      displayDate: '26 June 2026',
+      date: '2026-06-30',
+      displayDate: '30 June 2026',
       variant: 'Grey / Single',
       title: 'Gentle 30-second pacing timer is very helpful',
       body: 'Cleans deeply without irritating sensitive teeth. The 30-second timer pulse keeps my daily routine consistent.',
@@ -724,8 +737,8 @@
       name: 'Harrison Bell',
       country: 'Cambridge, UK',
       rating: 4,
-      date: '2026-06-18',
-      displayDate: '18 June 2026',
+      date: '2026-06-22',
+      displayDate: '22 June 2026',
       variant: 'Silver / Single',
       title: 'Lightweight in the hand with compact magnetic base',
       body: 'Love how light it is to hold at only 51g. The magnetic charging base is compact and sits securely.',
@@ -738,8 +751,8 @@
       name: 'Laura Stephenson',
       country: 'Norwich, UK',
       rating: 4,
-      date: '2026-06-11',
-      displayDate: '11 June 2026',
+      date: '2026-06-15',
+      displayDate: '15 June 2026',
       variant: 'Pink / Single',
       title: 'Included wall mount keeps sink totally clutter-free',
       body: 'Great device with excellent battery longevity. The included magnetic wall storage holder is very convenient for daily use.',
@@ -752,8 +765,8 @@
       name: 'Jack Robinson',
       country: 'Manchester, UK',
       rating: 3,
-      date: '2026-04-06',
-      displayDate: '6 April 2026',
+      date: '2026-04-10',
+      displayDate: '10 April 2026',
       variant: 'Silver / Single',
       title: '',
       body: "I bought it for £99 and totally regret it seeing they are giving it for £69 right now. If you want an electric toothbrush definitely grab it, it's honestly the best brush and best deal in the market but I'm gutted I didn't wait.",
@@ -762,7 +775,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '7 April 2026',
+        date: '11 April 2026',
         text: 'Hi Jack, thank you for your candid review! We are thrilled you find the Miroooo X2 to be the best electric toothbrush on the market. We run limited promotional offers to welcome new customers to the brand, and our team has credited a complimentary 2-pack of DuPont replacement heads to your account.'
       }
     },
@@ -771,8 +784,8 @@
       name: 'Sophie Bennett',
       country: 'London, UK',
       rating: 2,
-      date: '2026-03-31',
-      displayDate: '31 March 2026',
+      date: '2026-04-04',
+      displayDate: '4 April 2026',
       variant: 'Grey / Single',
       title: '',
       body: "Their support hours are only 9 to 5 so when I sent a message on Friday night nobody replied over the weekend. A brand this good should have off-hours support. Nothing wrong with how they handled the query though, they solved it immediately once they came back online on Monday.",
@@ -781,7 +794,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Experience Team',
-        date: '1 April 2026',
+        date: '5 April 2026',
         text: 'Hello Sophie, thank you for your honest feedback. We are glad our desk resolved your inquiry first thing on Monday morning, but we hear you on weekend coverage. We are currently expanding our dedicated UK customer care desk to include extended weekend support hours.'
       }
     },
@@ -790,8 +803,8 @@
       name: 'Oliver Chapman',
       country: 'Bristol, UK',
       rating: 2,
-      date: '2026-03-21',
-      displayDate: '21 March 2026',
+      date: '2026-03-25',
+      displayDate: '25 March 2026',
       variant: 'Silver / Single',
       title: '',
       body: "I wasn't at home when it arrived so the delivery driver just left my parcel right on the front door step. I really didn't like that at all since anyone could have taken it. Toothbrush itself is fine but courier shouldn't leave deliveries exposed outside.",
@@ -800,7 +813,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '22 March 2026',
+        date: '26 March 2026',
         text: 'Hi Oliver, we are sorry for the courier driver’s decision to leave your delivery unattended on the doorstep. While we are glad the Miroooo X2 reached you safely, we have logged a formal complaint with the carrier depot to enforce signature confirmation on all future orders.'
       }
     },
@@ -809,8 +822,8 @@
       name: 'Liam O\'Connor',
       country: 'Leeds, UK',
       rating: 2,
-      date: '2026-03-14',
-      displayDate: '14 March 2026',
+      date: '2026-03-18',
+      displayDate: '18 March 2026',
       variant: 'Grey / Double Pack',
       title: '',
       body: "The 2 extra free replacement heads you get when you buy 2 came in a completely separate package on the same day, not inside the main box. I thought they were missing at first until the second parcel was handed over. Let people know they ship in other package!",
@@ -819,7 +832,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '15 March 2026',
+        date: '19 March 2026',
         text: 'Hi Liam, thank you for pointing this out! To protect the presentation packaging, complimentary DuPont replacement head bundles are fulfilled in a separate sealed package dispatched alongside the main unit. We have added a clear fulfillment note on the cart page so customers know both packages arrive simultaneously.'
       }
     },
@@ -828,8 +841,8 @@
       name: 'Emma Davies',
       country: 'Birmingham, UK',
       rating: 1,
-      date: '2026-03-07',
-      displayDate: '7 March 2026',
+      date: '2026-03-11',
+      displayDate: '11 March 2026',
       variant: 'Pink / Single',
       title: '',
       body: "The delivery boy was incredibly rude when dropping off the parcel. Literally threw the package towards the porch and walked off shouting when I asked him to hand it over properly. Disgraceful courier behaviour.",
@@ -838,7 +851,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '8 March 2026',
+        date: '12 March 2026',
         text: 'Hello Emma, we are appalled to hear about the delivery driver’s unacceptable behaviour. We take courier conduct extremely seriously and have escalated this incident directly to the regional carrier branch manager for immediate disciplinary action. Our support team has also reached out directly with a complimentary gift.'
       }
     },
@@ -847,8 +860,8 @@
       name: 'Daniel Morgan',
       country: 'Edinburgh, UK',
       rating: 1,
-      date: '2026-03-01',
-      displayDate: '1 March 2026',
+      date: '2026-03-05',
+      displayDate: '5 March 2026',
       variant: 'Grey / Single',
       title: '',
       body: "I bought it for £99 but now they are giving it for £69! The product is genuinely good and cleans brilliantly, but I completely regret buying early. Why should I have rushed when I could have saved £30 if I waited.",
@@ -857,7 +870,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '2 March 2026',
+        date: '6 March 2026',
         text: 'Dear Daniel, we completely understand your frustration regarding promotional timing. We love that the Miroooo X2 is providing you with an exceptional clean, and our team has added a complimentary 4-pack of DuPont replacement heads to your account to ensure you receive unbeatable value.'
       }
     }
@@ -945,7 +958,7 @@
   ];
 
   const PROCEDURAL_REVIEWS = [];
-  const baseProceduralTimestamp = new Date('2026-09-25T12:00:00Z').getTime();
+  const baseProceduralTimestamp = new Date('2026-09-29T12:00:00Z').getTime();
 
   for (let i = 42; i <= 240; i++) {
     const fn = FIRST_NAMES[i % FIRST_NAMES.length];
@@ -987,8 +1000,8 @@
   let currentWithPhotos = false;
   let currentVerifiedOnly = false;
   let currentSort = 'most-recent';
-  let currentVisibleCount = 12;
-  const PAGE_SIZE = 12;
+  let currentVisibleCount = 24;
+  const PAGE_SIZE = 24;
 
   // Active Lightbox State
   let activeLightboxReview = null;
@@ -1149,7 +1162,7 @@
     // 1. Helpful Upvote Button
     const helpfulBtns = gridEl.querySelectorAll('.miroooo-helpful-btn');
     helpfulBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      listen(btn, 'click', (e) => {
         e.stopPropagation();
         const reviewId = btn.getAttribute('data-review-id');
         const countSpan = btn.querySelector('.miroooo-helpful-count');
@@ -1170,7 +1183,7 @@
     // 2. Read More Button Trigger (Full Review Modal Expansion)
     const readMoreBtns = gridEl.querySelectorAll('.miroooo-read-more-btn');
     readMoreBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      listen(btn, 'click', (e) => {
         e.stopPropagation();
         const reviewId = btn.getAttribute('data-review-id');
         const review = currentList.find(r => String(r.id) === String(reviewId));
@@ -1182,7 +1195,7 @@
     // 3. Gallery Photo Lightbox Triggers
     const galleryContainers = gridEl.querySelectorAll('.miroooo-card-gallery');
     galleryContainers.forEach(container => {
-      container.addEventListener('click', (e) => {
+      listen(container, 'click', (e) => {
         e.stopPropagation();
         const reviewId = container.getAttribute('data-review-id');
         const review = currentList.find(r => String(r.id) === String(reviewId));
@@ -1201,7 +1214,7 @@
     // 3b. Video Preview Click Trigger
     const videoWraps = gridEl.querySelectorAll('.miroooo-card-video-wrap');
     videoWraps.forEach(wrap => {
-      wrap.addEventListener('click', (e) => {
+      listen(wrap, 'click', (e) => {
         e.stopPropagation();
         const reviewId = wrap.getAttribute('data-review-id');
         const review = currentList.find(r => String(r.id) === String(reviewId));
@@ -1214,7 +1227,7 @@
     // 4. Whole Review Card Click (Opens modal on card click)
     const cards = gridEl.querySelectorAll('.miroooo-review-card');
     cards.forEach(card => {
-      card.addEventListener('click', (e) => {
+      listen(card, 'click', (e) => {
         if (
           e.target.closest('.miroooo-helpful-btn') ||
           e.target.closest('.miroooo-read-more-btn') ||
@@ -1382,7 +1395,7 @@
     // 1. Star Rating Breakdown Row Click
     breakdownRows = Array.from(document.querySelectorAll('.miroooo-breakdown-row'));
     breakdownRows.forEach(row => {
-      row.addEventListener('click', () => {
+      listen(row, 'click', () => {
         const star = parseInt(row.getAttribute('data-star'), 10);
         if (currentFilterRating === star) {
           currentFilterRating = null;
@@ -1406,7 +1419,7 @@
     const starDropdown = document.getElementById('miroooo-star-dropdown');
 
     if (starTrigger && starMenu && starDropdown) {
-      starTrigger.addEventListener('click', (e) => {
+      listen(starTrigger, 'click', (e) => {
         e.stopPropagation();
         closeAllDropdowns(starDropdown);
         starDropdown.classList.toggle('open');
@@ -1416,7 +1429,7 @@
 
       const starItems = starMenu.querySelectorAll('.miroooo-dropdown-item');
       starItems.forEach(item => {
-        item.addEventListener('click', () => {
+        listen(item, 'click', () => {
           const val = item.getAttribute('data-value');
           starItems.forEach(i => i.classList.remove('active'));
           item.classList.add('active');
@@ -1440,10 +1453,21 @@
       });
     }
 
+    const photoPill = document.getElementById('miroooo-filter-photos');
+    if (photoPill) {
+      listen(photoPill, 'click', () => {
+        currentWithPhotos = !currentWithPhotos;
+        photoPill.classList.toggle('active', currentWithPhotos);
+        photoPill.setAttribute('aria-pressed', currentWithPhotos);
+        currentVisibleCount = PAGE_SIZE;
+        renderReviews();
+      });
+    }
+
     // 3. Verified Buyer Filter Pill
     const verifiedPill = document.getElementById('miroooo-filter-verified');
     if (verifiedPill) {
-      verifiedPill.addEventListener('click', () => {
+      listen(verifiedPill, 'click', () => {
         currentVerifiedOnly = !currentVerifiedOnly;
         verifiedPill.classList.toggle('active', currentVerifiedOnly);
         verifiedPill.setAttribute('aria-pressed', currentVerifiedOnly);
@@ -1458,7 +1482,7 @@
     const sortDropdown = document.getElementById('miroooo-sort-dropdown');
 
     if (sortTrigger && sortMenu && sortDropdown) {
-      sortTrigger.addEventListener('click', (e) => {
+      listen(sortTrigger, 'click', (e) => {
         e.stopPropagation();
         closeAllDropdowns(sortDropdown);
         sortDropdown.classList.toggle('open');
@@ -1468,7 +1492,7 @@
 
       const sortItems = sortMenu.querySelectorAll('.miroooo-dropdown-item');
       sortItems.forEach(item => {
-        item.addEventListener('click', () => {
+        listen(item, 'click', () => {
           const val = item.getAttribute('data-value');
           sortItems.forEach(i => i.classList.remove('active'));
           item.classList.add('active');
@@ -1486,23 +1510,23 @@
 
     // 5. Reset Filters
     if (resetFilterBtn) {
-      resetFilterBtn.addEventListener('click', resetAllFilters);
+      listen(resetFilterBtn, 'click', resetAllFilters);
     }
     if (clearAllLink) {
-      clearAllLink.addEventListener('click', resetAllFilters);
+      listen(clearAllLink, 'click', resetAllFilters);
     }
     if (emptyResetBtn) {
-      emptyResetBtn.addEventListener('click', resetAllFilters);
+      listen(emptyResetBtn, 'click', resetAllFilters);
     }
 
     // 6. Close dropdowns on outside click
-    document.addEventListener('click', () => {
+    listen(document, 'click', () => {
       closeAllDropdowns();
     });
 
     // 7. Load More Button
     if (loadMoreBtn) {
-      loadMoreBtn.addEventListener('click', () => {
+      listen(loadMoreBtn, 'click', () => {
         currentVisibleCount += PAGE_SIZE;
         renderReviews(false);
       });
@@ -1566,14 +1590,14 @@
     const closeBtn = document.getElementById('miroooo-lightbox-close');
     const helpfulBtn = document.getElementById('miroooo-lightbox-helpful-btn');
 
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    if (closeBtn) listen(closeBtn, 'click', closeLightbox);
 
-    modal.addEventListener('click', (e) => {
+    listen(modal, 'click', (e) => {
       if (e.target === modal) closeLightbox();
     });
 
     if (helpfulBtn) {
-      helpfulBtn.addEventListener('click', () => {
+      listen(helpfulBtn, 'click', () => {
         if (!activeLightboxReview) return;
         activeLightboxReview.helpful = (activeLightboxReview.helpful || 0) + 1;
         const countSpan = document.getElementById('miroooo-lightbox-helpful-count');
@@ -1583,7 +1607,7 @@
       });
     }
 
-    document.addEventListener('keydown', (e) => {
+    listen(document, 'keydown', (e) => {
       if (!modal.classList.contains('is-open')) return;
       if (e.key === 'Escape') closeLightbox();
     });
@@ -1772,12 +1796,15 @@
       }, 250);
     }
 
-    writeBtn.addEventListener('click', openWriteModal);
-    if (closeBtn) closeBtn.addEventListener('click', closeWriteModal);
-    if (cancelBtn) cancelBtn.addEventListener('click', closeWriteModal);
-    if (successCloseBtn) successCloseBtn.addEventListener('click', closeWriteModal);
+    listen(document, 'keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) closeWriteModal();
+    });
+    listen(writeBtn, 'click', openWriteModal);
+    if (closeBtn) listen(closeBtn, 'click', closeWriteModal);
+    if (cancelBtn) listen(cancelBtn, 'click', closeWriteModal);
+    if (successCloseBtn) listen(successCloseBtn, 'click', closeWriteModal);
 
-    modal.addEventListener('click', (e) => {
+    listen(modal, 'click', (e) => {
       if (e.target === modal) closeWriteModal();
     });
 
@@ -1796,7 +1823,7 @@
     starBtns.forEach(btn => {
       const rating = parseInt(btn.getAttribute('data-rating'), 10);
 
-      btn.addEventListener('mouseenter', () => {
+      listen(btn, 'mouseenter', () => {
         starBtns.forEach(b => {
           const r = parseInt(b.getAttribute('data-rating'), 10);
           b.classList.toggle('hover', r <= rating);
@@ -1804,7 +1831,7 @@
         if (ratingLabel) ratingLabel.textContent = ratingTextMap[rating];
       });
 
-      btn.addEventListener('mouseleave', () => {
+      listen(btn, 'mouseleave', () => {
         starBtns.forEach(b => {
           b.classList.remove('hover');
           const r = parseInt(b.getAttribute('data-rating'), 10);
@@ -1813,7 +1840,7 @@
         if (ratingLabel) ratingLabel.textContent = ratingTextMap[selectedRating];
       });
 
-      btn.addEventListener('click', () => {
+      listen(btn, 'click', () => {
         selectedRating = rating;
         starBtns.forEach(b => {
           const r = parseInt(b.getAttribute('data-rating'), 10);
@@ -1825,7 +1852,7 @@
 
     // Form Submission
     if (form) {
-      form.addEventListener('submit', (e) => {
+      listen(form, 'submit', (e) => {
         e.preventDefault();
 
         const name = document.getElementById('miroooo-form-name')?.value.trim() || '';
@@ -1894,6 +1921,11 @@
 
   // Initialization
   function init() {
+    const currentRoot = document.getElementById('miroooo-reviews-grid');
+    if (!currentRoot || currentRoot === initializedRoot) return dispose;
+    dispose();
+    initializedRoot = currentRoot;
+
     gridEl = document.getElementById('miroooo-reviews-grid');
     loadMoreBtn = document.getElementById('miroooo-load-more-btn');
     loadCountEl = document.getElementById('miroooo-load-count');
@@ -1914,29 +1946,19 @@
 
     let lastCols = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 768 ? 3 : 2);
     let resizeTimer = null;
-    window.addEventListener('resize', () => {
+    listen(window, 'resize', () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
         const currentCols = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 768 ? 3 : 2);
         if (currentCols !== lastCols) {
           lastCols = currentCols;
-          renderReviews(false);
+          if (gridEl?.isConnected) renderReviews(false);
         }
       }, 150);
     });
   }
 
-  function scheduleInit() {
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(init, { timeout: 1500 });
-    } else {
-      setTimeout(init, 50);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', scheduleInit);
-  } else {
-    scheduleInit();
-  }
+  window.initMirooooX2Reviews = init;
+  window.initMirooooReviews = init;
+  window.disposeMirooooReviews = dispose;
 })();

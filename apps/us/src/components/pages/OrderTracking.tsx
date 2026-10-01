@@ -91,7 +91,7 @@ export function OrderTracking() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
             <span>
-              <strong>Tracked Transit:</strong> 7–20 business days across the US via USPS / FedEx.
+              <strong>Tracked Transit:</strong> 7–20 business days across the US.
             </span>
           </div>
         </div>

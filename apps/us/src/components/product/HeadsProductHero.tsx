@@ -1,7 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { formatUSD } from '@/lib/money';
 import { Product } from '@/data/products';
+import { ShippingMarquee } from './ShippingMarquee';
+import { AnimatedIcon } from '@/components/ui/AnimatedIcon';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 
 interface HeadsProductHeroProps {
@@ -9,20 +14,26 @@ interface HeadsProductHeroProps {
 }
 
 export function HeadsProductHero({ product }: HeadsProductHeroProps) {
+  const router = useRouter();
   const { addItem } = useCart();
   const isX2 = product.handle === 'miroooo-x2-heads';
 
   const [quantity, setQuantity] = useState(1);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isLightboxZoomed, setIsLightboxZoomed] = useState(false);
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const [isShippingTooltipOpen, setIsShippingTooltipOpen] = useState(false);
+
+  // Accordion state
+  const [openAccordion, setOpenAccordion] = useState<number | null>(0); // 0: Why Heads, 1: Package contents
 
   // Delivery timer countdown
   const [deliveryCountdown, setDeliveryCountdown] = useState('14:38');
   const [deliveryDateStr, setDeliveryDateStr] = useState('Friday 21 Aug');
 
   const heroCtaRef = useRef<HTMLButtonElement | null>(null);
+  const navRef = useRef<HTMLDivElement | null>(null);
 
   const images = isX2
     ? [
@@ -30,29 +41,22 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
         { src: '/assets_ref/x2/heads/B2.webp', alt: 'Miroooo X2 Heads Precision Bristles' },
       ]
     : [
-        { src: '/assets_ref/x/heads/1.webp', alt: 'Miroooo X1 Heads DuPont Pack' },
-        { src: '/assets_ref/x/heads/2.webp', alt: 'Miroooo X1 Heads Precision Bristles' },
+        { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Heads DuPont Pack' },
       ];
 
-  const basePrice = 13.0;
+  const basePrice = product.price;
   const totalPrice = basePrice * quantity;
 
-  // Timers
+  // Match the reference delivery estimate and countdown.
   useEffect(() => {
+    let deliverySeconds = 14 * 60 + 38;
     const updateTimers = () => {
       const now = new Date();
-      const cutoff = new Date(now);
-      cutoff.setHours(15, 0, 0, 0);
-      if (now > cutoff) {
-        cutoff.setDate(cutoff.getDate() + 1);
-      }
-      const cutoffDiff = cutoff.getTime() - now.getTime();
-      const dHours = Math.floor((cutoffDiff / (1000 * 60 * 60)) % 24);
-      const dMinutes = Math.floor((cutoffDiff / (1000 * 60)) % 60);
-      setDeliveryCountdown(`${String(dHours).padStart(2, '0')}:${String(dMinutes).padStart(2, '0')}`);
+      setDeliveryCountdown(`${String(Math.floor(deliverySeconds / 60)).padStart(2, '0')}:${String(deliverySeconds % 60).padStart(2, '0')}`);
+      deliverySeconds = deliverySeconds > 0 ? deliverySeconds - 1 : 15 * 60 + 59;
 
       const targetDate = new Date(now);
-      targetDate.setDate(targetDate.getDate() + 4);
+      targetDate.setDate(targetDate.getDate() + 5);
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       setDeliveryDateStr(`${days[targetDate.getDay()]} ${targetDate.getDate()} ${months[targetDate.getMonth()]}`);
@@ -75,8 +79,38 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Keyboard navigation for Lightbox
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('gallery-open');
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.classList.remove('gallery-open');
+    };
+  }, [isLightboxOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsLightboxOpen(false);
+        setIsLightboxZoomed(false);
+        setIsShippingTooltipOpen(false);
+      }
+      if (isLightboxOpen && ['ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+        setIsLightboxZoomed(false);
+        setActiveMediaIndex((index) => (index + 1) % (isX2 ? 2 : 1));
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, isX2]);
 
   const handleAddToCart = () => {
     addItem({
@@ -84,10 +118,18 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       color: 'Default',
       quantity,
     });
+    router.push('/cart');
+  };
+
+  const scrollThumbnails = (dir: 'up' | 'down') => {
+    if (navRef.current) {
+      const offset = dir === 'up' ? -100 : 100;
+      navRef.current.scrollBy({ top: offset, left: offset, behavior: 'smooth' });
+    }
   };
 
   return (
-    <div id="shopify-section-template--heads-main-product" className="shopify-section">
+    <div id="shopify-section-template--24203751129433__main-product" className="shopify-section" style={{ paddingTop: 16, marginTop: 0, paddingBottom: 0, marginBottom: 0 }}>
       <div className="section section--padding section--rounded relative">
         <div className="page-width relative">
           <div className="featured-product product product--columns flex flex-col items-start lg:grid gap-5 w-full relative">
@@ -96,7 +138,18 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
               <div className="miroooo-minmun-gallery" id="MirooooMainGallery">
                 {/* Thumbnails */}
                 <div className="miroooo-gallery__nav-wrap" aria-label="Product image thumbnails">
-                  <div className="miroooo-gallery__nav" id="MirooooGalleryNav">
+                  <button
+                    type="button"
+                    className="miroooo-gallery__nav-arrow miroooo-gallery__nav-arrow--prev hidden lg:flex"
+                    onClick={() => scrollThumbnails('up')}
+                    aria-label="Scroll thumbnails up"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                  </button>
+
+                  <div className="miroooo-gallery__nav" id="MirooooGalleryNav" ref={navRef}>
                     {images.map((img, idx) => (
                       <button
                         key={idx}
@@ -104,6 +157,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                         className={`miroooo-gallery__thumb ${activeMediaIndex === idx ? 'is-active' : ''}`}
                         onClick={() => setActiveMediaIndex(idx)}
                         aria-label={img.alt}
+                        aria-current={activeMediaIndex === idx ? 'true' : 'false'}
                       >
                         <div className="thumb-inner">
                           <img src={img.src} alt={img.alt} loading="eager" decoding="async" />
@@ -111,15 +165,30 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                       </button>
                     ))}
                   </div>
+
+                  <button
+                    type="button"
+                    className="miroooo-gallery__nav-arrow miroooo-gallery__nav-arrow--next hidden lg:flex"
+                    onClick={() => scrollThumbnails('down')}
+                    aria-label="Scroll thumbnails down"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
                 </div>
 
                 {/* Stage */}
                 <div className="miroooo-gallery__stage-wrap">
-                  <div className="miroooo-gallery__stage" id="MirooooGalleryStage">
+                  <div className="miroooo-gallery__stage" id="MirooooGalleryStage" aria-label="Main product image gallery">
                     <button
                       type="button"
                       className="miroooo-gallery__arrow miroooo-gallery__arrow--prev"
-                      onClick={() => setActiveMediaIndex((prev) => (prev - 1 + images.length) % images.length)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveMediaIndex((prev) => (prev - 1 + images.length) % images.length);
+                      }}
+                      aria-label="Previous image"
                     >
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
@@ -144,7 +213,11 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     <button
                       type="button"
                       className="miroooo-gallery__arrow miroooo-gallery__arrow--next"
-                      onClick={() => setActiveMediaIndex((prev) => (prev + 1) % images.length)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveMediaIndex((prev) => (prev + 1) % images.length);
+                      }}
+                      aria-label="Next image"
                     >
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
@@ -158,79 +231,77 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
             {/* Info / Buy Box */}
             <div className="product__info block sticky w-full">
               <div className="product__title">
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <img key={i} src="/assets/star.png" alt="★" width="16" height="15" style={{ width: '16px', height: '15px' }} />
-                    ))}
-                  </div>
-                  <span style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    4.9 · TRUSTED BY 40,000+ CUSTOMERS
-                  </span>
-                </div>
                 <h1
                   className="heading leading-none product-title-sm font-bold"
-                  style={{ fontSize: '38px', fontWeight: 700, lineHeight: 1.1, color: '#ffffff', margin: '4px 0 2px 0' }}
+                  style={{ fontSize: '40px', fontWeight: 700, lineHeight: 1.08, color: '#ffffff', margin: '4px 0 2px 0', letterSpacing: '-0.03em' }}
                 >
-                  {product.name}
+                  Miroooo {isX2 ? 'X2' : 'X1'} Heads
                 </h1>
               </div>
 
               {/* Price */}
               <div className="product__price grid gap-2 mt-2" style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
                 <span className="text-3xl font-extrabold text-white" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                  ${totalPrice.toFixed(2)}
-                </span>
-                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '13px', fontWeight: 500 }}>
-                  (${basePrice.toFixed(2)} per 2-head pack)
+                  {formatUSD(totalPrice)}
                 </span>
               </div>
 
-              {/* Bullets */}
+              {/* Features List */}
               <div className="product__features-list my-4" style={{ margin: '16px 0' }}>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: 'rgba(255, 255, 255, 0.9)', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.95rem' }}>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      ✓
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
                     </span>
-                    <span><strong>DuPont™ End-Rounded Filaments</strong> for gentle enamel care.</span>
+                    <span><strong>DuPont precision rounded</strong> nylon bristles for gentle enamel protection.</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      ✓
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     </span>
-                    <span><strong>Precision 2-Pack Replacement</strong> tailored for {isX2 ? 'Miroooo X2' : 'Miroooo X1'}.</span>
+                    <span><strong>Engineered exclusively</strong> for {isX2 ? 'Miroooo X2 45° Bass sweep sonic motor' : 'Miroooo X1 32,000 VPM acoustic sonic motor'}.</span>
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      ✓
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     </span>
-                    <span><strong>Dentist Recommended:</strong> Replace brush head every 3 months.</span>
+                    <span><strong>3-Month optimal hygiene</strong> and plaque-removal replacement cycle.</span>
+                  </li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </span>
+                    <span><strong>Anti-bacterial</strong>, fast-drying bristle design.</span>
                   </li>
                 </ul>
               </div>
 
               {/* Quantity Selector */}
-              <div style={{ margin: '20px 0 16px 0', display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px', fontWeight: 600 }}>Quantity:</span>
-                <div style={{ display: 'inline-flex', alignItems: 'center', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.05)', padding: '2px' }}>
+              <div className="heads-quantity-selector my-4" style={{ margin: '20px 0 16px 0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>QUANTITY:</span>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '12px' }}>{formatUSD(basePrice)} per 2-head pack</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111111', border: '1px solid rgba(255, 255, 255, 0.18)', borderRadius: '9999px', padding: '4px 8px', height: '50px', boxSizing: 'border-box' }}>
                   <button
                     type="button"
                     disabled={quantity <= 1}
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'transparent', color: '#ffffff', fontSize: '18px', fontWeight: 700, border: 'none', cursor: quantity <= 1 ? 'not-allowed' : 'pointer', opacity: quantity <= 1 ? 0.3 : 1 }}
+                    aria-label="Decrease quantity"
+                    style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: quantity <= 1 ? 'not-allowed' : 'pointer', fontSize: '18px', fontWeight: 700, opacity: quantity <= 1 ? 0.3 : 1, transition: 'all 0.2s ease' }}
                   >
-                    -
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                   </button>
-                  <span style={{ width: '36px', textAlign: 'center', color: '#ffffff', fontWeight: 700, fontSize: '15px' }}>
+                  <span style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', fontFamily: 'ui-monospace, SFMono-Regular, monospace', minWidth: '40px', textAlign: 'center' }}>
                     {quantity}
                   </span>
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => q + 1)}
-                    style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'transparent', color: '#ffffff', fontSize: '18px', fontWeight: 700, border: 'none', cursor: 'pointer' }}
+                    aria-label="Increase quantity"
+                    style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '18px', fontWeight: 700, transition: 'all 0.2s ease' }}
                   >
-                    +
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                   </button>
                 </div>
               </div>
@@ -258,10 +329,11 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     className="shipping-info-btn"
                     onClick={() => setIsShippingTooltipOpen((prev) => !prev)}
                     style={{ width: '18px', height: '18px', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', color: 'rgba(255, 255, 255, 0.6)', fontSize: '10px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+                    aria-label="Shipping estimate details"
                   >
-                    ?
+                    <span>?</span>
                   </button>
-                  {isShippingTooltipOpen && (
+                  {isShippingTooltipOpen ? (
                     <div
                       className="shipping-info-tooltip"
                       style={{ display: 'block', position: 'absolute', right: 0, top: 'calc(100% + 8px)', zIndex: 50, width: '270px', background: '#18191a', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '12px', padding: '12px 14px', boxShadow: '0 12px 30px rgba(0, 0, 0, 0.7)', textAlign: 'left', color: 'rgba(255, 255, 255, 0.85)' }}
@@ -270,17 +342,17 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                         <span style={{ fontWeight: 700, fontSize: '12px', color: '#ffffff' }}>Delivery Estimate</span>
                         <button
                           type="button"
-                          style={{ background: 'none', border: 'none', color: 'rgba(255, 255, 255, 0.6)', fontSize: '13px', cursor: 'pointer' }}
+                          style={{ background: 'none', border: 'none', color: 'rgba(255, 255, 255, 0.6)', fontSize: '13px', cursor: 'pointer', float: 'right' }}
                           onClick={() => setIsShippingTooltipOpen(false)}
                         >
-                          ✕
+                          &times;
                         </button>
                       </div>
                       <p style={{ fontSize: '11.5px', lineHeight: 1.5, margin: 0, color: 'rgba(255, 255, 255, 0.8)' }}>
-                        This is the estimated delivery timeframe based on 1–3 business days processing and 7–20 business days standard transit via USPS Priority / FedEx Ground. For more information, please visit our <a href="/policies/shipping-policy" style={{ color: '#ffffff', textDecoration: 'underline' }}>shipping policy</a> page.
+                        This is the estimated delivery timeframe based on 1–3 business days processing and 7–20 business days standard transit. For more information, please visit our <Link href="/policies/shipping-policy" style={{ color: '#ffffff', textDecoration: 'underline' }}>shipping policy</Link> page.
                       </p>
                     </div>
-                  )}
+                  ) : null}
                 </div>
               </div>
 
@@ -295,26 +367,82 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   onClick={handleAddToCart}
                 >
                   <span className="btn-fill" data-fill></span>
-                  <span className="btn-text">Add to Cart</span>
+                  <span className="btn-text">Add to cart</span>
                 </button>
               </div>
 
               {/* Trust Badges */}
               <div
                 className="grid grid-cols-3 gap-2 py-3 px-1 mb-6 text-center"
-                style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', padding: '12px 0 16px' }}
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', padding: '12px 0 16px', marginBottom: '20px' }}
               >
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                  <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>DuPont™<br />Bristles</span>
+                  <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>100% {isX2 ? 'Miroooo X2' : 'Miroooo X1'}<br/>Compatibility</span>
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                  <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Enamel<br />Safe</span>
+                  <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>DuPont 3D<br/>Bristles</span>
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                  <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><rect x="1" y="3" width="15" height="13" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Tracked<br />US Delivery</span>
+                  <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br/>Shipping</span>
+                </div>
+              </div>
+
+              {/* Accordions */}
+              <div className="product__accordions" style={{ display: 'flex', flexDirection: 'column', gap: 0, marginTop: '14px' }}>
+                <div className="product__accordion details" style={{ borderTop: '1px solid rgba(255,255,255,0.12)', padding: '12px 0' }}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenAccordion(openAccordion === 0 ? null : 0)}
+                    className="details__summary flex items-center justify-between gap-2 cursor-pointer w-full text-left"
+                    style={{ background: 'none', border: 'none', padding: 0, color: '#ffffff', outline: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                  >
+                    <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <svg className="icon icon-sparkles icon-md" viewBox="0 0 20 20" stroke="#ffffff" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '20px', height: '20px' }}>
+                        <path d="M10 2L11.8 7.2L17 9L11.8 10.8L10 16L8.2 10.8L3 9L8.2 7.2L10 2Z" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span className="text-sm font-semibold leading-none" style={{ color: '#ffffff', fontSize: '14px' }}>Why {isX2 ? 'Miroooo X2' : 'Miroooo X1'} Heads?</span>
+                    </div>
+                    <svg className="icon icon-chevron icon-xs flex-auto" viewBox="0 0 24 24" stroke="#ffffff" fill="none" strokeWidth="2" style={{ width: '16px', height: '16px', transform: openAccordion === 0 ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}>
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                  {openAccordion === 0 && (
+                    <div className="details__content rte text-sm" style={{ marginTop: '12px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, fontSize: '13.5px' }}>
+                      <p><strong>Micro-Diamond Rounded DuPont Bristles:</strong> Every bristle filament undergoes advanced micro-diamond tip polishing, eliminating sharp abrasive edges to safeguard gums while maximizing interdental plaque removal.</p>
+                      <p style={{ marginTop: '8px' }}><strong>{isX2 ? 'Seamless 45° Bass Sweep Coupling:' : 'Seamless 32,000 VPM Acoustic Motor Coupling:'}</strong> Custom-engineered mount securely locks with the high-frequency {isX2 ? 'Miroooo X2 acoustic magnetic motor' : 'Miroooo X1 acoustic sonic motor'} for zero energy loss.</p>
+                      <p style={{ marginTop: '8px' }}><strong>Optimal 3-Month Replacement:</strong> Dentists recommend replacing toothbrush heads every 90 days to maintain peak hygiene and optimal plaque-sweeping performance.</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="product__accordion details" style={{ borderTop: '1px solid rgba(255,255,255,0.12)', borderBottom: '1px solid rgba(255,255,255,0.12)', padding: '12px 0' }}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenAccordion(openAccordion === 1 ? null : 1)}
+                    className="details__summary flex items-center justify-between gap-2 cursor-pointer w-full text-left"
+                    style={{ background: 'none', border: 'none', padding: 0, color: '#ffffff', outline: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                  >
+                    <div className="flex items-center gap-2.5" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <svg className="icon icon-box icon-md" viewBox="0 0 20 20" stroke="#ffffff" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '20px', height: '20px' }}>
+                        <path d="M6.24986 7.91666L13.7499 3.33333M9.99996 10.4167L17.5 5.83333M9.99996 10.4167L2.49996 5.83333M9.99996 10.4167V18.75M1.66663 8.55104V11.4489C1.66663 12.44 1.66663 12.9355 1.80881 13.3807C1.93464 13.7747 2.14059 14.1385 2.41371 14.4491C2.72235 14.8001 3.14725 15.055 3.99705 15.5649L7.53038 17.6849C8.42828 18.2237 8.87723 18.493 9.35649 18.5983C9.78042 18.6914 10.2195 18.6914 10.6434 18.5983C11.1227 18.493 11.5716 18.2237 12.4695 17.6849L16.0029 15.5649C16.8527 15.055 17.2776 14.8001 17.5862 14.4491C17.8593 14.1385 18.0653 13.7747 18.1911 13.3807C18.3333 12.9355 18.3333 12.44 18.3333 11.4489V8.55104C18.3333 7.56002 18.3333 7.0645 18.1911 6.61926C18.0653 6.22525 17.8593 5.86151 17.5862 5.5509C17.2776 5.19989 16.8527 4.94495 16.0029 4.43508L12.4695 2.31508C11.5716 1.77634 11.1227 1.50697 10.6434 1.40172C10.2195 1.30863 9.78042 1.30863 9.35649 1.40172C8.87723 1.50697 8.42828 1.77634 7.53038 2.31508L3.99705 4.43508C3.14725 4.94495 2.72235 5.19989 2.41371 5.5509C2.14059 5.86151 1.93464 6.22525 1.80881 6.61926C1.66663 7.0645 1.66663 7.56002 1.66663 8.55104Z" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span className="text-sm font-semibold leading-none" style={{ color: '#ffffff', fontSize: '14px' }}>Package contents</span>
+                    </div>
+                    <svg className="icon icon-chevron icon-xs flex-auto" viewBox="0 0 24 24" stroke="#ffffff" fill="none" strokeWidth="2" style={{ width: '16px', height: '16px', transform: openAccordion === 1 ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}>
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                  {openAccordion === 1 && (
+                    <div className="details__content rte text-sm" style={{ marginTop: '12px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, fontSize: '13.5px' }}>
+                      <ul style={{ paddingLeft: '18px', margin: 0 }}>
+                        <li>2x {isX2 ? 'Miroooo X2' : 'Miroooo X1'} DuPont Replacement Brush Heads</li>
+                        <li>Individually Sealed Hygienic Protective Travel Caps</li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -330,7 +458,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 <div className="miroooo-sticky-info">
                   <p className="miroooo-sticky-title" id="sticky-bar-title">{product.name} ({quantity}x)</p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
-                    <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>${totalPrice.toFixed(2)}</span>
+                    <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>{formatUSD(totalPrice)}</span>
                     <span className="miroooo-sticky-bullet">·</span>
                     <span id="sticky-bar-gifts" className="miroooo-sticky-gifts-tag" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>2-Pack Replacement</span>
                   </p>
@@ -345,9 +473,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
               >
                 <span className="btn-fill" data-fill></span>
                 <span className="btn-text">
-                  <span className="miroooo-lottie-cart" data-lottie-cart aria-hidden="true">
-                    <svg className="icon-cart-bag miroooo-sticky-bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
-                  </span>
+                  <AnimatedIcon kind="cart" className="miroooo-lottie-cart" />
                   <span id="sticky-bar-cta-text">Add to cart</span>
                 </span>
               </button>
@@ -356,13 +482,15 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
         </div>
       </div>
 
+      <ShippingMarquee />
+
       {/* Exquisite Texture Split Section */}
-      <div id="x2-section-texture-split" className="shopify-section" style={{ background: '#000000', color: '#ffffff', width: '100%', padding: 'clamp(3.5rem, 6vw, 6rem) 0', boxSizing: 'border-box', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <div id={isX2 ? 'x2-section-texture-split' : 'x1-section-texture-split'} className="shopify-section" style={{ background: '#000000', color: '#ffffff', width: '100%', padding: 'clamp(3.5rem, 6vw, 6rem) 0', boxSizing: 'border-box', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
           <div className="split-section-grid" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(2rem, 4vw, 4.5rem)' }}>
             <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
               <div style={{ position: 'relative', width: '100%', borderRadius: '20px', overflow: 'hidden', background: '#0d0d0d', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }}>
-                <img src="/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head.webp" alt="Miroooo Precision DuPont Replacement Bristle Head" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} loading="lazy" decoding="async" />
+                <img src={isX2 ? '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head.webp' : '/assets_ref/x/heads/B1.webp'} alt={`Miroooo ${isX2 ? 'X2' : 'X1'} Precision DuPont Replacement Bristle Head`} style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} loading="lazy" decoding="async" />
               </div>
             </div>
 
@@ -385,8 +513,8 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                   <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
                   <div>
-                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>Gum Soothing Protection</strong>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>Anatomically contoured bristle layout hugs tooth surfaces for a soothing, non-abrasive gumline massage.</span>
+                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>{isX2 ? 'Gum Soothing Protection' : '32,000 VPM Acoustic Coupling'}</strong>
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>{isX2 ? 'Anatomically contoured bristle layout hugs tooth surfaces for a soothing, non-abrasive gumline massage.' : 'Custom-engineered precision shaft coupling transfers high-frequency sonic acoustic vibrations directly to bristle tips.'}</span>
                   </div>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
@@ -399,8 +527,8 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                   <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
                   <div>
-                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>Softer than Soft</strong>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>Dense, velvety bristle clustering delivers an unmatched, luxurious spa-grade brushing experience.</span>
+                    <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>{isX2 ? 'Softer than Soft' : 'Gentle Gumline Protection'}</strong>
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>{isX2 ? 'Dense, velvety bristle clustering delivers an unmatched, luxurious spa-grade brushing experience.' : 'Anatomically contoured bristle layout hugs tooth surfaces for a soothing, non-abrasive gumline massage.'}</span>
                   </div>
                 </li>
               </ul>
@@ -409,24 +537,80 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox Modal */}
       {isLightboxOpen && (
         <div
-          className="miroooo-gallery-lightbox is-active"
+          className="miroooo-gallery-lightbox is-open"
           role="dialog"
           aria-modal="true"
           style={{ display: 'flex' }}
         >
-          <div className="miroooo-gallery-lightbox__backdrop" onClick={() => setIsLightboxOpen(false)}></div>
+          <div
+            className="miroooo-gallery-lightbox__backdrop"
+            onClick={() => {
+              setIsLightboxOpen(false);
+              setIsLightboxZoomed(false);
+            }}
+          ></div>
           <button
             type="button"
             className="miroooo-gallery-lightbox__close"
-            onClick={() => setIsLightboxOpen(false)}
+            onClick={() => {
+              setIsLightboxOpen(false);
+              setIsLightboxZoomed(false);
+            }}
+            aria-label="Close lightbox"
           >
             ✕
           </button>
-          <div className="miroooo-gallery-lightbox__stage">
-            <img src={images[activeMediaIndex].src} alt={images[activeMediaIndex].alt} style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain' }} />
+
+          {images.length > 1 && (
+            <button
+              type="button"
+              className="miroooo-gallery-lightbox__arrow miroooo-gallery-lightbox__prev"
+              onClick={() => setActiveMediaIndex((prev) => (prev - 1 + images.length) % images.length)}
+              aria-label="Previous image"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          )}
+
+          <div
+            className="miroooo-gallery-lightbox__stage"
+            onClick={() => setIsLightboxZoomed((prev) => !prev)}
+            style={{ cursor: isLightboxZoomed ? 'zoom-out' : 'zoom-in' }}
+          >
+            <img
+              src={images[activeMediaIndex].src}
+              alt={images[activeMediaIndex].alt}
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '85vh',
+                objectFit: 'contain',
+                borderRadius: '12px',
+                transform: isLightboxZoomed ? 'scale(1.75)' : 'scale(1)',
+                transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+            />
+          </div>
+
+          {images.length > 1 && (
+            <button
+              type="button"
+              className="miroooo-gallery-lightbox__arrow miroooo-gallery-lightbox__next"
+              onClick={() => setActiveMediaIndex((prev) => (prev + 1) % images.length)}
+              aria-label="Next image"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          )}
+
+          <div className="miroooo-gallery-lightbox__counter" aria-live="polite">
+            <span>{activeMediaIndex + 1}</span> / <span>{images.length}</span>
           </div>
         </div>
       )}

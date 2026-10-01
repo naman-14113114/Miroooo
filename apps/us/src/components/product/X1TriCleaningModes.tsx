@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ViewportVideo } from '@/components/media/ViewportVideo';
 
 export function X1TriCleaningModes() {
   return (
@@ -97,7 +98,7 @@ export function X1TriCleaningModes() {
         <div className="video-mode-frame-grid">
           {/* Video Column (Left on Desktop, Top on Mobile) */}
           <div className="video-mode-col-video">
-            <video
+            <ViewportVideo
               id="mode-360-video"
               autoPlay
               loop
@@ -105,14 +106,14 @@ export function X1TriCleaningModes() {
               playsInline
               preload="none"
               src="/assets_ref/x/miroooo-x-360-view.mp4"
-            ></video>
+            ></ViewportVideo>
           </div>
 
           {/* Text Column (Right on Desktop, Bottom on Mobile) */}
           <div className="video-mode-col-text">
             <h2
               style={{
-                fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                 fontSize: 'clamp(1.6rem, 2.4vw, 2.3rem)',
                 fontWeight: 600,
                 color: '#111111',
@@ -140,7 +141,7 @@ export function X1TriCleaningModes() {
                 <div>
                   <h3
                     style={{
-                      fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                      fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                       fontSize: '1.05rem',
                       fontWeight: 600,
                       color: '#111111',
@@ -151,7 +152,7 @@ export function X1TriCleaningModes() {
                   >
                     STANDARD
                   </h3>
-                  <p style={{ fontFamily: "var(--font-body-family, 'Inter', sans-serif)", fontSize: '0.88rem', color: '#444444', lineHeight: 1.5, margin: 0 }}>
+                  <p style={{ fontFamily: "var(--font-body-family, var(--font-inter), sans-serif)", fontSize: '0.88rem', color: '#444444', lineHeight: 1.5, margin: 0 }}>
                     Gentle daily oral care designed for sensitive teeth and gums, providing a smooth, comfortable clean perfect for everyday brushing.
                   </p>
                 </div>
@@ -171,7 +172,7 @@ export function X1TriCleaningModes() {
                 <div>
                   <h3
                     style={{
-                      fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                      fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                       fontSize: '1.05rem',
                       fontWeight: 600,
                       color: '#111111',
@@ -182,7 +183,7 @@ export function X1TriCleaningModes() {
                   >
                     WHITENING
                   </h3>
-                  <p style={{ fontFamily: "var(--font-body-family, 'Inter', sans-serif)", fontSize: '0.88rem', color: '#444444', lineHeight: 1.5, margin: 0 }}>
+                  <p style={{ fontFamily: "var(--font-body-family, var(--font-inter), sans-serif)", fontSize: '0.88rem', color: '#444444', lineHeight: 1.5, margin: 0 }}>
                     Targeted high-frequency vibrations that effectively lift stubborn surface stains from coffee, tea, and food for a radiant smile.
                   </p>
                 </div>
@@ -202,7 +203,7 @@ export function X1TriCleaningModes() {
                 <div>
                   <h3
                     style={{
-                      fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                      fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                       fontSize: '1.05rem',
                       fontWeight: 600,
                       color: '#111111',
@@ -213,7 +214,7 @@ export function X1TriCleaningModes() {
                   >
                     DEEP CLEANSING
                   </h3>
-                  <p style={{ fontFamily: "var(--font-body-family, 'Inter', sans-serif)", fontSize: '0.88rem', color: '#444444', lineHeight: 1.5, margin: 0 }}>
+                  <p style={{ fontFamily: "var(--font-body-family, var(--font-inter), sans-serif)", fontSize: '0.88rem', color: '#444444', lineHeight: 1.5, margin: 0 }}>
                     Maximum power for an intensive plaque-removing clean, delivering a dentist-fresh feeling along the gumline and hard-to-reach areas.
                   </p>
                 </div>

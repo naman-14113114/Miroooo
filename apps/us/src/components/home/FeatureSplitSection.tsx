@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ViewportVideo } from '@/components/media/ViewportVideo';
 import Link from 'next/link';
 import { FeatureSplitSectionData } from '@/data/home';
 
@@ -27,7 +28,7 @@ export function FeatureSplitSection({ data }: FeatureSplitSectionProps) {
               {data.heading}
             </h2>
             <div className="gb-video-feature-divider" />
-            <p className="gb-video-feature-lead">{data.lead}</p>
+            {data.lead && <p className="gb-video-feature-lead">{data.lead}</p>}
 
             <div className="gb-video-feature-list">
               {data.points.map((point) => (
@@ -54,7 +55,7 @@ export function FeatureSplitSection({ data }: FeatureSplitSectionProps) {
           {/* Video Column */}
           <div className="gb-video-feature-media reveal">
             <div className={isPortrait ? 'gb-video-feature-box--portrait' : 'gb-video-feature-box'}>
-              <video
+              <ViewportVideo
                 className="gb-video-feature-player"
                 src={data.videoSrc}
                 autoPlay

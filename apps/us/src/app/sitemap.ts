@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://us.trymiroooo.com";
+const BASE_URL = "https://miroooo.us";
 
 const routes = [
   // Homepage

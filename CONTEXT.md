@@ -457,3 +457,199 @@ apps/uk/src/lib/checkout.ts
 - Located the official XPage sign-in using its help page https://help.xpage.ai/help/landing-page-account/manage-your-xpage-account and the visible Sign in button on https://www.xpage.ai/. Opened a dedicated Chrome tab which redirects to https://admin.myxpage.shop/auth/sign-in. It is signed out (empty Email/Password fields). Marked that tab for handoff and asked the user to sign in there and reply signed in. No credential entered, login submitted, account/settings change or message sent. This supersedes the earlier request for a dashboard URL. Dashboard inspection and any concrete proposed regular-cart promo correction remain pending this access.
 - Removed only this task's own anonymous private checkout URL/session scripts and raw private outputs outside the repository; sanitized results, screenshots, recording frames and original context snapshots retained. No application/customer/provider data was deleted. New context UTF-8 validation found zero replacement characters; GBP pound signs intact (terminal display encoding alone showed replacement glyphs).
 - Re-read complete updated context files, verified original snapshot byte prefixes and previous append bytes preserved. Final git diff --check passes; staged diff empty, US/shared diff empty, local14 tracked implementation modifications +8 new helpers/posters and append-only repo context. No commit/push/branch/PR/deploy or production setting change. Latest positive live4-brush UK handoff remains GBP276; remaining regular-cart promo provider mismatch is documented above.
+
+
+## 2026-10-01T23:24:36+05:30 — US storefront synchronization with approved UK 71a59f9 (implementation and pre-push verification)
+
+- Repository: E:\1st YEAR DTU\New folder\miroooo; branch main; HEAD 71a59f9c38661e061f9aa26a1203e4cc24b7bf09; upstream origin/main at 71a59f9c38661e061f9aa26a1203e4cc24b7bf09, ahead/behind 0	0. Remote https://github.com/naman-14113114/Miroooo.git. Initial checkout was clean. User explicitly confirmed 71a59f9 as the UK baseline and requested syncing the entire US storefront, all device sizes, media optimization and XPage checkout with its actual USD prices, then pushing clean code to GitHub. Repeated fetches found no newer overlapping remote commit. All changes below are this task's work.
+- Scope: apps/us, a root verify:us script entry, US-only pnpm lock importer changes, scripts/verify-us.mjs and append-only context records. Protected apps/uk and all packages: 381 tracked file SHA256 hashes match the initial snapshot. No GoBrush code/assets/context edited; no unrelated repository edits. Existing Next.js/React/TypeScript/Tailwind architecture and public URL scheme preserved; no standalone HTML pages. This newer explicit US request supersedes the older UK-only scope for this task, but does not authorize changing the working UK app.
+- Context/instructions read: workspace AGENTS.md and full workspace/repository CONTEXT histories; README.md, PRODUCT.md, DESIGN.md; no additional repository AGENTS.md found. Used Playwright CLI browser skill, Vercel React best practices, Vercel API guidance. The current approved storefront and explicit US instruction take precedence over older UK-oriented design-document defaults.
+
+### Implementation and USD commerce
+
+- Ported the UK page shell, fonts, Tailwind setup, legacy CSS fixes, header Shop drawer, mobile menu/focus/close behavior, footer/service strip, home supplied video, hover labels, six product-card galleries, product gallery/variants/bundle selectors, X1/X2 sections, scroll/hover/reveal animations, review controls, stats viewport activation, cart page/drawer and persistence, FAQ/contact/quiz/Smile Coach/guides/tracking/policies. Add to Cart navigates /cart. Phone sticky ATC contains cart icon and current main-button gift text (including Free 2/4 Brush Heads), with no thumbnails; desktop retains product details. Circular mobile close, consistent sonic sparkle, reduced motion and keyboard behavior preserved.
+- All 188 corresponding UK media/font/SVG assets are byte-identical in US, including supplied /assets_ref/x/gallery/miroooo-video-1.mp4 and optimized images/videos/posters. No quality, dimensions, frame rate or aspect ratio changed. Previous UK video remux saved only a few bytes; this task does NOT claim substantial new lossy video compression. Six exact lossless reel posters and native metadata/near-viewport buffering, selected-video playback, inactive/offscreen pause, media range/cache headers copied. Hero remains autoplay/muted/loop/playsInline. No new AJAX media loader or runtime media package.
+- US catalog matches live public USD XPage data observed October 1: X1 and X2 singles $91.15; pairs $169.10; triples $234.07. X1 compare-at $129.88; X2 $184.23. Paid X1 two-head pack $13.15 (compare $48.31); X2 $13.20 (compare $26.51). Pair gets one free two-head pack; triple gets two. Native promo tiers: single $82.03, pair $152.18, triple $210.67. MIROOOO and MIROOOO10 alias one discount, never stack. All monetary rendering uses en-US USD two decimals; cart arithmetic uses integer cents and server canonical products, not persisted/requested prices. Pure same-model two/three-brush carts qualify; mixed, paid-head combinations and four-plus brushes use original item prices. Forged client gifts discarded and server gifts rederived. All quantity/variant legacy request shapes preserved; invalid quantities rejected.
+- New US money.ts and checkout-quote.ts; US-only checkout.ts uses native set-cart for ordinary products/heads/mixed/four-plus and published create-bundle-order for eligible native tiers. Preserves model destinations https://x1.miroooo.us and https://offer.miroooo.us, CSRF/session/currency and signed handoff prefix, USD and attribution. Checks fresh customer HTML total, exact item quantities and the provider's settled ShippingHandler arithmetic without executing remote JS. Allowlisted origins/paths, bounded redirects/timeouts. PRICE_MISMATCH returns409; unavailable/unsafe/unverifiable quote returns503 QUOTE_UNAVAILABLE with no checkout URL. Cart shows the error; edits clear/invalidate old requests and cannot redirect stale carts. Shared package/helper and UK are unchanged.
+- Localized canonical/sitemap/robots to existing https://miroooo.us, en-US/en_US, United States/USD, Eastern Time support hours and America/New_York countdown. Preserved existing US operator xPage Drop LLC, 131 Continental Dr Suite 305, Newark, DE 19713, USA and support@trymiroooo.com. Authentic UK customer review locations/photos retained. Competitor prices retained with explicit '(UK)' currency labels rather than invented USD comparisons. Contact/forms/tracking behavior carried over without submitting customer messages/reviews. Same baseline analytics/chat retained.
+- Removed three obsolete US-only unreferenced components AboutContent.tsx, FaqContent.tsx, PolicyLayout.tsx after checking imports. Kept unrelated old public asset paths. US ESLint exceptions match deliberate UK legacy patterns. Added US tsx4.22.4 test script and Tailwind^4.3.3 specifiers; lock changes confined to US importer, no shared/UK resolved dependency changes. Root verify:us leaves UK verifier intact.
+
+### Verification, corrections, and evidence
+
+- US pnpm lint (eslint max-warnings0), typecheck, Next16.2.6 production build (31 generated routes) passed. Latest rerun: all28 commerce tests passed, verify:us586 checks, UK verify395 checks, git diff --check passed. Tests cover offers/gifts/cents/promos, stored-cart canonicalization, ordinary singles/heads/mixed/4+/paid-head carts, native bundles, invalid cart/provider offline/wrong currency/unsafe destination/wrong quantities, unavailable quote and provider rounding mismatch. US next-env.d.ts and tsconfig.tsbuildinfo were clean initially; only their generated bytes restored from HEAD after checks. No UK build rerun required because all UK/shared source and dependency resolutions are unchanged.
+- Browser production preview http://localhost:3121 using Chromium at390,820,1440: 78 route views (26 pages x3) returned200 with no horizontal overflow, incorrect US canonical, stale UK product offers or application page exceptions. Covered home, shop, four products, cart, informational pages, six policies and guides. Initial image audit falsely counted the deliberately sourceless hidden review lightbox placeholder as broken. Corrected to check actual currentSrc; final six X1/X2 responsive rechecks have zero broken images/page exceptions/overflow.
+- 48 journey assertions passed: heads ATC/cart navigation, five-head persistence/reload, checkout failure/edit clearing/stale request cancellation/no bad redirect, reel play/sound/advance/offscreen pause, inactive gallery video loading, supplied home hero playback and below-fold feature video visibility. Tested six card hover/reset/keyboard galleries, mobile menu/dots/close, all four mobile sticky controls, review button hover/load-more, contact submit/FAQ hover contrast and keyboard focus. Final11 UI assertions all pass, including USD Shop prices, Escape, header hover, keyboard focus, Pink triple+free heads, $234.07 total, $210.67 promo persistence, US privacy metadata and identical sonic icon.
+- Stats animation checks: initial concurrent headed-browser/background and build activity caused fixed-time test failures; foregrounded one browser and inspected events instead. Observed intermediate values at390/820/1440, unseen rows remained0, final targets95/98/91 and exact ring offsets8.8/3.52/15.84; reduced-motion passed. A rounded95% label can precede final exact stroke offset, so fixed text-only timing assertion. No animation source change was needed or made to satisfy test timing. Contact focus initial programmatic mouse-focus check was incorrect for :focus-visible; real Tab/Shift+Tab passed and screenshot reviewed. APPLY locator corrected to actual uppercase label. Two complex PowerShell/python quoting attempts failed before writes; used external scripts afterward. Initial mechanical localization swapped Shop compare prices and produced 'US GDPR'; fixed X1/X2 mapping and neutral US privacy metadata before final build. No such errors left in verified source.
+- Final cold-cache reel checks at390/1440,10Mbps download/80ms latency: all six unique reels readyState3/4 after7 seconds reading hero, before arrival; all18 cells poster-backed, selected clip plays on arrival, no overflow/page exceptions. Original high-bitrate clips remain; this demonstrates loading behavior for tested conditions, not guaranteed instant playback on all networks.
+- Live USD API/provider matrix18 cases:16 successful handoffs (both models1/2/3/4, both single/triple promos, X2pair promo, both heads, mixed brush+paid heads); two expected guard rejections described below. Actual phone browser X1 product -> /cart -> quantity4 -> checkout: all four provider totals $364.60, USD, United States selected, contact input visible. No personal details/payment/order purchase submitted; anonymous provider checkout drafts were created for these tests. Private draft URLs remain outside Git until cleanup; no tokens/cookies/PII recorded here.
+- Visual screenshots reviewed for desktop/phone product pages, tablet Shop, contact, phone menu/sticky, review hover, stats and reel sections. Final comparative capture of live UK and local US home/X2 at390/820/1440 supplements byte-identical media/styles; intended differences are USD offers/US locale. Evidence directory: C:\Users\sahil\.codex\visualizations\2026\09\28\01a0e633-4846-7891-aafc-fedb2ac007d9\us-sync-oct1. Sanitized live-usd-results.json, final-check-results.txt, reference-results.txt, screenshots and source snapshots retained.
+- Testing limits: Chromium emulation, not physical phones/iPad/Safari, real payment authorization or customer form delivery. Existing Tawk HTTP400 and unused CSS preload warnings persist; no application JS exception does not mean no third-party console noise. Local sessions closed across user pauses, causing connection-refused until production server and browser restarted. No claims of production field performance/Lighthouse scores.
+
+### Provider/domain limitations and publishing state
+
+- X1 two-brush promo: XPage initial HTML $152.18 but its own browser Math.floor calculation settles at $152.17. Guard blocks409, no redirect; changing the storefront to either amount would conceal inconsistent provider quote stages. Provider configuration was not changed. Other native promo cases tested match.
+- Ordinary mixed/four-plus cart promos: XPage does not preserve/apply the coupon in anonymous handoff. Tested mixed X1+X2: cart promo $164.07 vs live checkout $182.30; blocks409. Ordinary no-promo checkout works. This is the same previously documented UK provider limitation; retain validation instead of charging a different total. A mocked heads combination exposed another potential binary-floor penny mismatch; only documented as test-fixture evidence, not falsely described as a live failure. Guard remains for all carts.
+- US actual public Vercel alias: https://miroooo-us-eta.vercel.app/. Before push, deployment dpl_9ZfLb2WmeX9FknSK8NWPj6qpVG6L was READY at baseline71a59f9, project prj_ljeWNFxdnPrM4321xGrEzxz9juNj. Intended custom https://miroooo.us currently serves404 'Wrong Domain'; existing canonical preserved, no DNS/domain/provider settings changed. Vercel connector works with teamId empty string; using listed account team identifier gave403, corrected to personal scope without another authorization request.
+- At this record: implementation remains local, no commit/push yet; no branch/PR/manual deployment/promotion/settings edit, merge/rebase/reset/stash or unrelated work discard. User explicitly authorized final commit/push on main, planned after final checks/context update. Git-connected deployments may run automatically on push. Follow-up record will state actual commit/push/deployment results. Remaining external work: fix XPage promo discrepancies and custom-domain configuration; not silently represented as solved by US sync.
+
+### Exact changed/new implementation files (before this context append)
+
+```text
+apps/us/eslint.config.mjs
+apps/us/next.config.ts
+apps/us/package.json
+apps/us/postcss.config.mjs
+apps/us/public/assets/about-reference.css
+apps/us/public/assets/about/our-team-video.mp4
+apps/us/public/assets/cart-reference.css
+apps/us/public/assets/dentalcare-quiz.js
+apps/us/public/assets/faq-reference.css
+apps/us/public/assets/fonts/inter-500.woff2
+apps/us/public/assets/fonts/inter-600.woff2
+apps/us/public/assets/fonts/inter-product-latin.woff2
+apps/us/public/assets/fonts/playfair-display-italic-latin.woff2
+apps/us/public/assets/gallery-motion.css
+apps/us/public/assets/home-reference.css
+apps/us/public/assets/home/hero-video-poster.webp
+apps/us/public/assets/icons/mode-deepclean-green.png
+apps/us/public/assets/icons/mode-standard-blue.png
+apps/us/public/assets/icons/mode-whitening-purple.png
+apps/us/public/assets/policy-cookies-policy-reference.css
+apps/us/public/assets/policy-privacy-policy-reference.css
+apps/us/public/assets/policy-refund-policy-reference.css
+apps/us/public/assets/policy-return-policy-reference.css
+apps/us/public/assets/policy-shipping-policy-reference.css
+apps/us/public/assets/policy-terms-of-service-reference.css
+apps/us/public/assets/product-shell.css
+apps/us/public/assets/product-shell.js
+apps/us/public/assets/product-sticky.css
+apps/us/public/assets/product-tokens.css
+apps/us/public/assets/site.css
+apps/us/public/assets/site.js
+apps/us/public/assets/smile-coach.js
+apps/us/public/assets_ref/miroooo-reviews.js
+apps/us/public/assets_ref/miroooo-x2-reviews.js
+apps/us/public/assets_ref/org_miroooo-reviews.js
+apps/us/public/assets_ref/org_miroooo-x2-reviews.js
+apps/us/public/assets_ref/reviews/Screenshot 2026-08-29 135004.png
+apps/us/public/assets_ref/reviews/customer-review-3pack-bundle.png
+apps/us/public/assets_ref/reviews/customer-review-bristle-head-detail.png
+apps/us/public/assets_ref/reviews/customer-review-dupont-brush-heads.png
+apps/us/public/assets_ref/reviews/customer-review-packaging-box.png
+apps/us/public/assets_ref/reviews/customer-review-unboxing-travel-case.png
+apps/us/public/assets_ref/reviews/miroooo-x2-review-oliver-harrison.png
+apps/us/public/assets_ref/theme.js
+apps/us/public/assets_ref/x/gallery/miroooo-video-1.mp4
+apps/us/public/assets_ref/x/miroooo-video-2s.mp4
+apps/us/public/assets_ref/x/miroooo-video-3.mp4
+apps/us/public/assets_ref/x/miroooo-x-360-view.mp4
+apps/us/public/assets_ref/x/reels/V2-poster.webp
+apps/us/public/assets_ref/x/reels/V2.mp4
+apps/us/public/assets_ref/x/reels/V4-poster.webp
+apps/us/public/assets_ref/x/reels/V4.mp4
+apps/us/public/assets_ref/x/reels/V5-poster.webp
+apps/us/public/assets_ref/x/reels/V5.mp4
+apps/us/public/assets_ref/x/reels/miroooo-5-poster.webp
+apps/us/public/assets_ref/x/reels/miroooo-6-poster.webp
+apps/us/public/assets_ref/x/reels/miroooo-6.mp4
+apps/us/public/assets_ref/x/reels/miroooo-8-poster.webp
+apps/us/public/assets_ref/x/reels/miroooo-8.mp4
+apps/us/public/assets_ref/x2/vbj9qc-h264-hd.mp4
+apps/us/public/robots.txt
+apps/us/src/app/api/checkout/prepare/route.ts
+apps/us/src/app/api/geo/check/route.ts
+apps/us/src/app/api/reviews/[productId]/route.ts
+apps/us/src/app/guides/layout.tsx
+apps/us/src/app/guides/page.tsx
+apps/us/src/app/layout.tsx
+apps/us/src/app/not-found.tsx
+apps/us/src/app/pages/contact-us/page.tsx
+apps/us/src/app/pages/dentalcare-quiz/layout.tsx
+apps/us/src/app/pages/order-tracking/page.tsx
+apps/us/src/app/pages/smile-coach/layout.tsx
+apps/us/src/app/policies/cookies-policy/page.tsx
+apps/us/src/app/policies/privacy-policy/page.tsx
+apps/us/src/app/products/layout.tsx
+apps/us/src/app/products/miroooo-x/page.tsx
+apps/us/src/app/products/miroooo-x2/page.tsx
+apps/us/src/app/sitemap.ts
+apps/us/src/components/cart/CartDrawer.tsx
+apps/us/src/components/cart/CartLines.tsx
+apps/us/src/components/cart/CartPageContent.tsx
+apps/us/src/components/guides/GuideDetailPage.tsx
+apps/us/src/components/guides/GuidesListPage.tsx
+apps/us/src/components/home/FeatureSplitSection.tsx
+apps/us/src/components/home/HomeFaq.tsx
+apps/us/src/components/home/ShowcaseGrid.tsx
+apps/us/src/components/layout/AnnouncementBar.tsx
+apps/us/src/components/layout/CartMinimalFooter.tsx
+apps/us/src/components/layout/CartMinimalHeader.tsx
+apps/us/src/components/layout/ClientInitializer.tsx
+apps/us/src/components/layout/Footer.tsx
+apps/us/src/components/layout/Header.tsx
+apps/us/src/components/layout/MenuDrawer.tsx
+apps/us/src/components/layout/RouteChrome.tsx
+apps/us/src/components/layout/useDrawer.ts
+apps/us/src/components/media/ViewportVideo.tsx
+apps/us/src/components/pages/AboutContent.tsx
+apps/us/src/components/pages/AboutPage.tsx
+apps/us/src/components/pages/ContactForm.tsx
+apps/us/src/components/pages/FaqContent.tsx
+apps/us/src/components/pages/FaqsPage.tsx
+apps/us/src/components/pages/OrderTracking.tsx
+apps/us/src/components/pages/ShopPage.tsx
+apps/us/src/components/pages/SmileCoach.tsx
+apps/us/src/components/policies/PolicyLayout.tsx
+apps/us/src/components/policies/PolicyPage.tsx
+apps/us/src/components/product/BrushFunctions.tsx
+apps/us/src/components/product/BrushStylePrecision.tsx
+apps/us/src/components/product/ComparisonTable.tsx
+apps/us/src/components/product/CustomerStats.tsx
+apps/us/src/components/product/CustomerStories.tsx
+apps/us/src/components/product/DeliveryTimer.tsx
+apps/us/src/components/product/DiscoverOralHygiene.tsx
+apps/us/src/components/product/EnergyBoostSplit.tsx
+apps/us/src/components/product/HeadsProductHero.tsx
+apps/us/src/components/product/LuxuriousProfessionalism.tsx
+apps/us/src/components/product/PackageContents.tsx
+apps/us/src/components/product/ProductAccordions.tsx
+apps/us/src/components/product/ProductFaqs.tsx
+apps/us/src/components/product/ProductHero.tsx
+apps/us/src/components/product/ProductPage.tsx
+apps/us/src/components/product/ProductReviews.tsx
+apps/us/src/components/product/ReelsCarousel.tsx
+apps/us/src/components/product/ShippingMarquee.tsx
+apps/us/src/components/product/StickyBuyBox.tsx
+apps/us/src/components/product/X1TriCleaningModes.tsx
+apps/us/src/components/product/X2ComparisonTable.tsx
+apps/us/src/components/product/X2ModesSwipe.tsx
+apps/us/src/components/product/useLoopingCarousel.ts
+apps/us/src/components/quiz/DentalQuiz.tsx
+apps/us/src/components/ui/AnimatedIcon.tsx
+apps/us/src/context/CartContext.tsx
+apps/us/src/data/faqs.ts
+apps/us/src/data/guideReference.ts
+apps/us/src/data/guides.ts
+apps/us/src/data/home.ts
+apps/us/src/data/navigation.ts
+apps/us/src/data/policies.ts
+apps/us/src/data/policyReference.ts
+apps/us/src/data/productAccordions.ts
+apps/us/src/data/products.ts
+apps/us/src/data/quiz.ts
+apps/us/src/data/x1Gallery.ts
+apps/us/src/data/x2Gallery.ts
+apps/us/src/lib/cart.ts
+apps/us/src/lib/checkout-quote.ts
+apps/us/src/lib/checkout.ts
+apps/us/src/lib/market.ts
+apps/us/src/lib/money.ts
+apps/us/src/styles/globals.css
+apps/us/tests/commerce.test.ts
+package.json
+pnpm-lock.yaml
+scripts/verify-us.mjs
+```
+
+### Final staging correction
+- Newly added CSS files became visible to git diff --cached --check only after staging: nine copied reference CSS files contained trailing blank whitespace inherited from UK. Trimmed only that US EOF whitespace; rendered CSS and UK files unchanged. The earlier unstaged diff check could not inspect these untracked files. Re-ran the staged check successfully before commit.

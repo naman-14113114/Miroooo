@@ -4,238 +4,169 @@ export interface PolicyContent {
   metaTitle: string;
   metaDescription: string;
   lastUpdated: string;
-  sections: Array<{
-    heading: string;
-    content: string;
-  }>;
+  sections: Array<{ heading: string; content: string }>;
 }
 
-export const legalEntity = {
-  company: 'xPage Drop LLC',
-  address: '131 Continental Dr Suite 305, Newark, DE 19713, USA',
-  email: 'support@trymiroooo.com',
-  hours: 'Monday – Friday, 9:00 AM – 5:00 PM EST',
-  phoneText: 'Live Chat & Email Support Available Mon-Fri',
-};
-
 export const POLICIES: Record<string, PolicyContent> = {
-  'shipping-policy': {
-    slug: 'shipping-policy',
-    title: 'US Shipping & Delivery Policy',
-    metaTitle: 'US Shipping & Delivery Policy | Miroooo',
-    metaDescription: 'Read our US shipping policy: Free tracked delivery, 1-3 business days processing, 7-20 business days transit timeframe.',
-    lastUpdated: 'January 2026',
+  "shipping-policy": {
+    slug: "shipping-policy",
+    title: "Shipping and Delivery Policy",
+    metaTitle: "US Shipping & Delivery Policy | Miroooo",
+    metaDescription: "Read our US shipping policy: Free tracked delivery, 1-3 business days processing, 7-20 business days transit timeframe.",
+    lastUpdated: "January 2026",
     sections: [
-      {
-        heading: '1. Free Tracked US Delivery',
-        content:
-          '<p>We are pleased to provide <strong>100% Free Tracked Shipping</strong> on all Miroooo electric toothbrush and bundle orders delivered across the United States.</p>',
-      },
-      {
-        heading: '2. Order Processing & Dispatch Timeframe',
-        content:
-          '<p>All orders are verified, packed, and dispatched from our fulfillment facility within <strong>1 to 3 business days</strong> (Monday through Friday, excluding federal holidays). You will receive an automated dispatch notification email containing your courier tracking number (USPS Priority / FedEx Ground) as soon as your parcel is scanned into the carrier network.</p>',
-      },
-      {
-        heading: '3. Estimated Delivery Times',
-        content:
-          '<p>Standard tracked US delivery transit takes <strong>7 to 20 business days</strong> from the date of dispatch. During peak seasonal periods (such as Black Friday, Cyber Week, and Christmas), postal carrier networks may experience minor delays outside of our direct control.</p>',
-      },
-      {
-        heading: '4. Tracking Your Parcel',
-        content:
-          '<p>Once dispatched, you can monitor the progress of your shipment 24/7 using our <a href="/pages/order-tracking">Order Tracking Portal</a>. Please note that courier tracking records may take 24 to 72 hours from initial label generation to reflect live transit scans.</p>',
-      },
-      {
-        heading: '5. Address Accuracy & Modifications',
-        content:
-          '<p>Please ensure your delivery address and ZIP code are entered accurately at checkout. If you need to make an urgent address correction, please email us at <a href="mailto:support@trymiroooo.com">support@trymiroooo.com</a> within <strong>2 hours</strong> of placing your order. Once an order enters our automated fulfillment pipeline, address modifications cannot be guaranteed.</p>',
-      },
+      { heading: "1. About This Policy", content: "<p>This Policy applies to orders placed through Miroooo.</p><p>In this Policy:</p><ul>\n<li><strong>Store</strong> means Miroooo.</li>\n<li><strong>xPage Drop</strong> means xPage Drop LLC.</li>\n<li><strong>Seller</strong> means the independent merchant operating the Store.</li>\n<li><strong>Fulfillment Partner</strong> means a supplier, warehouse or carrier involved in delivering an order.</li>\n<li><strong>You</strong> means the buyer.</li>\n<li><strong>We, us and our</strong> mean the Store and xPage Drop where it handles the order.</li>\n</ul>" },
+      { heading: "2. Processing and Delivery Estimates", content: "<p>Orders normally require:</p><p><strong>Processing time:</strong> 1–3 business days</p><p><strong>Estimated delivery time after dispatch:</strong> 7–20 business days</p><p>Delivery dates are estimates unless expressly described as guaranteed. Processing may include payment review, fraud screening, inventory confirmation, product preparation and transfer to the carrier.</p><p>Orders are not normally processed on weekends or holidays affecting the relevant warehouse or carrier.</p>" },
+      { heading: "3. International Fulfillment", content: "<p>Some products may be stored or shipped internationally, including from China or another country different from your location.</p><p>Products from the same order may:</p><ol>\n<li>Be shipped by different Fulfillment Partners.</li>\n<li>Use different tracking numbers.</li>\n<li>Arrive in separate packages.</li>\n<li>Arrive on different dates.</li>\n</ol><p>No additional shipping fee will be charged solely because we divide an accepted order into separate packages.</p>" },
+      { heading: "4. Tracking", content: "<p>Tracking will be provided according to the following Store setting:</p><p><strong>Tracking availability:</strong> Tracking information becomes available after the order has been dispatched and the carrier has issued a tracking number. Tracking updates may take 24–72 hours to appear.</p><p>Tracking may take several business days to update after dispatch. Carrier scans may also be delayed or incomplete.</p><p>A temporary absence of tracking updates does not necessarily mean that a shipment is lost.</p>" },
+      { heading: "5. Customs and Import Charges", content: "<p>International orders may be inspected or delayed by customs.</p><p>The applicable rule for your order is:</p><p><strong>Customs and duties:</strong> Orders above €150 may be subject to customs duties and import taxes, payable by the customer upon delivery.</p><p>You must provide accurate information reasonably required for customs clearance.</p>" },
+      { heading: "6. Delivery Addresses", content: "<p>You are responsible for entering a complete and accurate delivery address.</p><p>Address-change requests must be submitted within:</p><p><strong>Address-change period:</strong> Address changes may be requested within 2 hours of placing the order, provided fulfillment has not started.</p><p>Address changes cannot be guaranteed after fulfillment begins.</p><p>If delivery fails because you supplied an incorrect or incomplete address, reasonable recovery, reshipping or return costs may be deducted from a refund where permitted by law.</p>" },
+      { heading: "7. Failed, Refused and Unclaimed Deliveries", content: "<p>You are responsible for monitoring tracking and following reasonable carrier instructions. Do not refuse or abandon a package without contacting support first.</p><p>If a deliverable package is refused or left unclaimed without a legally valid reason, unrecoverable shipping, return, customs or handling costs may be deducted from any refund where permitted by law.</p><p>No deduction will apply where the refusal resulted from an incorrect, materially misdescribed, defective or unauthorized order.</p>" },
+      { heading: "8. Delays", content: "<p>Delivery may be delayed by customs, carriers, weather, holidays, transport disruptions, government action, supplier interruptions, incorrect addresses or events outside our reasonable control.</p><p>If we cannot ship within the promised period, you will receive the option to accept a revised timeline or cancel the unshipped order where required by law.</p><p>You are not required to accept an indefinite delay.</p>" },
+      { heading: "9. Lost or Undelivered Orders", content: "<p>Report an order that has exceeded the estimated delivery period through:</p><p>\n<a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a>\n              or\n              <a href=\"/pages/contact-us\">Contact Us</a>\n</p><p>We may investigate with the carrier or Fulfillment Partner.</p><p>If an order is confirmed lost or remains undelivered after a reasonable investigation, we will provide a replacement, refund or other remedy required by law.</p>" },
+      { heading: "10. Delivered but Not Received", content: "<p>When tracking shows delivery but you cannot find the package:</p><ol>\n<li>Check entrances, safe places and reception areas.</li>\n<li>Ask household members or neighbors.</li>\n<li>Review carrier notices.</li>\n<li>Contact the carrier where practical.</li>\n<li>Report the issue promptly to Miroooo support.</li>\n</ol><p>We may review carrier records, delivery photographs, coordinates, signatures, address details and claim history.</p><p>An unboxing video is not required as the only form of evidence.</p><p>Knowingly false non-delivery claims may be denied and reported to payment providers or competent authorities.</p>" },
+      { heading: "11. Damaged Packages", content: "<p>Photograph visible package damage where reasonably possible and retain the product and packaging during review. Damage to packaging alone does not necessarily mean that the product is damaged.</p><p>Report damaged products under the Returns, Refunds and Cancellations Policy.</p>" },
+      { heading: "12. Unsupported Destinations", content: "<p>Products may be unavailable for certain countries, regions, postal codes or address types because of carrier, customs, safety, sanctions or legal restrictions.</p><h3>Supported destinations: Available destinations are determined for each product and confirmed using the customer's shipping address at checkout.</h3><p>An unsupported order may be rejected or cancelled and refunded.</p>" },
+      { heading: "13. Force Majeure", content: "<p>We are not responsible for delays caused by events outside reasonable control, including natural disasters, war, civil disorder, epidemics, government restrictions, sanctions, transport shutdowns or major infrastructure failures.</p><p>This clause does not remove cancellation, refund or delivery rights that applicable law makes mandatory.</p>" },
+      { heading: "14. Mandatory Rights", content: "<p>Mandatory delivery and consumer rights in your jurisdiction remain applicable and prevail over conflicting parts of this Policy.</p>" },
+      { heading: "15. Contact", content: "<h3>Miroooo</h3><p>131 Continental Dr Suite 305, Newark, DE 19713, USA</p><p>Email: <a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a></p><p>Contact form: <a href=\"/pages/contact-us\">Contact Us</a></p><p>This is a business address only. It is not a warehouse, fulfillment center or return address.</p>" },
     ],
   },
-
-  'delivery-returns': {
-    slug: 'delivery-returns',
-    title: 'Delivery & Returns Overview',
-    metaTitle: 'Delivery & Returns Overview | Miroooo US',
-    metaDescription: 'Comprehensive overview of Miroooo US shipping timelines, order tracking, returns eligibility, and 2-year warranty.',
-    lastUpdated: 'January 2026',
+  "return-policy": {
+    slug: "return-policy",
+    title: "Return Policy",
+    metaTitle: "Return Policy | Miroooo US",
+    metaDescription: "Miroooo US 30-day defective return policy, RMA authorization requirements, and return process.",
+    lastUpdated: "January 2026",
     sections: [
-      {
-        heading: 'Shipping & Delivery Summary',
-        content:
-          '<p>&bull; <strong>Free Delivery:</strong> All US orders qualify for 100% free tracked courier delivery.<br>&bull; <strong>Processing:</strong> 1–3 business days.<br>&bull; <strong>Transit:</strong> 7–20 business days via USPS / FedEx.<br>&bull; <strong>Tracking:</strong> Real-time tracking link emailed upon dispatch.</p>',
-      },
-      {
-        heading: '30-Day Defective Product Return Guarantee',
-        content:
-          '<p>If your Miroooo device arrives damaged, defective, or incorrect, you are entitled to request a replacement or return within <strong>30 calendar days</strong> of confirmed delivery date. Prior written authorization from <a href="mailto:support@trymiroooo.com">support@trymiroooo.com</a> is required.</p>',
-      },
-      {
-        heading: '2-Year Manufacturer Warranty',
-        content:
-          '<p>Every Miroooo X1 and X2 toothbrush handle is backed by a comprehensive <strong>2-year manufacturer warranty</strong> covering acoustic linear motor failures, charging malfunctions, and battery defects under normal personal hygiene use.</p>',
-      },
+      { heading: "1. About This Policy", content: "<p>This Policy applies to purchases from Miroooo.</p><p>In this Policy:</p><ul>\n<li>Store means Miroooo.</li>\n<li>xPage Drop means xPage Drop LLC.</li>\n<li>Seller means the independent merchant operating the Store.</li>\n<li>Fulfillment Partner means a supplier, manufacturer, warehouse or carrier.</li>\n<li>You means the buyer.</li>\n<li>We, us and our mean the Store and xPage Drop where it handles the request.</li>\n</ul>" },
+      { heading: "2. Contact Support First", content: "<p>Before cancelling or returning an order, contact:</p><p>\n<a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a>\n              or\n              <a href=\"/pages/contact-us\">Contact Us</a>\n</p><p>You must receive written return authorization before sending a product. The approved return address may differ from:</p><ol>\n<li>The shipping origin.</li>\n<li>The address printed on the package.</li>\n<li>The Fulfillment Partner's address.</li>\n<li>The Miroooo corporate address.</li>\n</ol><p>Do not return products to any address without written authorization.</p>" },
+      { heading: "3. Order Cancellations", content: "<p>Cancellation requests may be submitted within:</p><p><strong>Cancellation period:</strong> Cancellation requests must be submitted within 12 hours of placing the order. Cancellation is only possible if fulfillment has not started. Requests submitted within this period are not guaranteed once the order has entered processing.</p><p>We will try to stop the order, but cancellation cannot be guaranteed after payment review, preparation, customization, packaging or fulfillment begins.</p><p>If cancellation succeeds, the cancelled amount will be refunded to the original payment method. After fulfillment begins, you may need to receive the order and request a return.</p>" },
+      { heading: "4. Change-of-Mind Returns", content: "<p>Change-of-mind returns may be requested within:</p><p><strong>Return window:</strong> Within 30 days of delivery</p><p>Returned products must meet these conditions:</p><h3><strong>Return condition:</strong> Returns are accepted only for damaged, defective, incorrect or missing products. Customers must provide clear photo or video evidence and obtain return authorization before sending anything back. Items must not be returned to the address shown on the package. Change-of-mind, incorrect-size or personal-preference returns are not generally accepted.</h3><p>You may inspect a product as reasonably necessary, but you may be responsible for reduced value caused by use, damage or handling beyond normal inspection where permitted by law.</p>" },
+      { heading: "5. Defective, Damaged or Incorrect Products", content: "<p>Contact support promptly if a product:</p><ol>\n<li>Is defective or unsafe.</li>\n<li>Arrives damaged.</li>\n<li>Is materially different from its description.</li>\n<li>Is the wrong item, size, color or model.</li>\n<li>Is missing parts or quantities.</li>\n<li>Does not function as reasonably advertised.</li>\n</ol><p>We may request reasonable evidence such as photographs, measurements, packaging information or a short video showing the issue.</p><p>An unboxing video is not the only accepted evidence.</p><p>Depending on the issue and applicable law, the remedy may include replacement, missing parts, repair, partial refund or full refund.</p>" },
+      { heading: "6. Missing Items and Lost Shipments", content: "<p>Check whether your order was divided into separate packages before reporting a missing item.</p><p>For a missing item, provide photographs of the received package, label and contents where reasonably available.</p><p>If an item was omitted or a shipment is confirmed lost, we will provide a replacement, refund or other remedy required by law.</p>" },
+      { heading: "7. Delayed Shipments", content: "<p>Delivery estimates are not guarantees unless expressly stated otherwise.</p><p>A reasonable delay does not automatically qualify for a refund. However, if delivery materially exceeds the promised period, you may receive a revised delivery option, cancellation or refund as required by law.</p><p>You are not required to accept an indefinite delay.</p>" },
+      { heading: "8. Return Shipping Costs", content: "<p>The applicable return-cost rule is:</p><p><strong>Return shipping:</strong> Return shipping costs are the customer's responsibility unless Miroooo confirms otherwise in writing. Products must not be returned without prior authorization and return instructions.</p><p>For validated defective, damaged, incorrect or materially misdescribed products, we will provide a prepaid method, reimburse reasonable authorized return costs or provide another remedy required by law.</p><p>Unauthorized or unnecessarily expensive return shipping may not be reimbursed.</p>" },
+      { heading: "9. Return Inspection", content: "<p>Returned products may be inspected before a refund is approved. The inspection may confirm:</p><ol>\n<li>The correct product was returned.</li>\n<li>The product is complete.</li>\n<li>The reported defect exists.</li>\n<li>The product was not intentionally damaged or replaced.</li>\n<li>The return conditions were followed.</li>\n</ol><p>A lawful deduction may be made for missing parts, unauthorized damage or excessive use. Normal inspection will not remove mandatory return rights.</p>" },
+      { heading: "10. Non-Returnable Products", content: "<p>Subject to mandatory law, the following products may not qualify for change-of-mind returns:</p><h3><strong>Non-returnable products:</strong> Products are non-returnable when the request is based on a change of mind, personal preference, an incorrectly selected product, variant or size, an incorrect shipping address, minor cosmetic imperfections, packaging damage without product damage, or failure to complete customs clearance.</h3><p>This may include personalized, perishable, hygiene-sensitive or opened sealed products where legally permitted.</p><p>A non-returnable classification does not remove rights relating to defective, unsafe, incorrect or materially misdescribed products.</p>" },
+      { heading: "11. Refunds", content: "<p>Approved refunds will normally be sent to the original payment method.</p><p><strong>Refund initiation time:</strong> 5–10 business days</p><p>Your bank or payment provider may require additional time to display the refund.</p><p>Where the original payment method cannot receive the refund, another lawful method may be requested.</p><p>Original delivery fees will be refunded where required by applicable law.</p>" },
+      { heading: "12. Partial Refunds and Replacements", content: "<p>A partial refund may be offered if you choose to keep a product with a minor issue.</p><p>A replacement may be offered for defective, damaged, incorrect, missing or lost products. A materially different replacement will not be sent without your approval.</p><p>A partial refund or replacement will not replace a remedy that applicable law requires.</p>" },
+      { heading: "13. Refused and Unauthorized Returns", content: "<p>Do not refuse a package or send a return without contacting support.</p><p>Unauthorized returns may be refused, lost or delayed. You may be responsible for avoidable costs resulting from failure to follow reasonable return instructions.</p><p>This does not remove mandatory consumer rights.</p>" },
+      { heading: "14. Fraudulent or Abusive Claims", content: "<p>We may reject a claim involving materially false or misleading information, intentional damage, substitution of products, false non-delivery statements or duplicate recovery attempts.</p><p>Exercising a legitimate refund, consumer-protection or chargeback right is not abuse.</p><p>We may provide relevant order, delivery, refund and communication records to payment providers or competent authorities when fraud is reasonably suspected.</p>" },
+      { heading: "15. Chargebacks", content: "<p>Contact Miroooo support before opening a chargeback so the issue can be reviewed directly. This does not restrict legitimate chargeback rights.</p><p>Do not seek both a completed refund and a chargeback for the same amount. An active chargeback may pause a separate refund while the payment provider controls the disputed funds.</p>" },
+      { heading: "16. Mandatory Rights", content: "<p>Mandatory cancellation, return, conformity, warranty and refund rights in your jurisdiction remain applicable.</p><p>Where local law grants a longer return period, free return, legal guarantee or stronger remedy, that law prevails over conflicting parts of this Policy.</p>" },
+      { heading: "17. Contact and Return Warning", content: "<h3>Miroooo</h3><p>131 Continental Dr Suite 305, Newark, DE 19713, USA</p><p>\n              Email: <a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a>\n</p><p>\n              Contact form: <a href=\"/pages/contact-us\">Contact Us</a>\n</p><p>This is a business address only. It is not a warehouse, fulfillment center or standard return address. Do not send a return here or to the address printed on a package unless Miroooo expressly provides that address in writing.</p>" },
     ],
   },
-
-  'return-policy': {
-    slug: 'return-policy',
-    title: 'Return Policy',
-    metaTitle: 'Return Policy | Miroooo US',
-    metaDescription: 'Miroooo US 30-day defective return policy, RMA authorization requirements, and return process.',
-    lastUpdated: 'January 2026',
+  "refund-policy": {
+    slug: "refund-policy",
+    title: "Refund Policy",
+    metaTitle: "Refund Policy | Miroooo US",
+    metaDescription: "Refund processing timelines, payment method credits, and return inspection policies.",
+    lastUpdated: "January 2026",
     sections: [
-      {
-        heading: '1. Eligibility for Returns (30-Day Window)',
-        content:
-          '<p>To maintain rigorous hygiene and healthcare standards, Miroooo toothbrushes and brush heads are classified as personal oral hygiene instruments. We accept returns within <strong>30 calendar days</strong> of delivery strictly for items that arrive defective, damaged in transit, or materially incorrect.</p>',
-      },
-      {
-        heading: '2. Return Merchandise Authorization (RMA)',
-        content:
-          '<p>Do not return any parcel to the address on the packaging without contacting us first. You must request a Return Authorization from our US support team at <a href="mailto:support@trymiroooo.com">support@trymiroooo.com</a> including your order number, photo/video proof of defect, and reason for return. Unauthorized returns cannot be identified or processed.</p>',
-      },
-      {
-        heading: '3. Condition Requirements',
-        content:
-          '<p>All returned items must include all original unibody components, charging cables, travel cases, and packaging materials. Returned items are inspected upon arrival at our returns processing center.</p>',
-      },
+      { heading: "1. About This Policy", content: "<p>This Policy applies to purchases from Miroooo.</p><p>In this Policy:</p><ul>\n<li>Store means Miroooo.</li>\n<li>xPage Drop means xPage Drop LLC.</li>\n<li>Seller means the independent merchant operating the Store.</li>\n<li>Fulfillment Partner means a supplier, manufacturer, warehouse or carrier.</li>\n<li>You means the buyer.</li>\n<li>We, us and our mean the Store and xPage Drop where it handles the request.</li>\n</ul>" },
+      { heading: "2. Contact Support First", content: "<p>Before cancelling or returning an order, contact:</p><p>\n<a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a>\n              or\n              <a href=\"/pages/contact-us\">Contact Us</a>\n</p><p>You must receive written return authorization before sending a product. The approved return address may differ from:</p><ol>\n<li>The shipping origin.</li>\n<li>The address printed on the package.</li>\n<li>The Fulfillment Partner's address.</li>\n<li>The Miroooo corporate address.</li>\n</ol><p>Do not return products to any address without written authorization.</p>" },
+      { heading: "3. Order Cancellations", content: "<p>Cancellation requests may be submitted within:</p><p><strong>Cancellation period:</strong> Cancellation requests must be submitted within 12 hours of placing the order. Cancellation is only possible if fulfillment has not started. Requests submitted within this period are not guaranteed once the order has entered processing.</p><p>We will try to stop the order, but cancellation cannot be guaranteed after payment review, preparation, customization, packaging or fulfillment begins.</p><p>If cancellation succeeds, the cancelled amount will be refunded to the original payment method. After fulfillment begins, you may need to receive the order and request a return.</p>" },
+      { heading: "4. Change-of-Mind Returns", content: "<p>Change-of-mind returns may be requested within:</p><p><strong>Return window:</strong> Within 30 days of delivery</p><p>Returned products must meet these conditions:</p><h3><strong>Return condition:</strong> Returns are accepted only for damaged, defective, incorrect or missing products. Customers must provide clear photo or video evidence and obtain return authorization before sending anything back. Items must not be returned to the address shown on the package. Change-of-mind, incorrect-size or personal-preference returns are not generally accepted.</h3><p>You may inspect a product as reasonably necessary, but you may be responsible for reduced value caused by use, damage or handling beyond normal inspection where permitted by law.</p>" },
+      { heading: "5. Defective, Damaged or Incorrect Products", content: "<p>Contact support promptly if a product:</p><ol>\n<li>Is defective or unsafe.</li>\n<li>Arrives damaged.</li>\n<li>Is materially different from its description.</li>\n<li>Is the wrong item, size, color or model.</li>\n<li>Is missing parts or quantities.</li>\n<li>Does not function as reasonably advertised.</li>\n</ol><p>We may request reasonable evidence such as photographs, measurements, packaging information or a short video showing the issue.</p><p>An unboxing video is not the only accepted evidence.</p><p>Depending on the issue and applicable law, the remedy may include replacement, missing parts, repair, partial refund or full refund.</p>" },
+      { heading: "6. Missing Items and Lost Shipments", content: "<p>Check whether your order was divided into separate packages before reporting a missing item.</p><p>For a missing item, provide photographs of the received package, label and contents where reasonably available.</p><p>If an item was omitted or a shipment is confirmed lost, we will provide a replacement, refund or other remedy required by law.</p>" },
+      { heading: "7. Delayed Shipments", content: "<p>Delivery estimates are not guarantees unless expressly stated otherwise.</p><p>A reasonable delay does not automatically qualify for a refund. However, if delivery materially exceeds the promised period, you may receive a revised delivery option, cancellation or refund as required by law.</p><p>You are not required to accept an indefinite delay.</p>" },
+      { heading: "8. Return Shipping Costs", content: "<p>The applicable return-cost rule is:</p><p><strong>Return shipping:</strong> Return shipping costs are the customer's responsibility unless Miroooo confirms otherwise in writing. Products must not be returned without prior authorization and return instructions.</p><p>For validated defective, damaged, incorrect or materially misdescribed products, we will provide a prepaid method, reimburse reasonable authorized return costs or provide another remedy required by law.</p><p>Unauthorized or unnecessarily expensive return shipping may not be reimbursed.</p>" },
+      { heading: "9. Return Inspection", content: "<p>Returned products may be inspected before a refund is approved. The inspection may confirm:</p><ol>\n<li>The correct product was returned.</li>\n<li>The product is complete.</li>\n<li>The reported defect exists.</li>\n<li>The product was not intentionally damaged or replaced.</li>\n<li>The return conditions were followed.</li>\n</ol><p>A lawful deduction may be made for missing parts, unauthorized damage or excessive use. Normal inspection will not remove mandatory return rights.</p>" },
+      { heading: "10. Non-Returnable Products", content: "<p>Subject to mandatory law, the following products may not qualify for change-of-mind returns:</p><h3><strong>Non-returnable products:</strong> Products are non-returnable when the request is based on a change of mind, personal preference, an incorrectly selected product, variant or size, an incorrect shipping address, minor cosmetic imperfections, packaging damage without product damage, or failure to complete customs clearance.</h3><p>This may include personalized, perishable, hygiene-sensitive or opened sealed products where legally permitted.</p><p>A non-returnable classification does not remove rights relating to defective, unsafe, incorrect or materially misdescribed products.</p>" },
+      { heading: "11. Refunds", content: "<p>Approved refunds will normally be sent to the original payment method.</p><p><strong>Refund initiation time:</strong> 5–10 business days</p><p>Your bank or payment provider may require additional time to display the refund.</p><p>Where the original payment method cannot receive the refund, another lawful method may be requested.</p><p>Original delivery fees will be refunded where required by applicable law.</p>" },
+      { heading: "12. Partial Refunds and Replacements", content: "<p>A partial refund may be offered if you choose to keep a product with a minor issue.</p><p>A replacement may be offered for defective, damaged, incorrect, missing or lost products. A materially different replacement will not be sent without your approval.</p><p>A partial refund or replacement will not replace a remedy that applicable law requires.</p>" },
+      { heading: "13. Refused and Unauthorized Returns", content: "<p>Do not refuse a package or send a return without contacting support.</p><p>Unauthorized returns may be refused, lost or delayed. You may be responsible for avoidable costs resulting from failure to follow reasonable return instructions.</p><p>This does not remove mandatory consumer rights.</p>" },
+      { heading: "14. Fraudulent or Abusive Claims", content: "<p>We may reject a claim involving materially false or misleading information, intentional damage, substitution of products, false non-delivery statements or duplicate recovery attempts.</p><p>Exercising a legitimate refund, consumer-protection or chargeback right is not abuse.</p><p>We may provide relevant order, delivery, refund and communication records to payment providers or competent authorities when fraud is reasonably suspected.</p>" },
+      { heading: "15. Chargebacks", content: "<p>Contact Miroooo support before opening a chargeback so the issue can be reviewed directly. This does not restrict legitimate chargeback rights.</p><p>Do not seek both a completed refund and a chargeback for the same amount. An active chargeback may pause a separate refund while the payment provider controls the disputed funds.</p>" },
+      { heading: "16. Mandatory Rights", content: "<p>Mandatory cancellation, return, conformity, warranty and refund rights in your jurisdiction remain applicable.</p><p>Where local law grants a longer return period, free return, legal guarantee or stronger remedy, that law prevails over conflicting parts of this Policy.</p>" },
+      { heading: "17. Contact and Return Warning", content: "<h3>Miroooo</h3><p>131 Continental Dr Suite 305, Newark, DE 19713, USA</p><p>\n              Email: <a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a>\n</p><p>\n              Contact form: <a href=\"/pages/contact-us\">Contact Us</a>\n</p><p>This is a business address only. It is not a warehouse, fulfillment center or standard return address. Do not send a return here or to the address printed on a package unless Miroooo expressly provides that address in writing.</p>" },
     ],
   },
-
-  'refund-policy': {
-    slug: 'refund-policy',
-    title: 'Refund Policy',
-    metaTitle: 'Refund Policy | Miroooo US',
-    metaDescription: 'Refund processing timelines, payment method credits, and return inspection policies.',
-    lastUpdated: 'January 2026',
+  "privacy-policy": {
+    slug: "privacy-policy",
+    title: "Privacy Policy",
+    metaTitle: "Privacy Policy | Miroooo US",
+    metaDescription: "Read the Miroooo US Privacy Policy. Learn how personal information is collected, used and protected.",
+    lastUpdated: "January 2026",
     sections: [
-      {
-        heading: '1. Refund Processing',
-        content:
-          '<p>Once your authorized return is received and inspected at our returns facility, we will notify you via email regarding the approval or rejection of your refund. Approved refunds are processed immediately to your original payment method (Visa, Mastercard, Amex, Discover, PayPal, Apple Pay).</p>',
-      },
-      {
-        heading: '2. Timing for Card Issuers',
-        content:
-          '<p>Depending on your bank or credit card provider, the credited funds typically appear on your statement within <strong>3 to 7 business days</strong>.</p>',
-      },
-      {
-        heading: '3. Late or Missing Refunds',
-        content:
-          '<p>If you have not received an approved refund after 10 business days, first check your banking statement, then contact your credit card provider. If you still require assistance, email us at <a href="mailto:support@trymiroooo.com">support@trymiroooo.com</a>.</p>',
-      },
+      { heading: "1. About This Policy", content: "<p>This Privacy Policy explains how personal information is handled when you visit or purchase from Miroooo.</p><p>In this Policy:</p><ul>\n<li>Store means Miroooo.</li>\n<li>xPage Drop means xPage Drop LLC.</li>\n<li>Seller means the independent merchant operating the Store.</li>\n<li>Service Provider includes payment providers, suppliers, warehouses, carriers, analytics services and fraud-prevention providers.</li>\n<li>You means the visitor or buyer.</li>\n<li>We, us and our mean the Store and xPage Drop for the relevant processing activity.</li>\n</ul><p>xPage Drop handles customer support and may process personal information for checkout, payments, fraud prevention, order administration, refunds and fulfillment coordination.</p>" },
+      { heading: "2. Information We Collect", content: "<p>We may collect:</p><ol>\n<li>Your name, email address, phone number and delivery address.</li>\n<li>Billing, order, product, currency, tax and shipping information.</li>\n<li>Payment status, payment method, transaction references and limited payment details.</li>\n<li>Device, browser, IP address, approximate location and usage information.</li>\n<li>Cart activity, Store visits and referral information.</li>\n<li>Cookies and similar technologies.</li>\n<li>Support messages, attachments, complaints and refund requests.</li>\n<li>Tracking, delivery and return information.</li>\n<li>Fraud, identity, age or sanctions-verification information where necessary.</li>\n</ol><p>Full payment credentials may be collected directly by the payment provider rather than by the Store or xPage Drop.</p>" },
+      { heading: "3. How We Use Information", content: "<p>Information may be used to:</p><ol>\n<li>Operate the Store and checkout.</li>\n<li>Process payments and orders.</li>\n<li>Arrange fulfillment and delivery.</li>\n<li>Send order and tracking updates.</li>\n<li>Provide customer support.</li>\n<li>Process cancellations, returns and refunds.</li>\n<li>Prevent fraud, abuse and unauthorized transactions.</li>\n<li>Investigate delivery and payment disputes.</li>\n<li>Comply with tax, customs, sanctions, safety and legal obligations.</li>\n<li>Maintain Store and payment security.</li>\n<li>Measure and improve Store performance.</li>\n<li>Send marketing where permitted.</li>\n</ol><p>Where required, processing will rely on your consent, performance of the purchase contract, legal obligations or legitimate business and security interests.</p>" },
+      { heading: "4. Cookies and Analytics", content: "<p>The Store may use cookies and similar technologies for:</p><ol>\n<li>Cart and checkout functions.</li>\n<li>Security and fraud prevention.</li>\n<li>Language and session preferences.</li>\n<li>Analytics and Store improvement.</li>\n<li>Marketing where permitted.</li>\n</ol><p>Non-essential cookies will be subject to consent or opt-out controls where required by law. Blocking essential cookies may affect Store functionality.</p>" },
+      { heading: "5. How Information Is Shared", content: "<p>Information may be shared with:</p><ol>\n<li>The Seller, where necessary to operate the Store.</li>\n<li>Suppliers and warehouses preparing products.</li>\n<li>Carriers delivering orders.</li>\n<li>Payment providers and financial institutions.</li>\n<li>Fraud-prevention and identity-verification providers.</li>\n<li>Customer-support and technology providers.</li>\n<li>Analytics and marketing providers where legally permitted.</li>\n<li>Regulators, courts or government authorities where legally required.</li>\n</ol><p>Only information reasonably necessary for the relevant service should be shared.</p><p>We do not sell personal information for money. Certain advertising or analytics disclosures may be legally classified as a sale, sharing or targeted advertising in some jurisdictions. Required opt-out rights will be provided where applicable.</p>" },
+      { heading: "6. International Processing", content: "<p>Your information may be processed in the United States, your country, the Seller's country, a fulfillment country or another location used by Service Providers.</p><p>Where required, lawful safeguards will be used for international transfers.</p>" },
+      { heading: "7. Retention", content: "<p>Information is retained only for as long as reasonably necessary for:</p><ol>\n<li>Order fulfillment and support.</li>\n<li>Refunds, warranties and chargebacks.</li>\n<li>Tax, accounting and customs requirements.</li>\n<li>Fraud prevention and security.</li>\n<li>Product recalls and safety obligations.</li>\n<li>Legal claims and regulatory compliance.</li>\n</ol><p>Information may then be deleted, anonymized or restricted.</p>" },
+      { heading: "8. Security", content: "<p>Reasonable technical, administrative and organizational measures are used to protect personal information.</p><p>No online system is completely secure. You must protect your device, account and payment credentials and report suspected unauthorized activity promptly.</p>" },
+      { heading: "9. Marketing", content: "<p>Marketing messages will be sent only where legally permitted.</p><p>You may unsubscribe through the link in the message or by contacting support.</p><p>Order confirmations, security messages, recall notices and other necessary service communications are not marketing.</p>" },
+      { heading: "10. Your Privacy Rights", content: "<p>Depending on your location, you may have the right to:</p><ol>\n<li>Access your personal information.</li>\n<li>Correct inaccurate information.</li>\n<li>Request deletion.</li>\n<li>Restrict or object to processing.</li>\n<li>Request portable data.</li>\n<li>Withdraw consent.</li>\n<li>Opt out of certain marketing, profiling, sale or sharing activities.</li>\n<li>Appeal a privacy-request decision.</li>\n<li>Complain to a data-protection authority.</li>\n</ol><p>Legal exceptions may apply where information is required for orders, fraud prevention, safety, accounting or legal claims.</p>" },
+      { heading: "11. Privacy Requests", content: "<p>Submit privacy requests through:</p><p>\n<a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a>\n            or\n            <a href=\"/pages/contact-us\">Contact Us</a>\n</p><p>We may request reasonable information to verify your identity and protect your data. Requests will be handled within the period required by applicable law.</p>" },
+      { heading: "12. Children", content: "<p>The Store is not intended for children who lack legal capacity to make purchases.</p><p>If you believe a child submitted personal information without required authorization, contact Miroooo support.</p>" },
+      { heading: "13. Legal Disclosures", content: "<p>Information may be preserved or disclosed where reasonably necessary to comply with law, respond to lawful government requests, investigate fraud, protect legal rights, address security threats or manage a product recall.</p>" },
+      { heading: "14. Mandatory Rights", content: "<p>Mandatory privacy and consumer rights in your jurisdiction remain applicable and prevail over conflicting parts of this Policy.</p>" },
+      { heading: "15. Contact", content: "<h3>Miroooo</h3><p>131 Continental Dr Suite 305, Newark, DE 19713, USA</p><p>Email: <a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a></p><p>Contact form: <a href=\"/pages/contact-us\">Contact Us</a></p><p>This is a business address only. It is not a warehouse, fulfillment center or return address.</p>" },
     ],
   },
-
-  'warranty': {
-    slug: 'warranty',
-    title: '2-Year Limited Manufacturer Warranty',
-    metaTitle: '2-Year Warranty Policy | Miroooo US',
-    metaDescription: 'Comprehensive 2-year warranty terms covering Miroooo X1 & Miroooo X2 electric toothbrushes.',
-    lastUpdated: 'January 2026',
+  "terms-of-service": {
+    slug: "terms-of-service",
+    title: "Terms of Service",
+    metaTitle: "Terms of Service | Miroooo US",
+    metaDescription: "Terms and conditions governing the use of the Miroooo US website and purchase of Miroooo oral care products.",
+    lastUpdated: "January 2026",
     sections: [
-      {
-        heading: '1. Scope of Coverage',
-        content:
-          '<p>Miroooo warrants that your Miroooo X1 or Miroooo X2 toothbrush handle is free from functional defects in materials and acoustic motor workmanship for a period of <strong>24 months (2 years)</strong> from the date of original purchase.</p>',
-      },
-      {
-        heading: '2. Covered Issues',
-        content:
-          '<p>&bull; Acoustic sonic motor or drive shaft mechanical failure.<br>&bull; Internal lithium-ion battery failure to charge or hold voltage under normal use.<br>&bull; On/off power switch or mode toggle failure.<br>&bull; Internal IPX7 hermetic waterproofing defect not caused by impact.</p>',
-      },
-      {
-        heading: '3. What Is Excluded',
-        content:
-          '<p>&bull; Normal bristle wear and natural degradation of consumable brush heads.<br>&bull; Cosmetic scratches, dents, or anodization wear resulting from drops or abrasives.<br>&bull; Damage resulting from unauthorized disassemblies, commercial misuse, or submerging in chemicals.<br>&bull; Use of non-compliant 3rd-party charging blocks exceeding voltage specs.</p>',
-      },
-      {
-        heading: '4. Warranty Claim Procedure',
-        content:
-          '<p>To file a warranty claim, email <a href="mailto:support@trymiroooo.com">support@trymiroooo.com</a> with proof of purchase and a brief video illustrating the fault. Approved claims receive a replacement device at zero cost.</p>',
-      },
+      { heading: "1. About These Terms", content: "<p>These Terms apply when you visit or purchase from Miroooo.</p><p>In these Terms:</p><ul>\n<li>Store means Miroooo.</li>\n<li>xPage Drop means xPage Drop LLC.</li>\n<li>Seller means the independent merchant operating the Store.</li>\n<li>Fulfillment Partner means a third-party supplier, manufacturer, warehouse or carrier.</li>\n<li>You means the buyer.</li>\n<li>We, us and our mean the Store and, where it handles the transaction, xPage Drop.</li>\n</ul><p>The Store is operated by an independent Seller. xPage Drop provides customer support and may handle checkout, payments, fraud screening, refunds, order administration and fulfillment coordination.</p><p>The party identified as the merchant at checkout or in your order confirmation is your contractual seller. Where no separate merchant is identified, xPage Drop is the merchant of record for the transaction.</p>" },
+      { heading: "2. Eligibility and Store Use", content: "<p>You must have the legal capacity to place an order. Age-restricted products may only be purchased by buyers who meet the applicable age requirements. You must not:</p><ol>\n<li>Use false identity, payment or delivery information.</li>\n<li>Place fraudulent or unauthorized orders.</li>\n<li>Interfere with the Store's operation or security.</li>\n<li>Use the Store for unlawful activity.</li>\n<li>Evade geographic, age, sanctions or product restrictions.</li>\n<li>Copy, scrape or commercially reuse Store content without permission.</li>\n</ol><p>We may restrict access or cancel orders where fraud, abuse or unlawful activity is reasonably suspected.</p>" },
+      { heading: "3. Products", content: "<p>We aim to present product descriptions, photographs, sizes, colors and specifications accurately. Minor differences may occur because of screen settings, lighting, manufacturing batches, packaging changes or manual measurements. These differences do not affect your rights where a product is defective, unsafe, incorrect or materially different from its description.</p><p>You are responsible for reviewing product dimensions, compatibility, warnings and usage instructions before ordering.</p><p>Product reviews and promotional content do not create guarantees beyond the product description, any express warranty and rights provided by law.</p>" },
+      { heading: "4. Prices, Currency and Taxes", content: "<p>Prices and the transaction currency are shown before checkout.</p><p>Your bank or payment provider may apply currency-conversion or international transaction fees. These charges are not controlled by the Store or xPage Drop.</p><p>Applicable sales taxes may be collected at checkout. Customs duties, import taxes or brokerage charges will be handled according to the rule shown before purchase:</p><p><strong>Customs and duties:</strong> Orders above €150 may be subject to customs duties and import taxes, payable by the customer upon delivery.</p>" },
+      { heading: "5. Orders", content: "<p>Submitting an order is an offer to purchase. Receiving an order-confirmation email means that the order was received, not necessarily that it was finally accepted. Orders may be reviewed for:</p><ol>\n<li>Payment authorization.</li>\n<li>Fraud or chargeback risk.</li>\n<li>Product availability.</li>\n<li>Pricing or technical errors.</li>\n<li>Delivery restrictions.</li>\n<li>Sanctions or legal restrictions.</li>\n</ol><p>We may reject or cancel an order for a legitimate reason. If payment has already been collected for a cancelled order, the affected amount will be refunded.</p><p>A materially different replacement will not be sent without your approval.</p>" },
+      { heading: "6. Pricing Errors and Availability", content: "<p>We may correct obvious pricing, product or availability errors before accepting an order. If a product becomes unavailable, we may:</p><ol>\n<li>Cancel and refund the affected item.</li>\n<li>Offer an alternative for your approval.</li>\n<li>Ask whether you accept a revised fulfillment date.</li>\n</ol>" },
+      { heading: "7. Payments", content: "<p>By placing an order, you authorize the displayed amount to be charged through the selected payment method.</p><p>Payment authorization or capture does not guarantee order acceptance.</p><p>Payment processing is governed by the Payment and Billing Policy.</p>" },
+      { heading: "8. Shipping, Returns and Refunds", content: "<p>Processing and delivery estimates are shown on the product page, at checkout or in the Shipping and Delivery Policy.</p><p>Returns, cancellations and refunds are governed by the Returns, Refunds and Cancellations Policy. You must contact Miroooo support and receive written authorization before returning a product.</p>" },
+      { heading: "9. Intellectual Property", content: "<p>Store software, branding, photographs, designs, text and other content may belong to the Store, xPage Drop, manufacturers or licensors.</p><p>You may use Store content only for personal shopping purposes.</p><p>Intellectual-property complaints must be sent to <a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a> or <a href=\"/pages/contact-us\">Contact Us</a> and include sufficient information to identify the protected work and disputed content.</p>" },
+      { heading: "10. Liability", content: "<p>Nothing in these Terms excludes liability or consumer rights that cannot legally be excluded.</p><p>To the maximum extent permitted by law, we are not responsible for indirect or unforeseeable losses arising from a consumer purchase.</p><p>For claims that may legally be limited, total liability relating to an order will not exceed the amount paid for the affected product and its associated shipping charge.</p>" },
+      { heading: "11. Governing Law and Complaints", content: "<p>These Terms are governed by Delaware law, except where mandatory law in your country or state provides protections or dispute rights that cannot be removed by contract.</p><p>Before starting a formal dispute, contact:</p><p><a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a> or <a href=\"/pages/contact-us\">Contact Us</a></p><p>This does not prevent you from contacting a payment provider, regulator, consumer authority or court where permitted by law.</p>" },
+      { heading: "12. Mandatory Rights", content: "<p>Mandatory consumer rights in your jurisdiction remain applicable. If these Terms conflict with a right that cannot legally be waived, the mandatory right will prevail.</p>" },
+      { heading: "13. Contact", content: "<p>Customer support for this Store is administered by Miroooo.</p><h3>Miroooo</h3><p>131 Continental Dr Suite 305, Newark, DE 19713, USA</p><p>Email: <a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a></p><p>Contact form: <a href=\"/pages/contact-us\">Contact Us</a></p><p>This is a business address only. It is not a warehouse, fulfillment center or return address. Do not send products to this address unless Miroooo expressly authorizes it in writing.</p>" },
     ],
   },
-
-  'privacy-policy': {
-    slug: 'privacy-policy',
-    title: 'Privacy Policy',
-    metaTitle: 'Privacy Policy | Miroooo US',
-    metaDescription: 'Read the Miroooo US Privacy Policy. Learn how we protect personal information.',
-    lastUpdated: 'January 2026',
+  "cookies-policy": {
+    slug: "cookies-policy",
+    title: "Cookies Policy",
+    metaTitle: "Cookies Policy | Miroooo US",
+    metaDescription: "Learn how Miroooo uses cookies, local storage, and analytical technologies to enhance your browsing experience.",
+    lastUpdated: "17 August 2026",
     sections: [
-      {
-        heading: '1. Information We Collect',
-        content:
-          '<p>When you visit trymiroooo.com or complete a purchase, we collect contact details (name, email address, phone number), delivery address, order details, IP address, and browser analytics to fulfill your order and optimize your shopping experience.</p>',
-      },
-      {
-        heading: '2. Legal Basis for Processing',
-        content:
-          '<p>We process your data to perform contractual obligations (order fulfillment), comply with state and federal legal requirements, and pursue legitimate business interests (security and fraud prevention).</p>',
-      },
-      {
-        heading: '3. Data Security & Third Parties',
-        content:
-          '<p>We never sell your personal data. We only share necessary data with trusted service partners (such as postal carriers for shipping and PCI-DSS Level 1 certified payment processors for checkout security).</p>',
-      },
-      {
-        heading: '4. Your Rights',
-        content:
-          '<p>You have the right to access, rectify, or request deletion of your personal data held by us. Contact our Support Team at <a href="mailto:support@trymiroooo.com">support@trymiroooo.com</a>.</p>',
-      },
+      { heading: "What are cookies?", content: "<p>Cookies are small text files that are placed on your computer or mobile device by websites that you visit. Our site and our trusted partners use cookies to enhance your experience, remember preferences, analyze storefront traffic, and facilitate ad personalization and performance measurement.</p><p>You can restrict or block cookies using your browser settings. Information on how to do this is detailed below in the \"How to manage cookies\" section.</p><div class=\"policy-divider\"></div>" },
+      { heading: "How to manage cookies", content: "<p>Some cookies are strictly necessary to allow you to use the Miroooo website and its essential features, such as storing items in your shopping basket and completing checkout. Without these cookies, core features cannot be provided, which may impair the functionality of the website and prevent you from shopping on our storefront.</p><p>You can select the cookies you would like this website to store on your device by adjusting your browser settings. Each web browser allows you to restrict or block cookies in different ways.</p><p>Details on how to manage cookies in each browser can be found on the UK Information Commissioner's Office (ICO) website (please note that we are not responsible for the content of external websites):</p><div class=\"policy-note-box\">\n<p>Visit the ICO cookie guidance page: <a href=\"https://ico.org.uk/your-data-matters/online/cookies/\" rel=\"noopener noreferrer\" target=\"_blank\"><u>https://ico.org.uk/your-data-matters/online/cookies/</u></a></p>\n</div><p>Within most browsers, you can utilize private browsing modes (such as Chrome Incognito or Safari Private Browsing) that typically do not save local data associated with the session, such as cookies. These temporary files are deleted automatically when you close all private browser windows.</p><p>You can also install a browser add-on to opt out of Google Analytics across all websites (please note that we are not responsible for the content of external websites):</p><div class=\"policy-note-box\">\n<p>Google Analytics Opt-out Browser Add-on: <a href=\"https://tools.google.com/dlpage/gaoptout\" rel=\"noopener noreferrer\" target=\"_blank\"><u>https://tools.google.com/dlpage/gaoptout</u></a></p>\n</div><div class=\"policy-divider\"></div>" },
+      { heading: "Types of cookies we use", content: "<ul>\n<li><strong>First-party cookies:</strong> These are set directly by the website you have accessed (Miroooo). They are used to remember your preferences, such as selected currency, session state, and items in your shopping basket.</li>\n<li><strong>Third-party cookies:</strong> These are set by a domain other than the one you are accessing, such as analytics tools, payment infrastructure, and advertising services.</li>\n<li><strong>Session cookies:</strong> These are temporary cookies that remain active only during your browsing session and are automatically deleted when you close your browser.</li>\n<li><strong>Persistent cookies:</strong> These remain on your device until you erase them manually or until they reach their designated expiration date.</li>\n</ul><div class=\"policy-divider\"></div>" },
+      { heading: "Cookies that are used on our website", content: "<p>We have documented the key partners, tools, and categories that create cookies used by this storefront and our partners, along with their intended purpose. Please note that we are not responsible for the content of external websites.</p><h3>Google Analytics</h3><p>These cookies are used to collect information about how visitors navigate and interact with our site. We use this information to compile aggregated reports and help us improve storefront performance, user journeys, and page speed. The cookies collect information in an anonymous form, including the number of visitors to the site, where visitors have come to the site from, and the specific pages they viewed.</p><p>Find out how to opt out of Google Analytics across all websites in the \"How to manage cookies\" section above.</p><p>You can find out more about Google's use of information here: <a href=\"https://policies.google.com/technologies/partner-sites\" rel=\"noopener noreferrer\" target=\"_blank\"><u>https://policies.google.com/technologies/partner-sites</u></a>.</p><h3>Google Ads (and DoubleClick)</h3><p>Google Ads uses cookies to improve advertising by targeting promotional messages based on what is relevant for the user. They also allow reporting on advertising performance and help avoid showing ads that a user has already seen. This service collects and uses data using cookies to personalise advertising where consent has been provided.</p><p>You can find out more about Google's use of advertising information here: <a href=\"https://policies.google.com/technologies/partner-sites\" rel=\"noopener noreferrer\" target=\"_blank\"><u>https://policies.google.com/technologies/partner-sites</u></a>.</p><p>You can revoke your consent to ad personalisation by Google here: <a href=\"https://adssettings.google.com/\" rel=\"noopener noreferrer\" target=\"_blank\"><u>https://adssettings.google.com/</u></a>.</p><h3>Google reCAPTCHA</h3><p>Google reCAPTCHA is used to help establish that an interaction is made by a human user and enhances security across our storefront, checkout, and contact forms. This product collects and uses hardware and software data using cookies to prevent automated fraud and bot abuse.</p><p>You can find out more about Google's data privacy practices here: <a href=\"https://policies.google.com/technologies/partner-sites\" rel=\"noopener noreferrer\" target=\"_blank\"><u>https://policies.google.com/technologies/partner-sites</u></a>.</p><h3>Cookies for Storefront Functionality</h3><p>These essential cookies remember your product selections (such as Grey, Pink, or Silver variants), keep your cart items intact as you move between pages, and ensure checkout transitions operate securely and smoothly.</p><h3>Reporting and Analytics</h3><p>Performance and diagnostic cookies help us evaluate page load times, monitor customer interaction patterns, and identify technical issues so we can consistently refine our digital experience.</p><div class=\"policy-divider\"></div>" },
+      { heading: "How long will cookies remain on my device?", content: "<p>The length of time that a cookie remains on your computer or mobile device depends on whether it is a \"persistent\" or \"session\" cookie. Session cookies last until you stop browsing, and persistent cookies last until they expire or are manually deleted. Most of the functional and analytical cookies we use are persistent and will expire between 30 minutes and two years from the date they are downloaded to your device. Refer to the section above on how to manage cookies for instructions on removing them prior to expiration.</p><div class=\"policy-divider\"></div>" },
+      { heading: "Contact and questions", content: "<p>If you have any questions or require further information regarding our Cookies Policy or data handling practices, please contact our customer support team at <a href=\"mailto:support@trymiroooo.com\"><u>support@trymiroooo.com</u></a>.</p><div class=\"policy-meta-footer\">\n<span>Last updated: 17 August 2026</span>\n<span>Miroooo Storefront Policies</span>\n</div>" },
     ],
   },
-
-  'terms-of-service': {
-    slug: 'terms-of-service',
-    title: 'Terms of Service',
-    metaTitle: 'Terms of Service | Miroooo US',
-    metaDescription: 'Terms and conditions governing the use of the Miroooo US website and purchase of Miroooo oral care products.',
-    lastUpdated: 'January 2026',
+  "warranty": {
+    slug: "warranty",
+    title: "Product Support & Care",
+    metaTitle: "2-Year Warranty Policy | Miroooo US",
+    metaDescription: "Comprehensive 2-year warranty terms covering Miroooo X1 & Miroooo X2 electric toothbrushes.",
+    lastUpdated: "16 August 2026",
     sections: [
-      {
-        heading: '1. Acceptance of Terms',
-        content:
-          '<p>By accessing or purchasing from trymiroooo.com, you agree to be bound by these Terms of Service. If you do not agree to all terms, you must discontinue use of the website.</p>',
-      },
-      {
-        heading: '2. Product Use & Dental Disclaimer',
-        content:
-          '<p>Miroooo toothbrushes and tools (including the Dental Care Quiz and Smile Coach) provide wellness and hygiene support and are not a substitute for professional dental diagnosis, treatment, or medical advice. Consult a licensed dentist if you experience persistent bleeding, tooth pain, or gum distress.</p>',
-      },
-      {
-        heading: '3. Pricing & Governing Law',
-        content:
-          '<p>All prices are listed in US Dollars (USD). These terms are governed by and construed in accordance with the laws of the State of Delaware, United States, and disputes shall be subject to the exclusive jurisdiction of the state and federal courts located in Delaware.</p>',
-      },
+      { heading: "Daily maintenance & handling.", content: "<p class=\"eyebrow\">Product Care</p><p>Miroooo electric toothbrushes are engineered for daily oral care. To keep your handle and brush heads in optimal condition, rinse the brush head thoroughly after each use and allow it to dry upright in an open area. Wipe the handle with a soft, damp cloth as needed, and ensure the charging port is completely clean and dry before connecting the USB-C cable.</p><p>Consumable brush heads should be replaced every 3 months for optimal plaque removal and hygiene.</p>" },
+      { heading: "Common product guidance.", content: "<p class=\"eyebrow\">Troubleshooting</p><p>To prevent premature wear or performance issues, please observe the following care tips:</p><ul>\n<li>Avoid charging the device while wet or submerged;</li>\n<li>Do not use abrasive cleaning agents, harsh chemicals, or boiling water on the handle or brush heads;</li>\n<li>Avoid dropping or subjecting the handle to excessive physical impact;</li>\n<li>Use standard certified 5V USB power adapters for charging;</li>\n<li>Do not attempt to open, disassemble, or self-repair the internal motor and battery casing.</li>\n</ul>" },
+      { heading: "Getting assistance with your device.", content: "<p class=\"eyebrow\">Support Help</p><p>If you experience any difficulties with your Miroooo toothbrush, our dedicated support team is available to assist you. Email <a href=\"mailto:support@trymiroooo.com\"><u>support@trymiroooo.com</u></a> or contact us through our <a href=\"/pages/contact-us#contact-form\"><u>Contact Form</u></a> with your order number, checkout email, a description of the issue, and helpful photos or video where appropriate.</p><p>Our team will provide prompt troubleshooting guidance, operating tips, or return instructions where applicable.</p>" },
+      { heading: "Customer care & satisfaction.", content: "<p class=\"eyebrow\">Resolution</p><p>If a product issue cannot be resolved through standard troubleshooting, Miroooo will provide an appropriate resolution, such as replacement parts, device replacement, or refund in accordance with our return guidelines and applicable consumer rights.</p><p>These guidelines are in addition to your statutory consumer rights under applicable law.</p><p>Last updated: 16 August 2026.</p>" },
     ],
   },
-
-  'cookies-policy': {
-    slug: 'cookies-policy',
-    title: 'Cookies & Tracking Policy',
-    metaTitle: 'Cookies Policy | Miroooo US',
-    metaDescription: 'Learn how Miroooo uses cookies, local storage, and analytical technologies to enhance your browsing experience.',
-    lastUpdated: 'January 2026',
+  "delivery-returns": {
+    slug: "delivery-returns",
+    title: "Delivery & Returns Overview",
+    metaTitle: "Delivery & Returns Overview | Miroooo US",
+    metaDescription: "US shipping, returns, refunds, and support information.",
+    lastUpdated: "September 2026",
     sections: [
-      {
-        heading: '1. What Are Cookies',
-        content:
-          '<p>Cookies are small text files placed on your device by websites you visit. They enable the site to remember your cart items, preferences, and session state across pages.</p>',
-      },
-      {
-        heading: '2. Cookies We Use',
-        content:
-          '<p>&bull; <strong>Strictly Necessary:</strong> Required for cart functionality, promo code validation, and checkout session generation.<br>&bull; <strong>Performance & Analytics:</strong> Aggregate insights (Microsoft Clarity) to identify layout errors and optimize page load speed.<br>&bull; <strong>Local Storage:</strong> Used client-side for Smile Coach habits and quiz recommendations without sending private records to external servers.</p>',
-      },
-      {
-        heading: '3. Managing Cookie Preferences',
-        content:
-          '<p>You can adjust your browser settings at any time to block or delete cookies. However, disabling essential cookies may impact shopping cart operation and checkout responsiveness.</p>',
-      },
+      { heading: "Delivery", content: "<p>Orders normally process in 1–3 business days, with an estimated 7–20 business days for delivery after dispatch. Dates are estimates. <a href=\"/policies/shipping-policy\">Read the full shipping policy</a>.</p>" },
+      { heading: "Returns and refunds", content: "<p>Return and refund eligibility depends on the circumstances and applicable consumer rights. <a href=\"/policies/return-policy\">Read the return policy</a> and <a href=\"/policies/refund-policy\">refund policy</a>.</p>" },
     ],
   },
 };

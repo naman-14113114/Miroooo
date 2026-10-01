@@ -2,27 +2,21 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import type { ReactNode } from "react";
-import "@/styles/globals.css";
-
 import { CartProvider } from "@/context/CartContext";
-import { Header } from "@/components/layout/Header";
+import { RouteChrome } from "@/components/layout/RouteChrome";
 import { Footer } from "@/components/layout/Footer";
 import { CartMinimalHeader } from "@/components/layout/CartMinimalHeader";
 import { CartMinimalFooter } from "@/components/layout/CartMinimalFooter";
-import { RouteChrome } from "@/components/layout/RouteChrome";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import "@/styles/globals.css";
 
 const inter = localFont({
   variable: "--font-inter",
   display: "swap",
   src: [
-    { path: "../assets/fonts/inter-400.woff2", weight: "400", style: "normal" },
+    { path: "../../public/assets/fonts/inter-product-latin.woff2", weight: "100 900", style: "normal" },
     { path: "../assets/fonts/inter-400-italic.woff2", weight: "400", style: "italic" },
-    { path: "../assets/fonts/inter-500.woff2", weight: "500", style: "normal" },
-    { path: "../assets/fonts/inter-600.woff2", weight: "600", style: "normal" },
-    { path: "../assets/fonts/inter-700.woff2", weight: "700", style: "normal" },
     { path: "../assets/fonts/inter-700-italic.woff2", weight: "700", style: "italic" },
-    { path: "../assets/fonts/inter-800.woff2", weight: "800", style: "normal" },
   ],
 });
 
@@ -77,24 +71,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html
-      lang="en-US"
-      className={`${inter.variable} ${didot.variable}`}
-      style={{ backgroundColor: "#080909", colorScheme: "dark" }}
-    >
+    <html lang="en-US" className={`${inter.variable} ${didot.variable}`} style={{ backgroundColor: "#080909", colorScheme: "dark" }}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap"
-        />
-        <style
-          dangerouslySetInnerHTML={{
-            __html:
-              "html, body { background-color: #080909 !important; color: #ffffff; } loading-bar, .loading-bar, [data-page-rendering] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; } #tawk-bubble-container, #tawk-chat-panel, #tawk-default-container, .tawk-min-container, .widget-visible, iframe[src*='tawk.to'], iframe[title*='chat widget'], div[id*='tawk'], div[class*='tawk'] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }",
-          }}
-        />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" />
+        <link rel="preconnect" href="https://embed.tawk.to" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://embed.tawk.to" />
       </head>
       <body style={{ backgroundColor: "#080909" }}>
         <Script id="microsoft-clarity" strategy="afterInteractive">
@@ -106,16 +89,26 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             })(window, document, "clarity", "script", "ybadbatujm");
           `}
         </Script>
-        <a className="skip-link" href="#main">
-          Skip to content
-        </a>
+        <Script id="tawk-to" strategy="afterInteractive">
+          {`
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/6a94f3ac266bf9344afa81da/1k1atfn2e';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+            })();
+          `}
+        </Script>
+        <a className="skip-link" href="#main">Skip to content</a>
 
         <CartProvider>
           <RouteChrome
-            defaultHeader={<Header />}
-            defaultFooter={<Footer />}
             cartHeader={<CartMinimalHeader />}
             cartFooter={<CartMinimalFooter />}
+            defaultFooter={<Footer />}
           >
             {children}
           </RouteChrome>

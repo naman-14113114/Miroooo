@@ -3,7 +3,7 @@ const ORG_MIROOOO_X2_REVIEWS = [
   {
     "id": "org-rev-1787803717658",
     "name": "Dr. Sarah Jenkins",
-    "email": "support@trymiroooo.com",
+    "email": "sahiljainsj004@gmail.com",
     "country": "Verified Customer",
     "rating": 5,
     "date": "2026-08-27",
@@ -20,8 +20,8 @@ const ORG_MIROOOO_X2_REVIEWS = [
   },
   {
     "id": "org-rev-1787802201385",
-    "name": "Verified Customer",
-    "email": "support@trymiroooo.com",
+    "name": "Sahil X2 Test",
+    "email": "sahil@buudy.com",
     "country": "Verified Customer",
     "rating": 5,
     "date": "2026-08-27",

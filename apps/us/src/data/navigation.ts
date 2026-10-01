@@ -1,112 +1,125 @@
-export interface NavLink {
+export interface NavItem {
   label: string;
   href: string;
   badge?: string;
-  image?: string;
+  description?: string;
 }
 
-export interface FooterColumn {
-  title: string;
-  links: NavLink[];
+export interface NavGroup {
+  label: string;
+  items: NavItem[];
 }
 
-export const primaryNavigation: NavLink[] = [
-  { label: "Miroooo X2", href: "/products/miroooo-x2" },
-  { label: "Miroooo X1", href: "/products/miroooo-x" },
-  { label: "Replacement Heads", href: "/products/miroooo-x2-heads" },
-  { label: "Dental Quiz", href: "/pages/dentalcare-quiz" },
-  { label: "Smile Coach", href: "/pages/smile-coach" },
-];
-
-export const secondaryNavigation: NavLink[] = [
-  { label: "Track Order", href: "/pages/order-tracking" },
-  { label: "About Us", href: "/pages/about-us" },
-  { label: "Contact Us", href: "/pages/contact-us" },
-  { label: "FAQs", href: "/pages/faqs" },
-];
-
-export const mobileShopLinks: NavLink[] = [
+export const HEADER_NAV = [
   {
-    label: "Miroooo X2",
-    href: "/products/miroooo-x2",
-    badge: "Flagship",
-    image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
-  },
-  {
-    label: "Miroooo X1",
-    href: "/products/miroooo-x",
-    image: "/assets_ref/x/gallery/Miroooo_x_Silver-1.webp",
-  },
-  {
-    label: "X2 Brush Heads (2-Pk)",
-    href: "/products/miroooo-x2-heads",
-    image: "/assets_ref/x2/heads/B1.webp",
-  },
-  {
-    label: "X1 Brush Heads (2-Pk)",
-    href: "/products/miroooo-x1-heads",
-    image: "/assets_ref/x/heads/B1.webp",
-  },
-  {
-    label: "Shop All Products",
-    href: "/shop",
-  },
-];
-
-export const mobileToolsLinks: NavLink[] = [
-  { label: "Dental Care Quiz", href: "/pages/dentalcare-quiz" },
-  { label: "Smile Coach App", href: "/pages/smile-coach" },
-  { label: "Track Your Order", href: "/pages/order-tracking" },
-];
-
-export const announcementItems = [
-  "Free tracked US delivery",
-  "90-day risk-free home trial",
-  "2-year warranty on all devices",
-  "4.9 stars from 4,200+ happy brushers",
-];
-
-export const footerColumns: FooterColumn[] = [
-  {
-    title: "Shop",
-    links: [
-      { label: "Miroooo X2", href: "/products/miroooo-x2" },
-      { label: "Miroooo X1", href: "/products/miroooo-x" },
-      { label: "X2 Replacement Heads", href: "/products/miroooo-x2-heads" },
-      { label: "X1 Replacement Heads", href: "/products/miroooo-x1-heads" },
-      { label: "Shop All", href: "/shop" },
+    label: 'Shop',
+    href: '/shop',
+    hasDropdown: true,
+    groups: [
+      {
+        title: 'Sonic Brushes',
+        items: [
+          {
+            label: 'Miroooo X2 (Flagship)',
+            href: '/products/miroooo-x2',
+            description: '45° Bass sweep & smart red halo defense',
+            badge: 'Flagship',
+          },
+          {
+            label: 'Miroooo X1',
+            href: '/products/miroooo-x',
+            description: '51g ultra-lightweight linear sonic motor',
+          },
+        ],
+      },
+      {
+        title: 'Accessories',
+        items: [
+          {
+            label: 'Miroooo X2 Heads (2-Pack)',
+            href: '/products/miroooo-x2-heads',
+            description: 'DuPont precision Bass-sweep heads',
+          },
+          {
+            label: 'Miroooo X1 Heads (2-Pack)',
+            href: '/products/miroooo-x1-heads',
+            description: 'Micro-diamond polished replacement heads',
+          },
+        ],
+      },
     ],
   },
-  {
-    title: "Discover",
-    links: [
-      { label: "Dental Care Quiz", href: "/pages/dentalcare-quiz" },
-      { label: "Smile Coach App", href: "/pages/smile-coach" },
-      { label: "Electric Toothbrush Travel Guide", href: "/guides/electric-toothbrush-travel-guide" },
-      { label: "Sonic vs Oscillating Toothbrushes", href: "/guides/sonic-vs-oscillating-electric-toothbrush" },
-      { label: "When to Replace Brush Heads", href: "/guides/how-often-replace-electric-toothbrush-head" },
-      { label: "Two-Minute Timer Guide", href: "/guides/how-to-use-two-minute-toothbrush-timer" },
-    ],
-  },
-  {
-    title: "Help & Support",
-    links: [
-      { label: "Track Your Order", href: "/pages/order-tracking" },
-      { label: "Frequently Asked Questions", href: "/pages/faqs" },
-      { label: "Contact Us", href: "/pages/contact-us" },
-      { label: "Shipping Policy", href: "/policies/shipping-policy" },
-      { label: "Delivery & Returns", href: "/policies/delivery-returns" },
-    ],
-  },
-  {
-    title: "Legal & Privacy",
-    links: [
-      { label: "Privacy Policy", href: "/policies/privacy-policy" },
-      { label: "Terms of Service", href: "/policies/terms-of-service" },
-      { label: "Return Policy", href: "/policies/return-policy" },
-      { label: "Refund Policy", href: "/policies/refund-policy" },
-      { label: "Cookies Policy", href: "/policies/cookies-policy" },
-      { label: "Warranty Policy", href: "/policies/warranty" },
-    ],
-  },
+  { label: 'About Us', href: '/pages/about-us' },
+  { label: 'Dental Care Quiz', href: '/pages/dentalcare-quiz' },
+  { label: 'Contact Us', href: '/pages/contact-us' },
+  { label: 'FAQs', href: '/pages/faqs' },
 ];
+
+export const DRAWER_MENU = {
+  shop: {
+    label: 'Shop',
+    brushes: [
+      { label: 'Miroooo X2', href: '/products/miroooo-x2', badge: 'Flagship' },
+      { label: 'Miroooo X1', href: '/products/miroooo-x' },
+    ],
+    accessories: [
+      { label: 'Miroooo X2 Heads', href: '/products/miroooo-x2-heads' },
+      { label: 'Miroooo X1 Heads', href: '/products/miroooo-x1-heads' },
+    ],
+  },
+  pages: [
+    { label: 'About Us', href: '/pages/about-us' },
+    { label: 'Dental Care Quiz', href: '/pages/dentalcare-quiz' },
+    { label: 'Smile Coach', href: '/pages/smile-coach' },
+    { label: 'Contact Us', href: '/pages/contact-us' },
+    { label: 'FAQs', href: '/pages/faqs' },
+  ],
+};
+
+export const FOOTER_NAV = {
+  products: {
+    title: 'Products',
+    links: [
+      { label: 'Miroooo X2 Flagship', href: '/products/miroooo-x2' },
+      { label: 'Miroooo X1 Essential', href: '/products/miroooo-x' },
+      { label: 'Miroooo X2 Heads (2-Pack)', href: '/products/miroooo-x2-heads' },
+      { label: 'Miroooo X1 Heads (2-Pack)', href: '/products/miroooo-x1-heads' },
+      { label: 'Shop Entire Collection', href: '/shop' },
+    ],
+  },
+  guides: {
+    title: 'Guides & Tools',
+    links: [
+      { label: 'Dental Care Quiz', href: '/pages/dentalcare-quiz' },
+      { label: 'Smile Coach App', href: '/pages/smile-coach' },
+      { label: 'Oral Care Guides Index', href: '/guides' },
+      { label: 'Sonic vs Oscillating Guide', href: '/guides/sonic-vs-oscillating-electric-toothbrush' },
+      { label: 'Electric Toothbrush Travel Guide', href: '/guides/electric-toothbrush-travel-guide' },
+      { label: 'How Often to Replace Heads', href: '/guides/how-often-replace-electric-toothbrush-head' },
+      { label: '2-Minute Timer Quad-Pacer', href: '/guides/how-to-use-two-minute-toothbrush-timer' },
+    ],
+  },
+  careAndLegal: {
+    title: 'Customer Care & Policies',
+    links: [
+      { label: 'Help & FAQs', href: '/pages/faqs' },
+      { label: 'Contact Support', href: '/pages/contact-us' },
+      { label: 'Track Your Order', href: '/pages/order-tracking' },
+      { label: 'Shipping Policy', href: '/policies/shipping-policy' },
+      { label: 'Delivery & Returns', href: '/policies/delivery-returns' },
+      { label: 'Return Policy (30-Day)', href: '/policies/return-policy' },
+      { label: 'Refund Policy', href: '/policies/refund-policy' },
+      { label: '2-Year Warranty Policy', href: '/policies/warranty' },
+      { label: 'Privacy Policy', href: '/policies/privacy-policy' },
+      { label: 'Terms of Service', href: '/policies/terms-of-service' },
+      { label: 'Cookies Policy', href: '/policies/cookies-policy' },
+    ],
+  },
+  contactInfo: {
+    title: 'Business Address',
+    address: '131 Continental Dr Suite 305, Newark, DE 19713, USA',
+    email: 'support@trymiroooo.com',
+    hours: 'Monday – Friday: 9:00 AM – 5:00 PM Eastern Time',
+    announcement: 'Free Tracked US Delivery across all England, Scotland, Wales & Northern Ireland.',
+  },
+};

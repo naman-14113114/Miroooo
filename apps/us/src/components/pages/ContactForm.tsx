@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -32,9 +31,15 @@ export function ContactForm() {
       return;
     }
 
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.message.trim()) {
       setStatus('error');
       setFeedbackMsg('Please fill in all required fields marked with *.');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      setStatus('error');
+      setFeedbackMsg('Please enter a valid email address.');
       return;
     }
 
@@ -106,256 +111,420 @@ export function ContactForm() {
   };
 
   return (
-    <div className="contact-page-root bg-[#080909] text-white min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-16">
-        {/* Section 1: Hero */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <span className="text-[11.5px] font-bold uppercase tracking-widest text-white/50 block">
-              Contact Miroooo
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              We are here to <em className="italic font-serif">help.</em>
+    <main id="main">
+      {/* SECTION 1: HERO SECTION */}
+      <section className="contact-hero" aria-labelledby="contact-hero-heading">
+        <div className="contact-glow contact-glow--top-left" aria-hidden="true" />
+        <div className="contact-glow contact-glow--bottom-right" aria-hidden="true" />
+
+        <div className="site-shell contact-hero-grid">
+          <div className="contact-hero-content reveal">
+            <p className="eyebrow eyebrow--light">Contact Miroooo</p>
+            <h1 id="contact-hero-heading" className="contact-hero-title">
+              We are here to <em className="contact-em">help.</em>
             </h1>
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-light">
-              Welcome to Miroooo, where precision oral care meets thoughtful support. We are delighted to assist you with product questions, order help, and anything you need for a smoother daily routine.
+            <p className="contact-lead">
+              Welcome to Miroooo, where precision oral care meets thoughtful support. We are delighted to assist you with
+              product questions, order help, and anything you need for a smoother daily routine.
             </p>
 
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href="mailto:support@trymiroooo.com"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-[13px] font-medium transition-colors"
-              >
-                <span>✉</span>
+            <div className="contact-pills-wrap">
+              <a className="contact-pill contact-pill--primary" href="mailto:support@trymiroooo.com">
+                <svg className="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
                 <span>support@trymiroooo.com</span>
               </a>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/10 text-white/70 text-[13px]">
-                <span>🕒</span>
-                <span>Mon – Fri: 9:00 AM – 5:00 PM EST</span>
+              <span className="contact-pill contact-pill--outline">
+                <svg className="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span>Mon – Fri: 9:00 AM – 5:00 PM Eastern Time</span>
               </span>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/10 text-white/70 text-[13px]">
-                <span>📍</span>
+              <span className="contact-pill contact-pill--outline">
+                <svg className="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
                 <span>131 Continental Dr Suite 305, Newark, DE 19713, USA</span>
               </span>
             </div>
+
+            <p className="contact-intro">
+              Choose the contact path that suits you best. For product questions, order support, or store help, our team
+              will get back to you promptly.
+            </p>
           </div>
 
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#111213]">
-              <Image
-                src="/assets/miroooo-x2-sonic-electric-toothbrush-sticky-add-to-cart.webp"
-                alt="Miroooo Support Desk"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
-                <div>
-                  <strong className="block text-white text-[15px] font-bold">US Support Desk</strong>
-                  <p className="text-white/70 text-[12.5px]">Product guidance, order tracking, and warranty support.</p>
+          <div className="contact-hero-media-col reveal">
+            <div className="contact-hero-media-card">
+              <div className="contact-hero-image-wrap">
+                <img
+                  src="/assets/miroooo-x2-sonic-electric-toothbrush-sticky-add-to-cart.webp"
+                  alt="Miroooo Sonic Electric Toothbrushes Customer Care Support Desk"
+                  width={800}
+                  height={1000}
+                  loading="eager"
+                />
+              </div>
+              <div className="contact-hero-overlay-card">
+                <div className="contact-overlay-header">
+                  <svg className="contact-overlay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                  </svg>
+                  <span className="contact-overlay-title">Support Desk</span>
                 </div>
+                <p className="contact-overlay-desc">Product guidance, order updates, and care support for your Miroooo brushes</p>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Section 2: Quick Cards Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link
-            href="/pages/faqs"
-            className="p-6 rounded-3xl bg-[#111213] border border-white/10 hover:border-white/20 transition-all space-y-3 block group"
-          >
-            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-lg">
-              ?
-            </div>
-            <h3 className="text-lg font-bold text-white group-hover:text-white">FAQs &amp; Help</h3>
-            <p className="text-[13px] text-white/60">
-              Quick answers for delivery, returns, brush care, and order questions.
+      {/* SECTION 2: HELP & SOCIAL SECTION */}
+      <section className="contact-help-section" aria-labelledby="help-center-heading">
+        <div className="site-shell contact-help-grid">
+          <div className="contact-help-intro reveal">
+            <p className="eyebrow eyebrow--light">Help center</p>
+            <h2 id="help-center-heading" className="contact-section-title">
+              FAQ, help, and <em className="contact-em">social updates</em>
+            </h2>
+            <p className="contact-section-copy">
+              Explore our frequently asked questions for quick answers. For personalised assistance, use the contact form
+              below or stay connected with us on social media for updates and promotions.
             </p>
-            <span className="text-[13px] font-semibold text-white/90 group-hover:underline block pt-2">
-              Browse FAQs →
-            </span>
-          </Link>
+          </div>
 
-          <Link
-            href="/policies/delivery-returns"
-            className="p-6 rounded-3xl bg-[#111213] border border-white/10 hover:border-white/20 transition-all space-y-3 block group"
-          >
-            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-lg">
-              📦
+          <div className="contact-help-cards-col">
+            <div className="contact-help-cards-grid">
+              {/* Card 1: FAQs */}
+              <Link className="contact-service-card reveal" href="/pages/faqs">
+                <div className="contact-service-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                  </svg>
+                </div>
+                <h3 className="contact-service-card__title">FAQs</h3>
+                <p className="contact-service-card__copy">Quick answers for shipping, returns, product use, and order questions.</p>
+                <div className="contact-service-card__action">
+                  <span>Browse FAQs</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </div>
+              </Link>
+
+              {/* Card 2: Support Email */}
+              <a className="contact-service-card reveal" href="mailto:support@trymiroooo.com">
+                <div className="contact-service-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </div>
+                <h3 className="contact-service-card__title">Support email</h3>
+                <p className="contact-service-card__copy">Prefer email? Reach the Miroooo support desk directly.</p>
+                <div className="contact-service-card__action">
+                  <span>Email Miroooo</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </div>
+              </a>
             </div>
-            <h3 className="text-lg font-bold text-white group-hover:text-white">Delivery &amp; Returns</h3>
-            <p className="text-[13px] text-white/60">
-              Learn about tracked US shipping, dispatch times, and our 30-day defective return policy.
+
+            {/* Social Links Row */}
+            <div className="contact-social-row reveal">
+              <p className="contact-social-heading">Connect with us</p>
+              <div className="contact-social-pills">
+                <a
+                  className="contact-social-link"
+                  href="https://www.facebook.com/profile.php?id=61593351131893"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow Miroooo on Facebook"
+                >
+                  <span>Facebook</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+                <a
+                  className="contact-social-link"
+                  href="https://www.instagram.com/miroooo_official/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow Miroooo on Instagram"
+                >
+                  <span>Instagram</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+                <a
+                  className="contact-social-link"
+                  href="https://www.youtube.com/channel/UCVMc0L8ja_3DCL_bI3dczrQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Subscribe to Miroooo on YouTube"
+                >
+                  <span>YouTube</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: CONTACT FORM SECTION */}
+      <section className="contact-form-section" id="contact-form" aria-labelledby="form-section-heading">
+        <div className="contact-glow contact-glow--form" aria-hidden="true" />
+
+        <div className="site-shell contact-form-grid">
+          <div className="contact-form-info reveal">
+            <p className="eyebrow eyebrow--light">Contact form</p>
+            <h2 id="form-section-heading" className="contact-section-title">
+              Send us a <em className="contact-em">message.</em>
+            </h2>
+            <p className="contact-section-copy">
+              Have a question or need assistance? Fill out the form below with your name, email, and message. We will get
+              back to you promptly.
             </p>
-            <span className="text-[13px] font-semibold text-white/90 group-hover:underline block pt-2">
-              Delivery details →
-            </span>
-          </Link>
 
-          <a
-            href="mailto:support@trymiroooo.com"
-            className="p-6 rounded-3xl bg-[#111213] border border-white/10 hover:border-white/20 transition-all space-y-3 block group"
-          >
-            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-lg">
-              ✉
-            </div>
-            <h3 className="text-lg font-bold text-white group-hover:text-white">Direct Email</h3>
-            <p className="text-[13px] text-white/60">
-              Prefer direct email? Reach our US customer service team directly.
-            </p>
-            <span className="text-[13px] font-semibold text-white/90 group-hover:underline block pt-2">
-              Email Miroooo →
-            </span>
-          </a>
-        </section>
-
-        {/* Section 3: Contact Form */}
-        <section id="contact-form" className="p-8 sm:p-12 rounded-3xl bg-[#111213] border border-white/10 shadow-2xl">
-          <div className="max-w-2xl mx-auto space-y-6">
-            <div className="text-center space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-white/50">
-                Online Inquiry
-              </span>
-              <h2 className="text-3xl font-extrabold text-white">
-                Send Us a Message
-              </h2>
-              <p className="text-[13.5px] text-white/60">
-                Messages are reviewed Monday through Friday during US support hours (9:00 AM – 5:00 PM EST).
-              </p>
+            <div className="contact-callouts-list">
+              <div className="contact-callout-box reveal">
+                <div className="contact-callout-icon-wrap">
+                  <svg className="contact-callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                </div>
+                <p className="contact-callout-text">
+                  Include your order number if your message is about shipping, returns, or an existing purchase.
+                </p>
+              </div>
+              <div className="contact-callout-box reveal">
+                <div className="contact-callout-icon-wrap">
+                  <svg className="contact-callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <p className="contact-callout-text">
+                  Messages are reviewed Monday through Friday during US support hours.
+                </p>
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 pt-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[13px] font-semibold text-white/80 mb-1">
-                    First Name *
+            <div className="contact-faq-cta reveal">
+              <Link className="button button--outline contact-faq-link" href="/pages/faqs">
+                <span className="btn-fill" data-fill />
+                <span className="btn-text">
+                  <span>Browse FAQs first</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="contact-form-container reveal">
+            <form className="contact-form-card" id="contact-form-element" onSubmit={handleSubmit} noValidate>
+              <div className="contact-form-fields">
+                <div className="form-group">
+                  <label className="form-label" htmlFor="field-first-name">
+                    First Name <span className="required-indicator">*</span>
                   </label>
                   <input
-                    type="text"
+                    className="form-control"
+                    id="field-first-name"
                     name="firstName"
+                    type="text"
+                    placeholder="Your first name"
+                    autoComplete="given-name"
                     value={formData.firstName}
                     onChange={handleChange}
-                    placeholder="Your first name"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 text-[14px] focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
-                <div>
-                  <label className="block text-[13px] font-semibold text-white/80 mb-1">
-                    Last Name *
+                <div className="form-group">
+                  <label className="form-label" htmlFor="field-last-name">
+                    Last Name <span className="required-indicator">*</span>
                   </label>
                   <input
-                    type="text"
+                    className="form-control"
+                    id="field-last-name"
                     name="lastName"
+                    type="text"
+                    placeholder="Your last name"
+                    autoComplete="family-name"
                     value={formData.lastName}
                     onChange={handleChange}
-                    placeholder="Your last name"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 text-[14px] focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[13px] font-semibold text-white/80 mb-1">
-                    Email Address *
+                <div className="form-group">
+                  <label className="form-label" htmlFor="field-email">
+                    Email <span className="required-indicator">*</span>
                   </label>
                   <input
-                    type="email"
+                    className="form-control"
+                    id="field-email"
                     name="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="your.email@example.com"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 text-[14px] focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
-                <div>
-                  <label className="block text-[13px] font-semibold text-white/80 mb-1">
-                    Phone (Optional)
+                <div className="form-group">
+                  <label className="form-label" htmlFor="field-phone">
+                    Phone
                   </label>
                   <input
-                    type="tel"
+                    className="form-control"
+                    id="field-phone"
                     name="phone"
+                    type="tel"
+                    placeholder="Your phone (optional)"
+                    autoComplete="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+1 (555) 000-0000"
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 text-[14px] focus:outline-none focus:border-white transition-colors"
+                  />
+                </div>
+                <div className="form-group form-group--full">
+                  <label className="form-label" htmlFor="field-subject">
+                    Subject
+                  </label>
+                  <input
+                    className="form-control"
+                    id="field-subject"
+                    name="subject"
+                    type="text"
+                    placeholder="What can we help with?"
+                    value={formData.subject}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group form-group--full">
+                  <label className="form-label" htmlFor="field-message">
+                    Message <span className="required-indicator">*</span>
+                  </label>
+                  <textarea
+                    className="form-control form-textarea"
+                    id="field-message"
+                    name="message"
+                    rows={5}
+                    maxLength={1000}
+                    placeholder="Your message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-[13px] font-semibold text-white/80 mb-1">
-                  Subject / Order Number
-                </label>
+              {/* Anti-spam Honeypot */}
+              <div className="visually-hidden" aria-hidden="true">
+                <label htmlFor="field-botcheck">Do not fill this field</label>
                 <input
+                  id="field-botcheck"
+                  name="botcheck"
                   type="text"
-                  name="subject"
-                  value={formData.subject}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.botcheck}
                   onChange={handleChange}
-                  placeholder="What can we help you with?"
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 text-[14px] focus:outline-none focus:border-white transition-colors"
                 />
               </div>
 
-              <div>
-                <label className="block text-[13px] font-semibold text-white/80 mb-1">
-                  Message *
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  maxLength={1000}
-                  placeholder="Please describe your inquiry in detail..."
-                  required
-                  className="w-full p-4 rounded-xl bg-white/[0.04] border border-white/15 text-white placeholder-white/40 text-[14px] focus:outline-none focus:border-white transition-colors"
-                />
-              </div>
-
-              {/* Botcheck honeypot */}
-              <input
-                type="text"
-                name="botcheck"
-                value={formData.botcheck}
-                onChange={handleChange}
-                className="hidden"
-                tabIndex={-1}
-                autoComplete="off"
-              />
-
-              {status === 'success' && (
-                <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-[13.5px]">
-                  ✓ {feedbackMsg}
-                </div>
-              )}
-
-              {status === 'error' && (
-                <div className="p-4 rounded-2xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-[13.5px] space-y-2">
-                  <p>⚠ {feedbackMsg}</p>
-                  {mailtoHref && (
-                    <a href={mailtoHref} className="underline block font-semibold">
-                      Click here to email support@trymiroooo.com directly
-                    </a>
-                  )}
+              {/* Submission Status Banner */}
+              {status !== 'idle' && (
+                <div
+                  className={`contact-feedback-box ${
+                    status === 'success' ? 'is-success' : status === 'error' ? 'is-error' : ''
+                  }`}
+                  id="contact-feedback"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <div className="contact-feedback-inner">
+                    <div className="contact-feedback-icon" id="contact-feedback-icon">
+                      {status === 'success' && (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                          <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                      )}
+                      {status === 'error' && (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="8" x2="12" y2="12" />
+                          <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="contact-feedback-body">
+                      <p className="contact-feedback-msg" id="contact-feedback-msg">
+                        {feedbackMsg}
+                      </p>
+                      {status === 'error' && mailtoHref && (
+                        <a className="contact-feedback-mailto" id="contact-feedback-mailto" href={mailtoHref}>
+                          Email support@trymiroooo.com directly
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
 
               <button
+                className="button button--dark contact-form-submit"
+                id="contact-submit-btn"
                 type="submit"
                 disabled={status === 'submitting'}
-                className="w-full py-4 rounded-full bg-white text-black font-extrabold text-[15px] hover:bg-neutral-200 active:scale-95 transition-all shadow-xl disabled:opacity-50"
               >
-                {status === 'submitting' ? 'Sending Message...' : 'Send Message →'}
+                <span className="btn-fill" data-fill />
+                <span className="btn-text">
+                  {status === 'submitting' ? (
+                    <span className="btn-loader" id="btn-loader" aria-hidden="true">
+                      <svg className="spin-animation" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
+                        <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                  ) : (
+                    <span className="btn-send-icon" id="btn-send-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                      </svg>
+                    </span>
+                  )}
+                  <span className="btn-text-content" id="btn-text-content">
+                    {status === 'submitting' ? 'Sending...' : 'Send message'}
+                  </span>
+                </span>
               </button>
             </form>
           </div>
-        </section>
-      </div>
-    </div>
+        </div>
+      </section>
+    </main>
   );
 }

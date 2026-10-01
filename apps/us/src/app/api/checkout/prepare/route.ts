@@ -1,5 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- The existing checkout endpoint accepts several legacy request shapes. */
 import { NextResponse } from "next/server";
-import { createXpageCartCheckout } from "@miroooo/shared";
+import { XPAGE_VARIANTS } from "@miroooo/shared";
+import { calculateTotals, normalizeCartItems } from "@/lib/cart";
+import { CheckoutQuoteError } from "@/lib/checkout-quote";
+import { prepareUSCheckout } from "@/lib/checkout";
+import { PRODUCTS } from "@/data/products";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -8,6 +13,30 @@ const corsHeaders = {
 };
 
 const validDiscountCodes = ["MIROOOO", "MIROOOO10"];
+const xpageVariantToLocal: Record<string, { handle: string; color: string }> = {
+  [XPAGE_VARIANTS.x1_silver]: { handle: 'miroooo-x', color: 'Silver' },
+  [XPAGE_VARIANTS.x1_grey]: { handle: 'miroooo-x', color: 'Grey' },
+  [XPAGE_VARIANTS.x1_pink]: { handle: 'miroooo-x', color: 'Pink' },
+  [XPAGE_VARIANTS.x2_silver]: { handle: 'miroooo-x2', color: 'Silver' },
+  [XPAGE_VARIANTS.x2_grey]: { handle: 'miroooo-x2', color: 'Grey' },
+  [XPAGE_VARIANTS.x2_pink]: { handle: 'miroooo-x2', color: 'Pink' },
+  [XPAGE_VARIANTS.x1_heads]: { handle: 'miroooo-x1-heads', color: 'Default' },
+  [XPAGE_VARIANTS.x2_heads]: { handle: 'miroooo-x2-heads', color: 'Default' },
+};
+
+function resolveCheckoutLine(line: any) {
+  if (!line || typeof line !== 'object') throw new Error('Invalid checkout item.');
+  const requestedId = String(line.variantId || line.variant_id || '');
+  const xpageVariant = xpageVariantToLocal[requestedId];
+  const inferred = xpageVariant || Object.values(PRODUCTS).flatMap((product) =>
+    product.variants.map((variant) => ({ handle: product.handle, color: variant.color, id: variant.id }))
+  ).find((variant) => variant.id === requestedId);
+  if (!inferred) return line;
+  if (line.productHandle && line.productHandle !== inferred.handle) throw new Error('Invalid checkout variant.');
+  const product = PRODUCTS[inferred.handle];
+  const variant = product.variants.find((item) => item.color === inferred.color);
+  return { ...line, productHandle: product.handle, variantId: variant?.id };
+}
 
 function normalizeDiscountCode(code: unknown): string {
   return String(code || "").trim().toUpperCase();
@@ -86,7 +115,7 @@ export async function POST(req: Request) {
           variantId: body.variantId,
           productId: body.productId,
           color: body.color,
-          quantity: Math.max(1, Math.round(Number(body.quantity) || 1)),
+          quantity: body.quantity === undefined ? 1 : Number(body.quantity),
         },
       ];
     }
@@ -99,11 +128,27 @@ export async function POST(req: Request) {
     }
 
     const discountCode = collectRequestedDiscountCode(body);
-
-    const result = await createXpageCartCheckout({
-      cart: rawItems,
+    const canonicalItems = normalizeCartItems(rawItems.map(resolveCheckoutLine), true);
+    if (!canonicalItems.length) {
+      return NextResponse.json({ error: "Cart is empty." }, { status: 400, headers: corsHeaders });
+    }
+    const totals = calculateTotals(canonicalItems, discountCode ? [discountCode] : []);
+    const canonicalCart = canonicalItems.map(({ id, productHandle, productId, variantId, title, color, quantity }) =>
+      ({ id, productHandle, productId, variantId, title, color, quantity })
+    );
+    if (totals.extraBrushHeadSets || totals.extraX1BrushHeadSets) {
+      const handle = totals.extraBrushHeadSets ? 'miroooo-x2-heads' : 'miroooo-x1-heads';
+      const quantity = totals.extraBrushHeadSets || totals.extraX1BrushHeadSets;
+      const gift = normalizeCartItems([{ productHandle: handle, variantId: handle === 'miroooo-x2-heads' ? '1000020718937117' : '1000020710139724', quantity }], true)[0];
+      canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
+    }
+    const onlyBrushes = canonicalItems.every((item) => item.productHandle === 'miroooo-x' || item.productHandle === 'miroooo-x2');
+    const singlePromoBrush = Boolean(discountCode) && onlyBrushes && canonicalItems.reduce((sum, item) => sum + item.quantity, 0) === 1;
+    const result = await prepareUSCheckout({
+      cart: canonicalCart,
       attribution,
-      currency: "USD",
+      expectedUSD: totals.finalSubtotal,
+      useBundle: totals.unlockedGiftsCount > 0 || singlePromoBrush,
       discountCode: discountCode === "MIROOOO" ? "MIROOOO10" : discountCode,
     });
 
@@ -119,10 +164,16 @@ export async function POST(req: Request) {
       { status: 200, headers: corsHeaders }
     );
   } catch (error: any) {
-    console.error("XPage checkout preparation failed:", error);
+    if (error instanceof Error && /^Invalid checkout/.test(error.message)) {
+      return NextResponse.json({ ok: false, code: 'INVALID_CART', error: error.message }, { status: 400, headers: corsHeaders });
+    }
+    if (error instanceof CheckoutQuoteError) {
+      return NextResponse.json({ ok: false, code: error.code, error: error.message }, { status: error.code === 'PRICE_MISMATCH' ? 409 : 503, headers: corsHeaders });
+    }
+    console.error("XPage checkout preparation failed.");
     return NextResponse.json(
-      { error: "Secure checkout is temporarily unavailable. Please try again." },
-      { status: 500, headers: corsHeaders }
+      { ok: false, code: 'QUOTE_UNAVAILABLE', error: "Secure checkout is temporarily unavailable. No order has been placed." },
+      { status: 503, headers: corsHeaders }
     );
   }
 }

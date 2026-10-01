@@ -1,21 +1,22 @@
-import Link from "next/link";
-import { Lock, ShieldCheck } from "lucide-react";
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { AnnouncementBar } from './AnnouncementBar';
 
 export function CartMinimalHeader() {
   return (
-    <header className="bg-[#080909] border-b border-[rgba(255,255,255,0.08)] py-4 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
+    <><AnnouncementBar /><header className="site-header site-header--cart">
+      <div className="header__logo flex items-center justify-center w-full" style={{ padding: '16px 0' }}>
         <Link
           href="/"
-          className="text-xl font-black tracking-widest uppercase text-white hover:opacity-90 font-sans"
+          className="header__logo-link"
+          style={{ fontFamily: "'Montserrat', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif", fontSize: 'clamp(1.35rem, 2vw, 1.65rem)', fontWeight: 800, letterSpacing: '.03em', color: '#fff', lineHeight: 1 }}
         >
           MIROOOO
         </Link>
-        <div className="flex items-center gap-2 text-xs text-neutral-300 font-medium">
-          <Lock size={14} className="text-emerald-400" />
-          <span>256-Bit SSL Encrypted Checkout</span>
-        </div>
+
       </div>
-    </header>
+    </header></>
   );
 }

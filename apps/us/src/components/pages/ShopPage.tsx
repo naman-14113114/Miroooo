@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { PRODUCTS } from '@/data/products';
 import Link from 'next/link';
 
 export function ShopPage() {
@@ -12,7 +13,7 @@ export function ShopPage() {
           <p className="eyebrow eyebrow--light">Two models, no clutter</p>
           <h1>Find your Miroooo.</h1>
           <p className="lead lead--light">
-            Start with the essentials or add more guidance. Both models are built around precise dental care, long battery life and a balanced aluminum body.
+            Start with the essentials or add more guidance. Both models are built around precise dental care, long battery life and a balanced aluminium body.
           </p>
         </div>
       </header>
@@ -55,7 +56,7 @@ export function ShopPage() {
                   </Link>
                 </div>
                 <div className="price">
-                  <span>$76.70</span> <s>$154.70</s>
+                  <span>{PRODUCTS['miroooo-x'].formattedPrice}</span> <s>{PRODUCTS['miroooo-x'].formattedCompareAt}</s>
                 </div>
               </div>
             </article>
@@ -93,7 +94,7 @@ export function ShopPage() {
                   </Link>
                 </div>
                 <div className="price">
-                  <span>$89.70</span> <s>$180.70</s>
+                  <span>{PRODUCTS['miroooo-x2'].formattedPrice}</span> <s>{PRODUCTS['miroooo-x2'].formattedCompareAt}</s>
                 </div>
               </div>
             </article>
@@ -428,18 +429,18 @@ export function ShopPage() {
                 </tr>
                 <tr>
                   <th>Body Material</th>
-                  <td>Aerospace Aluminum</td>
-                  <td><span className="check" aria-label="Included">✓</span> Aerospace Aluminum</td>
+                  <td>Aerospace Aluminium</td>
+                  <td><span className="check" aria-label="Included">✓</span> Aerospace Aluminium</td>
                 </tr>
                 <tr>
                   <th>Price</th>
-                  <td><span>$76.70</span></td>
+                  <td><span>{PRODUCTS['miroooo-x2'].formattedPrice}</span></td>
                   <td>
                     <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '6px' }}>
-                      <span style={{ color: 'var(--signal-dark, #15803d)', fontWeight: 800 }}>$89.70</span>
-                      <s style={{ color: 'var(--mineral, #666666)', fontSize: '13px', fontWeight: 500 }}>$180.70</s>
+                      <span style={{ color: 'var(--signal-dark, #15803d)', fontWeight: 800 }}>{PRODUCTS['miroooo-x2'].formattedPrice}</span>
+                      <s style={{ color: 'var(--mineral, #666666)', fontSize: '13px', fontWeight: 500 }}>{PRODUCTS['miroooo-x2'].formattedCompareAt}</s>
                     </div>
-                    <span style={{ display: 'block', fontSize: '11px', color: 'var(--signal-dark, #15803d)', fontWeight: 700, marginTop: '2px' }}>(50% OFF)</span>
+                    <span style={{ display: 'block', fontSize: '11px', color: 'var(--signal-dark, #15803d)', fontWeight: 700, marginTop: '2px' }}>(51% OFF)</span>
                   </td>
                 </tr>
               </tbody>
@@ -543,11 +544,11 @@ export function ShopPage() {
                   <div className="x2-comp-m-feature-title">Body Material</div>
                   <div className="x2-comp-m-values-row">
                     <div className="x2-comp-m-val-cell x2-comp-m-val-cell--x2">
-                      <span className="x2-comp-m-val-main"><span className="x2-comp-m-tick">✓</span> Aerospace Aluminum</span>
+                      <span className="x2-comp-m-val-main"><span className="x2-comp-m-tick">✓</span> Aerospace Aluminium</span>
                       <span className="x2-comp-m-val-sub">CNC Precision Handle</span>
                     </div>
                     <div className="x2-comp-m-val-cell">
-                      <span className="x2-comp-m-val-main">Aerospace Aluminum</span>
+                      <span className="x2-comp-m-val-main">Aerospace Aluminium</span>
                       <span className="x2-comp-m-val-sub">CNC Precision Handle</span>
                     </div>
                   </div>
@@ -558,13 +559,13 @@ export function ShopPage() {
                   <div className="x2-comp-m-values-row">
                     <div className="x2-comp-m-val-cell x2-comp-m-val-cell--x2">
                       <div>
-                        <div className="x2-comp-m-price-winner">$89.70</div>
-                        <span className="x2-comp-m-price-old">$180.70</span>
-                        <span style={{ fontSize: '0.58rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1, marginTop: '1px' }}>(50% OFF)</span>
+                        <div className="x2-comp-m-price-winner">{PRODUCTS['miroooo-x2'].formattedPrice}</div>
+                        <span className="x2-comp-m-price-old">{PRODUCTS['miroooo-x2'].formattedCompareAt}</span>
+                        <span style={{ fontSize: '0.58rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1, marginTop: '1px' }}>(51% OFF)</span>
                       </div>
                     </div>
                     <div className="x2-comp-m-val-cell">
-                      <span className="x2-comp-m-price-standard">$76.70</span>
+                      <span className="x2-comp-m-price-standard">{PRODUCTS['miroooo-x2'].formattedPrice}</span>
                     </div>
                   </div>
                 </div>
@@ -605,7 +606,7 @@ export function ShopPage() {
                 <path d="m9 12 2 2 4-4" />
               </svg>
               <h3>Dedicated support</h3>
-              <p>Our US customer team is here to assist with any product questions or easy returns.</p>
+              <p>Our customer team is here to assist with any product questions or easy returns.</p>
             </article>
           </div>
         </div>

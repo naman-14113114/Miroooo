@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { savingPercent } from '@/lib/money';
 import Link from 'next/link';
 import { ShowcaseProductFinish } from '@/data/home';
 
@@ -40,14 +41,26 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
 
   return (
     <article className="gb-product-card reveal">
-      <div className="gb-product-card__media" data-slide-gallery>
+      <div
+        className="gb-product-card__media"
+        data-slide-gallery
+        onPointerMove={(event) => {
+          if (event.pointerType === 'touch' || (event.target as Element).closest('.flickity-page-dots')) return;
+          const bounds = event.currentTarget.getBoundingClientRect();
+          const position = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
+          setSlideIndex(Math.min(Math.floor(position * totalSlides), totalSlides - 1));
+        }}
+        onPointerLeave={(event) => {
+          if (event.pointerType !== 'touch') setSlideIndex(0);
+        }}
+      >
         <Link
           className="gb-product-card__media-link"
           href={`/products/${finish.handle}?color=${finish.color}`}
           data-product-link
           aria-label={`View ${finish.name}`}
         >
-          <span className="badge badge--onsale">Save 50%</span>
+          <span className="badge badge--onsale">Save {savingPercent(finish.price, finish.compareAt)}%</span>
           <div className="product-card__rating">
             <svg className="icon icon-star icon-xs" viewBox="0 0 16 16" fill="#f59e0b" width="11" height="11">
               <path d="M8 0L9.88914 5.81283H16L11.056 9.40604L12.9452 15.2177L8 11.6245L3.05603 15.2177L4.94397 9.40484L0 5.81163H6.11086L8 0Z" />
@@ -59,8 +72,7 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
             className="gb-product-card__track"
             style={{
               width: `${totalSlides * 100}%`,
-              transform: `translateX(-${(slideIndex * 100) / totalSlides}%)`,
-              transition: 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)',
+              transform: `translate3d(-${(slideIndex * 100) / totalSlides}%, 0, 0)`,
             }}
           >
             {images.map((imgSrc, idx) => (
@@ -81,30 +93,29 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
               </div>
             ))}
           </div>
-
-          {totalSlides > 1 && (
-            <div
-              className="flickity-page-dots"
-              aria-hidden="true"
-              style={{ pointerEvents: 'auto' }}
-            >
-              {images.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setSlideIndex(dotIdx);
-                  }}
-                  className={`dot ${slideIndex === dotIdx ? 'is-selected' : ''}`}
-                  aria-label={`View slide ${dotIdx + 1}`}
-                  style={{ border: 'none', cursor: 'pointer', padding: 0 }}
-                />
-              ))}
-            </div>
-          )}
         </Link>
+
+        {totalSlides > 1 && (
+          <div
+            className="flickity-page-dots"
+            role="group"
+            aria-label={`${finish.name} images`}
+            style={{ pointerEvents: 'auto' }}
+          >
+            {images.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                type="button"
+                onClick={() => setSlideIndex(dotIdx)}
+                className="gallery-dot-button"
+                aria-label={`View slide ${dotIdx + 1}`}
+                aria-pressed={slideIndex === dotIdx}
+              >
+                <span className={`dot ${slideIndex === dotIdx ? 'is-selected' : ''}`} />
+              </button>
+            ))}
+          </div>
+        )}
 
         <Link
           href={`/products/${finish.handle}?color=${finish.color}`}

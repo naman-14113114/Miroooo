@@ -1,158 +1,191 @@
-import Link from "next/link";
-import { Clock, Headphones, ShieldCheck, Truck } from "lucide-react";
-import { footerColumns } from "@/data/navigation";
-import { legalEntity } from "@/data/policies";
+import React from 'react';
+import Link from 'next/link';
 
 export function Footer() {
   return (
-    <>
-      {/* Customer Care Service Strip */}
-      <section
-        className="border-t border-b border-[rgba(255,255,255,0.08)] bg-[#0d0e0e] text-neutral-300 py-10"
-        aria-label="Customer Care Highlights"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-2xl bg-neutral-900 border border-neutral-800 text-white">
-                <Truck size={22} />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-white">Tracked US Delivery</h4>
-                <p className="text-xs text-neutral-400 mt-1">Free on all toothbrush orders</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-2xl bg-neutral-900 border border-neutral-800 text-white">
-                <ShieldCheck size={22} />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-white">90-Day Home Trial</h4>
-                <p className="text-xs text-neutral-400 mt-1">Risk-free satisfaction guarantee</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-2xl bg-neutral-900 border border-neutral-800 text-white">
-                <Clock size={22} />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-white">2-Year Warranty</h4>
-                <p className="text-xs text-neutral-400 mt-1">Full replacement coverage</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-2xl bg-neutral-900 border border-neutral-800 text-white">
-                <Headphones size={22} />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-white">Dedicated Support</h4>
-                <p className="text-xs text-neutral-400 mt-1">US EST hours · Fast email response</p>
-              </div>
-            </div>
+    <footer className="footer-group block w-full">
+      <aside className="service-strip" aria-label="Miroooo customer care">
+        <div className="service-strip__item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="service-strip__icon" aria-hidden="true">
+            <path d="M4 14a8 8 0 0 1 16 0v4a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
+            <path d="M4 14v4a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H4" />
+          </svg>
+          <div><strong>Customer support</strong><span>Real help when you need it</span></div>
+        </div>
+        <div className="service-strip__item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="service-strip__icon" aria-hidden="true">
+            <rect x="1" y="5" width="15" height="13" rx="2" />
+            <polygon points="16 8 20 8 23 11 23 18 16 18 16 8" />
+            <circle cx="5.5" cy="18.5" r="2.5" />
+            <circle cx="18.5" cy="18.5" r="2.5" />
+          </svg>
+          <div>
+            <strong>Tracked US delivery</strong>
+            <span>Free with every brush</span>
           </div>
         </div>
-      </section>
 
-      {/* Main 4-Column Footer */}
-      <footer className="bg-[#080909] text-white pt-16 pb-12 border-t border-[rgba(255,255,255,0.06)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-14 border-b border-[rgba(255,255,255,0.08)]">
-            {/* Brand column */}
-            <div className="lg:col-span-1">
-              <Link
-                href="/"
-                className="text-2xl font-black tracking-widest uppercase hover:opacity-90 transition font-sans"
-              >
-                MIROOOO
-              </Link>
-              <p className="mt-4 text-xs text-neutral-400 leading-relaxed max-w-sm">
-                Quietly precise sonic oral care, engineered around the everyday ritual. Designed
-                for long-lasting performance and bathroom counter elegance.
+        <div className="service-strip__item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="service-strip__icon" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          <div>
+            <strong>Secure checkout</strong>
+            <span>Encrypted &amp; protected</span>
+          </div>
+        </div>
+
+        <div className="service-strip__item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="service-strip__icon" aria-hidden="true">
+            <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+          </svg>
+          <div>
+            <strong>Sonic technology</strong>
+            <span>Precision oral care</span>
+          </div>
+        </div>
+      </aside>
+
+      {/* 4-Column Footer */}
+      <div className="site-footer" role="contentinfo">
+        <div className="site-footer__main">
+          {/* Column 1: Brand Info */}
+          <div className="site-footer__brand">
+            <Link
+              className="site-footer__logo"
+              href="/"
+              aria-label="Miroooo home"
+              style={{
+                fontFamily: "'Montserrat', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif",
+                fontWeight: 800,
+                letterSpacing: '0.03em',
+                textTransform: 'uppercase',
+              }}
+            >
+              MIROOOO
+            </Link>
+            <p className="site-footer__tagline">
+              Quietly precise electric toothbrushes, built to make better brushing feel uncomplicated.
+            </p>
+            <div className="site-footer__address">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="site-footer__address-icon" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span>131 Continental Dr Suite 305, Newark, DE 19713, USA</span>
+            </div>
+          </div>
+
+          {/* Column 2: SHOP */}
+          <div className="site-footer__column">
+            <h4 className="site-footer__heading">SHOP</h4>
+            <ul className="site-footer__links">
+              <li><Link href="/">Home</Link></li>
+              <li><Link href="/products/miroooo-x">Miroooo X1</Link></li>
+              <li><Link href="/products/miroooo-x2">Miroooo X2</Link></li>
+              <li><Link href="/products/miroooo-x1-heads">Miroooo X1 Heads</Link></li>
+              <li><Link href="/products/miroooo-x2-heads">Miroooo X2 Heads</Link></li>
+              <li><Link href="/policies/privacy-policy">Privacy Policy</Link></li>
+              <li><Link href="/policies/return-policy">Return Policy</Link></li>
+              <li><Link href="/policies/shipping-policy">Shipping Policy</Link></li>
+              <li><Link href="/policies/refund-policy">Refund Policy</Link></li>
+              <li><Link href="/policies/terms-of-service">Terms of Service</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3: SUPPORT */}
+          <div className="site-footer__column">
+            <h4 className="site-footer__heading">SUPPORT</h4>
+            <ul className="site-footer__links">
+              <li><Link href="/pages/smile-coach">Free Smile Coach App</Link></li>
+              <li><Link href="/pages/dentalcare-quiz">Dental Care Quiz</Link></li>
+              <li><Link href="/pages/contact-us">Contact Us</Link></li>
+              <li><Link href="/pages/about-us">About Us</Link></li>
+              <li><Link href="/guides">Oral Care Guides</Link></li>
+              <li><Link href="/pages/faqs">FAQs</Link></li>
+              <li><Link href="/policies/cookies-policy">Cookies Policy</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 4: GET IN TOUCH */}
+          <div className="site-footer__column site-footer__column--touch">
+            <h4 className="site-footer__heading">GET IN TOUCH</h4>
+            <div className="site-footer__touch-content">
+              <p className="site-footer__hours">
+                Operating Hours<br />
+                Monday - Friday - 9am - 5pm Eastern Time
               </p>
-              <div className="mt-6 text-xs text-neutral-400 space-y-1.5">
-                <p className="font-semibold text-neutral-300">{legalEntity.company}</p>
-                <p>{legalEntity.address}</p>
-                <p>Hours: {legalEntity.hours}</p>
+              <p className="site-footer__email">
+                <a href="mailto:support@trymiroooo.com">support@trymiroooo.com</a>
+              </p>
+              <div className="site-footer__socials" aria-label="Social media links">
                 <a
-                  href={`mailto:${legalEntity.email}`}
-                  className="inline-block text-white hover:underline mt-1 font-medium"
+                  href="https://www.facebook.com/profile.php?id=61593351131893"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="site-footer__social-btn"
+                  aria-label="Facebook"
                 >
-                  {legalEntity.email}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
+                </a>
+                <a
+                  href="https://www.instagram.com/miroooo_official/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="site-footer__social-btn"
+                  aria-label="Instagram"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                </a>
+                <a
+                  href="https://www.youtube.com/channel/UCVMc0L8ja_3DCL_bI3dczrQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="site-footer__social-btn"
+                  aria-label="YouTube"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+                  </svg>
                 </a>
               </div>
             </div>
-
-            {/* 4 Structured Menu Columns */}
-            {footerColumns.map((col) => (
-              <div key={col.title}>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-200 mb-5">
-                  {col.title}
-                </h3>
-                <ul className="space-y-3 text-xs text-neutral-400">
-                  {col.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="hover:text-white transition-colors duration-200"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom Row: Copyright, entity & SVGs */}
-          <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-xs text-neutral-400 text-center md:text-left space-y-1">
-              <p>© {new Date().getFullYear()} Miroooo ({legalEntity.company}). All rights reserved.</p>
-              <p className="text-[11px] text-neutral-400">United States Store · USD ($)</p>
-            </div>
-
-            {/* 5 SVG Payment Icons */}
-            <div className="flex items-center gap-2.5 flex-wrap justify-center" aria-label="Accepted Payment Methods">
-              {/* Visa */}
-              <div className="h-7 px-2.5 rounded bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                <svg className="h-3.5 w-auto" viewBox="0 0 48 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19.16 1.05L13.1 15.35H8.76L5.35 3.9C5.14 3.06 4.96 2.76 4.3 2.39C3.23 1.8 1.5 1.25 0 0.92L0.1 0.45H7.72C8.75 0.45 9.66 1.15 9.88 2.29L11.75 12.3L16.4 1.05H19.16ZM36.03 10.65C36.05 6.78 30.58 6.57 30.62 4.79C30.64 4.25 31.17 3.67 32.32 3.52C32.89 3.44 34.46 3.39 36.14 4.15L36.81 1.05C35.88 0.72 34.69 0.4 33.17 0.4C29.13 0.4 26.25 2.5 26.22 5.51C26.19 7.74 28.23 8.98 29.77 9.72C31.35 10.48 31.88 10.97 31.87 11.66C31.85 12.72 30.58 13.19 29.41 13.2C27.47 13.22 26.33 12.67 25.43 12.26L24.73 15.48C25.75 15.94 27.63 16.33 29.58 16.35C33.86 16.35 36.63 14.28 36.65 11.02L36.03 10.65ZM46.96 15.35H50.8L47.45 1.05H43.91C43.12 1.05 42.45 1.51 42.16 2.21L36.03 15.35H40.38L41.25 12.98H46.56L46.96 15.35ZM42.44 9.77L44.62 3.86L45.86 9.77H42.44ZM25.04 1.05L21.67 15.35H17.52L20.89 1.05H25.04Z" fill="#ffffff"/>
-                </svg>
-              </div>
-
-              {/* Mastercard */}
-              <div className="h-7 px-2.5 rounded bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                <svg className="h-4 w-auto" viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="10" cy="10" r="10" fill="#EB001B" fillOpacity="0.9"/>
-                  <circle cx="22" cy="10" r="10" fill="#F79E1B" fillOpacity="0.9"/>
-                  <path d="M16 3.8C18.2 5.4 19.6 8 19.6 11C19.6 14 18.2 16.6 16 18.2C13.8 16.6 12.4 14 12.4 11C12.4 8 13.8 5.4 16 3.8Z" fill="#FF5F00"/>
-                </svg>
-              </div>
-
-              {/* American Express */}
-              <div className="h-7 px-2.5 rounded bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                <span className="text-[10px] font-black tracking-tighter text-blue-400">AMEX</span>
-              </div>
-
-              {/* Apple Pay */}
-              <div className="h-7 px-2.5 rounded bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                <svg className="h-3.5 w-auto" viewBox="0 0 32 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5.4 7.6C5.4 5.9 6.8 5 6.9 4.9C6 3.6 4.7 3.4 4.2 3.3C3.1 3.2 2 4 1.4 4C0.8 4 0 3.3 -0.8 3.3C-1.8 3.3 -3.1 4.1 -3.8 5.2C-5.3 7.8 -4.2 11.6 -2.7 13.7C-2 14.7 -1.2 15.8 -0.1 15.8C0.9 15.7 1.3 15.1 2.5 15.1C3.7 15.1 4.1 15.7 5.2 15.8C6.3 15.8 7 14.8 7.7 13.8C8.5 12.6 8.8 11.5 8.9 11.4C8.8 11.3 6.9 10.6 6.9 8.3L5.4 7.6ZM3.4 2.2C3.9 1.6 4.2 0.8 4.1 0C3.4 0 2.5 0.5 2 1.1C1.6 1.6 1.2 2.4 1.3 3.2C2.1 3.3 2.9 2.8 3.4 2.2Z" transform="translate(6, 0)"/>
-                  <text x="16" y="12" fontSize="9" fontWeight="bold" fill="currentColor" fontFamily="sans-serif">Pay</text>
-                </svg>
-              </div>
-
-              {/* Google Pay */}
-              <div className="h-7 px-2.5 rounded bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                <span className="text-[10px] font-bold text-neutral-200">G Pay</span>
-              </div>
-            </div>
           </div>
         </div>
-      </footer>
-    </>
+
+        {/* Bottom Bar: Copyright, Legal Links, 5 SVG Payment Badges */}
+        <div className="site-footer__bottom">
+          <div className="site-footer__copyright">
+            &copy; 2026 MIROOOO - ALL RIGHTS RESERVED
+          </div>
+
+          <ul className="site-footer__payments" aria-label="Accepted payment methods">
+            <li>
+              <img src="/assets/icons/visa.svg" alt="Visa" width="38" height="24" loading="lazy" />
+            </li>
+            <li>
+              <img src="/assets/icons/mastercard.svg" alt="Mastercard" width="38" height="24" loading="lazy" />
+            </li>
+            <li>
+              <img src="/assets/icons/amex.svg" alt="American Express" width="38" height="24" loading="lazy" />
+            </li>
+            <li>
+              <img src="/assets/icons/jcb.svg" alt="JCB" width="38" height="24" loading="lazy" />
+            </li>
+            <li>
+              <img src="/assets/icons/paypal.svg" alt="PayPal" width="38" height="24" loading="lazy" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   );
 }

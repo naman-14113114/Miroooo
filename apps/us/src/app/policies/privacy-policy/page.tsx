@@ -4,7 +4,7 @@ import { PolicyPage } from "@/components/policies/PolicyPage";
 export const metadata: Metadata = {
   title: "Privacy Policy | Miroooo US",
   description:
-    "Read the Miroooo US Privacy Policy. Learn how we protect personal information.",
+    "Read the Miroooo US Privacy Policy. Learn how personal information is collected, used and protected.",
   alternates: { canonical: "https://miroooo.us/policies/privacy-policy" },
 };
 

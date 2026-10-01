@@ -1,25 +1,19 @@
-import Link from "next/link";
-import { legalEntity } from "@/data/policies";
+import React from 'react';
+import Link from 'next/link';
 
 export function CartMinimalFooter() {
   return (
-    <footer className="bg-[#080909] border-t border-[rgba(255,255,255,0.08)] py-8 px-4 text-center text-xs text-neutral-400">
-      <div className="max-w-4xl mx-auto space-y-3">
-        <div className="flex flex-wrap justify-center gap-6 text-neutral-400">
-          <Link href="/policies/privacy-policy" className="hover:text-white transition">
-            Privacy Policy
-          </Link>
-          <Link href="/policies/terms-of-service" className="hover:text-white transition">
-            Terms of Service
-          </Link>
-          <Link href="/policies/shipping-policy" className="hover:text-white transition">
-            Shipping Policy
-          </Link>
-          <Link href="/policies/return-policy" className="hover:text-white transition">
-            Return Policy
-          </Link>
+    <footer className="cart-minimal-footer bg-[#080909] text-white/60 border-t border-white/10 text-[12px] text-center" style={{ padding: '36px 20px 48px' }}>
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-4">
+        <p className="text-[11px] font-bold tracking-[0.12em] uppercase text-white/50">SECURE PAYMENTS • FREE TRACKED US DELIVERY • HASSLE-FREE REFUNDS</p>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          <Link href="/policies/shipping-policy" className="hover:text-white">Shipping Policy</Link>
+          <Link href="/policies/return-policy" className="hover:text-white">Return Policy</Link>
+          <Link href="/policies/refund-policy" className="hover:text-white">Refund Policy</Link>
+          <Link href="/policies/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+          <Link href="/policies/terms-of-service" className="hover:text-white">Terms of Service</Link>
+          <Link href="/pages/contact-us" className="hover:text-white">Contact Us</Link>
         </div>
-        <p>© {new Date().getFullYear()} Miroooo · {legalEntity.company}, {legalEntity.address}</p>
       </div>
     </footer>
   );

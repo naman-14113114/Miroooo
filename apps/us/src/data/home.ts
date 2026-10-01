@@ -1,3 +1,5 @@
+import { PRODUCTS } from './products';
+
 export interface HomeHeroData {
   kicker: string;
   titleWords: string[];
@@ -41,14 +43,13 @@ export interface FeatureSplitSectionData {
 export const HOME_HERO_DATA: HomeHeroData = {
   kicker: 'Electric Toothbrushes',
   titleWords: ['Brushing,', 'elevated', 'to ritual.'],
-  copy: 'Ultra-precise acoustic vibration, aerospace aluminum finish, and up to 90 days of battery life without bathroom clutter.',
+  copy: 'Ultra-precise acoustic vibration, aerospace aluminium finish, and up to 90 days of battery life without bathroom clutter.',
   ctaPrimaryText: 'Shop Miroooo X2',
   ctaPrimaryHref: '/products/miroooo-x2',
   ctaSecondaryText: 'Dental Care Quiz',
   ctaSecondaryHref: '/pages/dentalcare-quiz',
-  videoSrc:
-    'https://miroooo-us.vercel.app/media/products/miroooo-electric-toothbrush-x2/videos/31-miroooo-electric-toothbrush-x2-demo-1.mp4',
-  posterSrc: '/assets_ref/x2/gallery/hero-video-poster.webp',
+  videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
+  posterSrc: '/assets/home/hero-video-poster.webp',
 };
 
 export const X2_FINISHES: ShowcaseProductFinish[] = [
@@ -56,10 +57,10 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     handle: 'miroooo-x2',
     name: 'Miroooo X2 Pink',
     color: 'Pink',
-    price: 89.70,
-    compareAt: 180.70,
-    formattedPrice: '$89.70',
-    formattedCompareAt: '$180.70',
+    price: PRODUCTS['miroooo-x2'].price,
+    compareAt: PRODUCTS['miroooo-x2'].compareAt,
+    formattedPrice: PRODUCTS['miroooo-x2'].formattedPrice,
+    formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
     rating: 4.9,
     images: [
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp',
@@ -71,10 +72,10 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     handle: 'miroooo-x2',
     name: 'Miroooo X2 Grey',
     color: 'Grey',
-    price: 89.70,
-    compareAt: 180.70,
-    formattedPrice: '$89.70',
-    formattedCompareAt: '$180.70',
+    price: PRODUCTS['miroooo-x2'].price,
+    compareAt: PRODUCTS['miroooo-x2'].compareAt,
+    formattedPrice: PRODUCTS['miroooo-x2'].formattedPrice,
+    formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
     rating: 4.9,
     images: [
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp',
@@ -86,10 +87,10 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     handle: 'miroooo-x2',
     name: 'Miroooo X2 Silver',
     color: 'Silver',
-    price: 89.70,
-    compareAt: 180.70,
-    formattedPrice: '$89.70',
-    formattedCompareAt: '$180.70',
+    price: PRODUCTS['miroooo-x2'].price,
+    compareAt: PRODUCTS['miroooo-x2'].compareAt,
+    formattedPrice: PRODUCTS['miroooo-x2'].formattedPrice,
+    formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
     rating: 4.8,
     images: [
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp',
@@ -104,10 +105,10 @@ export const X1_FINISHES: ShowcaseProductFinish[] = [
     handle: 'miroooo-x',
     name: 'Miroooo X1 Pink',
     color: 'Pink',
-    price: 76.70,
-    compareAt: 154.70,
-    formattedPrice: '$76.70',
-    formattedCompareAt: '$154.70',
+    price: PRODUCTS['miroooo-x'].price,
+    compareAt: PRODUCTS['miroooo-x'].compareAt,
+    formattedPrice: PRODUCTS['miroooo-x'].formattedPrice,
+    formattedCompareAt: PRODUCTS['miroooo-x'].formattedCompareAt,
     rating: 4.8,
     images: [
       '/gallery_orig/RoseGold-color-1.jpg',
@@ -119,10 +120,10 @@ export const X1_FINISHES: ShowcaseProductFinish[] = [
     handle: 'miroooo-x',
     name: 'Miroooo X1 Grey',
     color: 'Grey',
-    price: 76.70,
-    compareAt: 154.70,
-    formattedPrice: '$76.70',
-    formattedCompareAt: '$154.70',
+    price: PRODUCTS['miroooo-x'].price,
+    compareAt: PRODUCTS['miroooo-x'].compareAt,
+    formattedPrice: PRODUCTS['miroooo-x'].formattedPrice,
+    formattedCompareAt: PRODUCTS['miroooo-x'].formattedCompareAt,
     rating: 4.5,
     images: [
       '/gallery_orig/Grey-color-8.jpg',
@@ -134,10 +135,10 @@ export const X1_FINISHES: ShowcaseProductFinish[] = [
     handle: 'miroooo-x',
     name: 'Miroooo X1 Silver',
     color: 'Silver',
-    price: 76.70,
-    compareAt: 154.70,
-    formattedPrice: '$76.70',
-    formattedCompareAt: '$154.70',
+    price: PRODUCTS['miroooo-x'].price,
+    compareAt: PRODUCTS['miroooo-x'].compareAt,
+    formattedPrice: PRODUCTS['miroooo-x'].formattedPrice,
+    formattedCompareAt: PRODUCTS['miroooo-x'].formattedCompareAt,
     rating: 4.4,
     images: [
       '/gallery_orig/Silver-color-1.jpg',
@@ -151,7 +152,7 @@ export const X2_FEATURE_SECTION: FeatureSplitSectionData = {
   id: 'x2-showcase',
   kicker: 'Miroooo X2 Flagship',
   heading: 'Precision. Without The Noise.',
-  lead: 'Engineered for deep plaque removal with ultra-lightweight aerospace aluminum, travel-ready protection, and up to 90 days on a single charge.',
+  lead: 'Engineered for deep plaque removal with ultra-lightweight aerospace aluminium, travel-ready protection, and up to 90 days on a single charge.',
   ctaText: 'Shop Miroooo X2',
   ctaHref: '/products/miroooo-x2',
   videoSrc: '/assets_ref/x2/vbj9qc-h264-hd.mp4',
@@ -160,7 +161,7 @@ export const X2_FEATURE_SECTION: FeatureSplitSectionData = {
   points: [
     {
       title: 'Ultra Lightweight',
-      description: '51g unibody aerospace aluminum chassis for effortless, fatigue-free daily brushing.',
+      description: '51g unibody aerospace aluminium chassis for effortless, fatigue-free daily brushing.',
     },
     {
       title: 'Travel-Friendly',
@@ -172,7 +173,7 @@ export const X2_FEATURE_SECTION: FeatureSplitSectionData = {
     },
     {
       title: 'IPX7 Immersion Waterproof',
-      description: 'Fully submersible unibody aluminum chassis safe for shower routines.',
+      description: 'Fully submersible unibody aluminium chassis.',
     },
   ],
 };
@@ -181,7 +182,7 @@ export const X1_FEATURE_SECTION: FeatureSplitSectionData = {
   id: 'ritual-features',
   kicker: 'The Miroooo Standard',
   heading: 'Engineered For The Modern Ritual',
-  lead: 'Extended battery intervals for Miroooo X1 and Miroooo X2, eliminating bulky charging stands and daily clutter around your sink.',
+  lead: '',
   ctaText: 'Shop Miroooo X1',
   ctaHref: '/products/miroooo-x',
   videoSrc: '/assets_ref/x/miroooo-feature-video.mp4',
@@ -190,7 +191,7 @@ export const X1_FEATURE_SECTION: FeatureSplitSectionData = {
   points: [
     {
       title: '60+ / 90 Days Battery Life',
-      description: 'Extended battery intervals eliminating bulky charging stands and daily clutter around your sink.',
+      description: 'Extended battery intervals for Miroooo X1 and Miroooo X2, eliminating bulky charging stands and daily clutter around your sink.',
     },
     {
       title: 'Guidance That Earns Its Place',
@@ -230,9 +231,9 @@ export const COMPARISON_ROWS = [
   },
   {
     feature: 'Chassis Material & Weight',
-    x2: '51g CNC Aerospace Anodized Aluminum',
-    x1: '51g CNC Aerospace Anodized Aluminum',
-    manual: 'Cheap molded plastic (~35g)',
+    x2: '51g CNC Aerospace Anodized Aluminium',
+    x1: '51g CNC Aerospace Anodized Aluminium',
+    manual: 'Cheap moulded plastic (~35g)',
   },
   {
     feature: 'Waterproofing',

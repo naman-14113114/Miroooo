@@ -7,6 +7,19 @@
 (function () {
   'use strict';
 
+  // React owns this runtime and disposes its listeners on route changes.
+  const listeners = [];
+  let initializedRoot = null;
+  function listen(target, type, handler, options) {
+    target.addEventListener(type, handler, options);
+    listeners.push(() => target.removeEventListener(type, handler, options));
+  }
+  function dispose() {
+    listeners.splice(0).forEach(remove => remove());
+    initializedRoot = null;
+  }
+
+
   // Master Archive Metadata
   const REVIEWS_SUMMARY = {
     total: 4275,
@@ -49,8 +62,8 @@
       name: 'Oliver Bennett',
       country: 'London, UK',
       rating: 5,
-      date: '2026-09-23',
-      displayDate: '23 September 2026',
+      date: '2026-09-27',
+      displayDate: '27 September 2026',
       variant: 'Color: Grey',
       title: 'Arrived in 2 days — genuine luxury feel straight out of the box',
       body: 'Tracked delivery arrived within 48 hours in London. The unboxing experience feels like opening an Apple device. The anodised aluminium body feels solid in hand, lightweight at only 51g, and looks brilliant on the bathroom sink.',
@@ -63,8 +76,8 @@
       name: 'Charlotte Davies',
       country: 'Edinburgh, UK',
       rating: 5,
-      date: '2026-09-22',
-      displayDate: '22 September 2026',
+      date: '2026-09-26',
+      displayDate: '26 September 2026',
       variant: 'Color: Silver',
       title: 'Get the 3-pack bundle — bought one each for me, my partner and our son',
       body: 'Initially planned on buying just one, but the 3-brush bundle was far better value. Got Silver for myself, Pink for my daughter and Grey for my partner. Everyone is thoroughly impressed with how clean their teeth feel after every session.',
@@ -77,8 +90,8 @@
       name: 'James Harrington',
       country: 'Manchester, UK',
       rating: 5,
-      date: '2026-09-20',
-      displayDate: '20 September 2026',
+      date: '2026-09-24',
+      displayDate: '24 September 2026',
       variant: 'Color: Grey',
       title: 'Retired my Oral-B iO — far gentler on gums with better plaque removal',
       body: 'Used Oral-B electric brushes for nearly a decade. The rotating head always felt aggressive on my gumline. Switched to the Miroooo X1 micro-vibrations and my gums haven\'t bled once. Teeth feel silky smooth after every 2-minute cycle.',
@@ -91,8 +104,8 @@
       name: 'Emma Richardson',
       country: 'Bristol, UK',
       rating: 5,
-      date: '2026-09-18',
-      displayDate: '18 September 2026',
+      date: '2026-09-22',
+      displayDate: '22 September 2026',
       variant: 'Color: Pink',
       title: '60-day battery life is no exaggeration — still on the first charge',
       body: 'Charged it once via USB-C when it arrived over six weeks ago and it is still running at full power. No bulky chargers or ugly cords cluttering my bathroom counter anymore.',
@@ -105,8 +118,8 @@
       name: 'Dr. Alistair Ross',
       country: 'Oxford, UK',
       rating: 5,
-      date: '2026-09-16',
-      displayDate: '16 September 2026',
+      date: '2026-09-20',
+      displayDate: '20 September 2026',
       variant: 'Color: Silver',
       title: 'Slim magnetic travel case makes packing effortless',
       body: 'I commute between Oxford and London weekly. The magnetic travel case is wonderfully slim and protects the bristle head without taking up luggage space. The magnetic charging base is super compact and clean too.',
@@ -119,8 +132,8 @@
       name: 'Sophie Turner',
       country: 'Bath, UK',
       rating: 5,
-      date: '2026-09-14',
-      displayDate: '14 September 2026',
+      date: '2026-09-18',
+      displayDate: '18 September 2026',
       variant: 'Color: Grey',
       title: 'Whisper quiet acoustic motor — noticeably quieter than my old SURI',
       body: 'My old SURI brush made a loud buzzing rattle in the morning that woke up my partner. The Miroooo X1 is whisper quiet with almost zero handle vibration fatigue. The 32,000 VPM feels refined and comfortable.',
@@ -133,8 +146,8 @@
       name: 'George MacLeod',
       country: 'Glasgow, UK',
       rating: 5,
-      date: '2026-09-12',
-      displayDate: '12 September 2026',
+      date: '2026-09-16',
+      displayDate: '16 September 2026',
       variant: 'Color: Grey',
       title: 'Three intuitive modes with zero unnecessary app gimmicks',
       body: 'So glad this doesn\'t require a bloated smartphone app just to brush your teeth. One tactile button cycles smoothly between Standard, Whitening and Sensitive. The 30-second quadrant pulse keeps your routine disciplined.',
@@ -147,8 +160,8 @@
       name: 'Hannah Cooper',
       country: 'Leeds, UK',
       rating: 5,
-      date: '2026-09-10',
-      displayDate: '10 September 2026',
+      date: '2026-09-14',
+      displayDate: '14 September 2026',
       variant: 'Color: Silver',
       title: 'Sealed DuPont brush heads and zero grime build-up around the base',
       body: 'Extra brush heads came individually sealed in sterile packs. Love that the magnetic base doesn\'t collect that nasty black puddle grime that standard electric toothbrushes always suffer from.',
@@ -161,8 +174,8 @@
       name: 'Callum Scott',
       country: 'York, UK',
       rating: 5,
-      date: '2026-09-08',
-      displayDate: '8 September 2026',
+      date: '2026-09-12',
+      displayDate: '12 September 2026',
       variant: 'Color: Grey',
       title: 'Weighs just 51g — unbelievable power for such a lightweight brush',
       body: 'Holding this feels like holding a luxury pen rather than a clunky plastic electric toothbrush. You don\'t get any wrist fatigue at all, yet the acoustic clean is powerful and deep.',
@@ -175,8 +188,8 @@
       name: 'Victoria Campbell',
       country: 'Birmingham, UK',
       rating: 5,
-      date: '2026-09-06',
-      displayDate: '6 September 2026',
+      date: '2026-09-10',
+      displayDate: '10 September 2026',
       variant: 'Color: Pink',
       title: 'My dental hygienist was genuinely impressed with my checkup',
       body: 'Drink several cups of black tea daily and usually dread the tartar scrape at my 6-month checkup. My hygienist asked what I changed because my lower teeth were practically tartar-free. The Whitening mode genuinely works.',
@@ -189,8 +202,8 @@
       name: 'Harry Fletcher',
       country: 'Cambridge, UK',
       rating: 5,
-      date: '2026-09-03',
-      displayDate: '3 September 2026',
+      date: '2026-09-07',
+      displayDate: '7 September 2026',
       variant: 'Color: Silver',
       title: 'USB-C fast charging is so clean and convenient',
       body: 'Charges quickly via standard USB-C and battery lasts for weeks. Direct USB-C compatibility means I can charge it anywhere with standard cables without proprietary bathroom two-pin shaving plugs.',
@@ -203,8 +216,8 @@
       name: 'Megan Phillips',
       country: 'Cardiff, UK',
       rating: 5,
-      date: '2026-08-31',
-      displayDate: '31 August 2026',
+      date: '2026-09-04',
+      displayDate: '4 September 2026',
       variant: 'Color: Pink',
       title: 'Gentlest acoustic clean I\'ve experienced for sensitive receding gums',
       body: 'Was nervous to switch to acoustic because of gum recession, but the Sensitive mode is remarkably gentle. The curved DuPont bristles hug the tooth contours without scraping raw enamel.',
@@ -217,8 +230,8 @@
       name: 'Daniel Hughes',
       country: 'Newcastle, UK',
       rating: 5,
-      date: '2026-08-28',
-      displayDate: '28 August 2026',
+      date: '2026-09-01',
+      displayDate: '1 September 2026',
       variant: 'Color: Grey',
       title: 'Took it on a 3-week holiday to Greece without taking the charger',
       body: 'Packed the brush in its hard case and left the charging cable at home in Newcastle. Used it twice a day for 21 days and it still had plenty of charge when I returned. Perfect travel companion.',
@@ -231,8 +244,8 @@
       name: 'Dr. Fiona Stewart',
       country: 'Aberdeen, UK',
       rating: 5,
-      date: '2026-08-25',
-      displayDate: '25 August 2026',
+      date: '2026-08-29',
+      displayDate: '29 August 2026',
       variant: 'Color: Silver',
       title: 'Flawless bristle geometry and acoustic frequency',
       body: 'The 3D wave cut on the brush head reaches right between molars and along the gumline. You can feel the acoustic fluid action pushing toothpaste foam through interdental spaces.',
@@ -245,8 +258,8 @@
       name: 'Lewis Armstrong',
       country: 'Belfast, UK',
       rating: 5,
-      date: '2026-08-22',
-      displayDate: '22 August 2026',
+      date: '2026-08-26',
+      displayDate: '26 August 2026',
       variant: 'Color: Grey',
       title: 'Exceptional customer service and quick Royal Mail delivery',
       body: 'Dispatched the same afternoon and arrived with tracked delivery in Belfast 2 days later. Had a quick question about replacement brush heads and support replied within 20 minutes. Truly top tier service.',
@@ -259,8 +272,8 @@
       name: 'Grace Jenkins',
       country: 'Norwich, UK',
       rating: 5,
-      date: '2026-08-19',
-      displayDate: '19 August 2026',
+      date: '2026-08-23',
+      displayDate: '23 August 2026',
       variant: 'Color: Pink',
       title: 'Replaced my bulky Philips Sonicare — slimmer, lighter and lasts way longer',
       body: 'My old Sonicare DiamondClean felt like a heavy brick and the rubber grip started peeling after a year. The Miroooo X1 full aluminium shell is so much more premium and hygienic. Very happy customer.',
@@ -273,8 +286,8 @@
       name: 'Nathan Walker',
       country: 'Sheffield, UK',
       rating: 4,
-      date: '2026-08-16',
-      displayDate: '16 August 2026',
+      date: '2026-08-20',
+      displayDate: '20 August 2026',
       variant: 'Color: Silver',
       title: 'Superb brushing power and build — wish starter box came with 4 heads',
       body: 'The toothbrush itself is a solid 5/5 — quiet motor, 60-day battery and sleek aerospace aluminium. The only reason for 4 stars instead of 5 is that I wish the single pack came with 4 heads standard instead of 2. I ended up ordering extra heads separately.',
@@ -287,8 +300,8 @@
       name: 'Zara Patel',
       country: 'Leicester, UK',
       rating: 5,
-      date: '2026-08-13',
-      displayDate: '13 August 2026',
+      date: '2026-08-17',
+      displayDate: '17 August 2026',
       variant: 'Color: Pink',
       title: 'Ordered 2 for me and my sister — best electric toothbrush we\'ve owned',
       body: 'We both ordered during the bundle promotion. The Pink is a gorgeous subtle pastel and the Grey is very sleek. Cleans significantly better than manual or cheap drugstore electric brushes.',
@@ -301,8 +314,8 @@
       name: 'Benjamin Taylor',
       country: 'Brighton, UK',
       rating: 5,
-      date: '2026-08-10',
-      displayDate: '10 August 2026',
+      date: '2026-08-14',
+      displayDate: '14 August 2026',
       variant: 'Color: Silver',
       title: 'Aerospace aluminium finish is in a completely different league',
       body: 'Every electric toothbrush on the market is cheap moulded plastic that gets discoloured and grimy. The seamless aluminium unibody on the Miroooo X1 feels like precision industrial design. Fits neatly into its case for gym and weekend trips.',
@@ -315,8 +328,8 @@
       name: 'Rebecca Evans',
       country: 'Liverpool, UK',
       rating: 5,
-      date: '2026-08-07',
-      displayDate: '7 August 2026',
+      date: '2026-08-11',
+      displayDate: '11 August 2026',
       variant: 'Color: Grey',
       title: 'Worth every penny — sleek, whisper quiet and teeth feel dentist-clean',
       body: 'After using it for a month, I can never go back to regular brushes. Battery seems almost limitless, the travel case is super convenient, and my teeth feel squeaky clean every single day.',
@@ -329,8 +342,8 @@
       name: 'Alexander Wright',
       country: 'Glasgow, UK',
       rating: 2,
-      date: '2026-07-24',
-      displayDate: '24 July 2026',
+      date: '2026-07-28',
+      displayDate: '28 July 2026',
       variant: 'Color: Grey',
       title: 'Outer shipping carton had a corner crease from Royal Mail transit',
       body: 'The toothbrush itself and accessories inside the hard travel case were completely pristine and work beautifully. However, the outer postal shipping box had a dent on delivery. For a premium device, transit packaging should be reinforced.',
@@ -339,7 +352,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Experience Team',
-        date: '25 July 2026',
+        date: '29 July 2026',
         text: 'Hello Alexander, thank you for your honest feedback! We are glad your Miroooo X1 is performing impeccably, but we apologize for the rough handling by the postal courier. We have upgraded our outbound packaging to heavy-duty double-wall corrugated cartons, and our team has added a complimentary 2-pack of DuPont brush heads to your account.'
       }
     },
@@ -348,8 +361,8 @@
       name: 'David O\'Connor',
       country: 'Belfast, UK',
       rating: 1,
-      date: '2026-07-19',
-      displayDate: '19 July 2026',
+      date: '2026-07-23',
+      displayDate: '23 July 2026',
       variant: 'Color: Silver',
       title: 'Postal delay during holiday rush resolved quickly by support',
       body: 'Ordered during the Black Friday peak and the courier parcel stalled for 4 days at the regional depot. Reached out to support and they immediately dispatched an express replacement parcel with next-day DPD tracking. Brush is fantastic now that it arrived, but delivery delay was annoying.',
@@ -358,7 +371,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Support Care',
-        date: '20 July 2026',
+        date: '24 July 2026',
         text: 'Dear David, we understand how frustrating carrier backlogs can be during holiday peaks. Our policy is to immediately intervene and dispatch a priority express replacement at zero cost when couriers stall. We are glad our support team took care of you and that you are enjoying the Miroooo X1 clean!'
       }
     },
@@ -367,8 +380,8 @@
       name: 'Toby Armstrong',
       country: 'Newcastle, UK',
       rating: 1,
-      date: '2026-07-16',
-      displayDate: '16 July 2026',
+      date: '2026-07-20',
+      displayDate: '20 July 2026',
       variant: 'Color: Grey',
       title: 'Courier delivered parcel to neighboring porch during storm',
       body: 'The local delivery driver left the parcel outside down the road in the rain. Contacted customer support who resolved the delivery issue promptly.',
@@ -377,7 +390,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '17 July 2026',
+        date: '21 July 2026',
         text: 'Hello Toby, we deeply regret the courier misplacement. Our team immediately intervened with the carrier supervisor and dispatched a priority replacement parcel. We are glad you received it safely.'
       }
     },
@@ -386,8 +399,8 @@
       name: 'Rachel Davies',
       country: 'Cardiff, UK',
       rating: 1,
-      date: '2026-07-14',
-      displayDate: '14 July 2026',
+      date: '2026-07-18',
+      displayDate: '18 July 2026',
       variant: 'Color: Pink',
       title: 'Missing secondary travel cap in bundle — replacement sent immediately',
       body: 'Received the brush and accessories, but the extra hygienic travel cap was missing from the box upon opening.',
@@ -396,7 +409,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '15 July 2026',
+        date: '19 July 2026',
         text: 'Hi Rachel, our apologies for the missing accessory in fulfillment. We dispatched a complimentary replacement accessory multi-pack via Royal Mail 24 on the same afternoon.'
       }
     },
@@ -405,8 +418,8 @@
       name: 'Lars Lindgren',
       country: 'Oslo, NO',
       rating: 2,
-      date: '2026-07-12',
-      displayDate: '12 July 2026',
+      date: '2026-07-16',
+      displayDate: '16 July 2026',
       variant: 'Color: Grey',
       title: 'Did not realize wall charger brick was not included in box',
       body: 'Package includes the USB-C charging cable, but you need your own 5V USB wall plug. Works fine plugged into my phone charger, but would prefer a wall adapter included directly in the box.',
@@ -415,7 +428,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '13 July 2026',
+        date: '17 July 2026',
         text: 'Hi Lars, thank you for your feedback! To reduce global electronic waste, the Miroooo X1 includes a universal USB-C cable compatible with any standard 5V adapter, laptop, or power bank. Because the battery only needs charging once every 60 days, most customers use their existing phone charger. We appreciate your valuable input!'
       }
     },
@@ -424,8 +437,8 @@
       name: 'Markus Weber',
       country: 'Frankfurt, DE',
       rating: 3,
-      date: '2026-07-07',
-      displayDate: '7 July 2026',
+      date: '2026-07-11',
+      displayDate: '11 July 2026',
       variant: 'Color: Grey',
       title: 'Good brush, high vibration intensity takes adjustment',
       body: 'The toothbrush is extremely well manufactured and the 60-day battery is accurate. However, the 32,000 VPM motor is quite powerful even on Daily Clean mode. I recommend starting on Sensitive mode for the first week until your gums acclimate.',
@@ -434,7 +447,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '8 July 2026',
+        date: '12 July 2026',
         text: 'Hi Markus, thank you for the helpful review! For users new to acoustic levitation motors, starting on Mode 1 (Sensitive) allows the oral tissue to gently acclimate before transitioning to Daily Clean or Whitening mode.'
       }
     },
@@ -443,8 +456,8 @@
       name: 'Valerie Gomez',
       country: 'Madrid, ES',
       rating: 3,
-      date: '2026-07-01',
-      displayDate: '1 July 2026',
+      date: '2026-07-05',
+      displayDate: '5 July 2026',
       variant: 'Color: Silver',
       title: 'Great hardware, delivery took 6 days to Spain',
       body: 'The Miroooo X1 device itself is 5 stars—whisper quiet, waterproof, and sleek. Took 6 business days for international shipping to arrive in Madrid instead of the promised 3-4 days. Customer support was polite and tracked the parcel.',
@@ -453,7 +466,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Support Care',
-        date: '2 July 2026',
+        date: '6 July 2026',
         text: 'Hello Valerie, thank you for loving the brush! We apologize for the international customs transit delay to Spain and have since integrated express courier routing for all mainland European shipments.'
       }
     },
@@ -462,8 +475,8 @@
       name: 'Simon Clarke',
       country: 'Leeds, UK',
       rating: 3,
-      date: '2026-06-24',
-      displayDate: '24 June 2026',
+      date: '2026-06-28',
+      displayDate: '28 June 2026',
       variant: 'Color: Grey',
       title: 'Carrier tracking took 48 hours to activate on portal',
       body: 'The brush is lightweight and cleans brilliantly. The dispatch tracking link took two days to scan on the carrier portal which caused slight confusion initially.',
@@ -472,7 +485,7 @@
       verified: true,
       merchantReply: {
         author: 'Miroooo Customer Care',
-        date: '25 June 2026',
+        date: '29 June 2026',
         text: 'Hi Simon, thank you for the feedback. Our automated logistics pipeline has been updated with real-time GPS tracking sync so dispatch scans reflect immediately.'
       }
     },
@@ -481,8 +494,8 @@
       name: 'Bernadine Mitchell',
       country: 'Oxford, UK',
       rating: 5,
-      date: '2026-05-19',
-      displayDate: 'May 19, 2026',
+      date: '2026-05-23',
+      displayDate: 'May 23, 2026',
       variant: 'Color: Pink',
       title: 'Enjoying the gentle yet thorough acoustic clean',
       body: 'I am thoroughly enjoying my new electric toothbrush. The DuPont bristles are soft on sensitive areas yet lift daily plaque effortlessly. Leaves my mouth feeling completely refreshed every morning.',
@@ -495,8 +508,8 @@
       name: 'Ryan Sterling',
       country: 'Leeds, UK',
       rating: 5,
-      date: '2026-03-18',
-      displayDate: 'Mar 18, 2026',
+      date: '2026-03-22',
+      displayDate: 'Mar 22, 2026',
       variant: 'Color: Grey',
       title: 'Clean teeth and no more bleeding gums',
       body: 'Really happy with my Miroooo electric brush. Squeaky clean teeth and no more bleeding gums when brushing. What more could you ask for?',
@@ -509,8 +522,8 @@
       name: 'Tom Sinclair',
       country: 'Bath, UK',
       rating: 5,
-      date: '2026-03-14',
-      displayDate: 'Mar 14, 2026',
+      date: '2026-03-18',
+      displayDate: 'Mar 18, 2026',
       variant: 'Color: Silver',
       title: 'Lightweight and sleek aesthetic on the bathroom counter',
       body: 'I love the aesthetics of the brush. It is so light, balanced, and sleek in the hand. The slim unibody design keeps everything super neat. Simply love it!',
@@ -523,8 +536,8 @@
       name: 'Alistair Campbell',
       country: 'Edinburgh, UK',
       rating: 5,
-      date: '2026-08-16',
-      displayDate: 'Aug 16, 2026',
+      date: '2026-08-20',
+      displayDate: 'Aug 20, 2026',
       variant: 'Color: Grey',
       title: 'Great lightweight toothbrush with exceptional battery life',
       body: 'Great lightweight electric toothbrush with exceptional battery life. The acoustic motor runs smooth and quiet, and the USB-C fast charging is completely hassle-free.',
@@ -537,8 +550,8 @@
       name: 'Lajla K.',
       country: 'Birmingham, UK',
       rating: 5,
-      date: '2025-07-07',
-      displayDate: 'Jul 7, 2025',
+      date: '2025-07-11',
+      displayDate: 'Jul 11, 2025',
       variant: 'Color: Grey',
       title: 'Remarkably sleek design and fantastic brushing power',
       body: 'Not only remarkably sleek and handsome on the countertop, but also a truly fantastic electric toothbrush. Customer service was top tier too — in short, an absolute recommendation!',
@@ -551,8 +564,8 @@
       name: 'Marthijn W.',
       country: 'Cambridge, UK',
       rating: 5,
-      date: '2025-05-12',
-      displayDate: 'May 12, 2025',
+      date: '2025-05-16',
+      displayDate: 'May 16, 2025',
       variant: 'Color: Silver',
       title: 'Cleans so much better than my old bulky electric brush',
       body: 'Delighted with this! The brush cleans so much better than my old heavy electric toothbrush. I think it is because of the slim, compact head and 32,000 VPM oscillation speed.',
@@ -565,8 +578,8 @@
       name: 'Fred v. V.',
       country: 'York, UK',
       rating: 5,
-      date: '2025-05-06',
-      displayDate: 'May 6, 2025',
+      date: '2025-05-10',
+      displayDate: 'May 10, 2025',
       variant: 'Color: Grey',
       title: 'Top tier electric toothbrush — leaves teeth squeaky clean',
       body: 'Top tier electric toothbrush. Delivers an effortless, scale-and-polish clean every single morning and evening. Highly satisfied.',
@@ -579,8 +592,8 @@
       name: 'Shelly Pennington',
       country: 'London, UK',
       rating: 5,
-      date: '2025-05-05',
-      displayDate: 'May 5, 2025',
+      date: '2025-05-09',
+      displayDate: 'May 9, 2025',
       variant: 'Color: Pink',
       title: 'Thoughtful ergonomic design and exceptional customer support',
       body: 'An incredibly thoughtful, friendly and responsive team. Ordered the brush for my mother who struggles with manual brushing. The ultra-lightweight 51g handle and long battery life make daily oral care effortless for her.',
@@ -593,8 +606,8 @@
       name: 'Marga B.',
       country: 'Glasgow, UK',
       rating: 5,
-      date: '2025-05-05',
-      displayDate: 'May 5, 2025',
+      date: '2025-05-09',
+      displayDate: 'May 9, 2025',
       variant: 'Color: Grey',
       title: 'Fast replacement and brilliant customer service',
       body: 'Had a small query after my first month of use and the support team resolved it immediately with utmost care. Brushing performance is top tier and my teeth feel amazing.',
@@ -607,8 +620,8 @@
       name: 'Aynsca MacDonald',
       country: 'Inverness, UK',
       rating: 5,
-      date: '2025-04-20',
-      displayDate: 'Apr 20, 2025',
+      date: '2025-04-24',
+      displayDate: 'Apr 24, 2025',
       variant: 'Color: Silver',
       title: 'Ordered two units for my son and myself — highly recommended',
       body: 'Ordered two toothbrushes for my teenage son and myself. Delivery was very fast. Took a couple of days to adjust to acoustic vibration, but it is a lovely, lightweight brush with 3 great modes. I recommend it to everyone.',
@@ -621,8 +634,8 @@
       name: 'Nathalie Bernard',
       country: 'Brussels, BE',
       rating: 4,
-      date: '2026-05-15',
-      displayDate: 'May 15, 2026',
+      date: '2026-05-19',
+      displayDate: 'May 19, 2026',
       variant: 'Color: Pink',
       title: 'Beautiful color, wish the brush head cap clicked tighter',
       body: 'The travel case is fantastic. When using the standalone plastic travel cap, it fits securely but could have a firmer snap lock. Brushing performance and battery longevity are undisputed 5 stars.',
@@ -635,8 +648,8 @@
       name: 'Vince Crawford',
       country: 'London, UK',
       rating: 5,
-      date: '2025-03-29',
-      displayDate: 'Mar 29, 2025',
+      date: '2025-04-02',
+      displayDate: 'Apr 2, 2025',
       variant: 'Color: Grey',
       title: 'Ideal for business travel with slim profile and hard case',
       body: 'Very elegant design and excellent brushing performance. Together with the ventilated travel case, this toothbrush is ideal for travel. I regularly travel abroad for work, so having an electric brush that has the slim profile of a manual brush without bulky charging stands is perfect!',
@@ -649,8 +662,8 @@
       name: 'Sylke Jansen',
       country: 'Brighton, UK',
       rating: 5,
-      date: '2025-03-27',
-      displayDate: 'Mar 27, 2025',
+      date: '2025-03-31',
+      displayDate: 'Mar 31, 2025',
       variant: 'Color: Silver',
       title: 'Premium acoustic build quality and extraordinary battery life',
       body: 'The acoustic micro-vibration cleaning performs remarkably well. Battery life lasts far longer than expected. I was initially hesitant about build quality, but after several weeks of use it clearly sits in the luxury tier and cleans deep into gum margins.',
@@ -663,8 +676,8 @@
       name: 'Owen Davies',
       country: 'Cardiff, UK',
       rating: 5,
-      date: '2025-03-27',
-      displayDate: 'Mar 27, 2025',
+      date: '2025-03-31',
+      displayDate: 'Mar 31, 2025',
       variant: 'Color: Grey',
       title: 'Compact design and lasts weeks longer than other brushes',
       body: 'Works really well! Extremely pleased with the battery longevity and compact ergonomic design. Far superior to drugstore electric toothbrushes that run flat after just a week and a half.',
@@ -677,8 +690,8 @@
       name: 'Marga Bennett',
       country: 'Norwich, UK',
       rating: 5,
-      date: '2025-03-17',
-      displayDate: 'Mar 17, 2025',
+      date: '2025-03-21',
+      displayDate: 'Mar 21, 2025',
       variant: 'Color: Silver',
       title: 'Balanced in hand and cleans smoothly without gum irritation',
       body: 'Next day delivery! Wonderful toothbrush, feels balanced in the hand and brushes smoothly — neither too harsh nor too soft. Gums feel healthy and teeth look visibly polished.',
@@ -691,8 +704,8 @@
       name: 'Robert MacLeod',
       country: 'Aberdeen, UK',
       rating: 4,
-      date: '2026-04-25',
-      displayDate: 'Apr 25, 2026',
+      date: '2026-04-29',
+      displayDate: 'Apr 29, 2026',
       variant: 'Color: Grey',
       title: 'Super smooth brushing, replacement head subscription is handy',
       body: 'The brush itself is top tier. Appreciate that replacement heads can be ordered easily. The acoustic motor sound is very discreet compared to loud mechanical brushes.',
@@ -705,8 +718,8 @@
       name: 'Arianne Fraser',
       country: 'Aberdeen, UK',
       rating: 5,
-      date: '2025-03-06',
-      displayDate: 'Mar 6, 2025',
+      date: '2025-03-10',
+      displayDate: 'Mar 10, 2025',
       variant: 'Color: Pink',
       title: 'Barely ever needs charging and looks lovely on the bathroom vanity',
       body: 'Excellent service with prompt, clear communication. Great toothbrush, handy to hold, and you barely ever have to recharge it. Looks lovely mounted on the bathroom mirror too.',
@@ -719,8 +732,8 @@
       name: 'Roos V.',
       country: 'Southampton, UK',
       rating: 5,
-      date: '2025-03-02',
-      displayDate: 'Mar 2, 2025',
+      date: '2025-03-06',
+      displayDate: 'Mar 6, 2025',
       variant: 'Color: Grey',
       title: 'Brilliant electric brush and compact travel case',
       body: 'Brilliant electric toothbrush, and the slim travel case is so handy for packing. The acoustic hum is very discreet and the 2-minute auto timer keeps me on track.',
@@ -733,8 +746,8 @@
       name: 'Karin B.',
       country: 'Exeter, UK',
       rating: 5,
-      date: '2025-02-21',
-      displayDate: 'Feb 21, 2025',
+      date: '2025-02-25',
+      displayDate: 'Feb 25, 2025',
       variant: 'Color: Silver',
       title: 'Sleek aesthetic and thorough hydrodynamic cleaning',
       body: 'Takes a couple of days to get used to the acoustic micro-vibrations, but it looks sleek and cleans thoroughly between tight teeth. Very courteous and efficient support team when ordering extra brush heads.',
@@ -747,8 +760,8 @@
       name: 'Maaike T.',
       country: 'Bristol, UK',
       rating: 5,
-      date: '2025-02-05',
-      displayDate: 'Feb 5, 2025',
+      date: '2025-02-09',
+      displayDate: 'Feb 9, 2025',
       variant: 'Color: Grey',
       title: 'Rapid delivery and thrilled with the brushing results',
       body: 'Ordered and arrived the very next day. Impressed with the rapid delivery! Absolutely thrilled with how smooth and polished my teeth feel after every brushing session.',
@@ -761,8 +774,8 @@
       name: 'Hannah Edwards',
       country: 'Chester, UK',
       rating: 5,
-      date: '2025-02-05',
-      displayDate: 'Feb 5, 2025',
+      date: '2025-02-09',
+      displayDate: 'Feb 9, 2025',
       variant: 'Color: Pink',
       title: 'Teeth feel glassy-smooth and pink metallic finish is gorgeous',
       body: 'Recently bought the Pink variant. My teeth always feel clean and glassy-smooth, and the metallic satin finish matches my bathroom tiles beautifully — a gorgeous addition to my morning routine!',
@@ -775,8 +788,8 @@
       name: 'Senne V.',
       country: 'Newcastle, UK',
       rating: 5,
-      date: '2025-02-01',
-      displayDate: 'Feb 1, 2025',
+      date: '2025-02-05',
+      displayDate: 'Feb 5, 2025',
       variant: 'Color: Grey',
       title: 'Upgraded from a manual brush — night and day difference',
       body: 'Upgraded from a manual toothbrush to this electric brush and it is a massive step up. The micro-vibrations lift plaque without aggressive brushing pressure. Night and day difference!',
@@ -789,8 +802,8 @@
       name: 'Nvard Hovhannisyan',
       country: 'Sheffield, UK',
       rating: 5,
-      date: '2025-01-31',
-      displayDate: 'Jan 31, 2025',
+      date: '2025-02-04',
+      displayDate: 'Feb 4, 2025',
       variant: 'Color: Silver',
       title: 'Gifted the Silver to my partner — ordering a second one',
       body: 'Bought the Silver toothbrush as a gift for my partner, and he loves it! I am definitely getting the Pink one for myself now. Delivery was swift and on time.',
@@ -803,8 +816,8 @@
       name: 'Edith Blackwood',
       country: 'Nottingham, UK',
       rating: 5,
-      date: '2025-01-31',
-      displayDate: 'Jan 31, 2025',
+      date: '2025-02-04',
+      displayDate: 'Feb 4, 2025',
       variant: 'Color: Grey',
       title: 'Two months of daily brushing without a single recharge',
       body: 'So pleased with this! I have been using the brush for nearly two months and still haven\'t needed to plug it in to recharge. The long battery life is so reliable. Absolutely wonderful device.',
@@ -817,8 +830,8 @@
       name: 'Lyan v. H.',
       country: 'Liverpool, UK',
       rating: 5,
-      date: '2025-01-09',
-      displayDate: 'Jan 9, 2025',
+      date: '2025-01-13',
+      displayDate: 'Jan 13, 2025',
       variant: 'Color: Silver',
       title: 'Arrived just in time for holiday travel',
       body: 'Purchased specifically for my travels, and thankfully the order arrived rapidly just before my holiday. Packed it in the travel case without bringing any charger and it worked flawlessly for 3 weeks.',
@@ -831,8 +844,8 @@
       name: 'Marwan v. H.',
       country: 'Manchester, UK',
       rating: 5,
-      date: '2024-12-19',
-      displayDate: 'Dec 19, 2024',
+      date: '2024-12-23',
+      displayDate: 'Dec 23, 2024',
       variant: 'Color: Grey',
       title: 'Switched from Oral-B — much gentler and cleaner feel',
       body: 'I had always used Oral-B oscillating brushes and decided it was time to try acoustic micro-vibration cleaning. After the first few days, I am thoroughly impressed. Much gentler on my enamel, excellent results, and neatly packaged.',
@@ -845,8 +858,8 @@
       name: 'Noah v. D.',
       country: 'Leeds, UK',
       rating: 5,
-      date: '2024-11-24',
-      displayDate: 'Nov 24, 2024',
+      date: '2024-11-28',
+      displayDate: 'Nov 28, 2024',
       variant: 'Color: Grey',
       title: 'Super fast dispatch and great build quality',
       body: 'The toothbrush arrived the very next day after ordering. Super quick fulfillment and great quality device. The 3 modes switch smoothly with single button clicks.',
@@ -859,8 +872,8 @@
       name: 'Tess Morrison',
       country: 'Belfast, UK',
       rating: 5,
-      date: '2024-10-29',
-      displayDate: 'Oct 29, 2024',
+      date: '2024-11-02',
+      displayDate: 'Nov 2, 2024',
       variant: 'Color: Pink',
       title: 'Immediate relief for sensitive gums',
       body: 'I often struggle with sensitive gums and receding margins. After using Sensitive mode on this electric brush for a few weeks, I noticed an immediate difference. Zero irritation and much healthier gums.',
@@ -873,8 +886,8 @@
       name: 'Jasper Vance',
       country: 'London, UK',
       rating: 5,
-      date: '2024-10-22',
-      displayDate: 'Oct 22, 2024',
+      date: '2024-10-26',
+      displayDate: 'Oct 26, 2024',
       variant: 'Color: Silver',
       title: 'Top tier hardware and outstanding customer service',
       body: 'The quality of the toothbrush is top tier. The acoustic levitation motor runs smooth without rattling. Service is outstanding and delivery was prompt. More than satisfied.',
@@ -887,8 +900,8 @@
       name: 'Mila Brennan',
       country: 'Edinburgh, UK',
       rating: 5,
-      date: '2024-10-07',
-      displayDate: 'Oct 7, 2024',
+      date: '2024-10-11',
+      displayDate: 'Oct 11, 2024',
       variant: 'Color: Grey',
       title: 'Switched from another brand and couldn\'t be happier',
       body: 'After a disappointing experience with another major brand, I made the switch and couldn\'t be happier. It is lighter, quieter, and holds battery 4x longer. A new lifetime customer!',
@@ -901,8 +914,8 @@
       name: 'Thijs d. B.',
       country: 'Oxford, UK',
       rating: 5,
-      date: '2024-10-05',
-      displayDate: 'Oct 5, 2024',
+      date: '2024-10-09',
+      displayDate: 'Oct 9, 2024',
       variant: 'Color: Silver',
       title: 'Superb build quality and well-calibrated brushing modes',
       body: 'Delivered very quickly! The build quality is superb and I love the different calibrated mode settings. Clean, minimalist design that looks great on the counter. Highly recommend.',
@@ -915,8 +928,8 @@
       name: 'Eva de Jong',
       country: 'Cardiff, UK',
       rating: 5,
-      date: '2024-09-24',
-      displayDate: 'Sep 24, 2024',
+      date: '2024-09-28',
+      displayDate: 'Sep 28, 2024',
       variant: 'Color: Pink',
       title: 'First-class live customer support and fast resolution',
       body: 'When I had a question about replacement heads, live customer support assisted me immediately and kindly. The toothbrush itself is immaculate and Whitening mode lifted coffee stains within weeks.',
@@ -929,8 +942,8 @@
       name: 'Sophie Marshall',
       country: 'Bath, UK',
       rating: 5,
-      date: '2024-09-21',
-      displayDate: 'Sep 21, 2024',
+      date: '2024-09-25',
+      displayDate: 'Sep 25, 2024',
       variant: 'Color: Grey',
       title: 'Long battery endurance eliminates charging hassle',
       body: 'Just received my new toothbrush and I am very impressed. The long battery endurance means I can brush for weeks without ever having to worry about charging cables or cluttered bathroom sinks.',
@@ -943,8 +956,8 @@
       name: 'Sander White',
       country: 'York, UK',
       rating: 5,
-      date: '2024-09-08',
-      displayDate: 'Sep 8, 2024',
+      date: '2024-09-12',
+      displayDate: 'Sep 12, 2024',
       variant: 'Color: Silver',
       title: 'Remarkably smooth teeth without irritating gums',
       body: 'My teeth feel remarkably smooth after brushing, completely gentle on gums with zero irritation. The 30-second quad pacer ensures an even 2-minute clean every time.',
@@ -957,8 +970,8 @@
       name: 'Anna Walker',
       country: 'Newcastle, UK',
       rating: 5,
-      date: '2024-08-13',
-      displayDate: 'Aug 13, 2024',
+      date: '2024-08-17',
+      displayDate: 'Aug 17, 2024',
       variant: 'Color: Grey',
       title: 'Morning rush made easy — no more dead batteries',
       body: 'In the morning I am always rushing. My old toothbrush needed charging every week which was a constant nuisance. With this 60-day battery, that problem is finally solved for good.',
@@ -1365,7 +1378,7 @@
     };
 
     // Reference anchor date: Aug 21, 2026 (shifted by +190 days)
-    const baseTimestamp = new Date('2026-09-25T12:00:00Z').getTime();
+    const baseTimestamp = new Date('2026-09-29T12:00:00Z').getTime();
     let globalIndex = dataset.length + 1;
 
     // Helper to generate a unique date
@@ -1640,8 +1653,8 @@
   let currentFilterRating = null; // null = all
   let currentWithPhotos = false;
   let currentVerifiedOnly = false;
-  let currentVisibleCount = 12;
-  const PAGE_SIZE = 12;
+  let currentVisibleCount = 24;
+  const PAGE_SIZE = 24;
 
   // Active Lightbox State
   let activeLightboxReview = null;
@@ -1663,6 +1676,11 @@
 
   // Init Function
   function initProductReviews() {
+    const currentRoot = document.getElementById('miroooo-reviews-grid');
+    if (!currentRoot || currentRoot === initializedRoot) return dispose;
+    dispose();
+    initializedRoot = currentRoot;
+
     const root = document.getElementById('shopify-section-template--24203751129433__reviews') || document.getElementById('miroooo-reviews-grid') || document.querySelector('.miroooo-reviews-section');
     if (!root) return;
 
@@ -1685,13 +1703,13 @@
 
     let lastCols = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 768 ? 3 : 2);
     let resizeTimer = null;
-    window.addEventListener('resize', () => {
+    listen(window, 'resize', () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
         const currentCols = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 768 ? 3 : 2);
         if (currentCols !== lastCols) {
           lastCols = currentCols;
-          renderReviews(false);
+          if (gridEl?.isConnected) renderReviews(false);
         }
       }, 150);
     });
@@ -1738,7 +1756,7 @@
   function bindEvents() {
     // Breakdown Rows Filter
     breakdownRows.forEach(row => {
-      row.addEventListener('click', () => {
+      listen(row, 'click', () => {
         const star = parseInt(row.getAttribute('data-star'), 10);
         if (currentFilterRating === star) {
           setStarFilter(null);
@@ -1751,7 +1769,7 @@
     // Star Dropdown Trigger
     const starTrigger = document.getElementById('miroooo-star-trigger');
     if (starTrigger) {
-      starTrigger.addEventListener('click', (e) => {
+      listen(starTrigger, 'click', (e) => {
         e.stopPropagation();
         if (starDropdownEl) starDropdownEl.classList.toggle('open');
       });
@@ -1760,7 +1778,7 @@
     // Star Dropdown Items
     const starMenuItems = document.querySelectorAll('#miroooo-star-menu .miroooo-dropdown-item');
     starMenuItems.forEach(item => {
-      item.addEventListener('click', () => {
+      listen(item, 'click', () => {
         const val = item.getAttribute('data-value');
         setStarFilter(val === 'all' ? null : parseInt(val, 10));
         if (starDropdownEl) starDropdownEl.classList.remove('open');
@@ -1768,13 +1786,13 @@
     });
 
     // Close Dropdowns on Click Outside
-    document.addEventListener('click', () => {
+    listen(document, 'click', () => {
       if (starDropdownEl) starDropdownEl.classList.remove('open');
     });
 
     // Filter Toggle: Photos
     if (filterPhotosBtn) {
-      filterPhotosBtn.addEventListener('click', () => {
+      listen(filterPhotosBtn, 'click', () => {
         currentWithPhotos = !currentWithPhotos;
         filterPhotosBtn.classList.toggle('active', currentWithPhotos);
         filterPhotosBtn.setAttribute('aria-pressed', currentWithPhotos);
@@ -1785,7 +1803,7 @@
 
     // Filter Toggle: Verified
     if (filterVerifiedBtn) {
-      filterVerifiedBtn.addEventListener('click', () => {
+      listen(filterVerifiedBtn, 'click', () => {
         currentVerifiedOnly = !currentVerifiedOnly;
         filterVerifiedBtn.classList.toggle('active', currentVerifiedOnly);
         filterVerifiedBtn.setAttribute('aria-pressed', currentVerifiedOnly);
@@ -1796,20 +1814,20 @@
 
     // Reset Filter Button & Clear All Link
     if (resetFilterBtn) {
-      resetFilterBtn.addEventListener('click', resetAllFilters);
+      listen(resetFilterBtn, 'click', resetAllFilters);
     }
     const clearAllLink = document.getElementById('miroooo-clear-all-link');
     if (clearAllLink) {
-      clearAllLink.addEventListener('click', resetAllFilters);
+      listen(clearAllLink, 'click', resetAllFilters);
     }
     const emptyResetBtn = document.getElementById('miroooo-empty-reset-btn');
     if (emptyResetBtn) {
-      emptyResetBtn.addEventListener('click', resetAllFilters);
+      listen(emptyResetBtn, 'click', resetAllFilters);
     }
 
     // Load More Button
     if (loadMoreBtn) {
-      loadMoreBtn.addEventListener('click', () => {
+      listen(loadMoreBtn, 'click', () => {
         currentVisibleCount += PAGE_SIZE;
         renderReviews(false);
       });
@@ -1818,7 +1836,7 @@
     // Write Review Button
     const writeBtn = document.getElementById('miroooo-write-review-btn');
     if (writeBtn) {
-      writeBtn.addEventListener('click', openWriteModal);
+      listen(writeBtn, 'click', openWriteModal);
     }
 
     // Lightbox Events
@@ -2106,7 +2124,7 @@
     // 1. Helpful Upvote Button
     const helpfulBtns = gridEl.querySelectorAll('.miroooo-helpful-btn');
     helpfulBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      listen(btn, 'click', (e) => {
         e.stopPropagation();
         const reviewId = btn.getAttribute('data-review-id');
         const countSpan = btn.querySelector('.miroooo-helpful-count');
@@ -2127,7 +2145,7 @@
     // 2. Read More Button Trigger (Full Review Modal Expansion)
     const readMoreBtns = gridEl.querySelectorAll('.miroooo-read-more-btn');
     readMoreBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      listen(btn, 'click', (e) => {
         e.stopPropagation();
         const reviewId = btn.getAttribute('data-review-id');
         const review = currentList.find(r => String(r.id) === String(reviewId));
@@ -2139,7 +2157,7 @@
     // 3. Gallery Photo Lightbox Triggers
     const galleryContainers = gridEl.querySelectorAll('.miroooo-card-gallery');
     galleryContainers.forEach(container => {
-      container.addEventListener('click', (e) => {
+      listen(container, 'click', (e) => {
         e.stopPropagation();
         const reviewId = container.getAttribute('data-review-id');
         const review = currentList.find(r => String(r.id) === String(reviewId));
@@ -2158,7 +2176,7 @@
     // 4. Whole Review Card Click (Opens modal on card click)
     const cards = gridEl.querySelectorAll('.miroooo-review-card');
     cards.forEach(card => {
-      card.addEventListener('click', (e) => {
+      listen(card, 'click', (e) => {
         if (
           e.target.closest('.miroooo-helpful-btn') ||
           e.target.closest('.miroooo-read-more-btn') ||
@@ -2188,14 +2206,14 @@
     const closeBtn = document.getElementById('miroooo-lightbox-close');
     const helpfulBtn = document.getElementById('miroooo-lightbox-helpful-btn');
 
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    if (closeBtn) listen(closeBtn, 'click', closeLightbox);
 
-    modal.addEventListener('click', (e) => {
+    listen(modal, 'click', (e) => {
       if (e.target === modal) closeLightbox();
     });
 
     if (helpfulBtn) {
-      helpfulBtn.addEventListener('click', () => {
+      listen(helpfulBtn, 'click', () => {
         if (!activeLightboxReview) return;
         activeLightboxReview.helpful = (activeLightboxReview.helpful || 0) + 1;
         const countSpan = document.getElementById('miroooo-lightbox-helpful-count');
@@ -2205,7 +2223,7 @@
       });
     }
 
-    document.addEventListener('keydown', (e) => {
+    listen(document, 'keydown', (e) => {
       if (!modal.classList.contains('is-open')) return;
       if (e.key === 'Escape') closeLightbox();
     });
@@ -2333,11 +2351,11 @@
     const successBox = document.getElementById('miroooo-write-success');
     const successCloseBtn = document.getElementById('miroooo-success-close');
 
-    if (closeBtn) closeBtn.addEventListener('click', closeWriteModal);
-    if (cancelBtn) cancelBtn.addEventListener('click', closeWriteModal);
-    if (successCloseBtn) successCloseBtn.addEventListener('click', closeWriteModal);
+    if (closeBtn) listen(closeBtn, 'click', closeWriteModal);
+    if (cancelBtn) listen(cancelBtn, 'click', closeWriteModal);
+    if (successCloseBtn) listen(successCloseBtn, 'click', closeWriteModal);
 
-    modal.addEventListener('click', (e) => {
+    listen(modal, 'click', (e) => {
       if (e.target === modal) closeWriteModal();
     });
 
@@ -2345,7 +2363,7 @@
     starBtns.forEach(btn => {
       const rating = parseInt(btn.getAttribute('data-rating'), 10);
 
-      btn.addEventListener('mouseenter', () => {
+      listen(btn, 'mouseenter', () => {
         starBtns.forEach(b => {
           const r = parseInt(b.getAttribute('data-rating'), 10);
           b.classList.toggle('hover', r <= rating);
@@ -2353,7 +2371,7 @@
         if (ratingLabel) ratingLabel.textContent = ratingLabels[rating];
       });
 
-      btn.addEventListener('mouseleave', () => {
+      listen(btn, 'mouseleave', () => {
         starBtns.forEach(b => {
           b.classList.remove('hover');
           const r = parseInt(b.getAttribute('data-rating'), 10);
@@ -2362,7 +2380,7 @@
         if (ratingLabel) ratingLabel.textContent = ratingLabels[selectedFormRating];
       });
 
-      btn.addEventListener('click', () => {
+      listen(btn, 'click', () => {
         selectedFormRating = rating;
         starBtns.forEach(b => {
           const r = parseInt(b.getAttribute('data-rating'), 10);
@@ -2378,7 +2396,7 @@
     let uploadedImageURLs = [];
 
     if (fileInput && thumbsContainer) {
-      fileInput.addEventListener('change', () => {
+      listen(fileInput, 'change', () => {
         thumbsContainer.innerHTML = '';
         uploadedImageURLs = [];
         const files = Array.from(fileInput.files);
@@ -2395,7 +2413,7 @@
 
     // Form Submission
     if (form) {
-      form.addEventListener('submit', (e) => {
+      listen(form, 'submit', (e) => {
         e.preventDefault();
         const name = document.getElementById('miroooo-form-name')?.value.trim() || '';
         const email = document.getElementById('miroooo-form-email')?.value.trim() || '';
@@ -2484,18 +2502,7 @@
   }
 
   // Initialize on Idle / DOM Ready
-  function scheduleInit() {
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(initProductReviews, { timeout: 1500 });
-    } else {
-      setTimeout(initProductReviews, 50);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', scheduleInit);
-  } else {
-    scheduleInit();
-  }
-
+  window.initProductReviews = initProductReviews;
+  window.initMirooooReviews = initProductReviews;
+  window.disposeMirooooReviews = dispose;
 })();

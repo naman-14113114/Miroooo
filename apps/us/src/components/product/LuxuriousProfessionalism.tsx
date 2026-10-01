@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ViewportVideo } from '@/components/media/ViewportVideo';
 
 export function LuxuriousProfessionalism() {
   return (
@@ -8,7 +9,8 @@ export function LuxuriousProfessionalism() {
       id="shopify-section-template--miroooo-luxurious-professionalism"
       className="shopify-section"
       style={{
-        background: '#000000',
+        background: '#000000 !important',
+        backgroundColor: '#000000',
         color: '#ffffff',
         width: '100%',
         overflow: 'hidden',
@@ -16,20 +18,36 @@ export function LuxuriousProfessionalism() {
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
+      <style>{`
+        .luxurious-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          width: 100%;
+          background: #000000 !important;
+          align-items: stretch;
+        }
+        .luxurious-media {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 10;
+          overflow: hidden;
+          background: #000000 !important;
+        }
+        @media (min-width: 1024px) {
+          .luxurious-grid {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          .luxurious-media {
+            aspect-ratio: auto !important;
+            height: 100% !important;
+          }
+        }
+      `}</style>
       <div style={{ width: '100%', maxWidth: '1856px', margin: '0 auto' }}>
-        <div
-          className="luxurious-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            width: '100%',
-            background: '#000000',
-            alignItems: 'stretch',
-          }}
-        >
+        <div className="luxurious-grid">
           {/* Left Column: Video */}
-          <div className="luxurious-media" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: '#000000', minHeight: '380px' }}>
-            <video
+          <div className="luxurious-media">
+            <ViewportVideo
               id="luxurious-video"
               src="/assets_ref/x/miroooo-video-2s.mp4"
               autoPlay
@@ -38,7 +56,7 @@ export function LuxuriousProfessionalism() {
               playsInline
               preload="none"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000', pointerEvents: 'none' }}
-            ></video>
+            ></ViewportVideo>
           </div>
 
           {/* Right Column: Content & Typography */}
@@ -57,7 +75,7 @@ export function LuxuriousProfessionalism() {
           >
             <h2
               style={{
-                fontFamily: "'GFS Didot', 'Playfair Display', Georgia, serif",
+                fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
                 fontSize: 'clamp(1.75rem, 3.2vw, 2.75rem)',
                 fontWeight: 600,
                 letterSpacing: '0.05em',
@@ -74,7 +92,7 @@ export function LuxuriousProfessionalism() {
 
             <p
               style={{
-                fontFamily: "'GFS Didot', Georgia, serif",
+                fontFamily: "var(--font-didot), Georgia, serif",
                 fontSize: 'clamp(1rem, 1.25vw, 1.2rem)',
                 color: 'rgba(255, 255, 255, 0.75)',
                 lineHeight: 1.75,

@@ -2477,7 +2477,6 @@ body.nav-open .miroooo-sticky-cart-wrap {
   pointer-events: none !important;
   transform: translateY(calc(100% + 2rem)) !important;
 }
-}
 
 #hero-cta:hover .btn-text svg,
 #sticky-bar-cta-btn:hover .btn-text svg,
@@ -3476,4 +3475,1379 @@ div[class*="tawk"],
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
+}
+
+/* ==========================================================================
+   SORA-INSPIRED URGENCY OFFER BANNER (MIROOOO X2 / X1)
+   Theme: Crisp Light Grey Background, Pure Black Text, Micro-Interactions
+   ========================================================================== */
+#miroooo-x2-urgency-banner,
+.x2-urgency-banner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  background: #e6e6e6 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 14px !important;
+  padding: 12px 20px !important;
+  margin: 0 0 20px 0 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  position: relative !important;
+  z-index: 5 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  color: #000000 !important;
+  font-family: inherit !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+#miroooo-x2-urgency-banner:hover,
+.x2-urgency-banner:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+.x2-urgency-banner__left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.x2-urgency-banner__icon {
+  font-size: 22px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  animation: x2FirePulse 2.2s ease-in-out infinite !important;
+  transform-origin: center bottom !important;
+}
+
+@keyframes x2FirePulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.12) rotate(-3deg); }
+  50% { transform: scale(0.96) rotate(2deg); }
+  75% { transform: scale(1.08) rotate(-2deg); }
+}
+
+.x2-urgency-banner__text-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+.x2-urgency-banner__eyebrow {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  color: #666666 !important;
+  line-height: 1.2 !important;
+}
+
+.x2-urgency-banner__headline {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.x2-urgency-banner__right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  flex-shrink: 0 !important;
+}
+
+.x2-urgency-banner__applied {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 14px !important;
+  background: #000000 !important;
+  border: 1px solid #000000 !important;
+  border-radius: 9999px !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  user-select: none !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.05em !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.2s ease !important;
+}
+
+.x2-urgency-banner__applied:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+.x2-applied-icon {
+  width: 13px !important;
+  height: 13px !important;
+  max-width: 13px !important;
+  max-height: 13px !important;
+  min-width: 13px !important;
+  min-height: 13px !important;
+  color: #22c55e !important;
+  stroke: #22c55e !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+}
+
+.x2-applied-text {
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  color: #ffffff !important;
+}
+
+.x2-urgency-banner__timer-block {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  flex-shrink: 0 !important;
+  text-align: right !important;
+}
+
+.x2-timer-label {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #666666 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.x2-timer-digits {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.1 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* Responsive Adjustments for Urgency Banner */
+@media (max-width: 900px) {
+  #miroooo-x2-urgency-banner,
+  .x2-urgency-banner {
+    padding: 10px 16px !important;
+    gap: 12px !important;
+  }
+  .x2-urgency-banner__headline {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #miroooo-x2-urgency-banner,
+  .x2-urgency-banner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 11px 14px !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+    border-radius: 12px !important;
+  }
+  .x2-urgency-banner__left {
+    gap: 10px !important;
+  }
+  .x2-urgency-banner__icon {
+    font-size: 20px !important;
+  }
+  .x2-urgency-banner__eyebrow {
+    font-size: 9.5px !important;
+  }
+  .x2-urgency-banner__headline {
+    font-size: 13.5px !important;
+    white-space: normal !important;
+  }
+  .x2-urgency-banner__right {
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 10px !important;
+    padding-top: 6px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+  .x2-urgency-banner__applied {
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+  }
+  .x2-timer-digits {
+    font-size: 15.5px !important;
+  }
+}
+
+/* Fix Showcase Grid Badges & Rating (Top-Left Save 50%, Top-Right 4.9 Star) */
+.gb-product-card .badge--onsale {
+  position: absolute !important;
+  top: 14px !important;
+  left: 14px !important;
+  right: auto !important;
+  z-index: 3 !important;
+  background: #c0004a !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  padding: 6px 14px !important;
+  border-radius: 9999px !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+  box-shadow: 0 4px 12px rgba(192, 0, 74, 0.35) !important;
+}
+
+.gb-product-card .product-card__rating {
+  position: absolute !important;
+  top: 14px !important;
+  right: 14px !important;
+  left: auto !important;
+  z-index: 2 !important;
+  background: #ffffff !important;
+  color: #080909 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  padding: 5px 11px !important;
+  border-radius: 9999px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  line-height: 1 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   Miroooo X2 & X1 Juujo-Style Bundle Tiers & Free Gifts (Grey Luxury Theme #e6e6e6)
+   ========================================================================== */
+.bundle-tiers-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+}
+.bundle-tier-card {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 16px !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.12) !important;
+  background: #e6e6e6 !important;
+  color: #111111 !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+.bundle-tier-card:hover {
+  border-color: rgba(0, 0, 0, 0.35) !important;
+}
+.bundle-tier-card.is-selected {
+  border: 2px solid #000000 !important;
+  background: #e6e6e6 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+.bundle-tier-card .tier-header-btn {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 16px 18px !important;
+  width: 100% !important;
+  text-align: left !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  box-sizing: border-box !important;
+}
+.bundle-tier-card.has-top-badge .tier-header-btn {
+  padding-top: 24px !important;
+}
+.bundle-tier-card .tier-header-btn .text-right {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  text-align: right !important;
+  flex-shrink: 0 !important;
+}
+.bundle-tier-card[data-tier="bundle-2"] .tier-header-btn .text-right,
+.bundle-tier-card.has-top-badge:has(.tier-popular-badge-wrap) .tier-header-btn .text-right {
+  margin-top: 14px !important;
+}
+.bundle-tier-card .tier-radio {
+  margin-top: 2px !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid #666666 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  background: #ffffff !important;
+  box-sizing: border-box !important;
+}
+.bundle-tier-card .tier-radio-dot {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  transition: all 0.15s ease !important;
+  display: block !important;
+}
+.bundle-tier-card.is-selected .tier-radio {
+  border-color: #000000 !important;
+  background: #ffffff !important;
+}
+.bundle-tier-card.is-selected .tier-radio .tier-radio-dot {
+  background: #000000 !important;
+}
+.tier-badge-pill {
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 2.5px 8px !important;
+  border-radius: 9999px !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: #111111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Slanted Red Slash on Compare-At Prices */
+.price-compare-strike {
+  position: relative !important;
+  display: inline-block !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
+}
+.price-compare-strike::after {
+  content: "" !important;
+  position: absolute !important;
+  left: -2px !important;
+  right: -2px !important;
+  top: 50% !important;
+  height: 1.5px !important;
+  background-color: #ef4444 !important;
+  transform: translateY(-50%) rotate(-16deg) !important;
+  transform-origin: center !important;
+  pointer-events: none !important;
+}
+
+/* Most Popular Badge (CloudAlign Scallop Seal Style) */
+.tier-popular-badge-wrap,
+.badge-popular {
+  position: absolute !important;
+  top: -16px !important;
+  right: 0px !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+}
+.tier-popular-seal {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4)) !important;
+  transition: transform 0.2s ease !important;
+}
+.tier-popular-seal svg {
+  width: 84px !important;
+  height: 53px !important;
+}
+
+/* Best Value Badge (CloudAlign Green Banner Style) */
+.tier-best-value-wrap,
+.badge-value {
+  position: absolute !important;
+  top: -11px !important;
+  right: 10px !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+}
+.tier-best-value-ribbon,
+.badge-value .tier-best-value-ribbon {
+  border-radius: 4px !important;
+  background: #22c55e !important; /* Exact green tick color */
+  padding: 4px 10px !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+  line-height: 1.2 !important;
+}
+
+.tier-expanded-panel {
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-bottom-left-radius: 14px !important;
+  border-bottom-right-radius: 14px !important;
+  padding: 14px 18px 16px !important;
+  background: transparent !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+.brush-selection-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 4px 0 !important;
+}
+.brush-color-swatches {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* ==========================================================================
+   MellowSleep-Style Embedded Tier Gift Strip (Buy 2 & Buy 3 Cards)
+   ========================================================================== */
+
+/* Reset panel bottom border radius when followed by gift strip */
+.bundle-tier-card:has(.tier-gift-strip) .tier-expanded-panel {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  padding-bottom: 12px !important;
+}
+
+/* Dedicated Bottom Upsell / Free Gift Strip */
+.tier-gift-strip {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 10px 18px !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 0 0 14px 14px !important;
+  background: rgba(0, 0, 0, 0.035) !important;
+  transition: background 0.2s ease, transform 0.15s ease !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  cursor: pointer !important;
+}
+
+.tier-gift-strip:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+.tier-gift-strip:hover .tier-gift-strip-title {
+  text-decoration: underline !important;
+}
+
+.bundle-tier-card:hover .tier-gift-strip {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.bundle-tier-card.is-selected .tier-gift-strip {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-top-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Left Content: Gift Icon + Label */
+.tier-gift-strip-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+
+.tier-gift-strip-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  width: 16px !important;
+  height: 16px !important;
+  color: #15803d !important; /* Subtle dark green accent */
+}
+
+.tier-gift-strip-icon svg {
+  width: 15px !important;
+  height: 15px !important;
+  stroke-width: 2 !important;
+}
+
+.tier-gift-strip-title {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #222222 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Right Content: Strikethrough Value + Bold FREE Badge */
+.tier-gift-strip-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.tier-gift-original-price {
+  font-size: 11.5px !important;
+  color: #777777 !important;
+  text-decoration: line-through !important;
+  font-weight: 500 !important;
+}
+
+.tier-gift-free-badge {
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  color: #15803d !important; /* Vibrant conversion green */
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+/* Tier 1 Add-on Checkbox Strip */
+.tier-addon-strip {
+  cursor: pointer !important;
+}
+
+.tier-addon-checkbox-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.tier-addon-checkbox {
+  position: absolute !important;
+  inset: 0 !important;
+  opacity: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 2 !important;
+}
+
+.tier-addon-custom-check {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 4px !important;
+  border: 1.5px solid #555555 !important;
+  background: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.18s ease !important;
+  box-sizing: border-box !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+.tier-addon-custom-check svg {
+  width: 11px !important;
+  height: 11px !important;
+  stroke: #ffffff !important;
+  stroke-width: 3.5 !important;
+  opacity: 0 !important;
+  transform: scale(0.6) !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.tier-addon-checkbox:checked + .tier-addon-custom-check {
+  background: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.tier-addon-checkbox:checked + .tier-addon-custom-check svg {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+.tier-addon-price-tag {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #111111 !important;
+  letter-spacing: -0.01em !important;
+}
+
+@media (max-width: 480px) {
+  .tier-gift-strip {
+    padding: 9px 14px !important;
+    gap: 8px !important;
+  }
+
+  .tier-gift-strip-title {
+    font-size: 11.5px !important;
+  }
+
+  .tier-gift-strip-icon {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .tier-gift-strip-icon svg {
+    width: 13.5px !important;
+    height: 13.5px !important;
+  }
+
+  .tier-gift-original-price {
+    font-size: 10.5px !important;
+  }
+
+  .tier-gift-free-badge {
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .tier-gift-strip {
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+
+  .tier-gift-strip-left {
+    gap: 5px !important;
+  }
+
+  .tier-gift-strip-title {
+    font-size: 10.5px !important;
+    white-space: normal !important;
+  }
+
+  .tier-gift-original-price {
+    font-size: 10px !important;
+  }
+
+  .tier-gift-free-badge {
+    font-size: 10.5px !important;
+  }
+}
+
+/* Accordion Rotating Chevron */
+.product__accordion summary .icon-chevron {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.product__accordion[open] summary .icon-chevron,
+.product__accordion.active summary .icon-chevron {
+  transform: rotate(180deg) !important;
+}
+
+
+
+/* ==========================================================================
+   Miroooo X2 & X1 MinMun-Style Product Gallery (Dark Luxury Theme)
+   ========================================================================== */
+.miroooo-minmun-gallery {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 16px !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Thumbnail Column (Desktop: Left Vertical Strip) */
+.miroooo-gallery__nav-wrap {
+  flex: 0 0 84px !important;
+  width: 84px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+}
+
+.miroooo-gallery__nav {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  height: 440px !important;
+  max-height: 440px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE 10+ */
+  scroll-behavior: smooth !important;
+  padding: 2px 2px 2px 2px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.miroooo-gallery__nav::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Miroooo Dark Luxury Vertical Navigation Arrows */
+.miroooo-gallery__nav-arrow {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  background: rgba(14, 14, 14, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45) !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  z-index: 5 !important;
+}
+
+.miroooo-gallery__nav-arrow svg {
+  width: 16px !important;
+  height: 16px !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  transition: transform 0.2s ease !important;
+}
+
+.miroooo-gallery__nav-arrow:hover:not(:disabled):not(.is-disabled) {
+  background: #000000 !important;
+  border-color: #ffffff !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65) !important;
+}
+
+.miroooo-gallery__nav-arrow:active:not(:disabled):not(.is-disabled) {
+  transform: scale(0.94) !important;
+}
+
+.miroooo-gallery__nav-arrow:disabled,
+.miroooo-gallery__nav-arrow.is-disabled {
+  opacity: 0.22 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  transform: none !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.miroooo-gallery__thumb {
+  position: relative !important;
+  width: 80px !important;
+  height: 80px !important;
+  padding: 0 !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 10px !important;
+  background: #e6e6e6 !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+  opacity: 0.65 !important;
+  display: block !important;
+}
+
+.miroooo-gallery__thumb:hover {
+  opacity: 0.95 !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  transform: translateY(-1px) !important;
+}
+
+.miroooo-gallery__thumb.is-active {
+  opacity: 1 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.miroooo-gallery__thumb .thumb-inner {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  background: #e6e6e6 !important;
+}
+
+.miroooo-gallery__thumb img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  mix-blend-mode: multiply !important;
+  pointer-events: none !important;
+}
+
+/* Video Thumbnail */
+.miroooo-gallery__thumb[data-media-type="video"],
+.miroooo-gallery__thumb .thumb-video-inner {
+  background: #000000 !important;
+}
+
+.miroooo-gallery__thumb .thumb-video-inner img {
+  opacity: 0.55 !important;
+  mix-blend-mode: normal !important;
+}
+
+.thumb-play-icon {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  background: rgba(0, 0, 0, 0.65) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
+  pointer-events: none !important;
+}
+
+.thumb-play-icon svg {
+  width: 13px !important;
+  height: 13px !important;
+  margin-left: 2px !important;
+  fill: #ffffff !important;
+}
+
+/* Main Featured Media Stage (Right Side) */
+.miroooo-gallery__stage-wrap {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.miroooo-gallery__stage {
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background: #e6e6e6 !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2) !important;
+  cursor: url("/cursor-zoom-in.svg") 20 20, zoom-in !important;
+  user-select: none !important;
+  touch-action: pan-y !important;
+}
+
+.miroooo-gallery__slides {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.miroooo-gallery__slide {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #e6e6e6 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.25s ease, visibility 0.25s ease !important;
+  z-index: 1 !important;
+}
+
+.miroooo-gallery__slide.is-active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 2 !important;
+}
+
+.miroooo-gallery__slide > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  mix-blend-mode: multiply !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.miroooo-gallery__slide[data-media-type="video"],
+.miroooo-gallery__slide .video-wrapper {
+  background: #000000 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.miroooo-gallery__slide video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Miroooo X2 Product Gallery Direct-on-Image Editorial Typography */
+.miroooo-infographic-badge,
+.miroooo-infographic-overlay {
+  position: absolute !important;
+  z-index: 6 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  box-sizing: border-box !important;
+  max-width: 250px !important;
+  will-change: opacity, transform !important;
+}
+
+/* Left-aligned slides glide in smoothly from Left to Right */
+.miroooo-infographic-badge--top-left,
+.miroooo-infographic-overlay--top-left {
+  top: 26px !important;
+  left: 26px !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  max-width: 230px !important;
+  transform: translate3d(-36px, 0, 0) !important;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.miroooo-infographic-badge--bottom-left,
+.miroooo-infographic-overlay--bottom-left {
+  bottom: 26px !important;
+  left: 26px !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  max-width: 230px !important;
+  transform: translate3d(-36px, 0, 0) !important;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Right-aligned slides glide in smoothly from Right to Left */
+.miroooo-infographic-badge--top-right,
+.miroooo-infographic-overlay--top-right {
+  top: 58px !important;
+  right: 24px !important;
+  align-items: flex-end !important;
+  text-align: right !important;
+  max-width: 220px !important;
+  transform: translate3d(36px, 0, 0) !important;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.miroooo-infographic-badge--bottom-right,
+.miroooo-infographic-overlay--bottom-right {
+  bottom: 26px !important;
+  right: 24px !important;
+  align-items: flex-end !important;
+  text-align: right !important;
+  max-width: 220px !important;
+  transform: translate3d(36px, 0, 0) !important;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Active Slide & Lightbox Modal Smooth Entrance */
+.miroooo-gallery__slide.is-active .miroooo-infographic-badge,
+.miroooo-gallery__slide.is-active .miroooo-infographic-overlay,
+.miroooo-gallery-lightbox.is-open .miroooo-infographic-badge,
+.miroooo-gallery-lightbox.is-open .miroooo-infographic-overlay,
+.miroooo-gallery-lightbox__media-box .miroooo-infographic-badge,
+.miroooo-gallery-lightbox__media-box .miroooo-infographic-overlay,
+.miroooo-gallery-lightbox-media-box .miroooo-infographic-badge,
+.miroooo-gallery-lightbox-media-box .miroooo-infographic-overlay {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition-delay: 0.12s !important;
+}
+
+.miroooo-infographic-badge__header {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.miroooo-infographic-badge__dot {
+  display: none !important;
+}
+
+.miroooo-infographic-badge__title,
+.miroooo-infographic-overlay__title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  line-height: 1.18 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: uppercase !important;
+  color: #111111 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95), 0 0 12px rgba(255, 255, 255, 0.85) !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  margin: 0 !important;
+  display: block !important;
+}
+
+.miroooo-infographic-badge__sub,
+.miroooo-infographic-overlay__sub {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  letter-spacing: -0.01em !important;
+  color: #4b5563 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  margin: 0 !important;
+  margin-top: 2px !important;
+  display: block !important;
+  opacity: 0 !important;
+  transform: translate3d(-12px, 0, 0) !important;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.miroooo-infographic-badge--top-right .miroooo-infographic-badge__sub,
+.miroooo-infographic-overlay--top-right .miroooo-infographic-overlay__sub,
+.miroooo-infographic-badge--bottom-right .miroooo-infographic-badge__sub,
+.miroooo-infographic-overlay--bottom-right .miroooo-infographic-overlay__sub {
+  transform: translate3d(12px, 0, 0) !important;
+}
+
+.miroooo-gallery__slide.is-active .miroooo-infographic-badge__sub,
+.miroooo-gallery__slide.is-active .miroooo-infographic-overlay__sub,
+.miroooo-gallery-lightbox.is-open .miroooo-infographic-badge__sub,
+.miroooo-gallery-lightbox.is-open .miroooo-infographic-overlay__sub,
+.miroooo-gallery-lightbox__media-box .miroooo-infographic-badge__sub,
+.miroooo-gallery-lightbox__media-box .miroooo-infographic-overlay__sub,
+.miroooo-gallery-lightbox-media-box .miroooo-infographic-badge__sub,
+.miroooo-gallery-lightbox-media-box .miroooo-infographic-overlay__sub {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition-delay: 0.22s !important;
+}
+
+/* --- White Typography Variant (.miroooo-infographic-badge--white for Slide 4 & Slide 8) --- */
+.miroooo-infographic-badge--white .miroooo-infographic-badge__title,
+.miroooo-infographic-overlay--white .miroooo-infographic-overlay__title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85), 0 0 16px rgba(0, 0, 0, 0.75) !important;
+}
+
+.miroooo-infographic-badge--white .miroooo-infographic-badge__sub,
+.miroooo-infographic-overlay--white .miroooo-infographic-overlay__sub {
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Miroooo Infographic 3 Clean Modes List (Slide 12) */
+.miroooo-infographic-modes {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-top: 4px !important;
+  opacity: 0 !important;
+  transform: translate3d(-12px, 0, 0) !important;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: opacity, transform !important;
+}
+
+.miroooo-gallery__slide.is-active .miroooo-infographic-modes,
+.miroooo-gallery-lightbox.is-open .miroooo-infographic-modes,
+.miroooo-gallery-lightbox__media-box .miroooo-infographic-modes,
+.miroooo-gallery-lightbox-media-box .miroooo-infographic-modes {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition-delay: 0.22s !important;
+}
+
+.miroooo-infographic-mode-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  line-height: 1 !important;
+}
+
+/* Precision LED Halo Ring Bullet Points */
+.miroooo-infographic-mode-ring {
+  display: inline-block !important;
+  width: 11px !important;
+  height: 11px !important;
+  min-width: 11px !important;
+  min-height: 11px !important;
+  flex-shrink: 0 !important;
+  border-radius: 50% !important;
+  border: 2.5px solid currentColor !important;
+  background-color: transparent !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+  position: relative !important;
+}
+
+/* 1. Standard Mode: Purple Ring */
+.miroooo-infographic-mode-ring--purple {
+  color: #a855f7 !important;
+  border-color: #a855f7 !important;
+  background-color: rgba(168, 85, 247, 0.18) !important;
+  box-shadow: 0 0 7px rgba(168, 85, 247, 0.65), inset 0 0 2px rgba(168, 85, 247, 0.35) !important;
+}
+
+/* 2. Whitening Mode: Blue Ring */
+.miroooo-infographic-mode-ring--blue {
+  color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.18) !important;
+  box-shadow: 0 0 7px rgba(59, 130, 246, 0.65), inset 0 0 2px rgba(59, 130, 246, 0.35) !important;
+}
+
+/* 3. Deep Clean Mode: Green Ring */
+.miroooo-infographic-mode-ring--green {
+  color: #22c55e !important;
+  border-color: #22c55e !important;
+  background-color: rgba(34, 197, 94, 0.18) !important;
+  box-shadow: 0 0 7px rgba(34, 197, 94, 0.65), inset 0 0 2px rgba(34, 197, 94, 0.35) !important;
+}
+
+.miroooo-infographic-mode-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  color: #1f2937 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95), 0 0 10px rgba(255, 255, 255, 0.9) !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+}
+
+.miroooo-gallery__arrow {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 10 !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: rgba(14, 14, 14, 0.72) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45) !important;
+  padding: 0 !important;
+}
+
+.miroooo-gallery__arrow svg {
+  width: 22px !important;
+  height: 22px !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  transition: transform 0.2s ease !important;
+}
+
+.miroooo-gallery__arrow--prev {
+  left: 14px !important;
+}
+
+.miroooo-gallery__arrow--next {
+  right: 14px !important;
+}
+
+.miroooo-gallery__arrow:hover {
+  background: #000000 !important;
+  border-color: #ffffff !important;
+  transform: translateY(-50%) scale(1.08) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6) !important;
+}
+
+.miroooo-gallery__arrow:active {
+  transform: translateY(-50%) scale(0.96) !important;
+}
+
+/* Mobile & Tablet Layout (< 1024px) */
+@media screen and (max-width: 1023px) {
+  .miroooo-minmun-gallery {
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .miroooo-gallery__stage-wrap {
+    order: 1 !important;
+    width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+
+  .miroooo-gallery__nav-wrap {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .miroooo-gallery__nav-arrow {
+    display: none !important;
+  }
+
+  .miroooo-gallery__nav {
+    flex-direction: row !important;
+    height: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 8px !important;
+    padding: 2px 2px 6px 2px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+  }
+
+  .miroooo-gallery__thumb {
+    width: 68px !important;
+    height: 68px !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+  }
+
+  .miroooo-gallery__arrow {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .miroooo-gallery__arrow svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .miroooo-gallery__arrow--prev {
+    left: 8px !important;
+  }
+
+  .miroooo-gallery__arrow--next {
+    right: 8px !important;
+  }
+}
+
+
+
+/* UK TSX product grid: match the live GoBrush inline section rules. */
+#shopify-section-template--24203751129433__main-product {
+  padding-top: 40px !important;
+  margin-top: 0;
+}
+.bundle-tier-card:not(.is-selected) .tier-expanded-panel {
+  display: none !important;
+}
+#shopify-section-template--24203751129433__main-product .section {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+@media (min-width: 1024px) {
+  #shopify-section-template--24203751129433__main-product .page-width {
+    width: min(1344px, calc(100% - 96px));
+    padding-inline: 0 !important;
+    max-width: none;
+    margin-inline: auto;
+  }
+  #shopify-section-template--24203751129433__main-product {
+    --miroooo-product-column-gap: clamp(48px, 4.73vw, 92px);
+    --miroooo-gallery-rail-offset: 100px;
+  }
+  #shopify-section-template--24203751129433__main-product .featured-product.product {
+    display: grid !important;
+    grid-template-columns: minmax(0, calc((100% - var(--miroooo-product-column-gap) + var(--miroooo-gallery-rail-offset)) / 2)) minmax(0, calc((100% - var(--miroooo-product-column-gap) - var(--miroooo-gallery-rail-offset)) / 2)) !important;
+    column-gap: var(--miroooo-product-column-gap) !important;
+    align-items: start !important;
+  }
+  #shopify-section-template--24203751129433__main-product .product__gallery {
+    position: sticky !important;
+    top: clamp(20px, 2.5vw, 32px) !important;
+    align-self: start !important;
+    min-width: 0;
+  }
+  #shopify-section-template--24203751129433__main-product .product__info {
+    min-width: 0;
+  }
+}
+@media (max-width: 1023px) {
+  #shopify-section-template--24203751129433__main-product .page-width {
+    width: calc(100% - 40px) !important;
+    margin-inline: auto !important;
+    padding-inline: 0 !important;
+  }
+  #shopify-section-template--24203751129433__main-product .featured-product.product {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  #shopify-section-template--24203751129433__main-product .product__gallery,
+  #shopify-section-template--24203751129433__main-product .product__info {
+    position: static !important;
+    width: 100% !important;
+  }
+}
+/* Complete the source template's phone spacing after the shared theme rules. */
+@media (max-width: 1023px) {
+  #shopify-section-template--24203751129433__main-product { padding-top: 28px !important; }
+  .product-page-root .miroooo-gallery__nav { padding: 2px 2px 4px !important; }
+}
+
+@media (max-width: 1023px) {
+  .x2-product-page #shopify-section-template--24203751129433__main-product { padding-top: 35px !important; }
+  .x2-product-page .miroooo-gallery__nav { padding-bottom: 6px !important; }
+}
+
+/* Preserve the source tablet gap and distinct head-product desktop grid. */
+body:has(.product-page-root) .site-header,
+body:has(.product-page-root) .site-header__inner { background-color: #000 !important; }
+body:has(.product-page-root) .site-header .count { color: #000 !important; }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product-page-root #shopify-section-template--24203751129433__main-product { padding-top: 32px !important; }
+  .x2-product-page #shopify-section-template--24203751129433__main-product { padding-top: 40px !important; }
+  #shopify-section-template--24203751129433__main-product .featured-product.product { row-gap: 64px !important; }
+}
+@media (min-width: 1024px) {
+  .x1-product-page #shopify-section-template--24203751129433__main-product,
+  .heads-product-page #shopify-section-template--24203751129433__main-product { padding-top: 32px !important; }
+  .heads-product-page #shopify-section-template--24203751129433__main-product { --miroooo-product-column-gap: 42px; }
 }

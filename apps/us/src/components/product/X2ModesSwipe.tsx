@@ -75,138 +75,185 @@ export function X2ModesSwipe() {
   return (
     <div id="shopify-section-template--miroooo-x2-modes-swipe" className="shopify-section x2-modes-swipe-section">
       <style>{`
-        .x2-modes-swipe-section {
-          background-color: #000000;
-          color: #ffffff;
-          width: 100%;
-          overflow: visible;
-          position: relative;
-          box-sizing: border-box;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .x2-modes-swipe-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: clamp(24px, 4vw, 40px);
-          position: relative;
-          width: 100%;
-          box-sizing: border-box;
-        }
-        .x2-mode-card {
-          position: sticky;
-          top: clamp(80px, 12vh, 120px);
-          width: 100%;
-          box-sizing: border-box;
-          border-radius: clamp(20px, 3vw, 32px);
-          transition: transform 0.1s ease-out;
-          will-change: transform;
-        }
-        .x2-mode-card-clipper {
-          position: relative;
-          width: 100%;
-          border-radius: inherit;
-          overflow: hidden;
-          background: #0d0d0d;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px -10px var(--glow-color, rgba(255, 255, 255, 0.2));
-        }
-        .x2-mode-card-content {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          height: auto;
-          position: relative;
-          z-index: 1;
-        }
-        .x2-mode-card-glow {
-          position: absolute;
-          width: 300px;
-          height: 300px;
-          border-radius: 50%;
-          filter: blur(80px);
-          opacity: 0.22;
-          pointer-events: none;
-          z-index: 0;
-          background: var(--glow-color, #ffffff);
-        }
-        .x2-mode-card-glow--top-right {
-          top: -100px;
-          right: -100px;
-        }
-        .x2-mode-card-glow--bottom-left {
-          bottom: -100px;
-          left: -100px;
-        }
-        .x2-mode-card-inner {
-          padding: clamp(24px, 4vw, 48px);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          position: relative;
-          z-index: 2;
-          box-sizing: border-box;
-        }
-        .x2-mode-brand-title {
-          font-family: var(--font-body-family, 'Inter', sans-serif);
-          font-size: clamp(0.75rem, 1.2vw, 0.9rem);
-          font-weight: 700;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.6);
-          margin: 0 0 8px 0;
-        }
-        .x2-mode-main-title {
-          font-family: 'GFS Didot', 'Playfair Display', Georgia, serif;
-          font-size: clamp(1.8rem, 3.8vw, 3.2rem);
-          font-weight: 700;
-          letter-spacing: 0.02em;
-          text-transform: uppercase;
-          line-height: 1.1;
-          color: #ffffff;
-          margin: 0 0 16px 0;
-        }
-        .x2-mode-desc p {
-          font-family: var(--font-body-family, 'Inter', sans-serif);
-          font-size: clamp(0.95rem, 1.3vw, 1.15rem);
-          line-height: 1.6;
-          color: rgba(255, 255, 255, 0.85);
-          margin: 0;
-          max-width: 520px;
-        }
-        .x2-mode-card-media {
-          width: 100%;
-          position: relative;
-          z-index: 2;
-          aspect-ratio: 16 / 10;
-          overflow: hidden;
-          background: #000000;
-        }
-        .x2-mode-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-        @media screen and (min-width: 768px) {
-          .x2-mode-card-content {
-            flex-direction: row;
-            align-items: center;
-            height: clamp(420px, 45vw, 540px);
-          }
-          .x2-mode-card-inner {
-            width: 50%;
-            padding: clamp(36px, 4.5vw, 64px);
-          }
-          .x2-mode-card-media {
-            width: 50%;
-            height: 100%;
-            min-height: 100%;
-            aspect-ratio: auto;
-          }
-        }
-      `}</style>
+    /* ══════════════════════════════════════════════
+       X2 MODES STACKING SCROLL SECTION
+       ══════════════════════════════════════════════ */
+    #shopify-section-template--miroooo-x2-modes-swipe {
+      display: block !important;
+    }
+    #shopify-section-template--miroooo-brush-functions {
+      display: none !important;
+    }
+    .x2-modes-swipe-container {
+      width: 100%;
+      position: relative;
+      box-sizing: border-box;
+    }
+    .x2-modes-swipe-wrapper {
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(40px, 8vh, 80px);
+      padding-bottom: clamp(40px, 8vh, 80px);
+      box-sizing: border-box;
+    }
+    .x2-mode-card {
+      position: sticky;
+      top: clamp(70px, 10vh, 100px);
+      margin-bottom: clamp(40px, 8vh, 80px);
+      width: 100%;
+      will-change: transform;
+      transform-origin: center top;
+      z-index: var(--card-index);
+      box-sizing: border-box;
+    }
+    .x2-mode-card-clipper {
+      border-radius: clamp(22px, 3vw, 32px);
+      overflow: hidden;
+      background: #000000 !important;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      position: relative;
+      box-sizing: border-box;
+    }
+    .x2-mode-card-content {
+      position: relative;
+      background: #000000 !important;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      width: 100%;
+      min-height: clamp(380px, 52vh, 540px);
+      box-sizing: border-box;
+    }
 
-      <div className="x2-modes-swipe-container" style={{ maxWidth: '1440px', margin: '0 auto', padding: 'clamp(3rem, 5vw, 5rem) clamp(16px, 4vw, 40px)', boxSizing: 'border-box' } as React.CSSProperties}>
+    /* Glowing ambient ellipses */
+    .x2-mode-card-glow {
+      position: absolute;
+      width: clamp(240px, 35vw, 460px);
+      height: clamp(240px, 35vw, 460px);
+      background-color: var(--glow-color, #538bf6);
+      filter: blur(clamp(90px, 14vw, 175px));
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+      transform: translateZ(0);
+    }
+    .x2-mode-card-glow--top-right {
+      top: -12%;
+      right: -8%;
+    }
+    .x2-mode-card-glow--bottom-left {
+      bottom: -15%;
+      left: -10%;
+      opacity: 0.35;
+    }
+
+    /* Inner text content */
+    .x2-mode-card-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      row-gap: clamp(12px, 2vw, 24px);
+      width: 100%;
+      padding: clamp(28px, 4.5vw, 60px);
+      position: relative;
+      z-index: 2;
+      box-sizing: border-box;
+    }
+    .x2-mode-brand-title {
+      font-family: var(--font-body-family, var(--font-inter), sans-serif);
+      font-size: clamp(1.2rem, 1.8vw, 1.85rem);
+      font-weight: 400;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+      margin: 0;
+      line-height: 1.1;
+    }
+    .x2-mode-main-title {
+      font-family: 'Poppins', var(--font-heading-family, var(--font-inter), sans-serif);
+      font-size: clamp(1.85rem, 3.8vw, 3.4rem);
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0;
+      line-height: 1.05;
+    }
+    .x2-mode-desc {
+      margin-top: 4px;
+    }
+    .x2-mode-desc p {
+      font-family: var(--font-body-family, var(--font-inter), sans-serif);
+      font-size: clamp(1rem, 1.2vw, 1.18rem);
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.65;
+      max-width: 480px;
+      margin: 0;
+    }
+
+    /* Media right / image */
+    .x2-mode-card-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .x2-mode-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transform: translateZ(0);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .x2-mode-card:hover .x2-mode-img {
+      transform: scale(1.025) translateZ(0);
+    }
+
+    /* Desktop layout */
+    @media screen and (min-width: 768px) {
+      #shopify-section-template--miroooo-x2-modes-swipe {
+        background: #e6e6e6 !important;
+      }
+      .x2-mode-card-content {
+        flex-direction: row;
+        align-items: center;
+        min-height: clamp(480px, 56vh, 540px);
+        height: 520px;
+      }
+      .x2-mode-card-inner {
+        width: 50%;
+        padding: clamp(36px, 4.5vw, 64px);
+        box-sizing: border-box;
+      }
+      .x2-mode-card-media {
+        width: 50%;
+        height: 100%;
+        min-height: 100%;
+        aspect-ratio: auto;
+      }
+    }
+    @media screen and (min-width: 1200px) {
+      .x2-mode-card-content {
+        height: 540px;
+      }
+      .x2-mode-card-inner {
+        padding: 48px 64px;
+      }
+    }
+  `}</style>
+
+      <div className="x2-modes-swipe-container" style={{ maxWidth: '1440px', margin: '0 auto', padding: 'clamp(3rem, 5vw, 5rem) clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
         <div ref={wrapperRef} className="x2-modes-swipe-wrapper js-x2-modes-wrapper" style={{ '--numcards': 3 } as React.CSSProperties}>
           
           {/* Card 1: WHITENING MODE */}

@@ -41,18 +41,18 @@
       badgeText: "Recommended Routine Match",
       pillClass: "quiz-pill-badge",
       title: "Miroooo X2 Flagship",
-      subtitle: "Ultra-Lightweight 51g Aerospace Aluminum, 90+ Day Battery Life, Whisper-Quiet & Travel-Ready",
-      price: "$89.70",
-      priceNumber: 89.70,
-      comparePrice: "$180.70",
-      comparePriceNumber: 180.70,
+      subtitle: "Ultra-Lightweight 51g Aerospace Aluminium, 90+ Day Battery Life, Whisper-Quiet & Travel-Ready",
+      price: "£69",
+      priceNumber: 69,
+      comparePrice: "£139",
+      comparePriceNumber: 139,
       saveText: "SAVE 50%",
       image: PRODUCT_ASSETS.x2.silver,
       isBundle: false,
-      ctaText: "Add Miroooo X2 to Cart · $89.70",
+      ctaText: "Add Miroooo X2 to Cart · £69",
       bullets: [
         {
-          strong: "Ultra-Lightweight 51g Aerospace Aluminum:",
+          strong: "Ultra-Lightweight 51g Aerospace Aluminium:",
           text: "Featherweight precision unibody weighs less than half of bulky legacy electric toothbrushes for effortless control."
         },
         {
@@ -93,18 +93,18 @@
       badgeText: "Recommended Routine Match",
       pillClass: "quiz-pill-badge",
       title: "Miroooo X2 Flagship",
-      subtitle: "Ultra-Lightweight 51g Aerospace Aluminum, 90+ Day Battery Life, Whisper-Quiet & Enamel Polish",
-      price: "$89.70",
-      priceNumber: 89.70,
-      comparePrice: "$180.70",
-      comparePriceNumber: 180.70,
+      subtitle: "Ultra-Lightweight 51g Aerospace Aluminium, 90+ Day Battery Life, Whisper-Quiet & Enamel Polish",
+      price: "£69",
+      priceNumber: 69,
+      comparePrice: "£139",
+      comparePriceNumber: 139,
       saveText: "SAVE 50%",
       image: PRODUCT_ASSETS.x2.silver,
       isBundle: false,
-      ctaText: "Add Miroooo X2 to Cart · $89.70",
+      ctaText: "Add Miroooo X2 to Cart · £69",
       bullets: [
         {
-          strong: "Ultra-Lightweight 51g Aerospace Aluminum:",
+          strong: "Ultra-Lightweight 51g Aerospace Aluminium:",
           text: "Featherweight precision instrument balance gives exact control for targeted front-incisor polishing."
         },
         {
@@ -146,18 +146,18 @@
       pillClass: "quiz-pill-badge",
       title: "Miroooo X1 Essential",
       subtitle: "Ultralight 51g Acoustic Precision & 60-Day Travel Freedom",
-      price: "$76.70",
-      priceNumber: 76.70,
-      comparePrice: "$154.70",
-      comparePriceNumber: 154.70,
+      price: "£59",
+      priceNumber: 59,
+      comparePrice: "£119",
+      comparePriceNumber: 119,
       saveText: "SAVE 50%",
       image: PRODUCT_ASSETS.x1.silver,
       isBundle: false,
-      ctaText: "Add Miroooo X1 to Cart · $76.70",
+      ctaText: "Add Miroooo X1 to Cart · £59",
       bullets: [
         {
           strong: "51g Ultra-Featherweight Chassis:",
-          text: "Aerospace aluminum body weighs less than half of bulky legacy electric toothbrushes."
+          text: "Aerospace aluminium body weighs less than half of bulky legacy electric toothbrushes."
         },
         {
           strong: "60-Day Single Charge Freedom:",
@@ -198,18 +198,18 @@
       pillClass: "quiz-pill-badge",
       title: "Miroooo X2 Duo Bundle (Set of 2)",
       subtitle: "Complete 2-Person Precision Set + 2x Free DuPont Heads",
-      price: "$128.70",
-      priceNumber: 128.70,
-      comparePrice: "$278.00",
+      price: "£128",
+      priceNumber: 128,
+      comparePrice: "£278",
       comparePriceNumber: 278,
-      saveText: "SAVE $150 (54% OFF)",
+      saveText: "SAVE £150 (54% OFF)",
       image: PRODUCT_ASSETS.x2.silver,
       isBundle: true,
-      ctaText: "Add Duo Set + Free Heads to Cart · $128.70",
+      ctaText: "Add Duo Set + Free Heads to Cart · £128",
       bullets: [
         {
           strong: "2x Ultra-Lightweight 51g Aerospace Instruments:",
-          text: "Two aluminum unibody toothbrushes (Silver and Pink or Grey combinations) for two separate daily routines."
+          text: "Two aluminium unibody toothbrushes (Silver and Pink or Grey combinations) for two separate daily routines."
         },
         {
           strong: "Dual 90+ Day Battery Endurance:",
@@ -382,7 +382,7 @@
       // Update CTA text on Step 5
       const textSpan = btn.querySelector(".btn-text") || btn;
       if (state.currentStep === TOTAL_STEPS) {
-        textSpan.textContent = "See My Personalized Routine →";
+        textSpan.textContent = "See My Personalised Routine →";
       } else {
         textSpan.textContent = "Continue →";
       }
@@ -677,7 +677,7 @@
     if (titleEl) titleEl.textContent = profile.title;
 
     const headlineEl = $("#results-headline", resultsEl);
-    if (headlineEl) headlineEl.textContent = "Your Personalized " + profile.title + " Routine";
+    if (headlineEl) headlineEl.textContent = "Your Personalised " + profile.title + " Routine";
 
     const summaryEl = $("#results-summary", resultsEl);
     if (summaryEl) summaryEl.textContent = "Based on your preferences, we have matched a Miroooo model and a practical two-minute routine.";
