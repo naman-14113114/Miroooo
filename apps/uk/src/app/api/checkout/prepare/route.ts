@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- The existing checkout endpoint accepts several legacy request shapes. */
 import { NextResponse } from "next/server";
-import { createXpageCartCheckout, XPAGE_VARIANTS } from "@miroooo/shared";
+import { XPAGE_VARIANTS } from "@miroooo/shared";
 import { calculateTotals, normalizeCartItems } from "@/lib/cart";
-import { assertMatchingCheckoutQuote, CheckoutQuoteError } from "@/lib/checkout-quote";
+import { CheckoutQuoteError } from "@/lib/checkout-quote";
+import { prepareUKCheckout } from "@/lib/checkout";
 import { PRODUCTS } from "@/data/products";
 
 const corsHeaders = {
@@ -114,7 +115,7 @@ export async function POST(req: Request) {
           variantId: body.variantId,
           productId: body.productId,
           color: body.color,
-          quantity: Math.max(1, Math.round(Number(body.quantity) || 1)),
+          quantity: body.quantity === undefined ? 1 : Number(body.quantity),
         },
       ];
     }
@@ -141,12 +142,13 @@ export async function POST(req: Request) {
       const gift = normalizeCartItems([{ productHandle: handle, variantId: handle === 'miroooo-x2-heads' ? '1000020718937117' : '1000020710139724', quantity }], true)[0];
       canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
     }
-    await assertMatchingCheckoutQuote(canonicalCart, discountCode, totals.finalSubtotal);
-
-    const result = await createXpageCartCheckout({
+    const onlyBrushes = canonicalItems.every((item) => item.productHandle === 'miroooo-x' || item.productHandle === 'miroooo-x2');
+    const singlePromoBrush = Boolean(discountCode) && onlyBrushes && canonicalItems.reduce((sum, item) => sum + item.quantity, 0) === 1;
+    const result = await prepareUKCheckout({
       cart: canonicalCart,
       attribution,
-      currency: "GBP",
+      expectedGBP: totals.finalSubtotal,
+      useBundle: totals.unlockedGiftsCount > 0 || singlePromoBrush,
       discountCode: discountCode === "MIROOOO" ? "MIROOOO10" : discountCode,
     });
 
@@ -168,7 +170,7 @@ export async function POST(req: Request) {
     if (error instanceof CheckoutQuoteError) {
       return NextResponse.json({ ok: false, code: error.code, error: error.message }, { status: error.code === 'PRICE_MISMATCH' ? 409 : 503, headers: corsHeaders });
     }
-    console.error("XPage checkout preparation failed:", error);
+    console.error("XPage checkout preparation failed.");
     return NextResponse.json(
       { ok: false, code: 'QUOTE_UNAVAILABLE', error: "Secure checkout is temporarily unavailable. No order has been placed." },
       { status: 503, headers: corsHeaders }

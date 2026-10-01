@@ -222,6 +222,8 @@ export function CartPageContent() {
                       >
                         <img
                           src={upsellImage}
+                          width={72}
+                          height={72}
                           alt={`Miroooo ${model} Precision Replacement Heads 1 Set`}
                         />
                       </Link>

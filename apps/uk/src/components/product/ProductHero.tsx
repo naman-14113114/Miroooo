@@ -571,13 +571,13 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                                   id="gallery-featured-video"
                                   src={slide.videoSrc}
                                   poster={slide.poster}
-                                  autoPlay
+                                  autoPlay={activeMediaIndex === idx}
                                   loop
                                   muted
                                   playsInline
                                   disablePictureInPicture
                                   controlsList="nodownload nofullscreen noremoteplayback"
-                                  preload="auto"
+                                  preload={activeMediaIndex === idx ? 'auto' : 'none'}
                                 ></video>
                               </div>
                             ) : (
@@ -587,7 +587,8 @@ export function ProductHero({ product, initialColor = 'Silver', onColorChange }:
                                   alt={slide.alt}
                                   width="1000"
                                   height="1000"
-                                  fetchPriority="high"
+                                  fetchPriority={activeMediaIndex === idx ? 'high' : 'auto'}
+                                  loading={activeMediaIndex === idx ? 'eager' : 'lazy'}
                                   decoding="async"
                                 />
                                 {slide.badge && (

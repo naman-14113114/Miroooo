@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import { PRODUCTS } from '../src/data/products';
 import { calculateTotals, normalizeCartItems } from '../src/lib/cart';
 import { POST } from '../src/app/api/checkout/prepare/route';
+import { assertCheckoutOrderQuote } from '../src/lib/checkout';
 import { XPAGE_BUNDLES, XPAGE_STORE_URL, XPAGE_VARIANTS } from '@miroooo/shared';
 
 const x1Grey = { productHandle: 'miroooo-x', variantId: PRODUCTS['miroooo-x'].variants[0].id, color: 'Grey', quantity: 1 };
@@ -38,6 +39,20 @@ function request(items: object[], discountCode = '') {
   });
 }
 
+// Minimal captured XPage calculation structure, including its separate GBP rounding.
+function browserQuote(subtotal: number, discount = 0) {
+  return `<script>class ShippingHandler {
+    state = {taxRate: 0 * 1, taxApplies: true};
+    async updateShippingCost() {
+      const tip = this.state.tipHandler?.getTipAmount() ?? 0 * 1;
+      const taxableBase = ${subtotal} * 1 + currentRate * 1 - discount;
+      const total = Math.floor((taxableBase + tax + tip) * 100,);
+      new Intl.NumberFormat("en", {style: "currency", currency: "GBP"});
+    }
+  }
+  class DiscountCodeValidator {state = {appliedDiscount: ${discount} * 1};}</script>`;
+}
+
 test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', () => {
   for (const brush of [x1Grey, x2Grey]) {
     assert.equal(totals([brush]).finalSubtotal, 69);
@@ -63,62 +78,154 @@ test('persisted cart prices and identities are rebuilt from canonical UK product
   assert.deepEqual(normalizeCartItems([{ ...x1Grey, productHandle: 'unknown' }]), []);
 });
 
-test('UK checkout allows an exact live GBP single-brush quote', async () => {
+function mockStandardCheckout(options: { currency?: string; price?: number; unavailable?: boolean; unsafeUrl?: boolean; wrongQuantity?: boolean } = {}) {
   const oldFetch = globalThis.fetch;
-  let orders = 0;
-  globalThis.fetch = async (_input, init) => {
-    if (init?.method === 'POST') {
-      orders++;
-      return Response.json({ status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'a'.repeat(64)}` });
+  const submitted: Array<{ variant_id: string; quantity: number }> = [];
+  const calls: string[] = [];
+  globalThis.fetch = async (input, init) => {
+    const url = String(input);
+    calls.push(url);
+    if (options.unavailable) throw new Error('offline');
+    if (url.includes('/set-cart?')) {
+      assert.equal(new Headers(init?.headers).get('x-csrf-token'), 'test-token');
+      assert.match(new Headers(init?.headers).get('cookie') || '', /xp_currency=GBP/);
+      assert.ok(!new Headers(init?.headers).get('cookie')?.includes('xp_currency=USD'));
+      submitted.push(...JSON.parse(String(init?.body)).cart);
+      return Response.json({ status: 'success', checkout_url: options.unsafeUrl ? 'https://example.com/checkout' : `${XPAGE_STORE_URL}/checkout` });
     }
-    return new Response(mockPublishedOffer(1), { status: 200 });
+    if (new URL(url).pathname === '/checkout') {
+      return new Response(null, { status: 302, headers: { location: `https://offer.miroooo.us/${'c'.repeat(256)}/checkout/${'a'.repeat(64)}` } });
+    }
+    if (url.includes('/checkout')) {
+      const lines = submitted.map((line) => ({ quantity: line.quantity + (options.wrongQuantity ? 1 : 0),
+        price: options.price ?? ([XPAGE_VARIANTS.x1_heads, XPAGE_VARIANTS.x2_heads].includes(line.variant_id as typeof XPAGE_VARIANTS.x1_heads) ? 10 : 69),
+        variant: { id: line.variant_id } }));
+      const amount = lines.reduce((sum, line) => sum + line.price * line.quantity, 0);
+      return new Response(`<script>const tokenPath = '/checkout/${'a'.repeat(64)}'; const payload = {variants: ${JSON.stringify(lines)}}; new Intl.NumberFormat("en", {style:"currency", currency:"${options.currency || 'GBP'}"});</script><span class="total font-semibold">${options.currency === 'USD' ? '$' : '£'}${amount.toFixed(2)}</span>${browserQuote(amount)}`);
+    }
+    return new Response('<script>"X-CSRF-Token": "test-token"</script>', { headers: { 'set-cookie': 'xp_currency=USD; Path=/' } });
   };
-  try {
-    const response = await POST(request([x2Grey]));
-    const body = await response.json();
-    assert.equal(response.status, 200);
-    assert.equal(orders, 1);
-    assert.match(body.checkoutUrl, /^https:\/\/offer\.miroooo\.us\/checkout\//);
-  } finally { globalThis.fetch = oldFetch; }
-});
+  return { submitted, calls, restore: () => { globalThis.fetch = oldFetch; } };
+}
 
-test('legacy XPage variantIds shape resolves X1 to canonical UK checkout data', async () => {
-  const oldFetch = globalThis.fetch;
-  let orders = 0;
-  globalThis.fetch = async (_input, init) => {
-    if (init?.method === 'POST') {
-      orders++;
-      return Response.json({ status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}` });
-    }
-    return new Response(mockPublishedOffer(1, 69, 'x1'), { status: 200 });
-  };
+const head = (model: 'x1' | 'x2', quantity = 1) => ({ productHandle: `miroooo-${model}-heads`, variantId: PRODUCTS[`miroooo-${model}-heads`].variants[0].id, quantity });
+
+for (const [label, lines, amount] of [
+  ['X1 single', [x1Grey], 69], ['X2 single', [x2Grey], 69],
+  ['X1 heads', [head('x1')], 10], ['X2 heads', [head('x2', 3)], 30],
+  ['both head models', [head('x1', 2), head('x2', 4)], 60],
+  ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 276],
+  ['X2 five brushes', [{ ...x2Grey, quantity: 5 }], 345],
+  ['mixed brushes', [x1Grey, x2Grey], 138],
+  ['brush and paid heads', [x1Grey, head('x1')], 79],
+  ['two brushes plus paid heads outside bundle', [{ ...x2Grey, quantity: 2 }, head('x2')], 148],
+  ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x1')], 217],
+  ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 217],
+] as const) {
+  test(`ordinary checkout accepts ${label} at original item prices`, async () => {
+    const mock = mockStandardCheckout();
+    try {
+      const response = await POST(request([...lines]));
+      const body = await response.json();
+      assert.equal(response.status, 200, body.error);
+      assert.equal(body.offerType, 'standard_cart');
+      assert.equal(totals([...lines]).finalSubtotal, amount);
+      assert.equal(mock.submitted.reduce((sum, line) => sum + line.quantity, 0), lines.reduce((sum, line) => sum + line.quantity, 0));
+      assert.match(body.checkoutUrl, /^https:\/\/(x1|offer)\.miroooo\.us\/[a-z0-9]{256}\/checkout\/[a-f0-9]{64}\?currency=GBP$/);
+      assert.ok(mock.calls.every((url) => !url.includes('create-bundle-order')));
+    } finally { mock.restore(); }
+  });
+}
+
+test('legacy XPage variantIds resolves to a standard X1 cart', async () => {
+  const mock = mockStandardCheckout();
   try {
     const response = await POST(new Request('http://localhost/api/checkout/prepare', {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ variantIds: [XPAGE_VARIANTS.x1_grey] }),
+      method: 'POST', body: JSON.stringify({ variantIds: [XPAGE_VARIANTS.x1_grey] }),
     }));
     const body = await response.json();
-    assert.equal(response.status, 200);
-    assert.equal(orders, 1);
+    assert.equal(response.status, 200, body.error);
     assert.equal(body.cart[0].variant_id, XPAGE_VARIANTS.x1_grey);
-  } finally { globalThis.fetch = oldFetch; }
+  } finally { mock.restore(); }
 });
 
-test('UK checkout blocks a published bundle penny mismatch without creating an order', async () => {
-  const oldFetch = globalThis.fetch;
-  let orders = 0;
-  globalThis.fetch = async (_input, init) => {
-    if (init?.method === 'POST') orders++;
-    return new Response(mockPublishedOffer(2), { status: 200 });
-  };
+for (const [label, options, code, status] of [
+  ['changed product price', { price: 70 }, 'PRICE_MISMATCH', 409],
+  ['USD handoff despite GBP server session', { currency: 'USD' }, 'QUOTE_UNAVAILABLE', 503],
+  ['provider offline', { unavailable: true }, 'QUOTE_UNAVAILABLE', 503],
+  ['unsafe checkout destination', { unsafeUrl: true }, 'QUOTE_UNAVAILABLE', 503],
+  ['different order quantities', { wrongQuantity: true }, 'QUOTE_UNAVAILABLE', 503],
+] as const) {
+  test(`ordinary checkout blocks ${label}`, async () => {
+    const mock = mockStandardCheckout(options);
+    try {
+      const response = await POST(request([x1Grey]));
+      const body = await response.json();
+      assert.equal(response.status, status);
+      assert.equal(body.code, code);
+      assert.equal(body.checkoutUrl, undefined);
+      assert.ok(mock.calls.every((url) => !url.startsWith('https://example.com')));
+    } finally { mock.restore(); }
+  });
+}
+
+test('unapplied standard-cart promo cannot silently redirect at full price', async () => {
+  const mock = mockStandardCheckout();
   try {
-    const response = await POST(request([{ ...x2Grey, quantity: 2 }]));
+    const response = await POST(request([{ ...x1Grey, quantity: 4 }], 'MIROOOO10'));
     const body = await response.json();
     assert.equal(response.status, 409);
     assert.equal(body.code, 'PRICE_MISMATCH');
-    assert.match(body.error, /£128\.00.*£128\.01/);
-    assert.equal(orders, 0);
-  } finally { globalThis.fetch = oldFetch; }
+    assert.equal(body.checkoutUrl, undefined);
+  } finally { mock.restore(); }
+});
+
+test('invalid quantities and variants are rejected without calling XPage', async () => {
+  const mock = mockStandardCheckout();
+  try {
+    for (const item of [{ ...x1Grey, quantity: 0 }, { ...x1Grey, quantity: 1.5 }, { ...x1Grey, quantity: 100 }, { ...x1Grey, variantId: 'unknown' }]) {
+      const response = await POST(request([item]));
+      assert.equal(response.status, 400);
+    }
+    assert.equal(mock.calls.length, 0);
+  } finally { mock.restore(); }
+});
+
+for (const actualTotal of [128, 128.01]) {
+  test(`bundle validation uses actual £${actualTotal} checkout, not published percentage estimate`, async () => {
+    const oldFetch = globalThis.fetch;
+    let orders = 0;
+    globalThis.fetch = async (input, init) => {
+      if (init?.method === 'POST') {
+        orders++;
+        return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
+      }
+      if (String(input).includes('/checkout/')) {
+        const rows = [{quantity: 2, price: 69, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 1, price: 10, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+        return new Response(`<span class="total font-semibold">£${actualTotal.toFixed(2)}</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(148, 20)}`);
+      }
+      return new Response(mockPublishedOffer(2));
+    };
+    try {
+      const response = await POST(request([{ ...x2Grey, quantity: 2 }]));
+      const body = await response.json();
+      assert.equal(response.status, actualTotal === 128 ? 200 : 409, body.error);
+      assert.equal(orders, 1);
+      if (actualTotal !== 128) {
+        assert.equal(body.code, 'PRICE_MISMATCH');
+        assert.equal(body.checkoutUrl, undefined);
+      } else assert.equal(body.offerType, 'native_bundle');
+    } finally { globalThis.fetch = oldFetch; }
+  });
+}
+
+test('checkout blocks the live triple rounding regression after XPage scripts initialise', () => {
+  const lines = [{quantity: 3, price: 69, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 2, price: 10, variant: {id: XPAGE_VARIANTS.x1_heads}}];
+  const cart = lines.map((line) => ({variant_id: line.variant.id, quantity: line.quantity}));
+  const html = `<span class="total">£177.00</span><script>const order = {variants: ${JSON.stringify(lines)}};</script>`;
+  assert.throws(() => assertCheckoutOrderQuote(html + browserQuote(226, 50), cart, 177),
+    {code: 'PRICE_MISMATCH', message: /live checkout offer is £176\.00/});
+  assert.throws(() => assertCheckoutOrderQuote(html, cart, 177), {code: 'QUOTE_UNAVAILABLE'});
 });
 
 test('UK checkout blocks an unavailable provider quote', async () => {

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ViewportVideo } from '@/components/media/ViewportVideo';
 
 export function DiscoverOralHygiene() {
   return (
@@ -131,7 +132,7 @@ export function DiscoverOralHygiene() {
 
           {/* Right Column: Demo Video */}
           <div className="oral-hygiene-media">
-            <video
+            <ViewportVideo
               id="oral-hygiene-video"
               src="/assets_ref/x/miroooo-video-3.mp4"
               autoPlay
@@ -140,7 +141,7 @@ export function DiscoverOralHygiene() {
               playsInline
               preload="none"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000', pointerEvents: 'none' }}
-            ></video>
+            ></ViewportVideo>
           </div>
         </div>
       </div>

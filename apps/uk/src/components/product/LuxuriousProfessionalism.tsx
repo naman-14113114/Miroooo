@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ViewportVideo } from '@/components/media/ViewportVideo';
 
 export function LuxuriousProfessionalism() {
   return (
@@ -46,7 +47,7 @@ export function LuxuriousProfessionalism() {
         <div className="luxurious-grid">
           {/* Left Column: Video */}
           <div className="luxurious-media">
-            <video
+            <ViewportVideo
               id="luxurious-video"
               src="/assets_ref/x/miroooo-video-2s.mp4"
               autoPlay
@@ -55,7 +56,7 @@ export function LuxuriousProfessionalism() {
               playsInline
               preload="none"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000', pointerEvents: 'none' }}
-            ></video>
+            ></ViewportVideo>
           </div>
 
           {/* Right Column: Content & Typography */}

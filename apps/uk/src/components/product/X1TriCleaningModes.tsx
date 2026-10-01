@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ViewportVideo } from '@/components/media/ViewportVideo';
 
 export function X1TriCleaningModes() {
   return (
@@ -97,7 +98,7 @@ export function X1TriCleaningModes() {
         <div className="video-mode-frame-grid">
           {/* Video Column (Left on Desktop, Top on Mobile) */}
           <div className="video-mode-col-video">
-            <video
+            <ViewportVideo
               id="mode-360-video"
               autoPlay
               loop
@@ -105,7 +106,7 @@ export function X1TriCleaningModes() {
               playsInline
               preload="none"
               src="/assets_ref/x/miroooo-x-360-view.mp4"
-            ></video>
+            ></ViewportVideo>
           </div>
 
           {/* Text Column (Right on Desktop, Bottom on Mobile) */}

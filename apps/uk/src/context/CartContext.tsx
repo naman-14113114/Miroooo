@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { CartItem, CartTotals, calculateTotals, normalizeCartItems, VALID_PROMO_CODES } from '@/lib/cart';
 import { PRODUCTS } from '@/data/products';
 
@@ -39,6 +39,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
+  const checkoutRequest = useRef<AbortController | null>(null);
+  const invalidateCheckout = useCallback(() => {
+    checkoutRequest.current?.abort();
+    checkoutRequest.current = null;
+    setIsCheckoutLoading(false);
+    setCheckoutError(null);
+  }, []);
+
+  useEffect(() => () => checkoutRequest.current?.abort(), []);
 
   // Load cart state from localStorage on initial mount
   useEffect(() => {
@@ -138,6 +147,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const totals = useMemo(() => calculateTotals(items, appliedPromoCodes), [items, appliedPromoCodes]);
 
   const addItem = useCallback((itemData: Partial<CartItem> & { productHandle: string }) => {
+    invalidateCheckout();
     const product = PRODUCTS[itemData.productHandle] || PRODUCTS['miroooo-x2'];
     const color = itemData.color || 'Silver';
     const variant = product.variants.find((v) => v.color.toLowerCase() === color.toLowerCase()) || product.variants[0];
@@ -176,9 +186,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...currentItems, newItem];
     });
 
-  }, []);
+  }, [invalidateCheckout]);
 
   const addBundle = useCallback((productHandle: string, quantity: 1 | 2 | 3, colors: string[]) => {
+    invalidateCheckout();
     const product = PRODUCTS[productHandle] || PRODUCTS['miroooo-x2'];
     const isBrush = productHandle === 'miroooo-x2' || productHandle === 'miroooo-x';
 
@@ -214,26 +225,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...withoutProduct, ...newItems];
     });
 
-  }, []);
+  }, [invalidateCheckout]);
 
   const updateQuantity = useCallback((id: string, quantity: number) => {
+    invalidateCheckout();
     setItems((currentItems) => {
       if (quantity <= 0) {
         return currentItems.filter((i) => i.id !== id);
       }
       return currentItems.map((i) => (i.id === id ? { ...i, quantity } : i));
     });
-  }, []);
+  }, [invalidateCheckout]);
 
   const removeItem = useCallback((id: string) => {
+    invalidateCheckout();
     setItems((currentItems) => currentItems.filter((i) => i.id !== id));
-  }, []);
+  }, [invalidateCheckout]);
 
   const applyPromoCode = useCallback((code: string) => {
     const formatted = code.trim().toUpperCase();
     if (!formatted) return { success: false, message: 'Please enter a promo code.' };
 
     if (VALID_PROMO_CODES.includes(formatted)) {
+      invalidateCheckout();
       setAppliedPromoCodes((current) => {
         const filtered = current.filter((c) => !VALID_PROMO_CODES.includes(c));
         return [...filtered, formatted];
@@ -242,11 +256,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
 
     return { success: false, message: 'Invalid promo code.' };
-  }, []);
+  }, [invalidateCheckout]);
 
   const removePromoCode = useCallback((code: string) => {
+    invalidateCheckout();
     setAppliedPromoCodes((current) => current.filter((c) => c !== code));
-  }, []);
+  }, [invalidateCheckout]);
 
   const saveGiftMessage = useCallback((msg: string) => {
     const trimmed = msg.trim();
@@ -263,7 +278,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const toggleCart = useCallback(() => setIsOpen((prev) => !prev), []);
 
   const proceedToCheckout = useCallback(async () => {
-    if (items.length === 0 || isCheckoutLoading) return;
+    if (items.length === 0 || checkoutRequest.current) return;
+    const controller = new AbortController();
+    checkoutRequest.current = controller;
 
     setIsCheckoutLoading(true);
     setCheckoutError(null);
@@ -333,6 +350,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const validDiscountCodes = appliedPromoCodes.filter((c) => VALID_PROMO_CODES.includes(c));
 
       const prepRes = await fetch('/api/checkout/prepare', {
+        signal: controller.signal,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -344,18 +362,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       });
 
       const data = await prepRes.json().catch(() => null);
+      if (checkoutRequest.current !== controller) return;
       if (prepRes.ok && data?.checkoutUrl) {
         window.location.href = data.checkoutUrl;
         return;
       }
       setCheckoutError(data?.error || 'Secure checkout is temporarily unavailable. Please try again.');
     } catch (err) {
+      if (checkoutRequest.current !== controller) return;
       console.error('Checkout error:', err);
       setCheckoutError('Unable to connect to checkout. Please try again.');
     } finally {
-      setIsCheckoutLoading(false);
+      if (checkoutRequest.current === controller) {
+        checkoutRequest.current = null;
+        setIsCheckoutLoading(false);
+      }
     }
-  }, [items, isCheckoutLoading, totals, appliedPromoCodes]);
+  }, [items, totals, appliedPromoCodes]);
 
   return (
     <CartContext.Provider

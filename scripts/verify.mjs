@@ -45,7 +45,12 @@ for (const value of ['normalizeCartItems', 'Math.round(brushSubtotal * 0.1)', 'x
   check(cart.includes(value), `Canonical cart rule: ${value}`);
 }
 const checkout = read('apps/uk/src/app/api/checkout/prepare/route.ts');
-check(checkout.includes('assertMatchingCheckoutQuote'), 'UK checkout compares the live GBP offer');
+const checkoutAdapter = read('apps/uk/src/lib/checkout.ts');
+check(checkout.includes('prepareUKCheckout') && checkoutAdapter.includes('assertCheckoutOrderQuote'), 'UK checkout compares the generated live GBP order');
+for (const clip of ['V5', 'miroooo-8', 'V4', 'miroooo-6', 'miroooo-5', 'V2']) {
+  const poster = join(publicRoot, 'assets_ref/x/reels', `${clip}-poster.webp`);
+  check(existsSync(poster) && statSync(poster).size > 0, `UK reel poster: ${clip}`);
+}
 check(checkout.includes('PRICE_MISMATCH'), 'UK checkout reports price mismatch');
 check(read('apps/uk/src/context/CartContext.tsx').includes('setCheckoutError'), 'UK cart displays checkout failures');
 check(read('apps/uk/src/styles/globals.css').includes('@import "tailwindcss"'), 'UK Tailwind stylesheet configured');

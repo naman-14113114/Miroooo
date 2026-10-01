@@ -6,13 +6,11 @@ export class CheckoutQuoteError extends Error {
   }
 }
 
-const cents = (value: number) => Math.round((value + Number.EPSILON) * 100);
-
-/** Check the live published GBP XPage option before a checkout URL can be returned. */
-export async function assertMatchingCheckoutQuote(cart: unknown[], discountCode: string, expectedGBP: number) {
+/** Validate a live bundle selection; the generated checkout determines its actual converted total. */
+export async function loadPublishedCheckoutOffer(cart: unknown[], discountCode: string) {
   const selected = detectBundlePayload(cart, discountCode);
   if (!selected) {
-    throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'We cannot verify the live checkout price for this cart. Please try a single brush or a listed bundle.');
+    throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The selected bundle is unavailable. Please try again later.');
   }
   const product = selected.product as 'x1' | 'x2';
   let session;
@@ -27,35 +25,24 @@ export async function assertMatchingCheckoutQuote(cart: unknown[], discountCode:
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live GBP checkout offer is unavailable. Please try again later.');
   }
 
-  const brushPrices = selected.brushes.map((id: string) => {
+  selected.brushes.forEach((id: string) => {
     const variant = condition.product.variants?.find((item: { id: string; is_visible: boolean }) => item.id === id && item.is_visible);
-    if (!variant || !Number.isFinite(Number(variant.price))) {
+    if (!variant || !Number.isFinite(Number(variant.price)) || Number(variant.price) < 0) {
       throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The selected brush has no live GBP checkout quote.');
     }
-    return Number(variant.price);
   });
   const discount = Number(option.discount_amount || 0);
   if (!Number.isFinite(discount) || discount < 0 || discount > 100 ||
       (option.discount_type && option.discount_type !== 'PERCENTAGE')) {
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live GBP discount could not be verified.');
   }
-  // Published XPage options discount the condition brushes; offered heads have their own discount.
-  const brushesGBP = brushPrices.reduce((sum: number, price: number) => sum + price, 0) * (1 - discount / 100);
-  let headsGBP = 0;
   if (selected.offeredQty > 0) {
     const offered = option.offered?.find((item: { quantity: number }) => item.quantity === selected.offeredQty);
     const head = offered?.product?.variants?.find((item: { id: string; is_visible: boolean }) => item.id === selected.headsVariant && item.is_visible);
     const headDiscount = Number(offered?.discount_amount);
-    if (!head || offered?.discount_type !== 'PERCENTAGE' || !Number.isFinite(headDiscount) || headDiscount < 0 || headDiscount > 100) {
+    if (!head || offered?.product?.status !== 'ACTIVE' || !Number.isFinite(Number(head.price)) || Number(head.price) < 0 || offered?.discount_type !== 'PERCENTAGE' || !Number.isFinite(headDiscount) || headDiscount < 0 || headDiscount > 100) {
       throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live GBP head offer could not be verified.');
     }
-    headsGBP = Number(head.price) * selected.offeredQty * (1 - headDiscount / 100);
   }
-  const quotedCents = cents(brushesGBP + headsGBP);
-  if (quotedCents !== cents(expectedGBP)) {
-    throw new CheckoutQuoteError(
-      'PRICE_MISMATCH',
-      `Checkout is paused: your cart shows £${expectedGBP.toFixed(2)}, but the live checkout offer is £${(quotedCents / 100).toFixed(2)}. No order has been placed.`
-    );
-  }
+  return { session, selected, option, condition };
 }

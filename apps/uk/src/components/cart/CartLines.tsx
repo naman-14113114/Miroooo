@@ -66,7 +66,7 @@ export function CartLines({
               className="cart-line-item__media-link"
               aria-label={`View ${item.title}`}
             >
-              <img src={item.image} alt={item.title} />
+              <img src={item.image} alt={item.title} width={112} height={112} />
             </Link>
           </div>
           <div

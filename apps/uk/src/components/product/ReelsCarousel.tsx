@@ -18,15 +18,33 @@ export function ReelsCarousel() {
   const { trackRef: carouselRef, selected: selectedIndex, select: selectReel } = useLoopingCarousel(reelSources.length, 5000, true);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const [unmutedIndex, setUnmutedIndex] = useState<number | null>(null);
+  const [isNearby, setIsNearby] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const track = carouselRef.current;
+    if (!track) return;
+    // Prepare upcoming clips before arrival, without downloading all 18 copies.
+    const prepare = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsNearby(true);
+        prepare.disconnect();
+      }
+    }, { rootMargin: '1800px 0px' });
+    const visibility = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting));
+    prepare.observe(track);
+    visibility.observe(track);
+    return () => { prepare.disconnect(); visibility.disconnect(); };
+  }, [carouselRef]);
 
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
       video.muted = index !== unmutedIndex;
-      if (index === selectedIndex) video.play().catch(() => {});
+      if (isVisible && index === selectedIndex) video.play().catch(() => {});
       else video.pause();
     });
-  }, [selectedIndex, unmutedIndex]);
+  }, [selectedIndex, unmutedIndex, isVisible]);
 
   const toggleSound = (index: number) => {
     const video = videoRefs.current[index];
@@ -50,10 +68,13 @@ export function ReelsCarousel() {
                 ref={(element) => { videoRefs.current[index] = element; }}
                 className="reels-video"
                 src={src}
+                poster={src.replace('.mp4', '-poster.webp')}
                 loop
                 muted
                 playsInline
-                preload="none"
+                preload={isNearby && (index === selectedIndex || index === selectedIndex + 1 || (isVisible && index === selectedIndex - 1))
+                  ? 'auto'
+                  : index >= reelSources.length && index < reelSources.length * 2 ? 'metadata' : 'none'}
               />
               <button
                 className={`reels-sound-btn ${unmutedIndex === index ? 'is-unmuted' : ''}`}
