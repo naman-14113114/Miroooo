@@ -4840,7 +4840,8 @@ div[class*="tawk"],
 /* Preserve the source tablet gap and distinct head-product desktop grid. */
 body:has(.product-page-root) .site-header,
 body:has(.product-page-root) .site-header__inner { background-color: #000 !important; }
-body:has(.product-page-root) .site-header .count { color: #000 !important; }
+body:has(.product-page-root) .site-header .count,
+body:has(.product-page-root) .site-header .cart-count { background: #ffffff !important; color: #000000 !important; }
 @media (min-width: 768px) and (max-width: 1023px) {
   .product-page-root #shopify-section-template--24203751129433__main-product { padding-top: 32px !important; }
   .x2-product-page #shopify-section-template--24203751129433__main-product { padding-top: 40px !important; }
