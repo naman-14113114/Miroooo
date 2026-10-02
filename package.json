@@ -18,7 +18,8 @@
     "lint:us": "pnpm --filter @miroooo/us lint",
     "typecheck": "turbo typecheck",
     "verify": "node scripts/verify.mjs",
-    "verify:us": "node scripts/verify-us.mjs"
+    "verify:us": "node scripts/verify-us.mjs",
+    "update-reviews": "node update-review-dates.js"
   },
   "devDependencies": {
     "turbo": "2.8.6",
