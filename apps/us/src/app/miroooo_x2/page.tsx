@@ -18,5 +18,5 @@ export default async function Page(props: {
   searchParams?: Promise<{ color?: string }>;
 }) {
   const searchParams = props.searchParams ? await props.searchParams : undefined;
-  return <ProductPage key={searchParams?.color || "default"} handle="miroooo-x2" searchParams={searchParams} isSimpleBuybox={false} />;
+  return <ProductPage key={searchParams?.color || "default"} handle="miroooo-x2" searchParams={searchParams} isSimpleBuybox={true} />;
 }

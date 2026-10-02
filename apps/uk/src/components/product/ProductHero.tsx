@@ -43,7 +43,7 @@ export function ProductHero({
 
   // Active color & tier state
   const [selectedColor, setSelectedColor] = useState<string>(initialColor);
-  const [selectedTier, setSelectedTier] = useState<'single' | 'bundle-2' | 'bundle-3'>('bundle-2');
+  const [selectedTier, setSelectedTier] = useState<'single' | 'bundle-2' | 'bundle-3'>('single');
   const [quantity, setQuantity] = useState(1);
 
   // Color choices per tier

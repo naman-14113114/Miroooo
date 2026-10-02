@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
     return [
       // Product legacy paths
       { source: "/miroooo-x", destination: "/products/miroooo-x", permanent: true },
+      { source: "/miroooo-x1", destination: "/products/miroooo-x", permanent: true },
+      { source: "/products/miroooo-x1", destination: "/products/miroooo-x", permanent: true },
       { source: "/miroooo-x2", destination: "/products/miroooo-x2", permanent: true },
       { source: "/miroooo-x1-heads", destination: "/products/miroooo-x1-heads", permanent: true },
       { source: "/miroooo-x2-heads", destination: "/products/miroooo-x2-heads", permanent: true },
