@@ -102,7 +102,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             })();
           `}
         </Script>
-        <a className="skip-link" href="#main">Skip to content</a>
 
         <CartProvider>
           <RouteChrome
