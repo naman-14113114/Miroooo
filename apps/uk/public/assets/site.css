@@ -7725,14 +7725,15 @@ body:not([data-page="home"]) .announcement:not(.header-layer--overlay .announcem
 }
 
 .miroooo-ticker-dot {
-  width: 7px !important;
-  height: 7px !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  border: 1.5px solid #111111 !important;
+  width: 4px !important;
+  height: 4px !important;
+  background: #111111 !important;
+  background-color: #111111 !important;
+  border: none !important;
   border-radius: 50% !important;
   display: inline-block !important;
   flex-shrink: 0 !important;
+  opacity: 0.45 !important;
   box-sizing: border-box !important;
 }
 
