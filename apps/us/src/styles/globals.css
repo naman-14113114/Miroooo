@@ -85,8 +85,8 @@ button { color: inherit; }
   .x1-package .rich-text h2 { font-size: clamp(23px, 2.53vw, 36.3744px); line-height: 1; margin-bottom: 40px; }
 }
 
-.miroshine-reels-section { background: #000; color: #fff; width: 100%; overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); padding: clamp(4rem, 6.5vw, 6.5rem) 0; }
-.miroshine-reels-carousel { position: relative; display: flex; width: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; scroll-snap-type: x mandatory; scroll-padding-inline: calc(50% - 145px); padding-inline: calc(50% - 145px); }
+.miroshine-reels-section { background: #000; color: #fff; width: 100%; overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); padding: clamp(3rem, 5vw, 5rem) 0; }
+.miroshine-reels-carousel { position: relative; display: flex; align-items: center; width: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; scroll-snap-type: x mandatory; scroll-padding-inline: calc(50% - 145px); padding-inline: calc(50% - 145px); padding-block: 28px; }
 .miroshine-reels-carousel::-webkit-scrollbar { display: none; }
 .reels-card-cell { flex: 0 0 290px; width: 290px; margin-inline: 10px; cursor: grab; scroll-snap-align: center; }
 .reels-card-cell:active { cursor: grabbing; }
@@ -97,7 +97,7 @@ button { color: inherit; }
 .reels-sound-btn { position: absolute; right: 14px; bottom: 14px; z-index: 2; display: grid; place-items: center; width: 38px; height: 38px; color: #fff; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; background: rgba(0,0,0,.55); backdrop-filter: blur(8px); cursor: pointer; transition: transform .2s ease, background-color .2s ease; }
 .reels-sound-btn:hover { transform: scale(1.1); background: rgba(0,0,0,.75); }
 @media (max-width: 767px) {
-  .miroshine-reels-carousel { scroll-padding-inline: calc(50% - 125px); padding-inline: calc(50% - 125px); }
+  .miroshine-reels-carousel { scroll-padding-inline: calc(50% - 125px); padding-inline: calc(50% - 125px); padding-block: 18px; }
   .reels-card-cell { flex-basis: 250px; width: 250px; margin-inline: 6px; }
 }
 
