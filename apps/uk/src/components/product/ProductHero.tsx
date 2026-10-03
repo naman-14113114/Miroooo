@@ -444,12 +444,6 @@ export function ProductHero({
           title: 'IPX7 100% Waterproof',
           sub: 'Shower-Safe & Fully Submersible',
         };
-      } else if (src.includes('Pink-6.webp') || src.includes('Grey-6.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
-          title: '60+ Day Battery<br>Life',
-          sub: 'Magnetic USB-C Dock Recharge',
-        };
       } else if (src.includes('Pink-8.webp') || src.includes('Silver-11.webp')) {
         badge = {
           pos: 'miroooo-infographic-badge--top-left',
