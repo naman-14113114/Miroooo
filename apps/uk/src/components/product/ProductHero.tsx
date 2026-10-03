@@ -444,7 +444,7 @@ export function ProductHero({
           title: 'IPX7 100% Waterproof',
           sub: 'Shower-Safe & Fully Submersible',
         };
-      } else if (src.includes('Pink-6.webp') || src.includes('Grey-6.webp') || src.includes('Silver-4.webp')) {
+      } else if (src.includes('Pink-6.webp') || src.includes('Grey-6.webp')) {
         badge = {
           pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
           title: '60+ Day Battery<br>Life',
@@ -455,12 +455,6 @@ export function ProductHero({
           pos: 'miroooo-infographic-badge--top-left',
           title: 'DuPont™<br>Precision Bristles',
           sub: 'End-Rounded For<br>Gentle Enamel Care',
-        };
-      } else if (src.includes('Silver-9.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--top-left',
-          title: 'Magnetic Charging<br>Dock',
-          sub: 'Clutter-Free Bathroom Counter',
         };
       }
 
@@ -529,7 +523,7 @@ export function ProductHero({
     } else {
       if (col === 'pink') return '/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp';
       if (col === 'grey') return '/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp';
-      return '/assets_ref/x/gallery/Miroooo_x_Silver-hero.webp';
+      return '/assets_ref/x/gallery/Hand-Holding-Branded-Silver-Toothbrush.webp';
     }
   };
 

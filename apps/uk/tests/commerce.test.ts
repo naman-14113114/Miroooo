@@ -249,15 +249,14 @@ test('UK checkout blocks an unavailable provider quote', async () => {
   } finally { globalThis.fetch = oldFetch; }
 });
 
-test('X1 6pc variants map accurately and support all 12 bundle options', () => {
-  const silver6 = XPAGE_VARIANTS.x1_silver;
-  const pink6 = XPAGE_VARIANTS.x1_pink;
-  const grey6 = XPAGE_VARIANTS.x1_grey;
-  const head = XPAGE_VARIANTS.x1_heads;
+test('X1 simple variants map accurately and support all 12 bundle options', () => {
+  const silver = XPAGE_VARIANTS.x1_silver;
+  const pink = XPAGE_VARIANTS.x1_pink;
+  const grey = XPAGE_VARIANTS.x1_grey;
 
-  assert.equal(silver6, 'a2ce5280-e9fd-4b0c-b4a3-51c04be7bef8');
-  assert.equal(pink6, 'a2ce527f-5948-4fc5-8eb0-25681599eeb5');
-  assert.equal(grey6, 'a2ce527d-ca5a-4906-8d9a-4d019556062a');
+  assert.equal(silver, 'a2ce5279-19c8-4e56-8253-a06d4b7a3bd7');
+  assert.equal(pink, 'a2ce527a-ac20-4a6d-888a-ada52bc9d509');
+  assert.equal(grey, 'a2ce527c-3b55-45a4-b832-9915d637ba8b');
 
   // Verify all 12 options exist in XPAGE_BUNDLES.x1
   const keys = [

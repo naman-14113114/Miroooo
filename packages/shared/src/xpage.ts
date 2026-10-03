@@ -8,15 +8,15 @@ export const XPAGE_LANDING_URLS: Record<string, string> = {
 };
 
 export const XPAGE_VARIANTS = {
-  // Miroooo X1 Brushes (Product: a2ce5266-8250-4f79-a587-d819e549bcd6) - 6pc brush head variants
-  x1_silver: "a2ce5280-e9fd-4b0c-b4a3-51c04be7bef8",
-  x1_pink: "a2ce527f-5948-4fc5-8eb0-25681599eeb5",
-  x1_grey: "a2ce527d-ca5a-4906-8d9a-4d019556062a",
+  // Miroooo X1 Brushes (Product: a2ce5266-8250-4f79-a587-d819e549bcd6) - Simple variants
+  x1_silver: "a2ce5279-19c8-4e56-8253-a06d4b7a3bd7",
+  x1_pink: "a2ce527a-ac20-4a6d-888a-ada52bc9d509",
+  x1_grey: "a2ce527c-3b55-45a4-b832-9915d637ba8b",
 
-  // Simple variants (kept for backwards compatibility)
-  x1_silver_simple: "a2ce5279-19c8-4e56-8253-a06d4b7a3bd7",
-  x1_pink_simple: "a2ce527a-ac20-4a6d-888a-ada52bc9d509",
-  x1_grey_simple: "a2ce527c-3b55-45a4-b832-9915d637ba8b",
+  // 6pc brush head variants (aliases)
+  x1_silver_6pc: "a2ce5280-e9fd-4b0c-b4a3-51c04be7bef8",
+  x1_pink_6pc: "a2ce527f-5948-4fc5-8eb0-25681599eeb5",
+  x1_grey_6pc: "a2ce527d-ca5a-4906-8d9a-4d019556062a",
 
   // Miroooo X1 Heads (Product: a2d0cb07-bb83-4f46-96ec-5d0de9e663b2)
   x1_heads: "a2d0cb07-ee63-4e45-b245-7bb90f494e2e",
@@ -308,23 +308,23 @@ export function mapCartToXpageVariants(cartLines: any[] = []) {
       targetVariantId = XPAGE_VARIANTS.x1_heads;
     } else if (
       variantIdRaw === XPAGE_VARIANTS.x1_pink ||
-      variantIdRaw === XPAGE_VARIANTS.x1_pink_simple ||
+      variantIdRaw === XPAGE_VARIANTS.x1_pink_6pc ||
       allText.includes(XPAGE_VARIANTS.x1_pink) ||
-      allText.includes(XPAGE_VARIANTS.x1_pink_simple)
+      allText.includes(XPAGE_VARIANTS.x1_pink_6pc)
     ) {
       targetVariantId = XPAGE_VARIANTS.x1_pink;
     } else if (
       variantIdRaw === XPAGE_VARIANTS.x1_grey ||
-      variantIdRaw === XPAGE_VARIANTS.x1_grey_simple ||
+      variantIdRaw === XPAGE_VARIANTS.x1_grey_6pc ||
       allText.includes(XPAGE_VARIANTS.x1_grey) ||
-      allText.includes(XPAGE_VARIANTS.x1_grey_simple)
+      allText.includes(XPAGE_VARIANTS.x1_grey_6pc)
     ) {
       targetVariantId = XPAGE_VARIANTS.x1_grey;
     } else if (
       variantIdRaw === XPAGE_VARIANTS.x1_silver ||
-      variantIdRaw === XPAGE_VARIANTS.x1_silver_simple ||
+      variantIdRaw === XPAGE_VARIANTS.x1_silver_6pc ||
       allText.includes(XPAGE_VARIANTS.x1_silver) ||
-      allText.includes(XPAGE_VARIANTS.x1_silver_simple)
+      allText.includes(XPAGE_VARIANTS.x1_silver_6pc)
     ) {
       targetVariantId = XPAGE_VARIANTS.x1_silver;
     }
@@ -471,9 +471,9 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
         XPAGE_VARIANTS.x1_silver,
         XPAGE_VARIANTS.x1_pink,
         XPAGE_VARIANTS.x1_grey,
-        XPAGE_VARIANTS.x1_silver_simple,
-        XPAGE_VARIANTS.x1_pink_simple,
-        XPAGE_VARIANTS.x1_grey_simple,
+        XPAGE_VARIANTS.x1_silver_6pc,
+        XPAGE_VARIANTS.x1_pink_6pc,
+        XPAGE_VARIANTS.x1_grey_6pc,
       ],
       x2: [XPAGE_VARIANTS.x2_silver, XPAGE_VARIANTS.x2_pink, XPAGE_VARIANTS.x2_grey],
     }) as Array<["x1" | "x2", readonly string[]]>).find(([, variants]) => variants.includes(variantId))?.[0];
@@ -780,9 +780,9 @@ export async function createXpageCartCheckout({
     XPAGE_VARIANTS.x1_pink,
     XPAGE_VARIANTS.x1_grey,
     XPAGE_VARIANTS.x1_silver,
-    XPAGE_VARIANTS.x1_pink_simple,
-    XPAGE_VARIANTS.x1_grey_simple,
-    XPAGE_VARIANTS.x1_silver_simple,
+    XPAGE_VARIANTS.x1_pink_6pc,
+    XPAGE_VARIANTS.x1_grey_6pc,
+    XPAGE_VARIANTS.x1_silver_6pc,
     XPAGE_VARIANTS.x1_heads,
   ]);
   const product: "x1" | "x2" = xpageLines.every((line) => x1Variants.has(line.variant_id as any)) ? "x1" : "x2";
