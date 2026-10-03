@@ -196,13 +196,17 @@ function processTsReviewsFile(filePath, days, filterHandle) {
   };
 
   if (filterHandle) {
-    const targetVar = filterHandle === 'miroooo-x' ? 'mirooooXReviews' : (filterHandle === 'miroooo-x2' ? 'mirooooX2Reviews' : null);
-    if (targetVar) {
-      const regex = new RegExp(`(export const ${targetVar} = \\[)([\\s\\S]*?)(\\n\\];)`, 'g');
-      content = content.replace(regex, (fullMatch, prefix, reviewsBlock, suffix) => {
-        const updatedBlock = updateDatesInBlock(reviewsBlock);
-        return `${prefix}${updatedBlock}${suffix}`;
-      });
+    const splitIdx = content.indexOf('export const mirooooX2Reviews');
+    if (filterHandle === 'miroooo-x' && splitIdx !== -1) {
+      const x1Part = content.slice(0, splitIdx);
+      const x2Part = content.slice(splitIdx);
+      content = updateDatesInBlock(x1Part) + x2Part;
+    } else if (filterHandle === 'miroooo-x2' && splitIdx !== -1) {
+      const x1Part = content.slice(0, splitIdx);
+      const x2Part = content.slice(splitIdx);
+      content = x1Part + updateDatesInBlock(x2Part);
+    } else {
+      content = updateDatesInBlock(content);
     }
   } else {
     content = updateDatesInBlock(content);
@@ -258,7 +262,7 @@ appDirs.forEach(appRelPath => {
   const assetsRefDir = path.join(rootDir, appRelPath, 'public', 'assets_ref');
   if (fs.existsSync(assetsRefDir)) {
     jsFileNames.forEach(entry => {
-      if (targetProductHandle && targetProductHandle !== entry.handle && !entry.file.includes(targetProductHandle)) {
+      if (targetProductHandle && targetProductHandle !== entry.handle) {
         return;
       }
       const fullPath = path.join(assetsRefDir, entry.file);
@@ -279,7 +283,8 @@ if (fs.existsSync(appsDir)) {
       const files = fs.readdirSync(reviewsDir);
       files.forEach(file => {
         if (!file.endsWith('.json')) return;
-        if (targetProductHandle && !file.includes(targetProductHandle)) return;
+        if (targetProductHandle === 'miroooo-x' && file.includes('x2')) return;
+        if (targetProductHandle === 'miroooo-x2' && !file.includes('x2')) return;
         processJsonReviewsFile(path.join(reviewsDir, file), daysToShift);
       });
     }
