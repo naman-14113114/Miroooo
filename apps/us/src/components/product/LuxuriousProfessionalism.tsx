@@ -1,9 +1,36 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ViewportVideo } from '@/components/media/ViewportVideo';
 
 export function LuxuriousProfessionalism() {
+  const statRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [values, setValues] = useState([0, 0, 0]);
+
+  useEffect(() => {
+    const frames = new Map<number, number>();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = [95, 98, 91];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.65) return;
+        const index = statRefs.current.indexOf(entry.target as HTMLDivElement);
+        if (index < 0) return;
+        observer.unobserve(entry.target);
+        const start = performance.now();
+        const step = (now: number) => {
+          const progress = reduced ? 1 : Math.min(1, (now - start) / 1400);
+          const value = targets[index] * (1 - Math.pow(1 - progress, 3));
+          setValues((previous) => previous.map((current, i) => i === index ? value : current));
+          if (progress < 1) frames.set(index, requestAnimationFrame(step));
+        };
+        frames.set(index, requestAnimationFrame(step));
+      });
+    }, { threshold: 0.65, rootMargin: '0px 0px -72px 0px' });
+    statRefs.current.forEach((row) => { if (row) observer.observe(row); });
+    return () => { observer.disconnect(); frames.forEach(cancelAnimationFrame); };
+  }, []);
+
   return (
     <div
       id="shopify-section-template--miroooo-luxurious-professionalism"
@@ -76,32 +103,103 @@ export function LuxuriousProfessionalism() {
             <h2
               style={{
                 fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
-                fontSize: 'clamp(1.75rem, 3.2vw, 2.75rem)',
-                fontWeight: 600,
-                letterSpacing: '0.05em',
+                fontSize: 'clamp(2rem, 3.5vw, 3.2rem)',
+                fontWeight: 700,
+                letterSpacing: '0.02em',
                 textTransform: 'uppercase',
-                lineHeight: 1.25,
-                margin: '0 0 1.75rem 0',
+                lineHeight: 1.15,
+                margin: '0 0 2.5rem 0',
                 color: '#ffffff',
                 maxWidth: '540px',
                 wordBreak: 'break-word',
               }}
             >
-              LUXURIOUS PROFESSIONALISM
+              HERE&apos;S WHAT REAL CUSTOMERS ARE SAYING
             </h2>
 
-            <p
-              style={{
-                fontFamily: "var(--font-didot), Georgia, serif",
-                fontSize: 'clamp(1rem, 1.25vw, 1.2rem)',
-                color: 'rgba(255, 255, 255, 0.75)',
-                lineHeight: 1.75,
-                margin: 0,
-                maxWidth: '580px',
-              }}
-            >
-              Uncover the exceptional qualities of a toothbrush carefully designed for daily professional and personalized dental care. Its gentle yet potent performance ensures optimal health for your teeth and gums, making it an intelligent companion for your active on-the-go lifestyle.
-            </p>
+            {/* Percentage Statistics List */}
+            <div className="miroooo-stats-list" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(1.75rem, 2.8vw, 2.25rem)', maxWidth: '580px' }}>
+              {/* Stat 1: 95% */}
+              <div ref={(row) => { statRefs.current[0] = row; }} className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
+                <div className="miroooo-stat-circle" style={{ position: 'relative', width: '68px', height: '68px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg viewBox="0 0 68 68" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
+                    <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3.5" />
+                    <circle
+                      className="miroooo-stat-progress"
+                      cx="34"
+                      cy="34"
+                      r="28"
+                      fill="none"
+                      stroke="#ffffff"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      strokeDasharray="176"
+                      strokeDashoffset={176 * (1 - values[0] / 100)}
+                    />
+                  </svg>
+                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
+                    {Math.round(values[0])}%
+                  </span>
+                </div>
+                <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
+                  Found brushing significantly gentler on gums while cleaning deeper than their previous electric brush.
+                </p>
+              </div>
+
+              {/* Stat 2: 98% */}
+              <div ref={(row) => { statRefs.current[1] = row; }} className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
+                <div className="miroooo-stat-circle" style={{ position: 'relative', width: '68px', height: '68px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg viewBox="0 0 68 68" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
+                    <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3.5" />
+                    <circle
+                      className="miroooo-stat-progress"
+                      cx="34"
+                      cy="34"
+                      r="28"
+                      fill="none"
+                      stroke="#ffffff"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      strokeDasharray="176"
+                      strokeDashoffset={176 * (1 - values[1] / 100)}
+                    />
+                  </svg>
+                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
+                    {Math.round(values[1])}%
+                  </span>
+                </div>
+                <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
+                  Reported a tidier, clutter-free bathroom sink thanks to the magnetic charging dock and compact design.
+                </p>
+              </div>
+
+              {/* Stat 3: 91% */}
+              <div ref={(row) => { statRefs.current[2] = row; }} className="miroooo-stat-item" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
+                <div className="miroooo-stat-circle" style={{ position: 'relative', width: '68px', height: '68px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg viewBox="0 0 68 68" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
+                    <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3.5" />
+                    <circle
+                      className="miroooo-stat-progress"
+                      cx="34"
+                      cy="34"
+                      r="28"
+                      fill="none"
+                      stroke="#ffffff"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      strokeDasharray="176"
+                      strokeDashoffset={176 * (1 - values[2] / 100)}
+                    />
+                  </svg>
+                  <span className="miroooo-stat-value" style={{ position: 'absolute', fontFamily: "var(--font-inter), sans-serif", fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
+                    {Math.round(values[2])}%
+                  </span>
+                </div>
+                <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
+                  Noticed visibly brighter, cleaner teeth and healthier gums within just 3 weeks of daily use.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -64,68 +64,42 @@ export function DiscoverOralHygiene() {
           >
             <h2
               style={{
-                fontFamily: "var(--font-heading-family, 'Inter', serif)",
-                fontSize: 'clamp(1.45rem, 2.6vw, 2.5rem)',
-                fontWeight: 500,
-                letterSpacing: '0.05em',
+                fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif",
+                fontSize: 'clamp(2rem, 3.5vw, 3.2rem)',
+                fontWeight: 700,
+                letterSpacing: '0.02em',
                 textTransform: 'uppercase',
-                lineHeight: 1.28,
-                margin: '0 0 1.5rem 0',
+                lineHeight: 1.15,
+                margin: '0 0 2rem 0',
                 color: '#ffffff',
                 maxWidth: '540px',
                 wordBreak: 'break-word',
               }}
             >
-              THE ULTIMATE TRAVEL-READY ELECTRIC TOOTHBRUSH
+              BUILT FOR TRAVEL
             </h2>
 
-            <div style={{ width: '100px', height: '1px', background: 'rgba(255, 255, 255, 0.35)', margin: '0 0 2.25rem 0' }}></div>
-
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.25rem', maxWidth: '580px' }}>
-              <li
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.85rem',
-                  fontSize: 'clamp(0.92rem, 1.15vw, 1.15rem)',
-                  color: 'rgba(255, 255, 255, 0.95)',
-                  lineHeight: 1.45,
-                  fontWeight: 400,
-                  letterSpacing: '0.01em',
-                }}
-              >
-                <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#ffffff', flexShrink: 0 }}></span>
-                <span>Slim, protective travel case included (fits seamlessly into your carry-on, wash bag, or handbag without taking up space)</span>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
+                <div>
+                  <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>Slim protective travel case included</strong>
+                  <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>Slips neatly into any carry-on, wash bag or handbag without taking up valuable luggage space.</span>
+                </div>
               </li>
-              <li
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.85rem',
-                  fontSize: 'clamp(0.92rem, 1.15vw, 1.15rem)',
-                  color: 'rgba(255, 255, 255, 0.95)',
-                  lineHeight: 1.45,
-                  fontWeight: 400,
-                  letterSpacing: '0.01em',
-                }}
-              >
-                <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#ffffff', flexShrink: 0 }}></span>
-                <span>60+ days of long-lasting battery life (no need to hunt for chargers or carry cables on holidays)</span>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
+                <div>
+                  <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>60+ day battery life from a single charge</strong>
+                  <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>Powers up to 2 months of twice-daily brushing—so you will never have to hunt for chargers or carry cables on holidays.</span>
+                </div>
               </li>
-              <li
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.85rem',
-                  fontSize: 'clamp(0.92rem, 1.15vw, 1.15rem)',
-                  color: 'rgba(255, 255, 255, 0.95)',
-                  lineHeight: 1.45,
-                  fontWeight: 400,
-                  letterSpacing: '0.01em',
-                }}
-              >
-                <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#ffffff', flexShrink: 0 }}></span>
-                <span>Ultralight 51g aerospace weight (lighter than standard manual brushes, you will forget it is even in your bag)</span>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
+                <div>
+                  <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block' }}>Weighs just 51 grams</strong>
+                  <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.5 }}>Noticeably lighter than most manual brushes—machined from premium aluminium alloy so you will hardly feel it in your bag.</span>
+                </div>
               </li>
             </ul>
           </div>
