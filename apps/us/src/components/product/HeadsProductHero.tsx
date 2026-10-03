@@ -112,6 +112,32 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLightboxOpen, isX2]);
 
+  // Scroll thumbnails into view with active thumbnail centered
+  useEffect(() => {
+    if (navRef.current) {
+      const container = navRef.current;
+      const activeThumb = container.children[activeMediaIndex] as HTMLElement;
+      if (activeThumb) {
+        const containerRect = container.getBoundingClientRect();
+        const thumbRect = activeThumb.getBoundingClientRect();
+
+        const currentScrollTop = container.scrollTop;
+        const thumbRelativeTop = thumbRect.top - containerRect.top + currentScrollTop;
+        const targetScrollTop = thumbRelativeTop - (container.clientHeight - thumbRect.height) / 2;
+
+        const currentScrollLeft = container.scrollLeft;
+        const thumbRelativeLeft = thumbRect.left - containerRect.left + currentScrollLeft;
+        const targetScrollLeft = thumbRelativeLeft - (container.clientWidth - thumbRect.width) / 2;
+
+        container.scrollTo({
+          top: Math.max(0, targetScrollTop),
+          left: Math.max(0, targetScrollLeft),
+          behavior: 'smooth',
+        });
+      }
+    }
+  }, [activeMediaIndex]);
+
   const handleAddToCart = () => {
     addItem({
       productHandle: product.handle,

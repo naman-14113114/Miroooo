@@ -146,12 +146,28 @@ export function ProductHero({
     return () => { document.body.style.overflow = overflow; document.body.classList.remove('gallery-open'); };
   }, [isLightboxOpen]);
 
-  // Scroll thumbnails into view when active index changes
+  // Scroll thumbnails into view with active thumbnail centered
   useEffect(() => {
     if (navRef.current) {
-      const activeThumb = navRef.current.children[activeMediaIndex] as HTMLElement;
+      const container = navRef.current;
+      const activeThumb = container.children[activeMediaIndex] as HTMLElement;
       if (activeThumb) {
-        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        const containerRect = container.getBoundingClientRect();
+        const thumbRect = activeThumb.getBoundingClientRect();
+
+        const currentScrollTop = container.scrollTop;
+        const thumbRelativeTop = thumbRect.top - containerRect.top + currentScrollTop;
+        const targetScrollTop = thumbRelativeTop - (container.clientHeight - thumbRect.height) / 2;
+
+        const currentScrollLeft = container.scrollLeft;
+        const thumbRelativeLeft = thumbRect.left - containerRect.left + currentScrollLeft;
+        const targetScrollLeft = thumbRelativeLeft - (container.clientWidth - thumbRect.width) / 2;
+
+        container.scrollTo({
+          top: Math.max(0, targetScrollTop),
+          left: Math.max(0, targetScrollLeft),
+          behavior: 'smooth',
+        });
       }
     }
   }, [activeMediaIndex]);
@@ -452,7 +468,7 @@ export function ProductHero({
       if (col === 'grey') return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp';
       return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp';
     } else {
-      if (col === 'pink') return '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp';
+      if (col === 'pink') return '/assets_ref/x/gallery/Miroooo_x_Pink-2.webp';
       if (col === 'grey') return '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp';
       return '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp';
     }

@@ -1,7 +1,6 @@
 export const x1Gallery = {
   Pink: {
     images: [
-      "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
       "/assets_ref/x/gallery/Miroooo_x_Pink-2.webp",
       "/assets_ref/x/gallery/Miroooo_x_Pink-video.mp4",
       "/assets_ref/x/gallery/Miroooo_x_Pink-4.webp",
@@ -11,7 +10,6 @@ export const x1Gallery = {
       "/assets_ref/x/gallery/Silver-9.webp",
     ],
     thumbnails: [
-      "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
       "/assets_ref/x/gallery/Miroooo_x_Pink-2.webp",
       "/assets_ref/x/gallery/Miroooo_x_Pink-3.webp",
       "/assets_ref/x/gallery/Miroooo_x_Pink-4.webp",
