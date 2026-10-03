@@ -408,15 +408,12 @@ export function ProductHero({
 
   const getX1Slides = (): GallerySlide[] => {
     const variant = x1Gallery[selectedColor as keyof typeof x1Gallery] || x1Gallery.Pink;
-    return [{
-      type: 'video', videoSrc: '/assets_ref/x/gallery/miroooo-video-1.mp4',
-      poster: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-      alt: 'Miroooo X1 Video Showcase', thumbImg: '/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp',
-    }, ...variant.images.map((src, index): GallerySlide => ({
+    return variant.images.map((src, index): GallerySlide => ({
       type: src.endsWith('.mp4') ? 'video' : 'image',
       ...(src.endsWith('.mp4') ? { videoSrc: src, poster: variant.thumbnails[index] } : { src }),
-      thumbImg: variant.thumbnails[index], alt: `Miroooo X1 ${selectedColor} product view ${index + 1}`,
-    }))];
+      thumbImg: variant.thumbnails[index],
+      alt: `Miroooo X1 ${selectedColor} product view ${index + 1}`,
+    }));
   };
 
   const gallerySlides = isX2 ? getX2Slides() : getX1Slides();
@@ -471,9 +468,9 @@ export function ProductHero({
       if (col === 'grey') return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp';
       return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp';
     } else {
-      if (col === 'pink') return '/assets_ref/x/gallery/Miroooo_x_Pink-2.webp';
-      if (col === 'grey') return '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp';
-      return '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp';
+      if (col === 'pink') return '/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp';
+      if (col === 'grey') return '/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp';
+      return '/assets_ref/x/gallery/Miroooo_x_Silver-hero.webp';
     }
   };
 
