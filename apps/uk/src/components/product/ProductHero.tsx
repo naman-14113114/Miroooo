@@ -434,13 +434,13 @@ export function ProductHero({
         };
       } else if (src.includes('Pink-5.webp')) {
         badge = {
-          pos: 'miroooo-infographic-badge--bottom-right',
+          pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
           title: 'IPX7 100% Waterproof',
           sub: 'Shower-Safe & Fully Submersible',
         };
       } else if (src.includes('Grey-5.webp') || src.includes('Silver-3.webp')) {
         badge = {
-          pos: 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white',
+          pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
           title: 'IPX7 100% Waterproof',
           sub: 'Shower-Safe & Fully Submersible',
         };
