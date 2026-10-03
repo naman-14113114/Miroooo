@@ -97,7 +97,15 @@ export async function prepareUSCheckout({ cart, discountCode, expectedUSD, useBu
   attribution: Record<string, unknown>;
 }) {
   const xpageCart = mapCartToXpageVariants(cart);
-  const x1 = new Set<string>([XPAGE_VARIANTS.x1_grey, XPAGE_VARIANTS.x1_pink, XPAGE_VARIANTS.x1_silver, XPAGE_VARIANTS.x1_heads]);
+  const x1 = new Set<string>([
+    XPAGE_VARIANTS.x1_grey,
+    XPAGE_VARIANTS.x1_pink,
+    XPAGE_VARIANTS.x1_silver,
+    XPAGE_VARIANTS.x1_grey_simple,
+    XPAGE_VARIANTS.x1_pink_simple,
+    XPAGE_VARIANTS.x1_silver_simple,
+    XPAGE_VARIANTS.x1_heads,
+  ]);
   const product = xpageCart.every((line) => x1.has(line.variant_id)) ? 'x1' : 'x2';
   let checkout: URL;
 

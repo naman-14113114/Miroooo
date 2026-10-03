@@ -264,3 +264,29 @@ test('US checkout blocks an unavailable provider quote', async () => {
     assert.equal(body.checkoutUrl, undefined);
   } finally { globalThis.fetch = oldFetch; }
 });
+
+test('X1 6pc variants map accurately and support all 12 bundle options', () => {
+  const silver6 = XPAGE_VARIANTS.x1_silver;
+  const pink6 = XPAGE_VARIANTS.x1_pink;
+  const grey6 = XPAGE_VARIANTS.x1_grey;
+  const head = XPAGE_VARIANTS.x1_heads;
+
+  assert.equal(silver6, 'a2ce5280-e9fd-4b0c-b4a3-51c04be7bef8');
+  assert.equal(pink6, 'a2ce527f-5948-4fc5-8eb0-25681599eeb5');
+  assert.equal(grey6, 'a2ce527d-ca5a-4906-8d9a-4d019556062a');
+
+  // Verify all 12 options exist in XPAGE_BUNDLES.x1
+  const keys = [
+    'buy1', 'buy2', 'buy3',
+    'promoBuy1', 'promoBuy2', 'promoBuy3',
+    'promoBuy1_1head', 'promoBuy1_2head',
+    'buy2_1head', 'promoBuy2_1head',
+    'buy3_1head', 'promoBuy3_1head',
+  ] as const;
+
+  for (const k of keys) {
+    assert.ok(XPAGE_BUNDLES.x1[k], `Missing bundle option ${k}`);
+    assert.ok(XPAGE_BUNDLES.x1[k].optionId, `Missing optionId in ${k}`);
+  }
+});
+

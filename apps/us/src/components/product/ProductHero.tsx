@@ -408,12 +408,74 @@ export function ProductHero({
 
   const getX1Slides = (): GallerySlide[] => {
     const variant = x1Gallery[selectedColor as keyof typeof x1Gallery] || x1Gallery.Pink;
-    return variant.images.map((src, index): GallerySlide => ({
-      type: src.endsWith('.mp4') ? 'video' : 'image',
-      ...(src.endsWith('.mp4') ? { videoSrc: src, poster: variant.thumbnails[index] } : { src }),
-      thumbImg: variant.thumbnails[index],
-      alt: `Miroooo X1 ${selectedColor} product view ${index + 1}`,
-    }));
+    return variant.images.map((src, index): GallerySlide => {
+      const isVideo = src.endsWith('.mp4');
+      const thumb = variant.thumbnails[index];
+
+      let badge: GallerySlide['badge'] | undefined;
+      let isModesBadge = false;
+
+      if (src.includes('Pink-2.webp') || src.includes('Grey-2.webp') || src.includes('Silver-1.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--top-right',
+          title: 'Whisper-Quiet<br>Operation',
+          sub: 'Sub-50dB Acoustic<br>Sonic Motor',
+        };
+      } else if (src.includes('luxury-travel-case-lifestyle.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+          title: 'Ultra<br>Lightweight (51g)',
+          sub: 'Travel-Friendly Slim Case',
+        };
+      } else if (src.includes('Pink-4.webp') || src.includes('Grey-8.webp') || src.includes('Silver-2.webp')) {
+        isModesBadge = true;
+      } else if (src.includes('Grey-4.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--top-left',
+          title: 'Aerospace<br>Aluminium Body',
+          sub: 'Precision CNC<br>Anodized Unibody',
+        };
+      } else if (src.includes('Pink-5.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--bottom-right',
+          title: 'IPX7 100% Waterproof',
+          sub: 'Shower-Safe & Fully Submersible',
+        };
+      } else if (src.includes('Grey-5.webp') || src.includes('Silver-3.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white',
+          title: 'IPX7 100% Waterproof',
+          sub: 'Shower-Safe & Fully Submersible',
+        };
+      } else if (src.includes('Pink-6.webp') || src.includes('Grey-6.webp') || src.includes('Silver-4.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+          title: '60+ Day Battery<br>Life',
+          sub: 'Magnetic USB-C Dock Recharge',
+        };
+      } else if (src.includes('Pink-8.webp') || src.includes('Silver-11.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--top-left',
+          title: 'DuPont™<br>Precision Bristles',
+          sub: 'End-Rounded For<br>Gentle Enamel Care',
+        };
+      } else if (src.includes('Silver-9.webp')) {
+        badge = {
+          pos: 'miroooo-infographic-badge--top-left',
+          title: 'Magnetic Charging<br>Dock',
+          sub: 'Clutter-Free Bathroom Counter',
+        };
+      }
+
+      return {
+        type: isVideo ? 'video' : 'image',
+        ...(isVideo ? { videoSrc: src, poster: thumb } : { src }),
+        thumbImg: thumb,
+        alt: `Miroooo X1 ${selectedColor} product view ${index + 1}`,
+        badge,
+        isModesBadge,
+      };
+    });
   };
 
   const gallerySlides = isX2 ? getX2Slides() : getX1Slides();
@@ -642,20 +704,26 @@ export function ProductHero({
                                 {slide.isModesBadge && (
                                   <div className="miroooo-infographic-badge miroooo-infographic-badge--top-left">
                                     <div className="miroooo-infographic-badge__header">
-                                      <span className="miroooo-infographic-badge__title">3 Tailored<br />Clean Modes</span>
+                                      <span className="miroooo-infographic-badge__title">
+                                        {isX2 ? (
+                                          <>3 Tailored<br />Clean Modes</>
+                                        ) : (
+                                          <>3 Cleaning<br />Modes</>
+                                        )}
+                                      </span>
                                     </div>
                                     <div className="miroooo-infographic-modes">
                                       <div className="miroooo-infographic-mode-item">
                                         <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--purple" aria-hidden="true"></span>
-                                        <span className="miroooo-infographic-mode-text">Standard</span>
+                                        <span className="miroooo-infographic-mode-text">{isX2 ? 'Standard' : 'Clean'}</span>
                                       </div>
                                       <div className="miroooo-infographic-mode-item">
                                         <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--blue" aria-hidden="true"></span>
-                                        <span className="miroooo-infographic-mode-text">Whitening</span>
+                                        <span className="miroooo-infographic-mode-text">{isX2 ? 'Whitening' : 'Soft'}</span>
                                       </div>
                                       <div className="miroooo-infographic-mode-item">
                                         <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--green" aria-hidden="true"></span>
-                                        <span className="miroooo-infographic-mode-text">Deep Clean</span>
+                                        <span className="miroooo-infographic-mode-text">{isX2 ? 'Deep Clean' : 'White'}</span>
                                       </div>
                                     </div>
                                   </div>
@@ -1496,6 +1564,33 @@ export function ProductHero({
                         className="miroooo-infographic-badge__sub"
                         dangerouslySetInnerHTML={{ __html: gallerySlides[activeMediaIndex].badge?.sub || '' }}
                       ></span>
+                    </div>
+                  )}
+                  {gallerySlides[activeMediaIndex].isModesBadge && !isLightboxZoomed && (
+                    <div className="miroooo-infographic-badge miroooo-infographic-badge--top-left">
+                      <div className="miroooo-infographic-badge__header">
+                        <span className="miroooo-infographic-badge__title">
+                          {isX2 ? (
+                            <>3 Tailored<br />Clean Modes</>
+                          ) : (
+                            <>3 Cleaning<br />Modes</>
+                          )}
+                        </span>
+                      </div>
+                      <div className="miroooo-infographic-modes">
+                        <div className="miroooo-infographic-mode-item">
+                          <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--purple" aria-hidden="true"></span>
+                          <span className="miroooo-infographic-mode-text">{isX2 ? 'Standard' : 'Clean'}</span>
+                        </div>
+                        <div className="miroooo-infographic-mode-item">
+                          <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--blue" aria-hidden="true"></span>
+                          <span className="miroooo-infographic-mode-text">{isX2 ? 'Whitening' : 'Soft'}</span>
+                        </div>
+                        <div className="miroooo-infographic-mode-item">
+                          <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--green" aria-hidden="true"></span>
+                          <span className="miroooo-infographic-mode-text">{isX2 ? 'Deep Clean' : 'White'}</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </>

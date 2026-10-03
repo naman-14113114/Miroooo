@@ -4653,6 +4653,85 @@ div[class*="tawk"],
   white-space: nowrap !important;
 }
 
+@media (max-width: 640px) {
+  .miroooo-infographic-badge--top-left,
+  .miroooo-infographic-overlay--top-left {
+    top: 14px !important;
+    left: 14px !important;
+    max-width: clamp(130px, 38vw, 160px) !important;
+    transform: translate3d(-16px, 0, 0) !important;
+  }
+  .miroooo-infographic-badge--bottom-left,
+  .miroooo-infographic-overlay--bottom-left {
+    bottom: 14px !important;
+    left: 14px !important;
+    max-width: clamp(130px, 38vw, 160px) !important;
+    transform: translate3d(-16px, 0, 0) !important;
+  }
+  .miroooo-infographic-badge--top-right,
+  .miroooo-infographic-overlay--top-right {
+    top: 26px !important;
+    right: 14px !important;
+    max-width: clamp(120px, 34vw, 150px) !important;
+    transform: translate3d(16px, 0, 0) !important;
+  }
+  .miroooo-infographic-badge--bottom-right,
+  .miroooo-infographic-overlay--bottom-right {
+    bottom: 14px !important;
+    right: 14px !important;
+    max-width: clamp(120px, 34vw, 150px) !important;
+    transform: translate3d(16px, 0, 0) !important;
+  }
+  .miroooo-infographic-badge__title,
+  .miroooo-infographic-overlay__title,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-badge__title,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-overlay__title,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-badge__title,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-overlay__title {
+    font-size: clamp(12px, 3.4vw, 14px) !important;
+    line-height: 1.16 !important;
+    letter-spacing: 0.01em !important;
+  }
+  .miroooo-infographic-badge__sub,
+  .miroooo-infographic-overlay__sub,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-badge__sub,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-overlay__sub,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-badge__sub,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-overlay__sub {
+    font-size: clamp(9.5px, 2.6vw, 11px) !important;
+    line-height: 1.25 !important;
+    margin-top: 1px !important;
+  }
+  .miroooo-infographic-modes,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-modes,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-modes {
+    gap: 3px !important;
+    margin-top: 2px !important;
+  }
+  .miroooo-infographic-mode-item,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-mode-item,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-mode-item {
+    gap: 5px !important;
+    line-height: 1 !important;
+  }
+  .miroooo-infographic-mode-ring,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-mode-ring,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-mode-ring {
+    width: 9px !important;
+    height: 9px !important;
+    min-width: 9px !important;
+    min-height: 9px !important;
+    border-width: 1.8px !important;
+  }
+  .miroooo-infographic-mode-text,
+  .miroooo-gallery-lightbox__media-box .miroooo-infographic-mode-text,
+  .miroooo-gallery-lightbox-media-box .miroooo-infographic-mode-text {
+    font-size: clamp(10px, 2.8vw, 11.5px) !important;
+    line-height: 1.2 !important;
+    font-weight: 600 !important;
+  }
+}
+
 .miroooo-gallery__arrow {
   position: absolute !important;
   top: 50% !important;
