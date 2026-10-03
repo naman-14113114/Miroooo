@@ -382,7 +382,7 @@ export function ProductHero({
         alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Dynamic Grip in Hand`,
         thumbImg: inHandGrip,
         badge: {
-          pos: 'miroooo-infographic-badge--top-right',
+          pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
           title: 'Whisper-Quiet<br>Operation',
           sub: 'Sub-45dB Acoustic<br>Sonic Motor',
         },
@@ -414,7 +414,7 @@ export function ProductHero({
 
       if (src.includes('Pink-2.webp') || src.includes('Grey-2.webp') || src.includes('Silver-1.webp')) {
         badge = {
-          pos: 'miroooo-infographic-badge--top-right',
+          pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
           title: 'Whisper-Quiet<br>Operation',
           sub: 'Sub-50dB Acoustic<br>Sonic Motor',
         };
