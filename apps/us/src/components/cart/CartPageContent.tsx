@@ -178,7 +178,7 @@ export function CartPageContent() {
               complimentary DuPont brush heads, and free tracked US delivery.
             </p>
             <div className="cart-empty-actions">
-              <Link href="/shop" className="cart-empty-shop-btn">
+              <Link href="/all-products" className="cart-empty-shop-btn">
                 <span className="btn-fill" />
                 <span className="btn-text">Shop Miroooo</span>
               </Link>

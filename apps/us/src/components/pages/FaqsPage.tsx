@@ -40,7 +40,7 @@ const FAQS: FaqItem[] = [
     id: 'faq-4',
     question: 'How do I place my order?',
     answerHtml: `
-      <p>Simply navigate to our <a href="/shop">Shop</a> or visit the dedicated <a href="/products/miroooo-x">Miroooo X1</a> or <a href="/products/miroooo-x2">Miroooo X2</a> product page. Choose your preferred color (Grey, Pink, or Silver), select your bundle, and click "Add to Cart".</p>
+      <p>Simply navigate to our <a href="/all-products">Shop</a> or visit the dedicated <a href="/products/miroooo-x">Miroooo X1</a> or <a href="/products/miroooo-x2">Miroooo X2</a> product page. Choose your preferred color (Grey, Pink, or Silver), select your bundle, and click "Add to Cart".</p>
       <p>Follow the intuitive checkout steps to complete your purchase securely. We will prepare your package and keep you informed via email throughout processing and delivery.</p>
     `,
   },
@@ -62,7 +62,7 @@ const FAQS: FaqItem[] = [
     id: 'faq-7',
     question: 'How often should I change brush heads and how do I clean my brush?',
     answerHtml: `
-      <p>Dental professionals recommend replacing your brush head every <strong>3 months</strong> for optimal oral hygiene and plaque removal efficiency. Replacement brush heads can be ordered directly in our <a href="/shop">Shop</a>.</p>
+      <p>Dental professionals recommend replacing your brush head every <strong>3 months</strong> for optimal oral hygiene and plaque removal efficiency. Replacement brush heads can be ordered directly in our <a href="/all-products">Shop</a>.</p>
       <p>To clean your toothbrush, rinse the brush head and handle under running water after each use and store it upright in an airy location to dry. Avoid storing damp handles in sealed travel cases for prolonged periods.</p>
     `,
   },

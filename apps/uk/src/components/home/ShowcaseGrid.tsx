@@ -19,7 +19,7 @@ export function ShowcaseGrid({ id, kicker, title, finishes }: ShowcaseGridProps)
           <p className="gb-kicker">{kicker}</p>
           <h2 id={`${id}-title`}>{title}</h2>
         </div>
-        <Link className="gb-text-link gb-text-link--light" href="/shop">
+        <Link className="gb-text-link gb-text-link--light" href="/all-products">
           View all products <span aria-hidden="true">→</span>
         </Link>
       </div>

@@ -202,7 +202,7 @@ export function SmileCoach() {
           <Link className="coach-store-link" href="/pages/dentalcare-quiz">
             Dental Care Quiz
           </Link>
-          <Link className="coach-store-link" href="/shop">
+          <Link className="coach-store-link" href="/all-products">
             Visit store
           </Link>
         </div>

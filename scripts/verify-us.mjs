@@ -14,7 +14,7 @@ const walk = (directory) => readdirSync(directory, { withFileTypes: true }).flat
 });
 
 const routes = [
-  'page', 'shop/page', 'cart/page',
+  'page', 'shop/page', 'all-products/page', 'cart/page',
   'products/miroooo-x/page', 'products/miroooo-x2/page',
   'products/miroooo-x1-heads/page', 'products/miroooo-x2-heads/page',
   'pages/about-us/page', 'pages/contact-us/page', 'pages/faqs/page',

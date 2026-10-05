@@ -117,6 +117,7 @@ export function Header({
                       aria-controls="ShopDrawer"
                       aria-label="Open Shop drawer"
                       aria-current={
+                        pathname === "/all-products" ||
                         pathname === "/shop" ||
                         pathname.startsWith("/products/")
                           ? "page"

@@ -7,7 +7,7 @@ const routes = [
   ["/", "weekly", 1.0],
 
   // Storefront & Cart
-  ["/shop", "weekly", 0.9],
+  ["/all-products", "weekly", 0.9],
   ["/cart", "weekly", 0.8],
 
   // Products

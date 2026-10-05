@@ -54,7 +54,7 @@ export function CartDrawer() {
                   Your shopping bag is empty.
                 </h3>
                 <Link
-                  href="/shop"
+                  href="/all-products"
                   className="miroooo-empty-shop-btn"
                   onClick={closeCart}
                 >

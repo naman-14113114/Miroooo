@@ -68,7 +68,7 @@ export const GUIDES: GuideItem[] = [
     ],
     disclaimer: "Sources last checked 1 September 2026. This general information is not a diagnosis or a substitute for advice from your dental professional.",
     aside: {
-      card1: { title: "Compare the brushes", text: "See X1 and X2 features and pricing together.", linkText: "Visit the Miroooo shop →", linkUrl: "/shop" },
+      card1: { title: "Compare the brushes", text: "See X1 and X2 features and pricing together.", linkText: "Visit the Miroooo shop →", linkUrl: "/all-products" },
       card2: { title: "Next guide", text: "Make two minutes easier to repeat.", linkText: "Use a two-minute timer →", linkUrl: "/guides/how-to-use-two-minute-toothbrush-timer" },
     },
   },
@@ -151,7 +151,7 @@ export const GUIDES: GuideItem[] = [
     ],
     disclaimer: "Sources last checked 1 September 2026. Always confirm current requirements with your airline.",
     aside: {
-      card1: { title: "Compare travel features", text: "See case, charging and battery details.", linkText: "Compare X1 and X2 →", linkUrl: "/shop" },
+      card1: { title: "Compare travel features", text: "See case, charging and battery details.", linkText: "Compare X1 and X2 →", linkUrl: "/all-products" },
       card2: { title: "Care after the trip", text: "Know when the head needs changing.", linkText: "Replacement guide →", linkUrl: "/guides/how-often-replace-electric-toothbrush-head" },
     },
   },
@@ -193,7 +193,7 @@ export const GUIDES: GuideItem[] = [
       },
       {
         heading: "Which Miroooo brushes include pacing?",
-        content: "<p>See the current timer, mode, pressure-feedback and battery details on the <a href=\"/products/miroooo-x\">Miroooo X1</a> and <a href=\"/products/miroooo-x2\">Miroooo X2</a> product pages, or use the side-by-side <a href=\"/shop\">Miroooo comparison</a>.</p>",
+        content: "<p>See the current timer, mode, pressure-feedback and battery details on the <a href=\"/products/miroooo-x\">Miroooo X1</a> and <a href=\"/products/miroooo-x2\">Miroooo X2</a> product pages, or use the side-by-side <a href=\"/all-products\">Miroooo comparison</a>.</p>",
       },
     ],
     sources: [

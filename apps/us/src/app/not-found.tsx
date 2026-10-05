@@ -20,7 +20,7 @@ export default function NotFound() {
             Return to Home
           </Link>
           <Link
-            href="/shop"
+            href="/all-products"
             className="w-full sm:w-auto px-6 py-3 rounded-full bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition-colors border border-white/15"
           >
             Shop Collection
