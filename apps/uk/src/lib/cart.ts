@@ -143,15 +143,15 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = x2Count === 0 && (x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: brush 139, heads 20)
+  // Compare At calculations (base compare: X2 brush 139, X1 brush 129, heads 20)
   const x2Compare = x2Count * 139;
-  const x1Compare = x1Count * 139;
+  const x1Compare = x1Count * 129;
   const x2HeadsCompare = x2HeadsCount * 20;
   const x1HeadsCompare = x1HeadsCount * 20;
   const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare;
 
   // Base 50% savings on brushes
-  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (139 - 69);
+  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (129 - 59);
   const baseHeadsCompareSavings = x2HeadsCount * (20 - 10) + x1HeadsCount * (20 - 10);
 
   let x2BundlePromoDiscount = 0;
@@ -205,7 +205,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const headsBundleCount = x1HeadsCount || x2HeadsCount;
 
   const x2Net = x2Count * 69 - x2BundlePromoDiscount;
-  const x1Net = x1Count * 69 - x1BundleDiscount;
+  const x1Net = x1Count * 59 - x1BundleDiscount;
   const brushSubtotal = Math.max(0, x2Net + x1Net);
   const subtotal = Math.max(0, brushSubtotal + headsNet);
 

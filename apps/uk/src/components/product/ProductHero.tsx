@@ -182,12 +182,12 @@ export function ProductHero({
   };
 
   // Pricing calculations
-  const singlePrice = 69;
-  const singleCompare = 139;
-  const bundle2Price = 128;
-  const bundle2Compare = 278;
-  const bundle3Price = 177;
-  const bundle3Compare = 417;
+  const singlePrice = isX2 ? 69 : 59;
+  const singleCompare = isX2 ? 139 : 129;
+  const bundle2Price = isX2 ? 128 : 108;
+  const bundle2Compare = isX2 ? 278 : 258;
+  const bundle3Price = isX2 ? 177 : 147;
+  const bundle3Compare = isX2 ? 417 : 387;
 
   const currentPrice =
     selectedTier === 'single'
@@ -196,7 +196,13 @@ export function ProductHero({
       ? bundle2Price
       : bundle3Price;
 
-  const addToCartLabel = isSimpleBuybox
+  const addToCartLabel = isX2
+    ? (selectedTier === 'bundle-2'
+        ? 'Add to Cart + Free 2 Brush Heads'
+        : selectedTier === 'bundle-3'
+        ? 'Add to Cart + Free 4 Brush Heads'
+        : 'Add to Cart + 2 Free Heads')
+    : isSimpleBuybox
     ? `Add to Cart — £${(singlePrice * quantity).toFixed(2)}`
     : `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
 
@@ -535,7 +541,7 @@ export function ProductHero({
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                 <strong className="x2-urgency-banner__headline">
-                  Get X2 at price of X1 for today only
+                  Free pair of brush heads for today only
                 </strong>
               </div>
             </div>

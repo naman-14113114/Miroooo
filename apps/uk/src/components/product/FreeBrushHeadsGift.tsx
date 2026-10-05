@@ -10,8 +10,8 @@ function Checkmark() {
 
 export function FreeBrushHeadsGift() {
   return (
-    <section className={styles.section} id="special-autumn-sale-gifts" aria-labelledby="free-heads-title">
-      <h3 className={styles.heading} id="free-heads-title">Special Autumn Sale</h3>
+    <section className={styles.section} id="special-flash-sale-gifts" aria-labelledby="free-heads-title">
+      <h3 className={styles.heading} id="free-heads-title">Flash Sale</h3>
       <div className={styles.card}>
         <div className={styles.header}>
           <span className={styles.selectedCheck}><Checkmark /></span>

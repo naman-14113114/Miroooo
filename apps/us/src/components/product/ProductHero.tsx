@@ -198,7 +198,13 @@ export function ProductHero({
     ? bundle2Price
     : bundle3Price;
 
-  const addToCartLabel = isSimpleBuybox
+  const addToCartLabel = isX2
+    ? (selectedTier === 'bundle-2'
+        ? 'Add to Cart + Free 2 Brush Heads'
+        : selectedTier === 'bundle-3'
+        ? 'Add to Cart + Free 4 Brush Heads'
+        : 'Add to Cart + 2 Free Heads')
+    : isSimpleBuybox
     ? `Add to Cart — $${(singlePrice * quantity).toFixed(2)}`
     : `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
 
@@ -537,7 +543,7 @@ export function ProductHero({
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                 <strong className="x2-urgency-banner__headline">
-                  Get X2 at price of X1 for today only
+                  Free pair of brush heads for today only
                 </strong>
               </div>
             </div>
@@ -1362,12 +1368,12 @@ export function ProductHero({
                 </div>
               </div>
 
-              {/* Special Autumn Sale Free Gifts (Buudy 3-Card Grid Style) */}
+              {/* Flash Sale Free Gifts */}
               {isX2 && (
-                <section className="autumn-sale-gifts-wrap mb-8" id="special-autumn-sale-gifts" aria-label="Special Autumn Sale Free Gifts">
+                <section className="autumn-sale-gifts-wrap mb-8" id="special-flash-sale-gifts" aria-label="Flash Sale Free Gifts">
                   <div className="text-center mb-6 flex flex-col items-center">
                     <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2" style={{ margin: 0, fontWeight: 700 }}>
-                      Special Autumn Sale
+                      Flash Sale
                     </h3>
                     <p
                       className="inline-flex items-center justify-center gap-1.5 flex-wrap rounded-md px-3 py-1 text-xs font-bold tracking-wider uppercase"

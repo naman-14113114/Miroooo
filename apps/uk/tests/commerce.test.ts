@@ -57,28 +57,35 @@ function browserQuote(subtotal: number, discount = 0) {
 }
 
 test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', () => {
-  for (const brush of [x1Grey, x2Grey]) {
-    assert.equal(totals([brush]).finalSubtotal, 69);
-    assert.equal(totals([{ ...brush, quantity: 2 }]).finalSubtotal, 128);
-    assert.equal(totals([{ ...brush, quantity: 3 }]).finalSubtotal, 177);
-    assert.equal(totals([{ ...brush, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);
-    assert.equal(totals([{ ...brush, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 159);
-    assert.equal(totals([{ ...brush, quantity: 3 }]).unlockedGiftsCount, 2);
-  }
+  // X2 tests
+  assert.equal(totals([x2Grey]).finalSubtotal, 69);
+  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).finalSubtotal, 128);
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).finalSubtotal, 177);
+  assert.equal(totals([{ ...x2Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 159);
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 2);
   assert.equal(totals([x2Grey]).unlockedGiftsCount, 1);
   assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 62);
-  assert.equal(totals([x1Grey], ['MIROOOO']).finalSubtotal, 62);
   assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 79);
+
+  // X1 tests
+  assert.equal(totals([x1Grey]).finalSubtotal, 59);
+  assert.equal(totals([{ ...x1Grey, quantity: 2 }]).finalSubtotal, 108);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).finalSubtotal, 147);
+  assert.equal(totals([{ ...x1Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 97);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 132);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([x1Grey], ['MIROOOO']).finalSubtotal, 53);
 });
 
 test('persisted cart prices and identities are rebuilt from canonical UK products', () => {
   const [item] = normalizeCartItems([{ ...x1Grey, id: 'old-line', unitPrice: 1, comparePrice: 2, title: 'Stale', image: '/old.jpg', quantity: 2 }]);
-  assert.equal(item.unitPrice, 69);
-  assert.equal(item.comparePrice, 139);
+  assert.equal(item.unitPrice, 59);
+  assert.equal(item.comparePrice, 129);
   assert.equal(item.title, 'Miroooo X1 (Grey)');
   assert.equal(item.image, PRODUCTS['miroooo-x'].variants[0].image);
   assert.equal(item.id, 'old-line');
-  assert.equal(totals([item]).finalSubtotal, 128);
+  assert.equal(totals([item]).finalSubtotal, 108);
   assert.deepEqual(normalizeCartItems([{ ...x1Grey, productHandle: 'unknown' }]), []);
 });
 
@@ -101,9 +108,13 @@ function mockStandardCheckout(options: { currency?: string; price?: number; unav
       return new Response(null, { status: 302, headers: { location: `https://offer.miroooo.us/${'c'.repeat(256)}/checkout/${'a'.repeat(64)}` } });
     }
     if (url.includes('/checkout')) {
-      const lines = submitted.map((line) => ({ quantity: line.quantity + (options.wrongQuantity ? 1 : 0),
-        price: options.price ?? ([XPAGE_VARIANTS.x1_heads, XPAGE_VARIANTS.x2_heads].includes(line.variant_id as typeof XPAGE_VARIANTS.x1_heads) ? 10 : 69),
-        variant: { id: line.variant_id } }));
+      const isX1Variant = (id: string) => [XPAGE_VARIANTS.x1_silver, XPAGE_VARIANTS.x1_pink, XPAGE_VARIANTS.x1_grey].includes(id as any);
+      const isHead = (id: string) => [XPAGE_VARIANTS.x1_heads, XPAGE_VARIANTS.x2_heads].includes(id as any);
+      const lines = submitted.map((line) => ({
+        quantity: line.quantity + (options.wrongQuantity ? 1 : 0),
+        price: options.price ?? (isHead(line.variant_id) ? 10 : isX1Variant(line.variant_id) ? 59 : 69),
+        variant: { id: line.variant_id }
+      }));
       const amount = lines.reduce((sum, line) => sum + line.price * line.quantity, 0);
       return new Response(`<script>const tokenPath = '/checkout/${'a'.repeat(64)}'; const payload = {variants: ${JSON.stringify(lines)}}; new Intl.NumberFormat("en", {style:"currency", currency:"${options.currency || 'GBP'}"});</script><span class="total font-semibold">${options.currency === 'USD' ? '$' : '£'}${amount.toFixed(2)}</span>${browserQuote(amount)}`);
     }
@@ -115,15 +126,15 @@ function mockStandardCheckout(options: { currency?: string; price?: number; unav
 const head = (model: 'x1' | 'x2', quantity = 1) => ({ productHandle: `miroooo-${model}-heads`, variantId: PRODUCTS[`miroooo-${model}-heads`].variants[0].id, quantity });
 
 for (const [label, lines, amount] of [
-  ['X1 single', [x1Grey], 69],
+  ['X1 single', [x1Grey], 59],
   ['both head models', [head('x1', 2), head('x2', 4)], 50],
-  ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 276],
+  ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 236],
   ['X2 five brushes', [{ ...x2Grey, quantity: 5 }], 345],
-  ['mixed brushes', [x1Grey, x2Grey], 138],
-  ['brush and paid heads', [x1Grey, head('x2')], 79],
+  ['mixed brushes', [x1Grey, x2Grey], 128],
+  ['brush and paid heads', [x1Grey, head('x2')], 69],
   ['two brushes plus paid heads outside bundle', [{ ...x2Grey, quantity: 2 }, head('x1')], 138],
-  ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x2')], 187],
-  ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 217],
+  ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x2')], 157],
+  ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 207],
 ] as const) {
   test(`ordinary checkout accepts ${label} at original item prices`, async () => {
     const mock = mockStandardCheckout();
@@ -333,7 +344,7 @@ test('cart normalization safely resolves handle aliases and legacy storage items
   const normalized = normalizeCartItems(rawItems);
   assert.equal(normalized.length, 3);
   assert.equal(normalized[0].productHandle, 'miroooo-x');
-  assert.equal(normalized[0].unitPrice, 69);
+  assert.equal(normalized[0].unitPrice, 59);
   assert.equal(normalized[1].productHandle, 'miroooo-x2-heads');
   assert.equal(normalized[1].quantity, 2);
   assert.equal(normalized[2].productHandle, 'miroooo-x1-heads');

@@ -44,8 +44,8 @@ const US_COLLECTION_PRODUCTS: CollectionProduct[] = [
     category: 'toothbrushes',
     eyebrow: 'The Essential',
     description: 'Ultra-precise 32,000 VPM acoustic sonic motor, 51g featherweight unibody & 60-day battery life.',
-    price: '$69',
-    compareAt: '$139',
+    price: '$59',
+    compareAt: '$129',
     badge: '50% OFF',
     isSoldOut: false,
     image: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
@@ -876,7 +876,7 @@ export function ShopPage() {
                 </tr>
                 <tr>
                   <th>Price</th>
-                  <td><span style={{ fontWeight: 800, color: '#ffffff' }}>$69</span></td>
+                  <td><span style={{ fontWeight: 800, color: '#ffffff' }}>$59</span></td>
                   <td>
                     <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '6px' }}>
                       <span style={{ color: '#4ade80', fontWeight: 800 }}>$69</span>
@@ -911,7 +911,7 @@ export function ShopPage() {
                 <div style={{ flex: 1, textAlign: 'center', borderLeft: '1px solid rgba(255, 255, 255, 0.08)' }}>
                   <span style={{ display: 'inline-block', visibility: 'hidden', fontSize: '10px', padding: '2px 8px' }}>-</span>
                   <div style={{ fontWeight: 800, fontSize: '15px', color: '#ffffff' }}>Miroooo X1</div>
-                  <div style={{ fontSize: '12px', color: '#ffffff', fontWeight: 700 }}>$69 <s style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>$139</s></div>
+                  <div style={{ fontSize: '12px', color: '#ffffff', fontWeight: 700 }}>$59 <s style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>$129</s></div>
                 </div>
               </div>
 

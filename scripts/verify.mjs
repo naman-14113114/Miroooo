@@ -41,7 +41,7 @@ const cart = read('apps/uk/src/lib/cart.ts');
 for (const value of ["price: 69.0", "compareAt: 139.0", "price: 128.0", "price: 177.0", "freeHeadsCount: 2"]) {
   check(products.includes(value), `Current GBP offer value: ${value}`);
 }
-for (const value of ['normalizeCartItems', 'Math.round(brushSubtotal * 0.1)', 'x1Count * 69', 'x2Count * 69']) {
+for (const value of ['normalizeCartItems', 'Math.round(brushSubtotal * 0.1)', 'x1Count * 59', 'x2Count * 69']) {
   check(cart.includes(value), `Canonical cart rule: ${value}`);
 }
 const checkout = read('apps/uk/src/app/api/checkout/prepare/route.ts');

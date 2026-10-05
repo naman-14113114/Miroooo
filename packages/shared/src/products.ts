@@ -48,7 +48,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     description:
       "Ultra-precise 32,000 VPM acoustic sonic motor, 51g featherweight unibody chassis, 3 cleaning modes, and 60-day battery life with magnetic travel case included.",
     basePrice: 59.0,
-    baseCompareAt: 119.0,
+    baseCompareAt: 129.0,
     rating: 4.9,
     reviewCount: 4275,
     plusBaseProductId: "1000000675113473",
@@ -83,7 +83,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         quantity: 1,
         name: "BUY 1",
         basePrice: 59.0,
-        baseCompareAt: 119.0,
+        baseCompareAt: 129.0,
         freeHeadsCount: 0,
         savingText: () => "50% OFF",
         description: () => "Includes 1 Miroooo X1 set & 1 Travel Case",
@@ -93,9 +93,9 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         name: "BUY 2",
         badge: "Most Popular",
         basePrice: 108.0,
-        baseCompareAt: 238.0,
+        baseCompareAt: 258.0,
         freeHeadsCount: 1,
-        savingText: (m) => `SAVE ${formatMoney(convertPrice(130, m), m.currencySymbol)}`,
+        savingText: (m) => `SAVE ${formatMoney(convertPrice(150, m), m.currencySymbol)}`,
         description: () => "Includes 2 Miroooo X1 sets + 1 FREE 2-Pack Brush Heads Set",
       },
       {
@@ -103,9 +103,9 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         name: "BUY 3",
         badge: "BEST VALUE",
         basePrice: 147.0,
-        baseCompareAt: 357.0,
+        baseCompareAt: 387.0,
         freeHeadsCount: 2,
-        savingText: (m) => `SAVE ${formatMoney(convertPrice(210, m), m.currencySymbol)}`,
+        savingText: (m) => `SAVE ${formatMoney(convertPrice(240, m), m.currencySymbol)}`,
         description: () => "Includes 3 Miroooo X1 sets + 2 FREE 2-Pack Brush Heads Sets",
       },
     ],
@@ -468,13 +468,13 @@ import { MARKETS } from "./market";
 
 export function getMirooooX(market: MarketConfig): ProductPageContent {
   const p1 = convertPrice(59.0, market);
-  const c1 = convertPrice(119.0, market);
+  const c1 = convertPrice(129.0, market);
   const p2 = convertPrice(108.0, market);
-  const c2 = convertPrice(238.0, market);
-  const s2 = convertPrice(130.0, market);
+  const c2 = convertPrice(258.0, market);
+  const s2 = convertPrice(150.0, market);
   const p3 = convertPrice(147.0, market);
-  const c3 = convertPrice(357.0, market);
-  const s3 = convertPrice(210.0, market);
+  const c3 = convertPrice(387.0, market);
+  const s3 = convertPrice(240.0, market);
   const giftVal = convertPrice(10.0, market);
 
   return {
