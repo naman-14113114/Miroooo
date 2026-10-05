@@ -96,10 +96,10 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const h2 = PRODUCTS['miroooo-x2-heads'];
   const hasPaidHeads = x1HeadsCount + x2HeadsCount > 0;
   const isX1Bundle = !hasPaidHeads && x2Count === 0 && (x1Count === 2 || x1Count === 3);
-  const isX2Bundle = !hasPaidHeads && x1Count === 0 && (x2Count === 2 || x2Count === 3);
-  const tier = isX1Bundle ? x1.bundles[x1Count - 1] : isX2Bundle ? x2.bundles[x2Count - 1] : undefined;
+  const isX2Bundle = !hasPaidHeads && x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
+  const tier = isX1Bundle ? x1.bundles[x1Count - 1] : isX2Bundle && x2Count > 1 ? x2.bundles[x2Count - 1] : undefined;
   const extraX1BrushHeadSets = isX1Bundle ? x1Count - 1 : 0;
-  const extraBrushHeadSets = isX2Bundle ? x2Count - 1 : 0;
+  const extraBrushHeadSets = isX2Bundle ? (x2Count === 1 ? 1 : x2Count - 1) : 0;
   const brushBase = x1Count * cents(x1.price) + x2Count * cents(x2.price);
   const headsBase = x1HeadsCount * cents(h1.price) + x2HeadsCount * cents(h2.price);
   const brushNet = tier ? cents(tier.price) : brushBase;
@@ -112,7 +112,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const compareAtCents = x1Count * cents(x1.compareAt) + x2Count * cents(x2.compareAt)
     + x1HeadsCount * cents(h1.compareAt) + x2HeadsCount * cents(h2.compareAt);
   const giftsValue = roundMoney(extraX1BrushHeadSets * h1.price + extraBrushHeadSets * h2.price);
-  const bundlePromoDiscount = isX2Bundle ? (brushBase - brushNet) / 100 : 0;
+  const bundlePromoDiscount = isX2Bundle && x2Count > 1 ? (brushBase - brushNet) / 100 : 0;
   const bundleSavings = (compareAtCents - brushBase - headsBase) / 100
     + (isX1Bundle ? (brushBase - brushNet) / 100 : 0);
   const promoDiscount = (brushNet - promoNet) / 100;
@@ -122,7 +122,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     compareAt: compareAtCents / 100,
     bundleSavings: roundMoney(bundleSavings),
     bundlePromoDiscount,
-    bundlePromoName: isX2Bundle ? `Buy ${x2Count} bundle (${formatUSD(bundlePromoDiscount)} extra saving)` : '',
+    bundlePromoName: isX2Bundle && x2Count > 1 ? `Buy ${x2Count} bundle (${formatUSD(bundlePromoDiscount)} extra saving)` : '',
     unlockedGiftsCount: extraX1BrushHeadSets + extraBrushHeadSets,
     giftsValue,
     promoDiscount,

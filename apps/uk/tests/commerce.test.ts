@@ -12,19 +12,19 @@ const totals = (lines: object[], promos: string[] = []) => calculateTotals(norma
 
 function mockPublishedOffer(quantity: 1 | 2, price = 69, product: 'x1' | 'x2' = 'x2') {
   const bundle = XPAGE_BUNDLES[product];
-  const option = quantity === 1 ? bundle.buy1 : bundle.buy2;
+  const option = quantity === 1 ? ((bundle as any).buy1_freehead || bundle.buy1) : bundle.buy2;
   const published = {
     id: bundle.id,
     status: 'ACTIVE',
     options: [{
       id: option.optionId,
       discount_target: quantity === 1 ? null : 'PER_ITEM',
-      discount_type: quantity === 1 ? null : 'PERCENTAGE',
+      discount_type: 'PERCENTAGE',
       discount_amount: quantity === 1 ? 0 : 7.24,
       conditions: [{ id: option.conditionId, quantity, product: {
         status: 'ACTIVE', variants: [{ id: XPAGE_VARIANTS[`${product}_grey`], is_visible: true, price }],
       } }],
-      offered: quantity === 1 ? [] : [{ id: bundle.buy2.offeredId, quantity: 1, discount_type: 'PERCENTAGE', discount_amount: '100.00', product: {
+      offered: [{ id: (option as any).offeredId || bundle.buy2.offeredId, quantity: 1, discount_type: 'PERCENTAGE', discount_amount: '100.00', product: {
         status: 'ACTIVE', variants: [{ id: XPAGE_VARIANTS[`${product}_heads`], is_visible: true, price: 10 }],
       } }],
     }],
@@ -62,6 +62,7 @@ test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', ()
     assert.equal(totals([{ ...brush, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 159);
     assert.equal(totals([{ ...brush, quantity: 3 }]).unlockedGiftsCount, 2);
   }
+  assert.equal(totals([x2Grey]).unlockedGiftsCount, 1);
   assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 62);
   assert.equal(totals([x1Grey], ['MIROOOO']).finalSubtotal, 62);
   assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 79);
@@ -111,7 +112,7 @@ function mockStandardCheckout(options: { currency?: string; price?: number; unav
 const head = (model: 'x1' | 'x2', quantity = 1) => ({ productHandle: `miroooo-${model}-heads`, variantId: PRODUCTS[`miroooo-${model}-heads`].variants[0].id, quantity });
 
 for (const [label, lines, amount] of [
-  ['X1 single', [x1Grey], 69], ['X2 single', [x2Grey], 69],
+  ['X1 single', [x1Grey], 69],
   ['X1 heads', [head('x1')], 10], ['X2 heads', [head('x2', 3)], 30],
   ['both head models', [head('x1', 2), head('x2', 4)], 60],
   ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 276],
@@ -136,6 +137,30 @@ for (const [label, lines, amount] of [
     } finally { mock.restore(); }
   });
 }
+
+test('ordinary checkout accepts X2 single with 1 free head via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 1, price: 69, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 1, price: 10, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">£69.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(79, 10)}`);
+    }
+    return new Response(mockPublishedOffer(1));
+  };
+  try {
+    const response = await POST(request([x2Grey]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
 
 test('legacy XPage variantIds resolves to a standard X1 cart', async () => {
   const mock = mockStandardCheckout();

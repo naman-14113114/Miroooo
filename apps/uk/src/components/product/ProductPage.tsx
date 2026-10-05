@@ -22,7 +22,6 @@ import { X1TriCleaningModes } from './X1TriCleaningModes';
 import { BrushStylePrecision } from './BrushStylePrecision';
 import { DiscoverOralHygiene } from './DiscoverOralHygiene';
 import { LuxuriousProfessionalism } from './LuxuriousProfessionalism';
-import { FreeGiftsSection } from './FreeGiftsSection';
 
 interface ProductPageProps {
   handle: string;
@@ -61,8 +60,6 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: Pr
       />
 
       <ShippingMarquee />
-
-      {isSimpleBuybox && <FreeGiftsSection isX2={isX2} />}
 
       {isX2 ? (
         /* Miroooo X2 Complete Section Sequence */

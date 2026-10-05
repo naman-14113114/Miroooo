@@ -46,6 +46,13 @@ export const XPAGE_BUNDLES = {
       conditionId: "a2d1e8dd-f806-4426-875c-7bc39fa38aa8",
       offeredQty: 0,
     },
+    buy1_freehead: {
+      optionId: "a2e7dcbe-d7d3-475d-b836-d76cb5016418",
+      conditionId: "a2e7dcbe-fb5f-442e-a788-aa557670dfa6",
+      offeredId: "a2e7dcbe-e64b-4f1e-af7c-d61e32554743",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 1,
+    },
     buy2: {
       optionId: "a2d0d131-3f1f-47c6-bfdb-112fd97f8952",
       conditionId: "a2d1e8de-5452-48cd-a8a0-f7e5a7a960e7",
@@ -512,8 +519,11 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
   let bundleKey: string | null = null;
 
   if (quantity === 1) {
-    if (freeHeadQty > 0) return null;
-    if (paidHeadQty === 0) {
+    if (product === "x2" && freeHeadQty === 1 && paidHeadQty === 0) {
+      bundleKey = "buy1_freehead";
+    } else if (freeHeadQty > 0) {
+      return null;
+    } else if (paidHeadQty === 0) {
       bundleKey = isPromo ? "promoBuy1" : "buy1";
     } else if (paidHeadQty === 1) {
       bundleKey = isPromo ? "promoBuy1_1head" : null;

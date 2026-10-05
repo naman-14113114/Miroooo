@@ -102,8 +102,8 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isHeadsOnly = hasPaidHeads && x2Count === 0 && x1Count === 0;
 
   // Pure bundle qualification:
-  // ONLY if NO paid heads are in cart, and exactly 2 or 3 of a single brush model
-  const isX2Bundle = !hasPaidHeads && x1Count === 0 && (x2Count === 2 || x2Count === 3);
+  // ONLY if NO paid heads are in cart, and exactly 1, 2 or 3 for X2, or 2 or 3 for X1
+  const isX2Bundle = !hasPaidHeads && x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = !hasPaidHeads && x2Count === 0 && (x1Count === 2 || x1Count === 3);
 
   // Compare At calculations
@@ -121,7 +121,11 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let extraBrushHeadSets = 0;
 
   if (isX2Bundle) {
-    if (x2Count === 2) {
+    if (x2Count === 1) {
+      x2BundlePromoDiscount = 0;
+      x2BundlePromoName = '';
+      extraBrushHeadSets = 1;
+    } else if (x2Count === 2) {
       x2BundlePromoDiscount = 10;
       x2BundlePromoName = 'Buy 2 bundle (£10 extra saving)';
       extraBrushHeadSets = 1;

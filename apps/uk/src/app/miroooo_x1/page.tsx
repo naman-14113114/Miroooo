@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Miroooo X1 Sonic Electric Toothbrush | Ultralight 51g Unibody UK",
   description:
     "Miroooo X1 delivers 32,000 VPM acoustic micro-vibrations, 51g aerospace aluminium body, 3 modes, and 60+ days of battery life. Free UK delivery.",
-  alternates: { canonical: "https://www.trymiroooo.com/products/miroooo-x" },
+  alternates: { canonical: "https://www.trymiroooo.com/miroooo_x1" },
 };
 
 export default async function Page(props: {
