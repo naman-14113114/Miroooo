@@ -271,6 +271,102 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     ],
     highlights: ["45° Bass Sweep Coupling", "DuPont Precision Bristles", "100% Miroooo X2 Compatibility"],
   },
+
+  "wall-mounted-dock": {
+    id: "wall-mounted-dock",
+    handle: "wall-mounted-dock",
+    name: "Miroooo Magnetic Wall Mounted Dock",
+    model: "Wall Mount Dock",
+    headline: "Floating magnetic wall storage for Miroooo.",
+    description:
+      "Effortless bathroom mirror & tile mounting. Floating magnetic wall storage dock engineered for Miroooo X1 & Miroooo X2 Sonic Electric Toothbrushes with 3M Command™ damage-free adhesive.",
+    basePrice: 9.0,
+    baseCompareAt: 18.0,
+    rating: 4.9,
+    reviewCount: 4275,
+    plusBaseProductId: "wall-mounted-dock",
+    variants: [
+      {
+        id: "wall-mounted-dock-default",
+        name: "Default",
+        color: "Default",
+        swatch: "#888888",
+        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted.webp",
+        checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted.webp",
+      },
+    ],
+    specs: [
+      { label: "Compatibility", value: "Miroooo X1 & Miroooo X2 Sonic Electric Toothbrushes" },
+      { label: "Mounting", value: "3M Command™ damage-free adhesive backing" },
+      { label: "Material", value: "High-grade aerospace polymer with magnetic docking core" },
+      { label: "Dimensions", value: "42mm x 38mm x 18mm (18g)" },
+    ],
+    highlights: ["3M Command™ Damage-Free Adhesive", "Magnetic Docking Core", "X1 & X2 Universal Fit"],
+  },
+
+  "travel-case": {
+    id: "travel-case",
+    handle: "travel-case",
+    name: "Miroooo Luxury Magnetic Travel Case",
+    model: "Travel Case",
+    headline: "Slim, magnetic travel protection for Miroooo.",
+    description:
+      "Ventilated acoustic travel pod. Slim, magnetic travel protection engineered with quad-magnetic snap closure and micro-ventilation ports for Miroooo X1 & Miroooo X2.",
+    basePrice: 20.0,
+    baseCompareAt: 40.0,
+    rating: 4.9,
+    reviewCount: 4275,
+    plusBaseProductId: "travel-case",
+    variants: [
+      {
+        id: "travel-case-default",
+        name: "Default",
+        color: "Default",
+        swatch: "#888888",
+        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
+        checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
+      },
+    ],
+    specs: [
+      { label: "Compatibility", value: "Miroooo X1 & Miroooo X2 Handles + 1 Brush Head" },
+      { label: "Closure", value: "Quad-magnetic snap closure with micro-ventilation ports" },
+      { label: "Material", value: "Matte soft-touch impact-resistant casing" },
+      { label: "Dimensions", value: "215mm x 35mm x 28mm (62g)" },
+    ],
+    highlights: ["Quad-Magnetic Snap Closure", "Micro-Ventilated Ports", "Impact-Resistant Soft-Touch Shell"],
+  },
+
+  "x1-charger": {
+    id: "x1-charger",
+    handle: "x1-charger",
+    name: "Miroooo X1 Magnetic Fast Charger",
+    model: "X1 Charger",
+    headline: "High-speed magnetic inductive charging dock.",
+    description:
+      "Fast 2-hour full charge for 60+ days battery. High-speed magnetic inductive charging dock exclusively for Miroooo X1 Sonic Electric Toothbrush.",
+    basePrice: 20.0,
+    baseCompareAt: 40.0,
+    rating: 4.9,
+    reviewCount: 4275,
+    plusBaseProductId: "x1-charger",
+    variants: [
+      {
+        id: "x1-charger-default",
+        name: "Default",
+        color: "Default",
+        swatch: "#888888",
+        image: "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
+        checkoutImage: "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
+      },
+    ],
+    specs: [
+      { label: "Compatibility", value: "Miroooo X1 Sonic Electric Toothbrush exclusively" },
+      { label: "Cable", value: "Integrated 1.0m braided USB-A to magnetic inductive dock" },
+      { label: "Input", value: "5V/1A USB fast charging" },
+      { label: "Safety", value: "Over-voltage, short-circuit and temperature surge protection" },
+    ],
+    highlights: ["Magnetic Inductive Charging Dock", "Fast 2-Hour Full Charge", "Integrated 1.0m Braided Cable", "Over-Voltage & Surge Protection"],
+  },
 };
 
 /**
@@ -412,4 +508,31 @@ export function getMirooooX2(market: MarketConfig): ProductPageContent {
 
 export const mirooooX: ProductPageContent = getMirooooX(MARKETS.uk);
 export const mirooooX2: ProductPageContent = getMirooooX2(MARKETS.uk);
+
+export function getProduct(handle: string): ProductCatalogItem | undefined {
+  if (handle === "miroooo_x1") return PRODUCTS["miroooo-x"];
+  if (handle === "miroooo_x2") return PRODUCTS["miroooo-x2"];
+  if (handle === "wall_mounted_dock") return PRODUCTS["wall-mounted-dock"];
+  if (handle === "travel_case") return PRODUCTS["travel-case"];
+  if (handle === "x1_charger") return PRODUCTS["x1-charger"];
+  return PRODUCTS[handle];
+}
+
+export function getAllProducts(): ProductCatalogItem[] {
+  return Object.values(PRODUCTS);
+}
+
+export function getBrushes(): ProductCatalogItem[] {
+  return [PRODUCTS["miroooo-x2"], PRODUCTS["miroooo-x"]];
+}
+
+export function getAccessories(): ProductCatalogItem[] {
+  return [
+    PRODUCTS["miroooo-x2-heads"],
+    PRODUCTS["miroooo-x1-heads"],
+    PRODUCTS["wall-mounted-dock"],
+    PRODUCTS["travel-case"],
+    PRODUCTS["x1-charger"],
+  ];
+}
 

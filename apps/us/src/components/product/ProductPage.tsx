@@ -38,10 +38,15 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: Pr
     notFound();
   }
 
-  const isHeads = handle === 'miroooo-x1-heads' || handle === 'miroooo-x2-heads';
+  const isAccessory =
+    handle === 'miroooo-x1-heads' ||
+    handle === 'miroooo-x2-heads' ||
+    handle === 'wall-mounted-dock' ||
+    handle === 'travel-case' ||
+    handle === 'x1-charger';
   const isX2 = handle === 'miroooo-x2';
 
-  if (isHeads) {
+  if (isAccessory) {
     return (
       <main className="product-page-root heads-product-page bg-[#080909] min-h-screen text-white">
         <HeadsProductHero product={product} />

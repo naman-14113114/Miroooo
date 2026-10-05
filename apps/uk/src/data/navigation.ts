@@ -13,7 +13,7 @@ export interface NavGroup {
 export const HEADER_NAV = [
   {
     label: 'Shop',
-    href: '/shop',
+    href: '/all-products',
     hasDropdown: true,
     groups: [
       {
@@ -45,6 +45,21 @@ export const HEADER_NAV = [
             href: '/products/miroooo-x1-heads',
             description: 'Micro-diamond polished replacement heads',
           },
+          {
+            label: 'Luxury Travel Case',
+            href: '/products/travel-case',
+            description: 'Slim ventilated magnetic travel shell',
+          },
+          {
+            label: 'Wall-Mounted Dock',
+            href: '/products/wall-mounted-dock',
+            description: 'Magnetic floating wall & mirror mount',
+          },
+          {
+            label: 'X1 Fast Charger',
+            href: '/products/x1-charger',
+            description: 'High-speed magnetic induction dock',
+          },
         ],
       },
     ],
@@ -65,6 +80,9 @@ export const DRAWER_MENU = {
     accessories: [
       { label: 'Miroooo X2 Heads', href: '/products/miroooo-x2-heads' },
       { label: 'Miroooo X1 Heads', href: '/products/miroooo-x1-heads' },
+      { label: 'Luxury Travel Case', href: '/products/travel-case' },
+      { label: 'Wall-Mounted Dock', href: '/products/wall-mounted-dock' },
+      { label: 'X1 Fast Charger', href: '/products/x1-charger' },
     ],
   },
   pages: [
@@ -84,7 +102,10 @@ export const FOOTER_NAV = {
       { label: 'Miroooo X1 Essential', href: '/products/miroooo-x' },
       { label: 'Miroooo X2 Heads (2-Pack)', href: '/products/miroooo-x2-heads' },
       { label: 'Miroooo X1 Heads (2-Pack)', href: '/products/miroooo-x1-heads' },
-      { label: 'Shop Entire Collection', href: '/shop' },
+      { label: 'Luxury Travel Case', href: '/products/travel-case' },
+      { label: 'Wall-Mounted Dock', href: '/products/wall-mounted-dock' },
+      { label: 'X1 Fast Charger', href: '/products/x1-charger' },
+      { label: 'Shop Entire Collection', href: '/all-products' },
     ],
   },
   guides: {

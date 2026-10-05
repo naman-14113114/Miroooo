@@ -437,11 +437,177 @@ export const PRODUCTS: Record<string, Product> = {
       '2x Transparent Hygienic Travel Caps',
     ],
   },
+
+  'wall-mounted-dock': {
+    id: 'wall-mounted-dock',
+    handle: 'wall-mounted-dock',
+    name: 'Miroooo Magnetic Wall Mounted Dock',
+    model: 'Wall Mount Dock',
+    headline: 'Floating magnetic wall storage for Miroooo.',
+    subtitle: 'Effortless bathroom mirror & tile mounting.',
+    description:
+      'Floating magnetic wall storage dock for Miroooo X1 & Miroooo X2 Sonic Electric Toothbrushes. Features 3M Command™ damage-free adhesive backing and aerospace polymer magnetic core for effortless mirror and tile mounting.',
+    price: 9.0,
+    compareAt: 18.0,
+    formattedPrice: formatUSD(9.0),
+    formattedCompareAt: formatUSD(18.0),
+    rating: 4.9,
+    reviewCount: 4275,
+    customerCount: '4,275',
+    plusBaseProductId: '1000000675616059',
+    defaultQuantity: 1,
+    variants: [
+      {
+        id: '1000020718937118',
+        name: 'Default',
+        color: 'Default',
+        swatch: '#888888',
+        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted.webp',
+        checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted.webp',
+      },
+    ],
+    bundles: [],
+    specs: [
+      { label: 'Compatibility', value: 'Miroooo X1 & Miroooo X2 Sonic Electric Toothbrushes' },
+      { label: 'Mounting', value: '3M Command™ damage-free adhesive backing' },
+      { label: 'Material', value: 'High-grade aerospace polymer with magnetic docking core' },
+      { label: 'Dimensions', value: '42mm x 38mm x 18mm (18g)' },
+    ],
+    highlights: [
+      '3M Command™ Damage-Free Adhesive Backing',
+      'High-Grade Aerospace Magnetic Docking Core',
+      'Miroooo X1 & X2 Universal Compatibility',
+      'Minimalist Bathroom Space-Saving Floating Design',
+    ],
+    gifts: [],
+    galleryImages: [
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted.webp', alt: 'Miroooo Magnetic Wall Mounted Dock Storage', width: 800, height: 800 },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp', alt: 'Miroooo Magnetic Wall Mounted Dock Storage Cradle', width: 800, height: 800 },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wall-mounted-storage.webp', alt: 'Miroooo Wall Mounted Dock Grey Storage', width: 800, height: 800 },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-wall-mounted-storage.webp', alt: 'Miroooo Wall Mounted Dock Pink Storage', width: 800, height: 800 },
+    ],
+    boxContents: [
+      '1x Miroooo Magnetic Wall & Mirror Storage Mount',
+      '1x 3M Command™ Damage-Free Adhesive Strip',
+      '1x Quick Installation & Surface Guide',
+    ],
+  },
+
+  'travel-case': {
+    id: 'travel-case',
+    handle: 'travel-case',
+    name: 'Miroooo Luxury Magnetic Travel Case',
+    model: 'Travel Case',
+    headline: 'Slim, magnetic travel protection for Miroooo.',
+    subtitle: 'Ventilated acoustic travel pod.',
+    description:
+      'Slim, magnetic travel protection for Miroooo sonic electric toothbrushes. Features quad-magnetic snap closure, micro-ventilation ports, and matte soft-touch impact-resistant casing engineered to hold 1 handle and 1 brush head securely.',
+    price: 20.0,
+    compareAt: 40.0,
+    formattedPrice: formatUSD(20.0),
+    formattedCompareAt: formatUSD(40.0),
+    rating: 4.9,
+    reviewCount: 4275,
+    customerCount: '4,275',
+    plusBaseProductId: '1000000675616060',
+    defaultQuantity: 1,
+    variants: [
+      {
+        id: '1000020718937119',
+        name: 'Default',
+        color: 'Default',
+        swatch: '#888888',
+        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
+        checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
+      },
+    ],
+    bundles: [],
+    specs: [
+      { label: 'Compatibility', value: 'Miroooo X1 & Miroooo X2 Handles + 1 Brush Head' },
+      { label: 'Closure', value: 'Quad-magnetic snap closure with micro-ventilation ports' },
+      { label: 'Material', value: 'Matte soft-touch impact-resistant casing' },
+      { label: 'Dimensions', value: '215mm x 35mm x 28mm (62g)' },
+    ],
+    highlights: [
+      'Quad-Magnetic Snap Closure',
+      'Micro-Ventilation Acoustic Air Ports',
+      'Matte Soft-Touch Impact-Resistant Shell',
+      'Holds 1 Miroooo Handle + 1 Brush Head',
+    ],
+    gifts: [],
+    galleryImages: [
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp', alt: 'Miroooo Luxury Magnetic Travel Case Lifestyle', width: 800, height: 800 },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ventilated-travel-case.webp', alt: 'Miroooo Ventilated Magnetic Travel Case', width: 800, height: 800 },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp', alt: 'Miroooo Travel Case Handbag Portability', width: 800, height: 800 },
+      { src: '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-portable-luxury-travel-case.webp', alt: 'Miroooo Portable Luxury Travel Case', width: 800, height: 800 },
+    ],
+    boxContents: [
+      '1x Miroooo Luxury Magnetic Travel Case',
+      '1x Micro-Ventilated Interior Cushion Insert',
+    ],
+  },
+
+  'x1-charger': {
+    id: 'x1-charger',
+    handle: 'x1-charger',
+    name: 'Miroooo X1 Magnetic Fast Charger',
+    model: 'X1 Charger',
+    headline: 'High-speed magnetic inductive charging dock.',
+    subtitle: 'Fast 2-hour full charge for 60+ days battery.',
+    description:
+      'High-speed magnetic inductive charging dock exclusively for Miroooo X1 Sonic Electric Toothbrush. Features fast 2-hour full charge delivering 60+ days of battery, integrated 1.0m braided USB cable, and complete multi-surge safety protection.',
+    price: 20.0,
+    compareAt: 40.0,
+    formattedPrice: formatUSD(20.0),
+    formattedCompareAt: formatUSD(40.0),
+    rating: 4.9,
+    reviewCount: 4275,
+    customerCount: '4,275',
+    plusBaseProductId: '1000000675616061',
+    defaultQuantity: 1,
+    variants: [
+      {
+        id: '1000020718937120',
+        name: 'Default',
+        color: 'Default',
+        swatch: '#888888',
+        image: '/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png',
+        checkoutImage: '/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png',
+      },
+    ],
+    bundles: [],
+    specs: [
+      { label: 'Compatibility', value: 'Miroooo X1 Sonic Electric Toothbrush exclusively' },
+      { label: 'Cable', value: 'Integrated 1.0m braided USB-A to magnetic inductive dock' },
+      { label: 'Input', value: '5V/1A USB fast charging' },
+      { label: 'Safety', value: 'Over-voltage, short-circuit and temperature surge protection' },
+    ],
+    highlights: [
+      'High-Speed Magnetic Inductive Charging Base',
+      'Fast 2-Hour Full Charge (60+ Days Battery)',
+      'Integrated 1.0m Braided USB-A Cable',
+      'Over-Voltage, Short-Circuit & Thermal Protection',
+    ],
+    gifts: [],
+    galleryImages: [
+      { src: '/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png', alt: 'Miroooo Toothbrush on White Charging Dock', width: 800, height: 800 },
+      { src: '/assets_ref/x/gallery/Rose-gold-toothbrush-on-MIROOOO-charging-dock.png', alt: 'Rose Gold Toothbrush on Miroooo Charging Dock', width: 800, height: 800 },
+      { src: '/assets_ref/x/gallery/White-toothbrush-with-subtle-MIROOOO-dock-logo.webp', alt: 'White Toothbrush with Subtle Miroooo Dock Logo', width: 800, height: 800 },
+    ],
+    boxContents: [
+      '1x Miroooo X1 Magnetic Inductive Fast Charging Dock',
+      '1x Integrated 1.0m Braided USB-A Cable',
+      '1x Safety & Charging Manual',
+    ],
+  },
 };
 
 export function getProduct(handle: string): Product | undefined {
   if (handle === 'miroooo_x1') return PRODUCTS['miroooo-x'];
   if (handle === 'miroooo_x2') return PRODUCTS['miroooo-x2'];
+  if (handle === 'wall_mounted_dock') return PRODUCTS['wall-mounted-dock'];
+  if (handle === 'travel_case') return PRODUCTS['travel-case'];
+  if (handle === 'x1_charger') return PRODUCTS['x1-charger'];
   return PRODUCTS[handle];
 }
 
@@ -454,5 +620,11 @@ export function getBrushes(): Product[] {
 }
 
 export function getAccessories(): Product[] {
-  return [PRODUCTS['miroooo-x2-heads'], PRODUCTS['miroooo-x1-heads']];
+  return [
+    PRODUCTS['wall-mounted-dock'],
+    PRODUCTS['travel-case'],
+    PRODUCTS['x1-charger'],
+    PRODUCTS['miroooo-x2-heads'],
+    PRODUCTS['miroooo-x1-heads'],
+  ];
 }

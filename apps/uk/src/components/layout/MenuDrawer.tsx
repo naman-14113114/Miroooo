@@ -13,6 +13,7 @@ const sections = [
         eyebrow: "The Essential",
         image: "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
         price: 69,
+        comparePrice: 139,
       },
       {
         handle: "miroooo-x2",
@@ -21,12 +22,20 @@ const sections = [
         image:
           "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-upright-grip.webp",
         price: 69,
+        comparePrice: 139,
       },
     ],
   },
   {
     title: "Accessories",
     products: [
+      {
+        handle: "miroooo-x2-heads",
+        title: "Miroooo X2 Heads",
+        eyebrow: "Replacement",
+        image: "/assets_ref/x2/heads/B1.webp",
+        price: 10,
+      },
       {
         handle: "miroooo-x1-heads",
         title: "Miroooo X1 Heads",
@@ -35,11 +44,31 @@ const sections = [
         price: 10,
       },
       {
-        handle: "miroooo-x2-heads",
-        title: "Miroooo X2 Heads",
-        eyebrow: "Replacement",
-        image: "/assets_ref/x2/heads/B1.webp",
-        price: 10,
+        handle: "travel-case",
+        title: "Luxury Travel Case",
+        eyebrow: "Protection",
+        image:
+          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
+        price: 20,
+        comparePrice: 40,
+      },
+      {
+        handle: "wall-mounted-dock",
+        title: "Wall-Mounted Dock",
+        eyebrow: "Storage",
+        image:
+          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted.webp",
+        price: 9,
+        comparePrice: 18,
+      },
+      {
+        handle: "x1-charger",
+        title: "X1 Fast Charger",
+        eyebrow: "Charging",
+        image:
+          "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
+        price: 20,
+        comparePrice: 40,
       },
     ],
   },
@@ -120,8 +149,10 @@ export function ShopDrawer({ isOpen, onClose }: DrawerProps) {
                         </h3>
                         <span className="shop-drawer__price">
                           £{product.price}{" "}
-                          {product.price === 69 && (
-                            <s className="shop-drawer__compare">£139</s>
+                          {product.comparePrice && (
+                            <s className="shop-drawer__compare">
+                              £{product.comparePrice}
+                            </s>
                           )}
                         </span>
                       </div>

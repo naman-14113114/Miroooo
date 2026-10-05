@@ -27,16 +27,45 @@ const sections = [
     title: "Accessories",
     products: [
       {
-        handle: "miroooo-x1-heads",
-        title: "Miroooo X1 Heads",
-        eyebrow: "Replacement",
-        image: "/assets_ref/x/heads/B1.webp",
-      },
-      {
         handle: "miroooo-x2-heads",
         title: "Miroooo X2 Heads",
         eyebrow: "Replacement",
         image: "/assets_ref/x2/heads/B1.webp",
+        fallbackPrice: "$10",
+      },
+      {
+        handle: "miroooo-x1-heads",
+        title: "Miroooo X1 Heads",
+        eyebrow: "Replacement",
+        image: "/assets_ref/x/heads/B1.webp",
+        fallbackPrice: "$10",
+      },
+      {
+        handle: "travel-case",
+        title: "Luxury Travel Case",
+        eyebrow: "Protection",
+        image:
+          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
+        fallbackPrice: "$20",
+        fallbackCompareAt: "$40",
+      },
+      {
+        handle: "wall-mounted-dock",
+        title: "Wall-Mounted Dock",
+        eyebrow: "Storage",
+        image:
+          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted.webp",
+        fallbackPrice: "$9",
+        fallbackCompareAt: "$18",
+      },
+      {
+        handle: "x1-charger",
+        title: "X1 Fast Charger",
+        eyebrow: "Charging",
+        image:
+          "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
+        fallbackPrice: "$20",
+        fallbackCompareAt: "$40",
       },
     ],
   },
@@ -116,9 +145,9 @@ export function ShopDrawer({ isOpen, onClose }: DrawerProps) {
                           {product.title}
                         </h3>
                         <span className="shop-drawer__price">
-                          {PRODUCTS[product.handle].formattedPrice}{" "}
-                          {!product.handle.endsWith('-heads') && (
-                            <s className="shop-drawer__compare">{PRODUCTS[product.handle].formattedCompareAt}</s>
+                          {PRODUCTS[product.handle]?.formattedPrice || (product as any).fallbackPrice}{" "}
+                          {(PRODUCTS[product.handle]?.formattedCompareAt || (product as any).fallbackCompareAt) && !product.handle.endsWith('-heads') && (
+                            <s className="shop-drawer__compare">{PRODUCTS[product.handle]?.formattedCompareAt || (product as any).fallbackCompareAt}</s>
                           )}
                         </span>
                       </div>
