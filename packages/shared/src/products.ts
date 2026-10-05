@@ -142,7 +142,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         name: "Silver",
         color: "Silver",
         swatch: "#e5e5e5",
-        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
+        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp",
         checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp",
       },
       {
@@ -150,7 +150,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         name: "Grey",
         color: "Grey",
         swatch: "#737373",
-        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp",
+        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp",
         checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp",
       },
       {
@@ -158,7 +158,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         name: "Pink",
         color: "Pink",
         swatch: "#f2a7b3",
-        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp",
+        image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp",
         checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp",
       },
     ],

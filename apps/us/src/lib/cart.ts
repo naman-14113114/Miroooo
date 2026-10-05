@@ -134,11 +134,11 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const h1 = PRODUCTS['miroooo-x1-heads'];
   const h2 = PRODUCTS['miroooo-x2-heads'];
   const hasPaidHeads = x1HeadsCount + x2HeadsCount > 0;
-  const isX1Bundle = !hasPaidHeads && x2Count === 0 && (x1Count === 2 || x1Count === 3);
-  const isX2Bundle = !hasPaidHeads && x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
+  const isX1Bundle = x2Count === 0 && (x1Count === 2 || x1Count === 3);
+  const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const tier = isX1Bundle ? x1.bundles[x1Count - 1] : isX2Bundle && x2Count > 1 ? x2.bundles[x2Count - 1] : undefined;
-  const extraX1BrushHeadSets = isX1Bundle ? x1Count - 1 : 0;
-  const extraBrushHeadSets = isX2Bundle ? (x2Count === 1 ? 1 : x2Count - 1) : 0;
+  const extraX1BrushHeadSets = x2Count === 0 ? (x1Count === 2 ? 1 : x1Count === 3 ? 2 : 0) : 0;
+  const extraBrushHeadSets = x1Count === 0 ? (x2Count === 1 || x2Count === 2 ? 1 : x2Count === 3 ? 2 : 0) : 0;
   const brushBase = x1Count * cents(x1.price) + x2Count * cents(x2.price);
   const headsBase = x1HeadsCount * cents(h1.price) + x2HeadsCount * cents(h2.price);
   const headsNet = getHeadsNetCents(x1HeadsCount) + getHeadsNetCents(x2HeadsCount);

@@ -136,9 +136,9 @@ for (const [label, lines, amount] of [
   ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 364.6],
   ['X2 five brushes', [{ ...x2Grey, quantity: 5 }], 455.75],
   ['mixed brushes', [x1Grey, x2Grey], 182.3],
-  ['brush and paid heads', [x1Grey, head('x1')], 101.15],
-  ['two brushes plus paid heads outside bundle', [{ ...x2Grey, quantity: 2 }, head('x2')], 192.3],
-  ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x1')], 283.45],
+  ['brush and paid heads', [x1Grey, head('x2')], 101.15],
+  ['two brushes plus paid heads outside bundle', [{ ...x2Grey, quantity: 2 }, head('x1')], 179.1],
+  ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x2')], 244.07],
   ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 283.45],
 ] as const) {
   test(`ordinary checkout accepts ${label} at original item prices`, async () => {

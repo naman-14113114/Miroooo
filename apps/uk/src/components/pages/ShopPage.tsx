@@ -33,7 +33,7 @@ const UK_COLLECTION_PRODUCTS: CollectionProduct[] = [
     compareAt: '£139',
     badge: '50% OFF',
     isSoldOut: false,
-    image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-upright-grip.webp',
+    image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp',
     link: '/products/miroooo-x2',
     buttonText: 'Choose Miroooo X2',
   },

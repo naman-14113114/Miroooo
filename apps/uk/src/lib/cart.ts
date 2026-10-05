@@ -140,10 +140,8 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const hasPaidHeads = x2HeadsCount > 0 || x1HeadsCount > 0;
   const isHeadsOnly = hasPaidHeads && x2Count === 0 && x1Count === 0;
 
-  // Pure bundle qualification:
-  // ONLY if NO paid heads are in cart, and exactly 1, 2 or 3 for X2, or 2 or 3 for X1
-  const isX2Bundle = !hasPaidHeads && x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
-  const isX1Bundle = !hasPaidHeads && x2Count === 0 && (x1Count === 2 || x1Count === 3);
+  const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
+  const isX1Bundle = x2Count === 0 && (x1Count === 2 || x1Count === 3);
 
   // Compare At calculations (base compare: brush 139, heads 20)
   const x2Compare = x2Count * 139;
@@ -160,7 +158,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let x2BundlePromoName = '';
   let extraBrushHeadSets = 0;
 
-  if (isX2Bundle) {
+  if (x1Count === 0) {
     if (x2Count === 1) {
       x2BundlePromoDiscount = 0;
       x2BundlePromoName = '';
@@ -179,7 +177,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let x1BundleDiscount = 0;
   let extraX1BrushHeadSets = 0;
 
-  if (isX1Bundle) {
+  if (x2Count === 0) {
     if (x1Count === 2) {
       x1BundleDiscount = 10;
       extraX1BrushHeadSets = 1;

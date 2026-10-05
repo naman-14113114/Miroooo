@@ -96,7 +96,8 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
   cart: CartLine[]; discountCode: string; expectedGBP: number; useBundle: boolean;
   attribution: Record<string, unknown>;
 }) {
-  const xpageCart = mapCartToXpageVariants(cart);
+  const paidLines = cart.filter((line: any) => line.isFree !== true && !/(?:^|:)free(?:$|:)/i.test(String(line.id || '')));
+  const xpageCart = mapCartToXpageVariants(useBundle ? cart : paidLines);
   const x1 = new Set<string>([
     XPAGE_VARIANTS.x1_grey,
     XPAGE_VARIANTS.x1_pink,

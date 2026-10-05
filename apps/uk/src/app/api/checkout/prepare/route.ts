@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- The existing checkout endpoint accepts several legacy request shapes. */
 import { NextResponse } from "next/server";
-import { XPAGE_VARIANTS } from "@miroooo/shared";
+import { XPAGE_VARIANTS, detectBundlePayload } from "@miroooo/shared";
 import { calculateTotals, normalizeCartItems } from "@/lib/cart";
 import { CheckoutQuoteError } from "@/lib/checkout-quote";
 import { prepareUKCheckout } from "@/lib/checkout";
@@ -145,13 +145,12 @@ export async function POST(req: Request) {
       const gift = normalizeCartItems([{ productHandle: handle, variantId: handle === 'miroooo-x2-heads' ? '1000020718937117' : '1000020710139724', quantity }], true)[0];
       canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
     }
-    const onlyBrushes = canonicalItems.every((item) => item.productHandle === 'miroooo-x' || item.productHandle === 'miroooo-x2');
-    const singlePromoBrush = Boolean(discountCode) && onlyBrushes && canonicalItems.reduce((sum, item) => sum + item.quantity, 0) === 1;
+    const bundlePayload = detectBundlePayload(canonicalCart, discountCode);
     const result = await prepareUKCheckout({
       cart: canonicalCart,
       attribution,
       expectedGBP: totals.finalSubtotal,
-      useBundle: totals.unlockedGiftsCount > 0 || singlePromoBrush || (totals.isHeadsOnly && totals.bundleEligible),
+      useBundle: Boolean(bundlePayload),
       discountCode: discountCode === "MIROOOO" ? "MIROOOO10" : discountCode,
     });
 

@@ -238,6 +238,20 @@ export function ProductHero({
   // Gallery items for X2 (dynamically reactive to selected color)
   const getX2Slides = (): GallerySlide[] => {
     const colorLower = selectedColor.toLowerCase();
+    const heroImage =
+      colorLower === 'pink'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp'
+        : colorLower === 'grey'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp'
+        : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp';
+
+    const heroAlt =
+      colorLower === 'pink'
+        ? 'Miroooo X2 Sonic Electric Toothbrush Pink with Glowing Smart Ring'
+        : colorLower === 'grey'
+        ? 'Miroooo X2 Sonic Electric Toothbrush Grey Kit on Wet Stone'
+        : 'Miroooo X2 Sonic Electric Toothbrush Silver with Precision DuPont Bristle Heads';
+
     const uprightGrip =
       colorLower === 'pink'
         ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp'
@@ -255,9 +269,9 @@ export function ProductHero({
     const slides: GallerySlide[] = [
       {
         type: 'image',
-        src: uprightGrip,
-        alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Upright Grip in Hand`,
-        thumbImg: uprightGrip,
+        src: heroImage,
+        alt: heroAlt,
+        thumbImg: heroImage,
       },
       {
         type: 'video',
@@ -268,20 +282,9 @@ export function ProductHero({
       },
       {
         type: 'image',
-        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
-        alt: 'Miroooo X2 Complete Set Presentation Packaging with Box, Travel Case and Accessories',
-        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp',
-        alt: 'Miroooo X2 Sonic Electric Toothbrush Wall-Mounted Storage Dock Cradle',
-        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp',
-        badge: {
-          pos: 'miroooo-infographic-badge--top-left',
-          title: 'Free Wall-Mounted<br>Storage',
-          sub: 'Hygienic Magnetic<br>Floating Storage',
-        },
+        src: uprightGrip,
+        alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Upright Grip in Hand`,
+        thumbImg: uprightGrip,
       },
       {
         type: 'image',

@@ -8,7 +8,6 @@ import {
   Plus,
   ShoppingBag,
   Star,
-  X,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { PRODUCTS } from "@/data/products";
@@ -351,23 +350,6 @@ export function CartPageContent() {
                     >
                       {promoStatus.message}
                     </p>
-                  )}
-                  {appliedPromoCodes.length > 0 && (
-                    <div className="cart-promo-applied-badges">
-                      {appliedPromoCodes.map((code) => (
-                        <span className="cart-promo-pill" key={code}>
-                          {code}
-                          <button
-                            type="button"
-                            className="cart-promo-pill-remove"
-                            onClick={() => removePromoCode(code)}
-                            aria-label={`Remove ${code}`}
-                          >
-                            <X size={12} />
-                          </button>
-                        </span>
-                      ))}
-                    </div>
                   )}
                 </div>
                 <div className="cart-subtotal-section">

@@ -2,9 +2,8 @@
 export const x2Gallery = {
   "Silver": {
     "images": [
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-45-degree-bass-sweep-action.webp",
@@ -19,9 +18,8 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp"
     ],
     "thumbnails": [
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-45-degree-bass-sweep-action.webp",
@@ -36,9 +34,8 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp"
     ],
     "alts": [
+      "Miroooo X2 Sonic Electric Toothbrush Silver with Precision DuPont Bristle Heads",
       "Miroooo X2 Sonic Electric Toothbrush Silver Upright Grip in Hand",
-      "Miroooo X2 Complete Set Presentation Packaging with Box, Travel Case and Accessories",
-      "Miroooo X2 Sonic Electric Toothbrush Wall-Mounted Storage Dock Cradle",
       "Miroooo X2 Sonic Electric Toothbrush Luxury Travel Case Lifestyle Presentation",
       "Miroooo X2 Sonic Electric Toothbrush IPX7 Full Immersion Waterproof Design",
       "Miroooo X2 Sonic Electric Toothbrush 45-Degree Bass Sweep Method Sonic Vibration",
@@ -62,9 +59,8 @@ export const x2Gallery = {
   },
   "Pink": {
     "images": [
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-wall-mounted-storage.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-45-degree-bass-sweep-action.webp",
@@ -79,9 +75,8 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-smile-coach-app.webp"
     ],
     "thumbnails": [
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-wall-mounted-storage.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-45-degree-bass-sweep-action.webp",
@@ -96,9 +91,8 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-smile-coach-app.webp"
     ],
     "alts": [
+      "Miroooo X2 Sonic Electric Toothbrush Pink with Glowing Smart Ring",
       "Miroooo X2 Sonic Electric Toothbrush Pink Upright Grip in Hand",
-      "Miroooo X2 Complete Set Presentation Packaging Pink with Box, Travel Case and Accessories",
-      "Miroooo X2 Sonic Electric Toothbrush Pink Wall-Mounted Storage Dock Cradle",
       "Miroooo X2 Sonic Electric Toothbrush Luxury Travel Case Lifestyle Presentation",
       "Miroooo X2 Sonic Electric Toothbrush Pink IPX7 Full Immersion Waterproof Design",
       "Miroooo X2 Sonic Electric Toothbrush Pink 45-Degree Bass Sweep Method Sonic Vibration",
@@ -122,9 +116,8 @@ export const x2Gallery = {
   },
   "Grey": {
     "images": [
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wall-mounted-storage.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-45-degree-bass-sweep-action.webp",
@@ -139,9 +132,8 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-smile-coach-app.webp"
     ],
     "thumbnails": [
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wall-mounted-storage.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-45-degree-bass-sweep-action.webp",
@@ -156,9 +148,8 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-smile-coach-app.webp"
     ],
     "alts": [
+      "Miroooo X2 Sonic Electric Toothbrush Grey Kit on Wet Stone",
       "Miroooo X2 Sonic Electric Toothbrush Grey Upright Grip in Hand",
-      "Miroooo X2 Complete Set Presentation Packaging Grey with Box, Travel Case and Accessories",
-      "Miroooo X2 Sonic Electric Toothbrush Grey Wall-Mounted Storage Dock Cradle",
       "Miroooo X2 Sonic Electric Toothbrush Luxury Travel Case Lifestyle Presentation",
       "Miroooo X2 Sonic Electric Toothbrush Grey IPX7 Full Immersion Waterproof Design",
       "Miroooo X2 Sonic Electric Toothbrush Grey 45-Degree Bass Sweep Method Sonic Vibration",

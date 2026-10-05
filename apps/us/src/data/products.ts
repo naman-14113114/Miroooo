@@ -228,7 +228,7 @@ export const PRODUCTS: Record<string, Product> = {
         name: 'Silver',
         color: 'Silver',
         swatch: '#e5e5e5',
-        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp',
+        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
         checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp',
       },
       {
@@ -236,7 +236,7 @@ export const PRODUCTS: Record<string, Product> = {
         name: 'Grey',
         color: 'Grey',
         swatch: '#737373',
-        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp',
+        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp',
         checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp',
       },
       {
@@ -244,7 +244,7 @@ export const PRODUCTS: Record<string, Product> = {
         name: 'Pink',
         color: 'Pink',
         swatch: '#f2a7b3',
-        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp',
+        image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp',
         checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp',
       },
     ],
@@ -318,11 +318,10 @@ export const PRODUCTS: Record<string, Product> = {
       },
     ],
     galleryImages: [
-      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-in-hand.webp', alt: 'Miroooo X2 Silver In Hand', width: 1200, height: 1200, variantColor: 'Silver' },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp', alt: 'Miroooo X2 Silver Precision DuPont Bristle Heads', width: 1200, height: 1200, variantColor: 'Silver' },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp', alt: 'Miroooo X2 Pink with Glowing Smart Ring', width: 1200, height: 1200, variantColor: 'Pink' },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp', alt: 'Miroooo X2 Grey Kit on Wet Stone', width: 1200, height: 1200, variantColor: 'Grey' },
       { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp', alt: 'Miroooo X2 Silver Upright Grip', width: 700, height: 700, variantColor: 'Silver' },
-      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp', alt: 'Miroooo X2 Grey Upright Grip', width: 700, height: 700, variantColor: 'Grey' },
-      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp', alt: 'Miroooo X2 Pink Upright Grip', width: 700, height: 700, variantColor: 'Pink' },
-      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp', alt: 'Miroooo X2 Complete Set Packaging', width: 1000, height: 1000 },
     ],
     boxContents: [
       '1x Miroooo X2 Flagship Sonic Electric Toothbrush Handle',

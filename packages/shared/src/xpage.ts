@@ -592,7 +592,7 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
     } else if (freeHeadQty > 0) {
       return null;
     } else if (paidHeadQty === 0) {
-      bundleKey = isPromo ? "promoBuy1" : "buy1";
+      bundleKey = isPromo ? "promoBuy1" : null;
     } else if (paidHeadQty === 1) {
       bundleKey = isPromo ? "promoBuy1_1head" : null;
     } else if (paidHeadQty === 2) {
