@@ -10,12 +10,14 @@ const x1Grey = { productHandle: 'miroooo-x', variantId: PRODUCTS['miroooo-x'].va
 const x2Grey = { productHandle: 'miroooo-x2', variantId: PRODUCTS['miroooo-x2'].variants.find((v) => v.color === 'Grey')!.id, color: 'Grey', quantity: 1 };
 const totals = (lines: object[], promos: string[] = []) => calculateTotals(normalizeCartItems(lines, true), promos);
 
-function mockPublishedOffer(quantity: 1 | 2 | 3, price = 69, product: 'x1' | 'x2' | 'x1_heads' | 'x2_heads' = 'x2') {
+function mockPublishedOffer(quantity: 1 | 2 | 3, price = 69, product: 'x1' | 'x2' | 'x1_heads' | 'x2_heads' = 'x2', optionKey?: string) {
   const bundle = XPAGE_BUNDLES[product];
   const isHeads = product === 'x1_heads' || product === 'x2_heads';
   const option = isHeads
     ? (quantity === 1 ? bundle.buy1 : quantity === 2 ? bundle.buy2 : bundle.buy3)
-    : (quantity === 1 ? ((bundle as any).buy1_freehead || bundle.buy1) : (quantity === 2 ? bundle.buy2 : bundle.buy3));
+    : optionKey ? (bundle as any)[optionKey] : (quantity === 1 ? ((bundle as any).buy1_freehead || bundle.buy1) : (quantity === 2 ? bundle.buy2 : bundle.buy3));
+  const isFixedOffered = optionKey === 'buy1_1head' || optionKey === 'buy2_1head' || optionKey === 'buy3_1head';
+  const offeredQty = (option as any).offeredQty !== undefined ? (option as any).offeredQty : (isHeads ? 0 : quantity);
   const published = {
     id: bundle.id,
     status: 'ACTIVE',
@@ -27,7 +29,7 @@ function mockPublishedOffer(quantity: 1 | 2 | 3, price = 69, product: 'x1' | 'x2
       conditions: [{ id: option.conditionId, quantity, product: {
         status: 'ACTIVE', variants: [{ id: isHeads ? XPAGE_VARIANTS[product] : XPAGE_VARIANTS[`${product}_grey`], is_visible: true, price: isHeads ? 10 : price }],
       } }],
-      offered: isHeads ? [] : [{ id: (option as any).offeredId || (bundle.buy2 as any).offeredId, quantity: (option as any).offeredQty || 1, discount_type: 'PERCENTAGE', discount_amount: '100.00', product: {
+      offered: isHeads || offeredQty === 0 ? [] : [{ id: (option as any).offeredId || (bundle.buy2 as any).offeredId, quantity: offeredQty, discount_type: isFixedOffered ? 'FIXED' : 'PERCENTAGE', discount_amount: isFixedOffered ? '10.00' : '100.00', product: {
         status: 'ACTIVE', variants: [{ id: XPAGE_VARIANTS[`${product}_heads`], is_visible: true, price: 10 }],
       } }],
     }],
@@ -192,6 +194,78 @@ test('ordinary checkout accepts X2 single with 1 free head via native bundle', a
   };
   try {
     const response = await POST(request([x2Grey]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts Option 4 (Buy 1 + 1 Free Head + 1 Paid Head) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 1, price: 69, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 2, price: 10, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">£79.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(89, 10)}`);
+    }
+    return new Response(mockPublishedOffer(1, 69, 'x2', 'buy1_1head'));
+  };
+  try {
+    const response = await POST(request([x2Grey, head('x2')]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts Option 5 (Buy 2 + 2 Free Heads + 1 Paid Head) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 2, price: 69, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 3, price: 10, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">£138.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(168, 30)}`);
+    }
+    return new Response(mockPublishedOffer(2, 69, 'x2', 'buy2_1head'));
+  };
+  try {
+    const response = await POST(request([{ ...x2Grey, quantity: 2 }, head('x2')]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts Option 6 (Buy 3 + 3 Free Heads + 1 Paid Head) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 3, price: 69, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 4, price: 10, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">£187.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(247, 60)}`);
+    }
+    return new Response(mockPublishedOffer(3, 69, 'x2', 'buy3_1head'));
+  };
+  try {
+    const response = await POST(request([{ ...x2Grey, quantity: 3 }, head('x2')]));
     const body = await response.json();
     assert.equal(response.status, 200, body.error);
     assert.equal(orders, 1);

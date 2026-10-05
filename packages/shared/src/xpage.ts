@@ -604,14 +604,11 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
 
   if (quantity === 1) {
     if (product === "x2") {
-      if (freeHeadQty === 1 && paidHeadQty === 0) {
-        bundleKey = "buy1_freehead";
-      } else if (freeHeadQty === 1 && paidHeadQty === 1) {
-        bundleKey = "buy1_1head";
-      } else if (freeHeadQty === 0 && paidHeadQty === 0) {
-        bundleKey = isPromo ? "promoBuy1" : "buy1";
-      } else if (freeHeadQty === 0 && paidHeadQty === 1) {
-        bundleKey = "buy1_1head";
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 1) {
+        bundleKey = isPromo ? "promoBuy1" : "buy1_freehead";
+      } else if (total === 2) {
+        bundleKey = isPromo ? "promoBuy1_1head" : "buy1_1head";
       } else {
         return null;
       }
@@ -629,9 +626,10 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
     }
   } else if (quantity === 2) {
     if (product === "x2") {
-      if ((freeHeadQty === 2 || freeHeadQty === 0) && paidHeadQty === 0) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 2) {
         bundleKey = isPromo ? "promoBuy2" : "buy2";
-      } else if ((freeHeadQty === 2 || freeHeadQty === 0) && paidHeadQty === 1) {
+      } else if (total === 3) {
         bundleKey = isPromo ? "promoBuy2_1head" : "buy2_1head";
       } else {
         return null;
@@ -648,9 +646,10 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
     }
   } else if (quantity === 3) {
     if (product === "x2") {
-      if ((freeHeadQty === 3 || freeHeadQty === 0) && paidHeadQty === 0) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 3) {
         bundleKey = isPromo ? "promoBuy3" : "buy3";
-      } else if ((freeHeadQty === 3 || freeHeadQty === 0) && paidHeadQty === 1) {
+      } else if (total === 4) {
         bundleKey = isPromo ? "promoBuy3_1head" : "buy3_1head";
       } else {
         return null;
