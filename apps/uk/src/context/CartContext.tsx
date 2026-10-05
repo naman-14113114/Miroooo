@@ -12,10 +12,12 @@ interface CartContextType {
   isCheckoutLoading: boolean;
   checkoutError: string | null;
   totals: CartTotals;
+  isHydrated: boolean;
   addItem: (item: Partial<CartItem> & { productHandle: string }) => void;
   addBundle: (productHandle: string, quantity: 1 | 2 | 3, colors: string[]) => void;
   updateQuantity: (id: string, quantity: number) => void;
   removeItem: (id: string) => void;
+  clearCart: () => void;
   applyPromoCode: (code: string) => { success: boolean; message: string };
   removePromoCode: (code: string) => void;
   saveGiftMessage: (msg: string) => void;
@@ -39,7 +41,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
+  const isHydratedRef = useRef(false);
   const checkoutRequest = useRef<AbortController | null>(null);
+
   const invalidateCheckout = useCallback(() => {
     checkoutRequest.current?.abort();
     checkoutRequest.current = null;
@@ -49,8 +53,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => () => checkoutRequest.current?.abort(), []);
 
-  // Load cart state from localStorage on initial mount
-  useEffect(() => {
+  const loadCartFromStorage = useCallback(() => {
     try {
       // 1. Promo codes
       const storedPromos = localStorage.getItem(LOCAL_STORAGE_PROMOS_KEY);
@@ -73,7 +76,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (storedCart) {
         const parsed = JSON.parse(storedCart);
         if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
-          setItems(normalizeCartItems(parsed.items));
+          const normalized = normalizeCartItems(parsed.items);
+          if (normalized.length > 0) {
+            setItems(normalized);
+          }
         } else if (parsed && parsed.quantity > 0) {
           // Legacy format migration
           const pHandle = parsed.productId || 'miroooo-x2';
@@ -82,33 +88,73 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           const newItems: CartItem[] = colors.slice(0, parsed.quantity).map((col: string, idx: number) => {
             const v = p.variants.find((vr) => vr.color.toLowerCase() === col.toLowerCase()) || p.variants[0];
             return {
-              id: `${p.handle}-${col}-${idx}`,
+              id: `${p.handle}-${v.color}-${idx}`,
               productHandle: p.handle,
               productId: p.plusBaseProductId,
               variantId: v.id,
-              title: `${p.name} (${col})`,
+              title: (p.handle === 'miroooo-x' || p.handle === 'miroooo-x2') ? `${p.name} (${v.color})` : p.name,
               subtitle: p.subtitle,
-              color: col,
+              color: v.color,
               quantity: 1,
               unitPrice: p.price,
               comparePrice: p.compareAt,
               image: v.image,
-              url: `/products/${p.handle}?color=${col}`,
+              url: `/products/${p.handle}${(p.handle === 'miroooo-x' || p.handle === 'miroooo-x2') ? `?color=${v.color}` : ''}`,
             };
           });
-          setItems(normalizeCartItems(newItems));
+          const normalized = normalizeCartItems(newItems);
+          if (normalized.length > 0) {
+            setItems(normalized);
+          }
         }
       }
     } catch (e) {
       console.warn('Failed to load cart state from localStorage:', e);
     } finally {
+      isHydratedRef.current = true;
       setIsHydrated(true);
     }
   }, []);
 
+  // Initial load and bfcache/tab sync listeners
+  useEffect(() => {
+    loadCartFromStorage();
+
+    const handlePageShow = () => {
+      invalidateCheckout();
+      loadCartFromStorage();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        invalidateCheckout();
+      }
+    };
+
+    const handleStorage = (e: StorageEvent) => {
+      if (
+        e.key === LOCAL_STORAGE_CART_KEY ||
+        e.key === LOCAL_STORAGE_PROMOS_KEY ||
+        e.key === LOCAL_STORAGE_GIFT_MSG_KEY
+      ) {
+        loadCartFromStorage();
+      }
+    };
+
+    window.addEventListener('pageshow', handlePageShow);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('storage', handleStorage);
+
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('storage', handleStorage);
+    };
+  }, [loadCartFromStorage, invalidateCheckout]);
+
   // Sync to localStorage
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || !isHydratedRef.current) return;
     try {
       if (items.length === 0) {
         localStorage.removeItem(LOCAL_STORAGE_CART_KEY);
@@ -135,7 +181,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // Sync promos to localStorage
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || !isHydratedRef.current) return;
     try {
       localStorage.setItem(LOCAL_STORAGE_PROMOS_KEY, JSON.stringify(appliedPromoCodes));
       localStorage.setItem('miroooo_promo_code', appliedPromoCodes.join(','));
@@ -240,6 +286,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const removeItem = useCallback((id: string) => {
     invalidateCheckout();
     setItems((currentItems) => currentItems.filter((i) => i.id !== id));
+  }, [invalidateCheckout]);
+
+  const clearCart = useCallback(() => {
+    invalidateCheckout();
+    setItems([]);
   }, [invalidateCheckout]);
 
   const applyPromoCode = useCallback((code: string) => {
@@ -390,10 +441,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         isCheckoutLoading,
         checkoutError,
         totals,
+        isHydrated,
         addItem,
         addBundle,
         updateQuantity,
         removeItem,
+        clearCart,
         applyPromoCode,
         removePromoCode,
         saveGiftMessage,

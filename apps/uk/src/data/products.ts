@@ -16,6 +16,7 @@ export interface BundleTier {
   formattedPrice: string;
   formattedCompareAt: string;
   freeHeadsCount: number;
+  promoPrice?: number;
   savingText: string;
   description: string;
 }
@@ -353,7 +354,46 @@ export const PRODUCTS: Record<string, Product> = {
         checkoutImage: '/assets_ref/x/heads/B1.webp',
       },
     ],
-    bundles: [],
+    bundles: [
+      {
+        quantity: 1,
+        name: 'BUY 1',
+        price: 10.0,
+        promoPrice: 10.0,
+        compareAt: 20.0,
+        formattedPrice: '£10',
+        formattedCompareAt: '£20',
+        freeHeadsCount: 0,
+        savingText: '50% OFF',
+        description: '1 Pack (2 Brush Heads)',
+      },
+      {
+        quantity: 2,
+        name: 'BUY 2',
+        badge: 'Most Popular',
+        price: 18.0,
+        promoPrice: 18.0,
+        compareAt: 40.0,
+        formattedPrice: '£18',
+        formattedCompareAt: '£40',
+        freeHeadsCount: 0,
+        savingText: 'SAVE £22',
+        description: '2 Packs (4 Brush Heads) — £9 / pack',
+      },
+      {
+        quantity: 3,
+        name: 'BUY 3',
+        badge: 'BEST VALUE',
+        price: 24.0,
+        promoPrice: 24.0,
+        compareAt: 60.0,
+        formattedPrice: '£24',
+        formattedCompareAt: '£60',
+        freeHeadsCount: 0,
+        savingText: 'SAVE £36',
+        description: '3 Packs (6 Brush Heads) — £8 / pack',
+      },
+    ],
     specs: [
       { label: 'Compatibility', value: '100% Miroooo X1 acoustic linear vibration motor' },
       { label: 'Bristle Rounding Rate', value: '90%+ End-rounded micro-polished filaments' },
@@ -405,7 +445,46 @@ export const PRODUCTS: Record<string, Product> = {
         checkoutImage: '/assets_ref/x2/heads/B1.webp',
       },
     ],
-    bundles: [],
+    bundles: [
+      {
+        quantity: 1,
+        name: 'BUY 1',
+        price: 10.0,
+        promoPrice: 10.0,
+        compareAt: 20.0,
+        formattedPrice: '£10',
+        formattedCompareAt: '£20',
+        freeHeadsCount: 0,
+        savingText: '50% OFF',
+        description: '1 Pack (2 Brush Heads)',
+      },
+      {
+        quantity: 2,
+        name: 'BUY 2',
+        badge: 'Most Popular',
+        price: 18.0,
+        promoPrice: 18.0,
+        compareAt: 40.0,
+        formattedPrice: '£18',
+        formattedCompareAt: '£40',
+        freeHeadsCount: 0,
+        savingText: 'SAVE £22',
+        description: '2 Packs (4 Brush Heads) — £9 / pack',
+      },
+      {
+        quantity: 3,
+        name: 'BUY 3',
+        badge: 'BEST VALUE',
+        price: 24.0,
+        promoPrice: 24.0,
+        compareAt: 60.0,
+        formattedPrice: '£24',
+        formattedCompareAt: '£60',
+        freeHeadsCount: 0,
+        savingText: 'SAVE £36',
+        description: '3 Packs (6 Brush Heads) — £8 / pack',
+      },
+    ],
     specs: [
       { label: 'Compatibility', value: '100% Miroooo X2 45° Bass sweep oscillating drive shaft' },
       { label: 'Bristle Rounding Rate', value: '90%+ End-rounded micro-polished filaments' },

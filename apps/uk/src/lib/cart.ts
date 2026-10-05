@@ -44,6 +44,34 @@ export interface CartTotals {
 
 export const VALID_PROMO_CODES = ['MIROOOO', 'MIROOOO10'];
 
+const UK_HANDLE_ALIASES: Record<string, string> = {
+  'miroooo-x1': 'miroooo-x',
+  'miroooo-x': 'miroooo-x',
+  'x1': 'miroooo-x',
+  'miroooo-x2': 'miroooo-x2',
+  'x2': 'miroooo-x2',
+  'miroooo-x1-heads': 'miroooo-x1-heads',
+  'miroooo-x-heads': 'miroooo-x1-heads',
+  'x1-heads': 'miroooo-x1-heads',
+  'miroooo-x2-heads': 'miroooo-x2-heads',
+  'x2-heads': 'miroooo-x2-heads',
+  'x1-charger': 'x1-charger',
+  'miroooo-charger': 'x1-charger',
+  'charger': 'x1-charger',
+  'travel-case': 'travel-case',
+  'miroooo-travel-case': 'travel-case',
+  'wall-mounted-dock': 'wall-mounted-dock',
+  'miroooo-dock': 'wall-mounted-dock',
+  'miroooo-wall-mounted-dock': 'wall-mounted-dock',
+  '1000000675113473': 'miroooo-x',
+  '1000000675072187': 'miroooo-x2',
+  '1000000675471182': 'miroooo-x1-heads',
+  '1000000675616058': 'miroooo-x2-heads',
+  '1000000675113474': 'travel-case',
+  '1000000675113475': 'wall-mounted-dock',
+  '1000000675113476': 'x1-charger',
+};
+
 /** Rebuild every cart line from the UK catalogue. Stored/requested prices are never trusted. */
 export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
   if (!Array.isArray(raw)) return [];
@@ -51,14 +79,17 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
     if (!value || typeof value !== 'object') return [];
     const line = value as Partial<CartItem>;
     if (line.isFree || /(?:^|:)free(?:$|:)/i.test(String(line.id || ''))) return [];
-    const product = PRODUCTS[String(line.productHandle || '')];
+    const rawHandle = String(line.productHandle || line.productId || '');
+    const resolvedHandle = UK_HANDLE_ALIASES[rawHandle.toLowerCase()] || rawHandle;
+    const product = PRODUCTS[resolvedHandle];
     const quantity = Number(line.quantity ?? 1);
     if (!product || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 99) {
       if (strict) throw new Error('Invalid checkout item.');
       return [];
     }
     const variant = product.variants.find((item) => item.id === String(line.variantId || '')) ||
-      (!strict ? product.variants.find((item) => item.color.toLowerCase() === String(line.color || '').toLowerCase()) : undefined);
+      (!strict ? product.variants.find((item) => item.color.toLowerCase() === String(line.color || '').toLowerCase()) : undefined) ||
+      (!strict ? product.variants[0] : undefined);
     if (!variant) {
       if (strict) throw new Error('Invalid checkout variant.');
       return [];
@@ -79,6 +110,14 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
       url: `/products/${product.handle}${isBrush ? `?color=${variant.color}` : ''}`,
     }];
   });
+}
+
+function getHeadsNetGBP(count: number): number {
+  if (count <= 0) return 0;
+  if (count === 1) return 10;
+  if (count === 2) return 18;
+  if (count === 3) return 24;
+  return 24 + (count - 3) * 8;
 }
 
 export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]): CartTotals {
@@ -106,15 +145,16 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2Bundle = !hasPaidHeads && x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = !hasPaidHeads && x2Count === 0 && (x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations
+  // Compare At calculations (base compare: brush 139, heads 20)
   const x2Compare = x2Count * 139;
   const x1Compare = x1Count * 139;
-  const x2HeadsCompare = x2HeadsCount * 10;
-  const x1HeadsCompare = x1HeadsCount * 10;
+  const x2HeadsCompare = x2HeadsCount * 20;
+  const x1HeadsCompare = x1HeadsCount * 20;
   const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare;
 
   // Base 50% savings on brushes
   const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (139 - 69);
+  const baseHeadsCompareSavings = x2HeadsCount * (20 - 10) + x1HeadsCount * (20 - 10);
 
   let x2BundlePromoDiscount = 0;
   let x2BundlePromoName = '';
@@ -161,9 +201,13 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     unlockedGiftsCount += extraX1BrushHeadSets;
   }
 
+  const headsBase = x2HeadsCount * 10 + x1HeadsCount * 10;
+  const headsNet = getHeadsNetGBP(x2HeadsCount) + getHeadsNetGBP(x1HeadsCount);
+  const headsBundleDiscount = headsBase - headsNet;
+  const headsBundleCount = x1HeadsCount || x2HeadsCount;
+
   const x2Net = x2Count * 69 - x2BundlePromoDiscount;
   const x1Net = x1Count * 69 - x1BundleDiscount;
-  const headsNet = x2HeadsCount * 10 + x1HeadsCount * 10;
   const brushSubtotal = Math.max(0, x2Net + x1Net);
   const subtotal = Math.max(0, brushSubtotal + headsNet);
 
@@ -174,9 +218,11 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const promoDiscount = hasValidPromo ? Math.round(brushSubtotal * 0.1) : 0;
 
   const finalSubtotal = Math.max(0, Number((subtotal - promoDiscount).toFixed(2)));
-  const bundleSavings = baseBrushCompareSavings + x1BundleDiscount;
+  const bundleSavings = baseBrushCompareSavings + x1BundleDiscount + baseHeadsCompareSavings + headsBundleDiscount;
+  const bundlePromoDiscount = x2BundlePromoDiscount > 0 ? x2BundlePromoDiscount : isHeadsOnly && headsBundleDiscount > 0 ? headsBundleDiscount : 0;
+  const bundlePromoName = x2BundlePromoName || (isHeadsOnly && headsBundleDiscount > 0 ? `Buy ${headsBundleCount} heads bundle (£${headsBundleDiscount} extra saving)` : '');
   const totalSavings = Number(
-    (bundleSavings + x2BundlePromoDiscount + giftsValue + promoDiscount).toFixed(2)
+    (bundleSavings + (isHeadsOnly ? 0 : x2BundlePromoDiscount) + giftsValue + promoDiscount).toFixed(2)
   );
 
   return {
@@ -184,8 +230,8 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     subtotal,
     compareAt,
     bundleSavings,
-    bundlePromoDiscount: x2BundlePromoDiscount,
-    bundlePromoName: x2BundlePromoName,
+    bundlePromoDiscount,
+    bundlePromoName,
     unlockedGiftsCount,
     giftsValue,
     promoDiscount,
@@ -202,7 +248,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     x1Count,
     x2HeadsCount,
     x1HeadsCount,
-    bundleEligible: isX2Bundle || isX1Bundle,
+    bundleEligible: isX2Bundle || isX1Bundle || (isHeadsOnly && ((x1HeadsCount >= 1 && x1HeadsCount <= 3 && x2HeadsCount === 0) || (x2HeadsCount >= 1 && x2HeadsCount <= 3 && x1HeadsCount === 0))),
   };
 }
 

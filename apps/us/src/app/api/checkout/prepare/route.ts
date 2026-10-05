@@ -151,7 +151,7 @@ export async function POST(req: Request) {
       cart: canonicalCart,
       attribution,
       expectedUSD: totals.finalSubtotal,
-      useBundle: totals.unlockedGiftsCount > 0 || singlePromoBrush,
+      useBundle: totals.unlockedGiftsCount > 0 || singlePromoBrush || (totals.isHeadsOnly && totals.bundleEligible),
       discountCode: discountCode === "MIROOOO" ? "MIROOOO10" : discountCode,
     });
 

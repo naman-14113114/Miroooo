@@ -39,7 +39,7 @@ for (const file of ukSource) {
 }
 const products = read('apps/us/src/data/products.ts');
 const cart = read('apps/us/src/lib/cart.ts');
-for (const value of ["price: 91.15", "compareAt: 129.88", "compareAt: 184.23", "price: 169.10", "price: 234.07", "price: 13.15", "price: 13.2", "freeHeadsCount: 2"]) {
+for (const value of ["price: 91.15", "compareAt: 129.88", "compareAt: 184.23", "price: 169.10", "price: 234.07", "price: 10.0", "freeHeadsCount: 2"]) {
   check(products.includes(value), `Current USD offer value: ${value}`);
 }
 for (const value of ['normalizeCartItems', 'cents(tier.promoPrice)', 'x1Count * cents(x1.price)', 'x2Count * cents(x2.price)']) {

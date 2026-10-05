@@ -1670,36 +1670,37 @@ ${tickerItemSet.repeat(12)}
         const storedStandard = localStorage.getItem("miroooo_cart");
         if (storedStandard) {
           const parsed = JSON.parse(storedStandard);
-          let itemsList = parsed.items.map(item => {
-            const h = item.productHandle || "miroooo-x";
-            const color = item.color || "Grey";
-            const qty = Math.max(1, parseInt(item.quantity || "1", 10));
+          if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
+            let itemsList = parsed.items.map(item => {
+              const h = item.productHandle || "miroooo-x";
+              const color = item.color || "Grey";
+              const qty = Math.max(1, parseInt(item.quantity || "1", 10));
+              return {
+                id: item.id || `${h}:${color}`,
+                productHandle: h,
+                productId: item.productId || (h === "miroooo-x2" ? "1000000675072187" : (h === "miroooo-x2-heads" ? "1000000675616058" : (h === "miroooo-x1-heads" ? "1000000675471182" : "1000000675113473"))),
+                variantId: item.variantId || (h === "miroooo-x2" ? (color === "Pink" ? "1000020700182882" : (color === "Silver" ? "1000020700182884" : "1000020700182883")) : (h === "miroooo-x2-heads" ? "1000020718937117" : (h === "miroooo-x1-heads" ? "1000020710139724" : (color === "Pink" ? "1000020700958562" : (color === "Silver" ? "1000020700958563" : "1000020700958564"))))),
+                title: (h === "miroooo-x2" ? "Miroooo X2" : (h === "miroooo-x2-heads" ? "Miroooo X2 Heads" : (h === "miroooo-x1-heads" ? "Miroooo X1 Heads" : "Miroooo X1"))),
+                subtitle: (h === "miroooo-x2-heads" ? "DuPont precision heads for Miroooo X2." : (h === "miroooo-x1-heads" ? "DuPont precision heads for Miroooo X1." : (h === "miroooo-x2" ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life." : "Electric Toothbrush with 32,000 VPM acoustic motor & 60-day battery."))),
+                color: color,
+                quantity: qty,
+                unitPrice: item.unitPrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 59 : 69)),
+                comparePrice: item.comparePrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 119 : 139)),
+                image: item.image || (h === "miroooo-x2-heads" ? "/assets_ref/x2/heads/B1.webp" : (h === "miroooo-x1-heads" ? "/assets_ref/x/heads/1.webp" : (h === "miroooo-x2" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp" : "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp"))),
+                url: item.url || `/products/${h}`
+              };
+            });
+
             return {
-              id: item.id || `${h}:${color}`,
-              productHandle: h,
-              productId: item.productId || (h === "miroooo-x2" ? "1000000675072187" : (h === "miroooo-x2-heads" ? "1000000675616058" : (h === "miroooo-x1-heads" ? "1000000675471182" : "1000000675113473"))),
-              variantId: item.variantId || (h === "miroooo-x2" ? (color === "Pink" ? "1000020700182882" : (color === "Silver" ? "1000020700182884" : "1000020700182883")) : (h === "miroooo-x2-heads" ? "1000020718937117" : (h === "miroooo-x1-heads" ? "1000020710139724" : (color === "Pink" ? "1000020700958562" : (color === "Silver" ? "1000020700958563" : "1000020700958564"))))),
-              title: (h === "miroooo-x2" ? "Miroooo X2" : (h === "miroooo-x2-heads" ? "Miroooo X2 Heads" : (h === "miroooo-x1-heads" ? "Miroooo X1 Heads" : "Miroooo X1"))),
-              subtitle: (h === "miroooo-x2-heads" ? "DuPont precision heads for Miroooo X2." : (h === "miroooo-x1-heads" ? "DuPont precision heads for Miroooo X1." : (h === "miroooo-x2" ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life." : "Electric Toothbrush with 32,000 VPM acoustic motor & 60-day battery."))),
-              color: color,
-              quantity: qty,
-              unitPrice: item.unitPrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 59 : 69)),
-              comparePrice: item.comparePrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 119 : 139)),
-              image: item.image || (h === "miroooo-x2-heads" ? "/assets_ref/x2/heads/B1.webp" : (h === "miroooo-x1-heads" ? "/assets_ref/x/heads/1.webp" : (h === "miroooo-x2" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp" : "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp"))),
-              url: item.url || `/products/${h}`
+              version: 2,
+              items: itemsList,
+              promoCode: "AUTO",
+              promoApplied: true
             };
-          });
+          }
 
-          return {
-            version: 2,
-            items: itemsList,
-            promoCode: "AUTO",
-            promoApplied: true
-          };
-        }
-
-        // Legacy conversion
-        if (parsed.productId && (parsed.quantity > 0 || (Array.isArray(parsed.colors) && parsed.colors.length > 0))) {
+          // Legacy conversion
+          if (parsed && parsed.productId && (parsed.quantity > 0 || (Array.isArray(parsed.colors) && parsed.colors.length > 0))) {
           const isX1Heads = parsed.productId === "miroooo-x1-heads" || parsed.productId === "miroooo-x-heads";
           const isX2Heads = parsed.productId === "miroooo-x2-heads";
           const isHeads = isX1Heads || isX2Heads;

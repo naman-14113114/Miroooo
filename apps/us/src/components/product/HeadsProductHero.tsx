@@ -49,7 +49,11 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       ];
 
   const basePrice = product.price || 10;
-  const totalPrice = basePrice * quantity;
+  const totalPrice = isHeads
+    ? (quantity === 1 ? 10.0 : quantity === 2 ? 18.0 : quantity === 3 ? 24.0 : 24.0 + (quantity - 3) * 8.0)
+    : (product.price || 9) * quantity;
+  const comparePrice = isHeads ? quantity * 20.0 : (product.compareAt || 18) * quantity;
+  const selectedTier = quantity === 1 ? 'single' : quantity === 2 ? 'bundle-2' : quantity === 3 ? 'bundle-3' : 'custom';
 
   // Match the reference delivery estimate and countdown.
   useEffect(() => {
@@ -281,10 +285,15 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 <span className="text-3xl font-extrabold text-white" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
                   {isOutOfStock ? `$${product.price}` : formatUSD(totalPrice)}
                 </span>
-                {product.compareAt && (
+                {comparePrice > totalPrice && (
                   <s style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: '1.15rem', textDecoration: 'line-through' }}>
-                    ${product.compareAt}
+                    {formatUSD(comparePrice)}
                   </s>
+                )}
+                {isHeads && quantity >= 1 && (
+                  <span style={{ background: '#d4af37', color: '#000000', fontSize: '11px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', textTransform: 'uppercase' }}>
+                    {quantity === 1 ? '50% OFF' : quantity === 2 ? 'SAVE $22' : 'SAVE $36'}
+                  </span>
                 )}
               </div>
 
@@ -307,12 +316,144 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 </ul>
               </div>
 
-              {/* Quantity Selector (In stock only) */}
+              {/* Bundle Divider & Tier Cards for Heads */}
+              {isHeads && (
+                <>
+                  <div className="bundle-header-divider flex items-center gap-3 my-4">
+                    <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
+                    <span className="font-bold uppercase" style={{ fontSize: 13, lineHeight: 'normal', letterSpacing: '0.12em', color: 'rgba(255, 255, 255, 0.7)' }}>
+                      BUNDLE &amp; SAVE + FREE SHIPPING
+                    </span>
+                    <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
+                  </div>
+
+                  <div className="bundle-tiers-container flex flex-col gap-4 mb-4" id="bundle-tiers" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {/* Tier 1: Buy 1 */}
+                    <div
+                      className={`bundle-tier-card ${selectedTier === 'single' ? 'is-selected' : ''}`}
+                      data-tier="single"
+                      onClick={() => setQuantity(1)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <button type="button" className="tier-header-btn" aria-label="Select Buy 1 Pack">
+                        <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                        <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 1</span>
+                            </div>
+                            <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555' }}>1 Pack (2 Brush Heads)</p>
+                          </div>
+                          <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
+                            <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                              <span className="font-bold text-base sm:text-lg" id="tier-single-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                $10.00
+                              </span>
+                              <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                                $20.00
+                              </span>
+                            </div>
+                            <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
+                              50% OFF
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+
+                    {/* Tier 2: Buy 2 (Most Popular) */}
+                    <div
+                      className={`bundle-tier-card has-top-badge ${selectedTier === 'bundle-2' ? 'is-selected' : ''}`}
+                      data-tier="bundle-2"
+                      onClick={() => setQuantity(2)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <div className="tier-popular-badge-wrap badge-popular">
+                        <div className="tier-popular-seal">
+                          <svg width="84" height="53" viewBox="0 0 90 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 85.0 28.0 Q 80.2 31.2 83.0 35.1 Q 76.8 37.3 77.4 41.5 Q 70.2 42.5 68.5 46.6 Q 61.2 46.3 57.4 49.9 Q 50.6 48.2 45.0 51.0 Q 39.4 48.2 32.6 49.9 Q 28.8 46.3 21.5 46.6 Q 19.8 42.5 12.6 41.5 Q 13.2 37.3 7.0 35.1 Q 9.8 31.2 5.0 28.0 Q 9.8 24.8 7.0 20.9 Q 13.2 18.7 12.6 14.5 Q 19.8 13.5 21.5 9.4 Q 28.8 9.7 32.6 6.1 Q 39.4 7.8 45.0 5.0 Q 50.6 7.8 57.4 6.1 Q 61.2 9.7 68.5 9.4 Q 70.2 13.5 77.4 14.5 Q 76.8 18.7 83.0 20.9 Q 80.2 24.8 85.0 28.0 Z" fill="#22c55e" />
+                            <ellipse cx="45" cy="28" rx="34" ry="18.5" stroke="rgba(255, 255, 255, 0.45)" strokeWidth="0.9" strokeDasharray="2 1.5" fill="none" />
+                            <text x="45" y="23" textAnchor="middle" fill="#ffffff" fontFamily="'Playfair Display', Georgia, serif" fontSize="12.5" fontStyle="italic" fontWeight="600" letterSpacing="0.3">Most</text>
+                            <text x="45" y="37.5" textAnchor="middle" fill="#ffffff" fontFamily="'Inter', -apple-system, sans-serif" fontSize="11" fontWeight="800" letterSpacing="0.5">Popular</text>
+                          </svg>
+                        </div>
+                      </div>
+                      <button type="button" className="tier-header-btn" aria-label="Select Buy 2 Tier">
+                        <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                        <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 2</span>
+                              <span className="tier-badge-pill" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111' }}>SAVE $22</span>
+                            </div>
+                            <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>2 Packs (4 Brush Heads)</p>
+                          </div>
+                          <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
+                            <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                              <span className="font-bold text-base sm:text-lg" id="tier-bundle-2-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                $18.00
+                              </span>
+                              <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-2-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                                $40.00
+                              </span>
+                            </div>
+                            <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
+                              <span className="font-bold text-xs sm:text-sm" id="tier-bundle-2-each-price" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
+                                ($9 each)
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+
+                    {/* Tier 3: Buy 3 (Best Value) */}
+                    <div
+                      className={`bundle-tier-card ${selectedTier === 'bundle-3' ? 'is-selected' : ''}`}
+                      data-tier="bundle-3"
+                      onClick={() => setQuantity(3)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <button type="button" className="tier-header-btn" aria-label="Select Buy 3 Tier">
+                        <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                        <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 3</span>
+                              <span className="tier-badge-pill" style={{ background: '#d4af37', color: '#000000', fontWeight: 800 }}>BEST VALUE</span>
+                            </div>
+                            <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>3 Packs (6 Brush Heads)</p>
+                          </div>
+                          <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
+                            <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                              <span className="font-bold text-base sm:text-lg" id="tier-bundle-3-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                $24.00
+                              </span>
+                              <span className="text-xs sm:text-sm price-compare-strike" id="tier-bundle-3-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                                $60.00
+                              </span>
+                            </div>
+                            <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
+                              <span className="font-bold text-xs sm:text-sm" id="tier-bundle-3-each-price" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
+                                ($8 each)
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Quantity Selector */}
               {!isOutOfStock && (
-                <div className="heads-quantity-selector my-4" style={{ margin: '20px 0 16px 0' }}>
+                <div className="heads-quantity-selector my-4" style={{ margin: isHeads ? '8px 0 16px 0' : '20px 0 16px 0' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>QUANTITY:</span>
-                    <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '12px' }}>${basePrice} per 2-head pack</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '12px' }}>
+                      {isHeads ? (quantity === 1 ? '$10 per pack' : quantity === 2 ? '$9 per pack ($18 total)' : '$8 per pack') : `$${basePrice} per unit`}
+                    </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111111', border: '1px solid rgba(255, 255, 255, 0.18)', borderRadius: '9999px', padding: '4px 8px', height: '50px', boxSizing: 'border-box' }}>
                     <button
@@ -527,11 +668,11 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     <img id="sticky-bar-img" src={images[0].src} alt={product.name} width="54" height="54" loading="eager" decoding="async" />
                   </div>
                   <div className="miroooo-sticky-info">
-                    <p className="miroooo-sticky-title" id="sticky-bar-title">{product.name} ({quantity}x)</p>
+                    <p className="miroooo-sticky-title" id="sticky-bar-title">{product.name} ({quantity} Pack{quantity > 1 ? 's' : ''})</p>
                     <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
-                      <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>${totalPrice.toFixed(2)}</span>
+                      <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>{formatUSD(totalPrice)}</span>
                       <span className="miroooo-sticky-bullet">·</span>
-                      <span id="sticky-bar-gifts" className="miroooo-sticky-gifts-tag" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>2-Pack Replacement</span>
+                      <span id="sticky-bar-gifts" className="miroooo-sticky-gifts-tag" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>{quantity * 2} Brush Heads</span>
                     </p>
                   </div>
                 </div>

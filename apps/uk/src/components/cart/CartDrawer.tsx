@@ -8,7 +8,7 @@ import { useDrawer } from "@/components/layout/useDrawer";
 import { CartLines } from "./CartLines";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, totals } = useCart();
+  const { items, isOpen, closeCart, totals, isHydrated } = useCart();
   const [discountOpen, setDiscountOpen] = useState(false);
   const ref = useDrawer(isOpen, closeCart, "cart-drawer-open");
   return (
@@ -46,7 +46,11 @@ export function CartDrawer() {
         </div>
         <div className="miroooo-cart-body">
           <div className="miroooo-cart-items">
-            {items.length ? (
+            {!isHydrated ? (
+              <div style={{ padding: "40px 16px", textAlign: "center", color: "rgba(255,255,255,0.6)", fontSize: "0.9rem" }}>
+                Loading bag...
+              </div>
+            ) : items.length ? (
               <CartLines drawer onNavigate={closeCart} />
             ) : (
               <div className="miroooo-cart-empty">

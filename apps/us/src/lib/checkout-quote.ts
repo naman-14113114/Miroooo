@@ -12,7 +12,7 @@ export async function loadPublishedCheckoutOffer(cart: unknown[], discountCode: 
   if (!selected) {
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The selected bundle is unavailable. Please try again later.');
   }
-  const product = selected.product as 'x1' | 'x2';
+  const product = selected.product as 'x1' | 'x2' | 'x1_heads' | 'x2_heads';
   let session;
   try {
     session = await loadXpageSession('USD', product);
@@ -28,12 +28,12 @@ export async function loadPublishedCheckoutOffer(cart: unknown[], discountCode: 
   selected.brushes.forEach((id: string) => {
     const variant = condition.product.variants?.find((item: { id: string; is_visible: boolean }) => item.id === id && item.is_visible);
     if (!variant || !Number.isFinite(Number(variant.price)) || Number(variant.price) < 0) {
-      throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The selected brush has no live USD checkout quote.');
+      throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The selected item has no live USD checkout quote.');
     }
   });
   const discount = Number(option.discount_amount || 0);
-  if (!Number.isFinite(discount) || discount < 0 || discount > 100 ||
-      (option.discount_type && option.discount_type !== 'PERCENTAGE')) {
+  if (!Number.isFinite(discount) || discount < 0 ||
+      (option.discount_type && option.discount_type !== 'PERCENTAGE' && option.discount_type !== 'FIXED_AMOUNT')) {
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live USD discount could not be verified.');
   }
   if (selected.offeredQty > 0) {

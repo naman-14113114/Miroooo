@@ -188,6 +188,42 @@ export const XPAGE_BUNDLES = {
       offeredQty: 3,
     },
   },
+  x1_heads: {
+    id: "a2e82522-3843-45bf-bace-38a2ffda5175",
+    buy1: {
+      optionId: "a2e82522-4503-46f8-8b6b-fb8cc43949b1",
+      conditionId: "a2e82522-5106-44a1-ab8a-f0cff71132c9",
+      offeredQty: 0,
+    },
+    buy2: {
+      optionId: "a2e82522-5590-419d-867c-13f53b00cd5f",
+      conditionId: "a2e82522-5e14-435d-8aa9-bd2b00eeb555",
+      offeredQty: 0,
+    },
+    buy3: {
+      optionId: "a2e82522-62be-4805-841b-3416aa7aade1",
+      conditionId: "a2e82522-6c2d-4c85-98b9-c43580b58a13",
+      offeredQty: 0,
+    },
+  },
+  x2_heads: {
+    id: "a2e825f5-0519-4e38-a62c-be9c972241e3",
+    buy1: {
+      optionId: "a2e825f5-0d2d-4415-a548-14a0d53b4c22",
+      conditionId: "a2e825f5-1543-440f-8108-19a78651f722",
+      offeredQty: 0,
+    },
+    buy2: {
+      optionId: "a2e825f5-196a-4051-9c7b-d64da7c95761",
+      conditionId: "a2e825f5-21fe-416f-9fc6-1caabae90533",
+      offeredQty: 0,
+    },
+    buy3: {
+      optionId: "a2e825f5-2692-47e0-91c4-4406926a2c3c",
+      conditionId: "a2e825f5-307f-47a7-9721-623eceea458e",
+      offeredQty: 0,
+    },
+  },
 } as const;
 
 export const ALLOWED_ATTRIBUTION_KEYS = [
@@ -210,7 +246,10 @@ function sanitizeHeaderValue(value: unknown): string {
 /**
  * Fetch initial session to extract XSRF-TOKEN and cookies from XPage
  */
-export async function loadXpageSession(currency = "GBP", product: "x1" | "x2" | "store" = "x2") {
+export async function loadXpageSession(
+  currency = "GBP",
+  product: "x1" | "x2" | "x1_heads" | "x2_heads" | "store" = "x2"
+) {
   const origin = product === "store" ? XPAGE_STORE_URL : XPAGE_LANDING_URLS[product];
   if (!origin) throw new Error("Unknown Miroooo XPage offer.");
   const url = `${origin}/?currency=${encodeURIComponent(currency)}`;
@@ -500,6 +539,35 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
   }
   const product = brushCounts.x1 ? "x1" : brushCounts.x2 ? "x2" : null;
   if (!product) {
+    if (brushCounts.x1 === 0 && brushCounts.x2 === 0) {
+      if (paidHeads.x1 > 0 && paidHeads.x1 <= 3 && paidHeads.x2 === 0 && freeHeads.x1 === 0 && freeHeads.x2 === 0) {
+        const bundleKey = paidHeads.x1 === 1 ? "buy1" : paidHeads.x1 === 2 ? "buy2" : "buy3";
+        const option = (XPAGE_BUNDLES.x1_heads as any)[bundleKey];
+        if (option) {
+          return {
+            bundle_option_id: option.optionId,
+            product: "x1_heads" as const,
+            brushes: Array(paidHeads.x1).fill(XPAGE_VARIANTS.x1_heads),
+            headsVariant: XPAGE_VARIANTS.x1_heads,
+            offeredQty: 0,
+            matchedKey: bundleKey,
+          };
+        }
+      } else if (paidHeads.x2 > 0 && paidHeads.x2 <= 3 && paidHeads.x1 === 0 && freeHeads.x1 === 0 && freeHeads.x2 === 0) {
+        const bundleKey = paidHeads.x2 === 1 ? "buy1" : paidHeads.x2 === 2 ? "buy2" : "buy3";
+        const option = (XPAGE_BUNDLES.x2_heads as any)[bundleKey];
+        if (option) {
+          return {
+            bundle_option_id: option.optionId,
+            product: "x2_heads" as const,
+            brushes: Array(paidHeads.x2).fill(XPAGE_VARIANTS.x2_heads),
+            headsVariant: XPAGE_VARIANTS.x2_heads,
+            offeredQty: 0,
+            matchedKey: bundleKey,
+          };
+        }
+      }
+    }
     return null;
   }
   const quantity = brushCounts[product];
@@ -559,7 +627,7 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
 
   return {
     bundle_option_id: option.optionId,
-    product,
+    product: product as "x1" | "x2" | "x1_heads" | "x2_heads",
     brushes: brushes[product],
     headsVariant: option.headsVariant || (product === "x1" ? XPAGE_VARIANTS.x1_heads : XPAGE_VARIANTS.x2_heads),
     offeredQty: option.offeredQty || 0,
@@ -598,7 +666,7 @@ export function buildCheckoutUrl(
   return url.toString();
 }
 
-export function brandedCheckoutUrl(href: string, product: "x1" | "x2" = "x2") {
+export function brandedCheckoutUrl(href: string, product: "x1" | "x2" | "x1_heads" | "x2_heads" = "x2") {
   if (typeof href !== "string") throw new Error("XPage did not return a checkout session.");
   const url = new URL(href);
   if (
@@ -614,7 +682,11 @@ export function brandedCheckoutUrl(href: string, product: "x1" | "x2" = "x2") {
   return new URL(url.pathname, brandedOrigin).toString();
 }
 
-function validatePublishedBundle(session: any, product: "x1" | "x2", payload: any) {
+function validatePublishedBundle(
+  session: any,
+  product: "x1" | "x2" | "x1_heads" | "x2_heads",
+  payload: any
+) {
   const selected = session.bundle?.options?.find((option: any) => option.id === payload.bundle_option_id);
   const quantity = payload.brushes?.length || 0;
   const condition = selected?.conditions?.find((item: any) => item.quantity === quantity);
@@ -673,11 +745,7 @@ export async function createXpageCartCheckout({
   const bundlePayload = forceStandardCart ? null : detectBundlePayload(cart, discountCode);
 
   if (bundlePayload) {
-    const product: "x1" | "x2" = Object.values(XPAGE_BUNDLES.x1).some(
-      (value: any) => value?.optionId === bundlePayload.bundle_option_id
-    )
-      ? "x1"
-      : "x2";
+    const product: "x1" | "x2" | "x1_heads" | "x2_heads" = bundlePayload.product;
     const session = await loadXpageSession(currency, product);
     const publishedPayload = validatePublishedBundle(session, product, bundlePayload);
     const response = await fetch(`${session.origin}/create-bundle-order`, {
@@ -795,7 +863,13 @@ export async function createXpageCartCheckout({
     XPAGE_VARIANTS.x1_silver_6pc,
     XPAGE_VARIANTS.x1_heads,
   ]);
-  const product: "x1" | "x2" = xpageLines.every((line) => x1Variants.has(line.variant_id as any)) ? "x1" : "x2";
+  const product: "x1" | "x2" | "x1_heads" | "x2_heads" = xpageLines.every((line) => line.variant_id === XPAGE_VARIANTS.x1_heads)
+    ? "x1_heads"
+    : xpageLines.every((line) => line.variant_id === XPAGE_VARIANTS.x2_heads)
+    ? "x2_heads"
+    : xpageLines.every((line) => x1Variants.has(line.variant_id as any))
+    ? "x1"
+    : "x2";
   const finalCheckoutUrl = buildCheckoutUrl(brandedCheckoutUrl(baseCheckoutUrl, product), "", attribution, currency);
 
   return {

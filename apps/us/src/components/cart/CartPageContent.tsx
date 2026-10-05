@@ -134,6 +134,7 @@ export function CartPageContent() {
     isCheckoutLoading,
     checkoutError,
     addItem,
+    isHydrated,
   } = useCart();
   const [promoInput, setPromoInput] = useState("");
   const [promoStatus, setPromoStatus] = useState<{
@@ -165,7 +166,12 @@ export function CartPageContent() {
     <main id="main" className="cart-page">
       <div className="cart-page-wrapper">
         <DeliveryBanner />
-        {items.length === 0 ? (
+        {!isHydrated ? (
+          <div className="cart-empty-state" style={{ minHeight: '360px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 28, height: 28, border: '2px solid rgba(255,255,255,0.15)', borderTopColor: '#ffffff', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: 14 }} />
+            <p className="cart-empty-desc" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem' }}>Loading your cart...</p>
+          </div>
+        ) : items.length === 0 ? (
           <section
             id="cart-empty-container"
             className="cart-empty-state"
