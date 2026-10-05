@@ -8,6 +8,7 @@ import { ProductAccordions } from './ProductAccordions';
 import { Product } from '@/data/products';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { FreeBrushHeadsGift } from './FreeBrushHeadsGift';
 
 interface ProductHeroProps {
   product: Product;
@@ -1357,92 +1358,7 @@ export function ProductHero({
                 </div>
               </div>
 
-              {/* Special Autumn Sale Free Gifts (Buudy 3-Card Grid Style) */}
-              {isX2 && (
-                <section className="autumn-sale-gifts-wrap mb-8" id="special-autumn-sale-gifts" aria-label="Special Autumn Sale Free Gifts">
-                  <div className="text-center mb-6 flex flex-col items-center">
-                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2" style={{ margin: 0, fontWeight: 700 }}>
-                      Special Autumn Sale
-                    </h3>
-                    <p
-                      className="inline-flex items-center justify-center gap-1.5 flex-wrap rounded-md px-3 py-1 text-xs font-bold tracking-wider uppercase"
-                      style={{
-                        background: 'rgba(212, 175, 55, 0.12)',
-                        border: '1px solid rgba(212, 175, 55, 0.28)',
-                        color: '#e5c07b',
-                        marginTop: '8px',
-                      }}
-                    >
-                      <span style={{ fontSize: '13px', fontWeight: 800, color: '#ffffff' }}>£39</span>
-                      <span>VALUE OF FREE GIFTS FOR TODAY ONLY</span>
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 md:gap-3">
-                    {/* Card 1: Luxury Travel Case */}
-                    <div
-                      className="group relative flex min-h-[160px] sm:min-h-[180px] flex-col justify-start rounded-[18px] border border-white/15 bg-[#121316] p-2 pt-4 sm:pt-5 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[rgba(212,175,55,0.6)]"
-                    >
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2 sm:px-2.5 py-0.5 bg-[#1a1c20] border border-white/20 rounded-full flex items-center gap-1 shadow-md whitespace-nowrap">
-                        <span className="text-[#4ade80] text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase">FREE</span>
-                        <span className="line-through text-[10px] sm:text-[11px] text-white/40 font-semibold">£20</span>
-                      </div>
-                      <div className="relative mt-1 aspect-square w-full overflow-hidden rounded-[14px] bg-black/40 p-1 flex items-center justify-center">
-                        <img
-                          src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp"
-                          alt="Luxury Travel Case"
-                          className="w-full h-full object-contain rounded-[10px] transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                      <p className="mt-1.5 text-xs sm:text-sm font-semibold text-white/95 leading-tight">
-                        Luxury Travel Case
-                      </p>
-                    </div>
-
-                    {/* Card 2: Wall-Mounted Dock */}
-                    <div
-                      className="group relative flex min-h-[160px] sm:min-h-[180px] flex-col justify-start rounded-[18px] border border-white/15 bg-[#121316] p-2 pt-4 sm:pt-5 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[rgba(212,175,55,0.6)]"
-                    >
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2 sm:px-2.5 py-0.5 bg-[#1a1c20] border border-white/20 rounded-full flex items-center gap-1 shadow-md whitespace-nowrap">
-                        <span className="text-[#4ade80] text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase">FREE</span>
-                        <span className="line-through text-[10px] sm:text-[11px] text-white/40 font-semibold">£9</span>
-                      </div>
-                      <div className="relative mt-1 aspect-square w-full overflow-hidden rounded-[14px] bg-black/40 p-1 flex items-center justify-center">
-                        <img
-                          src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp"
-                          alt="Wall-Mounted Dock"
-                          className="w-full h-full object-contain rounded-[10px] transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                      <p className="mt-1.5 text-xs sm:text-sm font-semibold text-white/95 leading-tight">
-                        Wall-Mounted Dock
-                      </p>
-                    </div>
-
-                    {/* Card 3: 2x DuPont Brush Heads */}
-                    <div
-                      className="group relative flex min-h-[160px] sm:min-h-[180px] flex-col justify-start rounded-[18px] border border-white/15 bg-[#121316] p-2 pt-4 sm:pt-5 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[rgba(212,175,55,0.6)]"
-                    >
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2 sm:px-2.5 py-0.5 bg-[#1a1c20] border border-white/20 rounded-full flex items-center gap-1 shadow-md whitespace-nowrap">
-                        <span className="text-[#4ade80] text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase">FREE</span>
-                        <span className="line-through text-[10px] sm:text-[11px] text-white/40 font-semibold">£10</span>
-                      </div>
-                      <div className="relative mt-1 aspect-square w-full overflow-hidden rounded-[14px] bg-black/40 p-1 flex items-center justify-center">
-                        <img
-                          src="/assets_ref/x2/heads/B1.webp"
-                          alt="2x DuPont Precision Brush Heads"
-                          className="w-full h-full object-contain rounded-[10px] transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                      <p className="mt-1.5 text-xs sm:text-sm font-semibold text-white/95 leading-tight">
-                        2x Brush Heads
-                      </p>
-                    </div>
-                  </div>
-                </section>
-              )}
+              {isX2 && <FreeBrushHeadsGift />}
 
               <ProductAccordions model={isX2 ? 'x2' : 'x1'} />
             </div>
