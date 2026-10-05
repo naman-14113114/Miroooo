@@ -109,7 +109,7 @@ export async function prepareUSCheckout({ cart, discountCode, expectedUSD, useBu
   ]);
   const isX1HeadsOnly = xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.x1_heads);
   const isX2HeadsOnly = xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.x2_heads);
-  const product = isX1HeadsOnly ? 'x1_heads' : isX2HeadsOnly ? 'x2_heads' : xpageCart.every((line) => x1.has(line.variant_id)) ? 'x1' : 'x2';
+  const product = isX1HeadsOnly ? 'x1_heads' : isX2HeadsOnly ? 'x2_heads' : xpageCart.every((line) => x1.has(line.variant_id) || line.variant_id === XPAGE_VARIANTS.x1_heads) ? 'x1' : 'x2';
   let checkout: URL;
 
   if (useBundle) {

@@ -8,6 +8,7 @@ import {
   Plus,
   ShoppingBag,
   Star,
+  X,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatGBP } from "@/lib/cart";
@@ -153,13 +154,15 @@ export function CartPageContent() {
     model === "X2"
       ? "/assets_ref/x2/heads/B1.webp"
       : "/assets_ref/x/heads/B1.webp";
-  const discountRows = [
+  const discountRows: [string, number][] = ([
     ["Bundle Special Offer", totals.bundleSavings],
     [totals.bundlePromoName, totals.bundlePromoDiscount],
     ["Free Miroooo X2 Heads", totals.extraBrushHeadSets * 10],
     ["Free Miroooo X1 Heads", totals.extraX1BrushHeadSets * 10],
-    [appliedPromoCodes.join(", "), totals.promoDiscount],
-  ] as [string, number][];
+    ...(totals.promoDiscount > 0 && appliedPromoCodes.length > 0
+      ? [[`Promo (${appliedPromoCodes.join(', ')})`, totals.promoDiscount] as [string, number]]
+      : []),
+  ] as [string, number][]).filter(([label, amount]) => Boolean(label) && Number(amount) > 0);
   return (
     <main id="main" className="cart-page">
       <div className="cart-page-wrapper">
@@ -349,6 +352,51 @@ export function CartPageContent() {
                     >
                       {promoStatus.message}
                     </p>
+                  )}
+                  {appliedPromoCodes.length > 0 && (
+                    <div className="cart-promo-applied-badges" style={{ marginTop: '10px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                      {appliedPromoCodes.map((code) => (
+                        <span
+                          key={code}
+                          className="cart-promo-pill"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '4px 10px',
+                            background: 'rgba(255, 255, 255, 0.08)',
+                            border: '1px solid rgba(255, 255, 255, 0.15)',
+                            borderRadius: '20px',
+                            fontSize: '0.8rem',
+                            fontWeight: 600,
+                            color: '#ffffff',
+                            letterSpacing: '0.04em',
+                          }}
+                        >
+                          <span>{code}</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              removePromoCode(code);
+                              setPromoStatus(null);
+                            }}
+                            aria-label={`Remove promo code ${code}`}
+                            style={{
+                              background: 'transparent',
+                              border: 'none',
+                              color: 'rgba(255, 255, 255, 0.6)',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              padding: 0,
+                              lineHeight: 1,
+                            }}
+                          >
+                            <X size={13} strokeWidth={2.5} />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
                   )}
                 </div>
                 <div className="cart-subtotal-section">

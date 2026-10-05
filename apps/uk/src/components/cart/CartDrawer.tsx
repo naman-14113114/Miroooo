@@ -8,7 +8,7 @@ import { useDrawer } from "@/components/layout/useDrawer";
 import { CartLines } from "./CartLines";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, totals, isHydrated } = useCart();
+  const { items, isOpen, closeCart, totals, isHydrated, appliedPromoCodes } = useCart();
   const [discountOpen, setDiscountOpen] = useState(false);
   const ref = useDrawer(isOpen, closeCart, "cart-drawer-open");
   return (
@@ -96,7 +96,12 @@ export function CartDrawer() {
                     ["Bundle Special Offer", totals.bundleSavings],
                     [totals.bundlePromoName, totals.bundlePromoDiscount],
                     ["Unlocked Free Gifts", totals.giftsValue],
-                    ["Promo Code", totals.promoDiscount],
+                    [
+                      appliedPromoCodes.length > 0
+                        ? `Promo (${appliedPromoCodes.join(", ")})`
+                        : "Promo Code",
+                      totals.promoDiscount,
+                    ],
                   ].map(
                     ([label, amount]) =>
                       Number(amount) > 0 && (

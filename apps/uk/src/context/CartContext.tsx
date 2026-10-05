@@ -55,15 +55,42 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const loadCartFromStorage = useCallback(() => {
     try {
-      // 1. Promo codes
+      // 1. Promo codes (strictly filtered to valid user codes, never auto-applied)
       const storedPromos = localStorage.getItem(LOCAL_STORAGE_PROMOS_KEY);
       if (storedPromos) {
-        const parsed = JSON.parse(storedPromos);
-        if (Array.isArray(parsed)) setAppliedPromoCodes(parsed);
+        try {
+          const parsed = JSON.parse(storedPromos);
+          if (Array.isArray(parsed)) {
+            const valid = parsed
+              .map((c) => String(c).trim().toUpperCase())
+              .filter((c) => VALID_PROMO_CODES.includes(c));
+            setAppliedPromoCodes(valid);
+            if (valid.length !== parsed.length) {
+              if (valid.length === 0) {
+                localStorage.removeItem(LOCAL_STORAGE_PROMOS_KEY);
+                localStorage.removeItem('miroooo_promo_code');
+              } else {
+                localStorage.setItem(LOCAL_STORAGE_PROMOS_KEY, JSON.stringify(valid));
+                localStorage.setItem('miroooo_promo_code', valid.join(','));
+              }
+            }
+          }
+        } catch {
+          localStorage.removeItem(LOCAL_STORAGE_PROMOS_KEY);
+          setAppliedPromoCodes([]);
+        }
       } else {
         const singlePromo = localStorage.getItem('miroooo_promo_code');
         if (singlePromo) {
-          setAppliedPromoCodes([singlePromo.toUpperCase().trim()]);
+          const formatted = singlePromo.toUpperCase().trim();
+          if (VALID_PROMO_CODES.includes(formatted)) {
+            setAppliedPromoCodes([formatted]);
+          } else {
+            localStorage.removeItem('miroooo_promo_code');
+            setAppliedPromoCodes([]);
+          }
+        } else {
+          setAppliedPromoCodes([]);
         }
       }
 
