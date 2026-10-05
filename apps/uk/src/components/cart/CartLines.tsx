@@ -43,7 +43,7 @@ export function CartLines({
         })),
         ...gifts.map((gift) => ({
           id: `gift-${gift.handle}`,
-          title: `${drawer ? "Free " : ""}Miroooo ${gift.model} Heads`,
+          title: `Free Miroooo ${gift.model} Heads (2-Pack)`,
           subtitle: `${gift.sets} complimentary ${gift.sets > 1 ? "sets contain" : "set contains"} ${gift.sets * 2} DuPont precision heads for Miroooo ${gift.model}.`,
           image: gift.image,
           url: `/products/${gift.handle}`,

@@ -133,7 +133,6 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const x2 = PRODUCTS['miroooo-x2'];
   const h1 = PRODUCTS['miroooo-x1-heads'];
   const h2 = PRODUCTS['miroooo-x2-heads'];
-  const hasPaidHeads = x1HeadsCount + x2HeadsCount > 0;
   const isX1Bundle = x2Count === 0 && (x1Count === 2 || x1Count === 3);
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const tier = isX1Bundle ? x1.bundles[x1Count - 1] : isX2Bundle && x2Count > 1 ? x2.bundles[x2Count - 1] : undefined;
@@ -153,7 +152,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const compareAtCents = x1Count * cents(x1.compareAt) + x2Count * cents(x2.compareAt)
     + x1HeadsCount * cents(h1.compareAt) + x2HeadsCount * cents(h2.compareAt);
   const giftsValue = roundMoney(extraX1BrushHeadSets * h1.price + extraBrushHeadSets * h2.price);
-  const isHeadsOnly = hasPaidHeads && x1Count + x2Count === 0;
+  const isHeadsOnly = (x1HeadsCount + x2HeadsCount > 0) && x1Count + x2Count === 0;
   const headsBundleCount = x1HeadsCount || x2HeadsCount;
   const brushBundlePromoDiscount = isX2Bundle && x2Count > 1 ? (brushBase - brushNet) / 100 : 0;
   const bundlePromoDiscount = brushBundlePromoDiscount > 0 ? brushBundlePromoDiscount : isHeadsOnly && headsBundleDiscount > 0 ? headsBundleDiscount : 0;

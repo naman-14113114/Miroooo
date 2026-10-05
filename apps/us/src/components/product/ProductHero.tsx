@@ -246,14 +246,14 @@ export function ProductHero({
     const colorLower = selectedColor.toLowerCase();
     const heroImage =
       colorLower === 'pink'
-        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp?v=violet'
         : colorLower === 'grey'
         ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp'
         : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp';
 
     const heroAlt =
       colorLower === 'pink'
-        ? 'Miroooo X2 Sonic Electric Toothbrush Pink with Glowing Smart Ring'
+        ? 'Miroooo X2 Sonic Electric Toothbrush Pink with Violet Glowing Smart Ring'
         : colorLower === 'grey'
         ? 'Miroooo X2 Sonic Electric Toothbrush Grey Kit on Wet Stone'
         : 'Miroooo X2 Sonic Electric Toothbrush Silver with Precision DuPont Bristle Heads';

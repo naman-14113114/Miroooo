@@ -319,7 +319,7 @@ export const PRODUCTS: Record<string, Product> = {
     ],
     galleryImages: [
       { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp', alt: 'Miroooo X2 Silver Precision DuPont Bristle Heads', width: 1200, height: 1200, variantColor: 'Silver' },
-      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp', alt: 'Miroooo X2 Pink with Glowing Smart Ring', width: 1200, height: 1200, variantColor: 'Pink' },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp?v=violet', alt: 'Miroooo X2 Pink with Glowing Smart Ring', width: 1200, height: 1200, variantColor: 'Pink' },
       { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp', alt: 'Miroooo X2 Grey Kit on Wet Stone', width: 1200, height: 1200, variantColor: 'Grey' },
       { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp', alt: 'Miroooo X2 Silver Upright Grip', width: 700, height: 700, variantColor: 'Silver' },
     ],
