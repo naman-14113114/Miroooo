@@ -166,11 +166,11 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     } else if (x2Count === 2) {
       x2BundlePromoDiscount = 10;
       x2BundlePromoName = 'Buy 2 bundle (£10 extra saving)';
-      extraBrushHeadSets = 1;
+      extraBrushHeadSets = 2;
     } else if (x2Count === 3) {
       x2BundlePromoDiscount = 30;
       x2BundlePromoName = 'Buy 3 bundle (£30 extra saving)';
-      extraBrushHeadSets = 2;
+      extraBrushHeadSets = 3;
     }
   }
 

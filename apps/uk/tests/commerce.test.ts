@@ -22,12 +22,12 @@ function mockPublishedOffer(quantity: 1 | 2 | 3, price = 69, product: 'x1' | 'x2
     options: [{
       id: option.optionId,
       discount_target: isHeads ? 'PER_ITEM' : (quantity === 1 ? null : 'PER_ITEM'),
-      discount_type: isHeads ? 'FIXED_AMOUNT' : 'PERCENTAGE',
+      discount_type: isHeads ? 'FIXED_AMOUNT' : (quantity === 1 ? null : 'PERCENTAGE'),
       discount_amount: isHeads ? (quantity === 1 ? '0' : quantity === 2 ? '1' : '2') : (quantity === 1 ? 0 : 7.24),
       conditions: [{ id: option.conditionId, quantity, product: {
         status: 'ACTIVE', variants: [{ id: isHeads ? XPAGE_VARIANTS[product] : XPAGE_VARIANTS[`${product}_grey`], is_visible: true, price: isHeads ? 10 : price }],
       } }],
-      offered: isHeads ? [] : [{ id: (option as any).offeredId || (bundle.buy2 as any).offeredId, quantity: 1, discount_type: 'PERCENTAGE', discount_amount: '100.00', product: {
+      offered: isHeads ? [] : [{ id: (option as any).offeredId || (bundle.buy2 as any).offeredId, quantity: (option as any).offeredQty || 1, discount_type: 'PERCENTAGE', discount_amount: '100.00', product: {
         status: 'ACTIVE', variants: [{ id: XPAGE_VARIANTS[`${product}_heads`], is_visible: true, price: 10 }],
       } }],
     }],
@@ -63,7 +63,8 @@ test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', ()
   assert.equal(totals([{ ...x2Grey, quantity: 3 }]).finalSubtotal, 177);
   assert.equal(totals([{ ...x2Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);
   assert.equal(totals([{ ...x2Grey, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 159);
-  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 3);
+  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 2);
   assert.equal(totals([x2Grey]).unlockedGiftsCount, 1);
   assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 62);
   assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 79);
@@ -275,7 +276,7 @@ for (const actualTotal of [128, 128.01]) {
         return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
       }
       if (String(input).includes('/checkout/')) {
-        const rows = [{quantity: 2, price: 69, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 1, price: 10, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+        const rows = [{quantity: 2, price: 69, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 2, price: 10, variant: {id: XPAGE_VARIANTS.x2_heads}}];
         return new Response(`<span class="total font-semibold">£${actualTotal.toFixed(2)}</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(148, 20)}`);
       }
       return new Response(mockPublishedOffer(2));

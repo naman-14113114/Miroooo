@@ -198,9 +198,9 @@ export function ProductHero({
 
   const addToCartLabel = isX2
     ? (selectedTier === 'bundle-2'
-        ? 'Add to Cart + Free 2 Brush Heads'
-        : selectedTier === 'bundle-3'
         ? 'Add to Cart + Free 4 Brush Heads'
+        : selectedTier === 'bundle-3'
+        ? 'Add to Cart + Free 6 Brush Heads'
         : 'Add to Cart + 2 Free Heads')
     : isSimpleBuybox
     ? `Add to Cart — £${(singlePrice * quantity).toFixed(2)}`
@@ -1140,10 +1140,10 @@ export function ProductHero({
                           <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
                         </svg>
                       </span>
-                      <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
+                      <span className="tier-gift-strip-title">{isX2 ? '+ 4 Brush Heads (2 Sets)' : '+ 2 Brush Heads'}</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">£10</span>
+                      <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">{isX2 ? '£20' : '£10'}</span>
                       <span className="tier-gift-free-badge">FREE</span>
                     </div>
                   </a>
@@ -1261,10 +1261,10 @@ export function ProductHero({
                           <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
                         </svg>
                       </span>
-                      <span className="tier-gift-strip-title">+ 4 Brush Heads (2 Sets)</span>
+                      <span className="tier-gift-strip-title">{isX2 ? '+ 6 Brush Heads (3 Sets)' : '+ 4 Brush Heads (2 Sets)'}</span>
                     </div>
                     <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">£20</span>
+                      <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">{isX2 ? '£30' : '£20'}</span>
                       <span className="tier-gift-free-badge">FREE</span>
                     </div>
                   </a>

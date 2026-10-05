@@ -33,14 +33,18 @@ export async function loadPublishedCheckoutOffer(cart: unknown[], discountCode: 
   });
   const discount = Number(option.discount_amount || 0);
   if (!Number.isFinite(discount) || discount < 0 ||
-      (option.discount_type && option.discount_type !== 'PERCENTAGE' && option.discount_type !== 'FIXED_AMOUNT')) {
+      (option.discount_type && option.discount_type !== 'PERCENTAGE' && option.discount_type !== 'FIXED_AMOUNT' && option.discount_type !== 'FIXED')) {
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live USD discount could not be verified.');
   }
   if (selected.offeredQty > 0) {
     const offered = option.offered?.find((item: { quantity: number }) => item.quantity === selected.offeredQty);
     const head = offered?.product?.variants?.find((item: { id: string; is_visible: boolean }) => item.id === selected.headsVariant && item.is_visible);
     const headDiscount = Number(offered?.discount_amount);
-    if (!head || offered?.product?.status !== 'ACTIVE' || !Number.isFinite(Number(head.price)) || Number(head.price) < 0 || offered?.discount_type !== 'PERCENTAGE' || !Number.isFinite(headDiscount) || headDiscount < 0 || headDiscount > 100) {
+    const isPercentage = offered?.discount_type === 'PERCENTAGE';
+    const isFixed = offered?.discount_type === 'FIXED' || offered?.discount_type === 'FIXED_AMOUNT';
+    if (!head || offered?.product?.status !== 'ACTIVE' || !Number.isFinite(Number(head.price)) || Number(head.price) < 0 ||
+        (!isPercentage && !isFixed) || !Number.isFinite(headDiscount) || headDiscount < 0 ||
+        (isPercentage && headDiscount > 100)) {
       throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live USD head offer could not be verified.');
     }
   }

@@ -43,93 +43,94 @@ export const XPAGE_BUNDLES = {
     id: "a2d0d131-2f3a-4f9c-a8a7-70a398be8b39",
     buy1: {
       optionId: "a2d0d131-33fd-4d08-aadd-c56b2e8dc30d",
-      conditionId: "a2e8ad3b-e65a-466d-b917-c09ce1543a97",
-      offeredQty: 0,
+      conditionId: "a2e8badf-fa6c-412e-9ed0-8e2e35730e89",
+      offeredId: "a2e8bae0-001c-4a35-8848-487d8ea3d430",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 1,
     },
     buy1_freehead: {
-      optionId: "a2e7dcbe-d7d3-475d-b836-d76cb5016418",
-      conditionId: "a2e8ad38-ea25-4a27-b082-05e7033bfd73",
-      offeredId: "a2e8ad38-ef0e-4ef7-8074-4abc06047349",
+      optionId: "a2d0d131-33fd-4d08-aadd-c56b2e8dc30d",
+      conditionId: "a2e8badf-fa6c-412e-9ed0-8e2e35730e89",
+      offeredId: "a2e8bae0-001c-4a35-8848-487d8ea3d430",
       headsVariant: XPAGE_VARIANTS.x2_heads,
       offeredQty: 1,
     },
     buy1_1head: {
       optionId: "a2e88657-6fbd-410c-950c-56e0208d19a9",
-      conditionId: "a2e8ad3d-09e1-4dd0-af4f-144fac0d54b6",
-      offeredId: "a2e8ad3d-10af-4a73-b20d-52c0b4e26ff9",
+      conditionId: "a2e8bae1-eda1-4ba1-b1ae-38cd1fd182f7",
+      offeredId: "a2e8bae1-f651-464e-8a2f-fe38bb44d0de",
       headsVariant: XPAGE_VARIANTS.x2_heads,
       offeredQty: 2,
     },
     buy2: {
       optionId: "a2d0d131-3f1f-47c6-bfdb-112fd97f8952",
-      conditionId: "a2e8ad39-1d78-4caa-a583-8c76b24031b9",
-      offeredId: "a2e8ad39-2542-417e-8950-f7caae8c3d24",
-      headsVariant: "a2d0cb1d-dfcf-425d-9251-7792053c08b8",
-      offeredQty: 1,
-    },
-    buy3: {
-      optionId: "a2d0d131-4ca9-4fd6-a859-bb73df7c1550",
-      conditionId: "a2e8ad39-0c1d-4187-b9d3-9e0adecbebbd",
-      offeredId: "a2e8ad39-1d1f-4067-9927-e3388dc03d69",
-      headsVariant: "a2d0cb1d-dfcf-425d-9251-7792053c08b8",
-      offeredQty: 2,
-    },
-    promoBuy1: {
-      optionId: "a2d1e8dd-8ff5-4a93-970f-fe69b2fda5ca",
-      conditionId: "a2e8ad3b-9003-427a-bc1b-7deb32ea2b20",
-      offeredQty: 0,
-    },
-    promoBuy2: {
-      optionId: "a2d1e8dd-8a4d-4f52-8495-7740cc7ba3cd",
-      conditionId: "a2e8ad3c-f7b4-4ae2-a233-b9b43d89075d",
-      offeredId: "a2e8ad3d-0210-4ab9-8231-c9035a8f2110",
-      headsVariant: XPAGE_VARIANTS.x2_heads,
-      offeredQty: 1,
-    },
-    promoBuy3: {
-      optionId: "a2d1e8dd-9455-4386-a6f8-e98cc347b10d",
-      conditionId: "a2e8ad3c-6d0a-493c-b57e-4d092fc26342",
-      offeredId: "a2e8ad3c-716a-4ab1-840e-3dff104c7c3e",
-      headsVariant: XPAGE_VARIANTS.x2_heads,
-      offeredQty: 2,
-    },
-    promoBuy1_1head: {
-      optionId: "a2d3de8d-bcf5-46a1-8c0c-691de9443494",
-      headsVariant: XPAGE_VARIANTS.x2_heads,
-      offeredQty: 1,
-    },
-    promoBuy1_2head: {
-      optionId: "a2d3df3c-066d-4cc1-b93e-2d3533862e88",
+      conditionId: "a2e8bae0-64b2-4201-b8b5-938bc21435d2",
+      offeredId: "a2e8bae0-6caa-43df-a68d-d8dce83ce99b",
       headsVariant: XPAGE_VARIANTS.x2_heads,
       offeredQty: 2,
     },
     buy2_1head: {
-      optionId: "a2d4034b-5edb-4c5e-84bb-027fb30b2076",
-      conditionId: "a2e8ad3c-ea53-4250-8b6b-324f04ae39ae",
-      offeredId: "a2e8ad3c-f13a-4bb1-9e3c-498fec21df06",
+      optionId: "a2e8bae0-105f-49d8-917a-ec4574dcc0f4",
+      conditionId: "a2e8bae0-2fd8-4959-a1cc-545f8cc2a14e",
+      offeredId: "a2e8bae0-1983-4a60-b91b-bad0422198fa",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 3,
+    },
+    buy3: {
+      optionId: "a2d0d131-4ca9-4fd6-a859-bb73df7c1550",
+      conditionId: "a2e8bae0-98f2-451b-b234-de92c979a59f",
+      offeredId: "a2e8bae0-b302-4e23-bb42-555616bc009c",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 3,
+    },
+    buy3_1head: {
+      optionId: "a2e8bae1-384e-489d-bf59-5e969c873c06",
+      conditionId: "a2e8bae1-4280-4d50-9335-538f54f3bf72",
+      offeredId: "a2e8bae1-4037-493b-a66c-b02cb7e1c65f",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 4,
+    },
+    promoBuy1: {
+      optionId: "a2d0d131-33fd-4d08-aadd-c56b2e8dc30d",
+      conditionId: "a2e8badf-fa6c-412e-9ed0-8e2e35730e89",
+      offeredId: "a2e8bae0-001c-4a35-8848-487d8ea3d430",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 1,
+    },
+    promoBuy2: {
+      optionId: "a2d0d131-3f1f-47c6-bfdb-112fd97f8952",
+      conditionId: "a2e8bae0-64b2-4201-b8b5-938bc21435d2",
+      offeredId: "a2e8bae0-6caa-43df-a68d-d8dce83ce99b",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 2,
+    },
+    promoBuy3: {
+      optionId: "a2d0d131-4ca9-4fd6-a859-bb73df7c1550",
+      conditionId: "a2e8bae0-98f2-451b-b234-de92c979a59f",
+      offeredId: "a2e8bae0-b302-4e23-bb42-555616bc009c",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 3,
+    },
+    promoBuy1_1head: {
+      optionId: "a2e88657-6fbd-410c-950c-56e0208d19a9",
+      conditionId: "a2e8bae1-eda1-4ba1-b1ae-38cd1fd182f7",
+      offeredId: "a2e8bae1-f651-464e-8a2f-fe38bb44d0de",
       headsVariant: XPAGE_VARIANTS.x2_heads,
       offeredQty: 2,
     },
     promoBuy2_1head: {
-      optionId: "a2d3f3b3-b11a-465a-ba68-9a7e6c306a39",
-      conditionId: "a2e8ad39-6f06-4772-a776-b3ab683784cc",
-      offeredId: "a2e8ad39-7822-42eb-941c-1a796d154b57",
-      headsVariant: XPAGE_VARIANTS.x2_heads,
-      offeredQty: 2,
-    },
-    buy3_1head: {
-      optionId: "a2d4034b-31ac-428e-8e8b-3a5ee28e12eb",
-      conditionId: "a2e8ad3c-800b-462c-87c4-d684d36c67e5",
-      offeredId: "a2e8ad3c-919b-4baa-b258-0b7198abd8dc",
+      optionId: "a2e8bae0-105f-49d8-917a-ec4574dcc0f4",
+      conditionId: "a2e8bae0-2fd8-4959-a1cc-545f8cc2a14e",
+      offeredId: "a2e8bae0-1983-4a60-b91b-bad0422198fa",
       headsVariant: XPAGE_VARIANTS.x2_heads,
       offeredQty: 3,
     },
     promoBuy3_1head: {
-      optionId: "a2d3fb2f-f333-49c5-a1f1-838c3d2a0f82",
-      conditionId: "a2e8ad3c-4e1d-4a47-83ce-36f0b86b4c37",
-      offeredId: "a2e8ad3c-5d01-4a6d-90cf-32b7c0596bac",
+      optionId: "a2e8bae1-384e-489d-bf59-5e969c873c06",
+      conditionId: "a2e8bae1-4280-4d50-9335-538f54f3bf72",
+      offeredId: "a2e8bae1-4037-493b-a66c-b02cb7e1c65f",
       headsVariant: XPAGE_VARIANTS.x2_heads,
-      offeredQty: 3,
+      offeredQty: 4,
     },
   },
   x1: {
@@ -602,38 +603,67 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
   let bundleKey: string | null = null;
 
   if (quantity === 1) {
-    if (product === "x2" && freeHeadQty === 1 && paidHeadQty === 0) {
-      bundleKey = "buy1_freehead";
-    } else if (product === "x2" && freeHeadQty === 1 && paidHeadQty === 1) {
-      bundleKey = "buy1_1head";
-    } else if (freeHeadQty > 0) {
-      return null;
-    } else if (paidHeadQty === 0) {
-      bundleKey = isPromo ? "promoBuy1" : null;
-    } else if (paidHeadQty === 1) {
-      bundleKey = isPromo ? "promoBuy1_1head" : null;
-    } else if (paidHeadQty === 2) {
-      bundleKey = isPromo ? "promoBuy1_2head" : null;
+    if (product === "x2") {
+      if (freeHeadQty === 1 && paidHeadQty === 0) {
+        bundleKey = "buy1_freehead";
+      } else if (freeHeadQty === 1 && paidHeadQty === 1) {
+        bundleKey = "buy1_1head";
+      } else if (freeHeadQty === 0 && paidHeadQty === 0) {
+        bundleKey = isPromo ? "promoBuy1" : "buy1";
+      } else if (freeHeadQty === 0 && paidHeadQty === 1) {
+        bundleKey = "buy1_1head";
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      if (freeHeadQty > 0) return null;
+      if (paidHeadQty === 0) {
+        bundleKey = isPromo ? "promoBuy1" : null;
+      } else if (paidHeadQty === 1) {
+        bundleKey = isPromo ? "promoBuy1_1head" : null;
+      } else if (paidHeadQty === 2) {
+        bundleKey = isPromo ? "promoBuy1_2head" : null;
+      } else {
+        return null;
+      }
     }
   } else if (quantity === 2) {
-    if (freeHeadQty > 0 && freeHeadQty !== 1) return null;
-    if (paidHeadQty === 0) {
-      bundleKey = isPromo ? "promoBuy2" : "buy2";
-    } else if (paidHeadQty === 1) {
-      bundleKey = isPromo ? "promoBuy2_1head" : "buy2_1head";
+    if (product === "x2") {
+      if ((freeHeadQty === 2 || freeHeadQty === 0) && paidHeadQty === 0) {
+        bundleKey = isPromo ? "promoBuy2" : "buy2";
+      } else if ((freeHeadQty === 2 || freeHeadQty === 0) && paidHeadQty === 1) {
+        bundleKey = isPromo ? "promoBuy2_1head" : "buy2_1head";
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      if (freeHeadQty > 0 && freeHeadQty !== 1) return null;
+      if (paidHeadQty === 0) {
+        bundleKey = isPromo ? "promoBuy2" : "buy2";
+      } else if (paidHeadQty === 1) {
+        bundleKey = isPromo ? "promoBuy2_1head" : "buy2_1head";
+      } else {
+        return null;
+      }
     }
   } else if (quantity === 3) {
-    if (freeHeadQty > 0 && freeHeadQty !== 2) return null;
-    if (paidHeadQty === 0) {
-      bundleKey = isPromo ? "promoBuy3" : "buy3";
-    } else if (paidHeadQty === 1) {
-      bundleKey = isPromo ? "promoBuy3_1head" : "buy3_1head";
+    if (product === "x2") {
+      if ((freeHeadQty === 3 || freeHeadQty === 0) && paidHeadQty === 0) {
+        bundleKey = isPromo ? "promoBuy3" : "buy3";
+      } else if ((freeHeadQty === 3 || freeHeadQty === 0) && paidHeadQty === 1) {
+        bundleKey = isPromo ? "promoBuy3_1head" : "buy3_1head";
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      if (freeHeadQty > 0 && freeHeadQty !== 2) return null;
+      if (paidHeadQty === 0) {
+        bundleKey = isPromo ? "promoBuy3" : "buy3";
+      } else if (paidHeadQty === 1) {
+        bundleKey = isPromo ? "promoBuy3_1head" : "buy3_1head";
+      } else {
+        return null;
+      }
     }
   }
 

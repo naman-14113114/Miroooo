@@ -22,12 +22,12 @@ function mockPublishedOffer(quantity: 1 | 2 | 3, price = 91.15, product: 'x1' | 
     options: [{
       id: option.optionId,
       discount_target: isHeads ? 'PER_ITEM' : (quantity === 1 ? null : 'PER_ITEM'),
-      discount_type: isHeads ? 'FIXED_AMOUNT' : 'PERCENTAGE',
+      discount_type: isHeads ? 'FIXED_AMOUNT' : (quantity === 1 ? null : 'PERCENTAGE'),
       discount_amount: isHeads ? (quantity === 1 ? '0' : quantity === 2 ? '1' : '2') : (quantity === 1 ? 0 : 7.24),
       conditions: [{ id: option.conditionId, quantity, product: {
         status: 'ACTIVE', variants: [{ id: isHeads ? XPAGE_VARIANTS[product] : XPAGE_VARIANTS[`${product}_grey`], is_visible: true, price: isHeads ? 10.0 : price }],
       } }],
-      offered: isHeads ? [] : [{ id: (option as any).offeredId || (bundle.buy2 as any).offeredId, quantity: 1, discount_type: 'PERCENTAGE', discount_amount: '100.00', product: {
+      offered: isHeads ? [] : [{ id: (option as any).offeredId || (bundle.buy2 as any).offeredId, quantity: (option as any).offeredQty || 1, discount_type: 'PERCENTAGE', discount_amount: '100.00', product: {
         status: 'ACTIVE', variants: [{ id: XPAGE_VARIANTS[`${product}_heads`], is_visible: true, price: 10.0 }],
       } }],
     }],
@@ -63,8 +63,11 @@ test('X1 and X2 displayed USD offers, gifts, and post-bundle promo rounding', ()
     assert.equal(totals([{ ...brush, quantity: 3 }]).finalSubtotal, 234.07);
     assert.equal(totals([{ ...brush, quantity: 2 }], ['MIROOOO']).finalSubtotal, 152.18);
     assert.equal(totals([{ ...brush, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 210.67);
-    assert.equal(totals([{ ...brush, quantity: 3 }]).unlockedGiftsCount, 2);
   }
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 3);
+  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([{ ...x1Grey, quantity: 2 }]).unlockedGiftsCount, 1);
   assert.equal(totals([x2Grey]).unlockedGiftsCount, 1);
   assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 82.03);
   assert.equal(totals([x1Grey], ['MIROOOO']).finalSubtotal, 82.03);
@@ -125,7 +128,7 @@ test('split brush colors qualify together, promo aliases never stack, and client
   const pink = {...x2Grey, variantId: PRODUCTS['miroooo-x2'].variants.find(v => v.color === 'Pink')!.id};
   const pair = [x2Grey, pink];
   assert.equal(totals(pair).finalSubtotal, 169.10);
-  assert.equal(totals(pair).giftsValue, 10);
+  assert.equal(totals(pair).giftsValue, 20);
   assert.equal(totals(pair, ['MIROOOO', 'MIROOOO10']).finalSubtotal, 152.18);
   assert.equal(normalizeCartItems([...pair, {...head('x2', 99), id: 'miroooo-x2-heads:free', unitPrice: 0}], true).length, 2);
 });
@@ -280,7 +283,7 @@ for (const actualTotal of [169.10, 169.11]) {
         return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
       }
       if (String(input).includes('/checkout/')) {
-        const rows = [{quantity: 2, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 1, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+        const rows = [{quantity: 2, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 2, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}];
         return new Response(`<span class="total font-semibold">$${actualTotal.toFixed(2)}</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(195.50, 26.40)}`);
       }
       return new Response(mockPublishedOffer(2));
