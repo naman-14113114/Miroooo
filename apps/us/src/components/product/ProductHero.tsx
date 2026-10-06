@@ -17,6 +17,12 @@ interface ProductHeroProps {
   isSimpleBuybox?: boolean;
 }
 
+interface InfographicBadge {
+  pos: string;
+  title: string;
+  sub: string;
+}
+
 interface GallerySlide {
   type: 'image' | 'video';
   src?: string;
@@ -24,11 +30,8 @@ interface GallerySlide {
   thumbImg: string;
   videoSrc?: string;
   poster?: string;
-  badge?: {
-    pos: string;
-    title: string;
-    sub: string;
-  };
+  badge?: InfographicBadge;
+  badges?: InfographicBadge[];
   isModesBadge?: boolean;
 }
 
@@ -291,6 +294,18 @@ export function ProductHero({
         src: uprightGrip,
         alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Upright Grip in Hand`,
         thumbImg: uprightGrip,
+        badges: [
+          {
+            pos: 'miroooo-infographic-badge--top-left',
+            title: '51g Ultra<br>Lightweight',
+            sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
+          },
+          {
+            pos: 'miroooo-infographic-badge--top-right',
+            title: '90-Day Battery<br>Life',
+            sub: '3 Full Months Power<br>On A Single Charge',
+          },
+        ],
       },
       {
         type: 'image',
@@ -299,8 +314,8 @@ export function ProductHero({
         thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
         badge: {
           pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
-          title: 'Ultra<br>Lightweight (51g)',
-          sub: 'Travel-Friendly Slim Case',
+          title: 'Free Luxury<br>Travel Case',
+          sub: 'Travel-Friendly Slim Case<br>Included For On-The-Go Care',
         },
       },
       {
@@ -332,9 +347,38 @@ export function ProductHero({
         thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-usbc-fast-charging-port.webp',
         badge: {
           pos: 'miroooo-infographic-badge--top-right',
-          title: '90-Day Battery<br>Life',
-          sub: 'Universal USB-C<br>Fast Recharge',
+          title: 'USB-C Fast<br>Charging',
+          sub: 'Full 2-Hour Quick Charge<br>Universal Type-C Port',
         },
+      },
+      {
+        type: 'image',
+        src: inHandGrip,
+        alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Dynamic Grip in Hand`,
+        thumbImg: inHandGrip,
+        badge: {
+          pos: 'miroooo-infographic-badge--top-right',
+          title: 'Whisper-Quiet<br>Operation',
+          sub: 'Sub-45dB Acoustic<br>Sonic Motor',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Intelligent Microprocessor and Internal Circuitry',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
+        badge: {
+          pos: 'miroooo-infographic-badge--top-left',
+          title: 'Smart Pressure Sensor',
+          sub: 'Intelligent Microchip Protects Gums',
+        },
+      },
+      {
+        type: 'image',
+        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
+        alt: 'Miroooo X2 Sonic Electric Toothbrush Precision DuPont Bristle Head and LED Halo Ring',
+        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
+        isModesBadge: true,
       },
       {
         type: 'image',
@@ -361,24 +405,6 @@ export function ProductHero({
       },
       {
         type: 'image',
-        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
-        alt: 'Miroooo X2 Sonic Electric Toothbrush Intelligent Microprocessor and Internal Circuitry',
-        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smart-microchip-architecture.webp',
-        badge: {
-          pos: 'miroooo-infographic-badge--top-left',
-          title: 'Smart Pressure Sensor',
-          sub: 'Intelligent Microchip Protects Gums',
-        },
-      },
-      {
-        type: 'image',
-        src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
-        alt: 'Miroooo X2 Sonic Electric Toothbrush Precision DuPont Bristle Head and LED Halo Ring',
-        thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
-        isModesBadge: true,
-      },
-      {
-        type: 'image',
         src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-dupont-bristle-head-macro.webp',
         alt: 'Miroooo X2 Sonic Electric Toothbrush DuPont Multi-Action Replacement Bristle Head',
         thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-dupont-bristle-head-macro.webp',
@@ -386,17 +412,6 @@ export function ProductHero({
           pos: 'miroooo-infographic-badge--top-left',
           title: 'DuPont™<br>Premium Bristles',
           sub: 'End-Rounded For<br>Gentle Enamel Care',
-        },
-      },
-      {
-        type: 'image',
-        src: inHandGrip,
-        alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Dynamic Grip in Hand`,
-        thumbImg: inHandGrip,
-        badge: {
-          pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
-          title: 'Whisper-Quiet<br>Operation',
-          sub: 'Sub-45dB Acoustic<br>Sonic Motor',
         },
       },
       {
@@ -684,7 +699,22 @@ export function ProductHero({
                                   loading={activeMediaIndex === idx ? 'eager' : 'lazy'}
                                   decoding="async"
                                 />
-                                {slide.badge && (
+                                {slide.badges ? (
+                                  slide.badges.map((b, bIdx) => (
+                                    <div key={bIdx} className={`miroooo-infographic-badge ${b.pos}`}>
+                                      <div className="miroooo-infographic-badge__header">
+                                        <span
+                                          className="miroooo-infographic-badge__title"
+                                          dangerouslySetInnerHTML={{ __html: b.title }}
+                                        ></span>
+                                      </div>
+                                      <span
+                                        className="miroooo-infographic-badge__sub"
+                                        dangerouslySetInnerHTML={{ __html: b.sub }}
+                                      ></span>
+                                    </div>
+                                  ))
+                                ) : slide.badge ? (
                                   <div className={`miroooo-infographic-badge ${slide.badge.pos}`}>
                                     <div className="miroooo-infographic-badge__header">
                                       <span
@@ -697,7 +727,7 @@ export function ProductHero({
                                       dangerouslySetInnerHTML={{ __html: slide.badge.sub }}
                                     ></span>
                                   </div>
-                                )}
+                                ) : null}
                                 {slide.isModesBadge && (
                                   <div className="miroooo-infographic-badge miroooo-infographic-badge--top-left">
                                     <div className="miroooo-infographic-badge__header">
@@ -1611,7 +1641,22 @@ export function ProductHero({
                     alt={gallerySlides[activeMediaIndex].alt}
                     style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain', userSelect: 'none' }}
                   />
-                  {gallerySlides[activeMediaIndex].badge && !isLightboxZoomed && (
+                  {gallerySlides[activeMediaIndex].badges && !isLightboxZoomed ? (
+                    gallerySlides[activeMediaIndex].badges!.map((b, bIdx) => (
+                      <div key={bIdx} className={`miroooo-infographic-badge ${b.pos}`}>
+                        <div className="miroooo-infographic-badge__header">
+                          <span
+                            className="miroooo-infographic-badge__title"
+                            dangerouslySetInnerHTML={{ __html: b.title }}
+                          ></span>
+                        </div>
+                        <span
+                          className="miroooo-infographic-badge__sub"
+                          dangerouslySetInnerHTML={{ __html: b.sub }}
+                        ></span>
+                      </div>
+                    ))
+                  ) : gallerySlides[activeMediaIndex].badge && !isLightboxZoomed ? (
                     <div className={`miroooo-infographic-badge ${gallerySlides[activeMediaIndex].badge?.pos}`}>
                       <div className="miroooo-infographic-badge__header">
                         <span
@@ -1624,7 +1669,7 @@ export function ProductHero({
                         dangerouslySetInnerHTML={{ __html: gallerySlides[activeMediaIndex].badge?.sub || '' }}
                       ></span>
                     </div>
-                  )}
+                  ) : null}
                   {gallerySlides[activeMediaIndex].isModesBadge && !isLightboxZoomed && (
                     <div className="miroooo-infographic-badge miroooo-infographic-badge--top-left">
                       <div className="miroooo-infographic-badge__header">
