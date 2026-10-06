@@ -214,7 +214,7 @@
   .miroooo-gallery-lightbox__media-box .miroooo-infographic-overlay--top-left,
   .miroooo-gallery-lightbox-media-box .miroooo-infographic-badge--top-left,
   .miroooo-gallery-lightbox-media-box .miroooo-infographic-overlay--top-left {
-    top: clamp(10px, 3vw, 14px) !important;
+    top: 44px !important;
     left: clamp(10px, 3vw, 14px) !important;
     max-width: clamp(125px, 36vw, 155px) !important;
     transform: translate3d(-16px, 0, 0);

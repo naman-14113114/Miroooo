@@ -4437,7 +4437,7 @@ div[class*="tawk"],
 /* Left-aligned slides glide in smoothly from Left to Right */
 .miroooo-infographic-badge--top-left,
 .miroooo-infographic-overlay--top-left {
-  top: 26px !important;
+  top: 58px !important;
   left: 26px !important;
   align-items: flex-start !important;
   text-align: left !important;
@@ -4671,7 +4671,7 @@ div[class*="tawk"],
 @media (max-width: 640px) {
   .miroooo-infographic-badge--top-left,
   .miroooo-infographic-overlay--top-left {
-    top: 14px !important;
+    top: 26px !important;
     left: 14px !important;
     max-width: clamp(130px, 38vw, 160px) !important;
     transform: translate3d(-16px, 0, 0) !important;
