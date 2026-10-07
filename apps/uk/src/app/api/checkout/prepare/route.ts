@@ -139,10 +139,16 @@ export async function POST(req: Request) {
     const canonicalCart = canonicalItems.map(({ id, productHandle, productId, variantId, title, color, quantity }) =>
       ({ id, productHandle, productId, variantId, title, color, quantity })
     );
-    if (totals.extraBrushHeadSets || totals.extraX1BrushHeadSets) {
-      const handle = totals.extraBrushHeadSets ? 'miroooo-x2-heads' : 'miroooo-x1-heads';
-      const quantity = totals.extraBrushHeadSets || totals.extraX1BrushHeadSets;
-      const gift = normalizeCartItems([{ productHandle: handle, variantId: handle === 'miroooo-x2-heads' ? '1000020718937117' : '1000020710139724', quantity }], true)[0];
+    if (totals.extraBrushHeadSets > 0) {
+      const handle = 'miroooo-x2-heads';
+      const quantity = totals.extraBrushHeadSets;
+      const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020718937117', quantity }], true)[0];
+      canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
+    }
+    if (totals.extraX1BrushHeadSets > 0) {
+      const handle = 'miroooo-x1-heads';
+      const quantity = totals.extraX1BrushHeadSets;
+      const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020710139724', quantity }], true)[0];
       canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
     }
     const bundlePayload = detectBundlePayload(canonicalCart, discountCode);

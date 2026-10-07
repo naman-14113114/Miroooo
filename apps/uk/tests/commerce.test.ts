@@ -6,7 +6,7 @@ import { POST } from '../src/app/api/checkout/prepare/route';
 import { assertCheckoutOrderQuote } from '../src/lib/checkout';
 import { XPAGE_BUNDLES, XPAGE_STORE_URL, XPAGE_VARIANTS } from '@miroooo/shared';
 
-const x1Grey = { productHandle: 'miroooo-x', variantId: PRODUCTS['miroooo-x'].variants[0].id, color: 'Grey', quantity: 1 };
+const x1Grey = { productHandle: 'miroooo-x', variantId: PRODUCTS['miroooo-x'].variants.find((v) => v.color === 'Grey')!.id, color: 'Grey', quantity: 1 };
 const x2Grey = { productHandle: 'miroooo-x2', variantId: PRODUCTS['miroooo-x2'].variants.find((v) => v.color === 'Grey')!.id, color: 'Grey', quantity: 1 };
 const totals = (lines: object[], promos: string[] = []) => calculateTotals(normalizeCartItems(lines, true), promos);
 
@@ -27,7 +27,11 @@ function mockPublishedOffer(quantity: 1 | 2 | 3, price = 69, product: 'x1' | 'x2
       discount_type: isHeads ? 'FIXED_AMOUNT' : (quantity === 1 ? null : 'PERCENTAGE'),
       discount_amount: isHeads ? (quantity === 1 ? '0' : quantity === 2 ? '1' : '2') : (quantity === 1 ? 0 : 7.24),
       conditions: [{ id: option.conditionId, quantity, product: {
-        status: 'ACTIVE', variants: [{ id: isHeads ? XPAGE_VARIANTS[product] : XPAGE_VARIANTS[`${product}_grey`], is_visible: true, price: isHeads ? 10 : price }],
+        status: 'ACTIVE', variants: isHeads ? [{ id: XPAGE_VARIANTS[product], is_visible: true, price: 10 }] : [
+          { id: XPAGE_VARIANTS[`${product}_silver`], is_visible: true, price },
+          { id: XPAGE_VARIANTS[`${product}_grey`], is_visible: true, price },
+          { id: XPAGE_VARIANTS[`${product}_pink`], is_visible: true, price },
+        ],
       } }],
       offered: isHeads || offeredQty === 0 ? [] : [{ id: (option as any).offeredId || (bundle.buy2 as any).offeredId, quantity: offeredQty, discount_type: isFixedOffered ? 'FIXED' : 'PERCENTAGE', discount_amount: isFixedOffered ? '10.00' : '100.00', product: {
         status: 'ACTIVE', variants: [{ id: XPAGE_VARIANTS[`${product}_heads`], is_visible: true, price: 10 }],
@@ -72,23 +76,26 @@ test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', ()
   assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 79);
 
   // X1 tests
-  assert.equal(totals([x1Grey]).finalSubtotal, 59);
-  assert.equal(totals([{ ...x1Grey, quantity: 2 }]).finalSubtotal, 108);
-  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).finalSubtotal, 147);
-  assert.equal(totals([{ ...x1Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 97);
-  assert.equal(totals([{ ...x1Grey, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 132);
-  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).unlockedGiftsCount, 2);
-  assert.equal(totals([x1Grey], ['MIROOOO']).finalSubtotal, 53);
+  assert.equal(totals([x1Grey]).finalSubtotal, 69);
+  assert.equal(totals([{ ...x1Grey, quantity: 2 }]).finalSubtotal, 128);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).finalSubtotal, 177);
+  assert.equal(totals([{ ...x1Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 159);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).unlockedGiftsCount, 3);
+  assert.equal(totals([{ ...x1Grey, quantity: 2 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([x1Grey]).unlockedGiftsCount, 1);
+  assert.equal(totals([x1Grey], ['MIROOOO10']).finalSubtotal, 62);
+  assert.equal(totals([x1Grey, { productHandle: 'miroooo-x1-heads', variantId: PRODUCTS['miroooo-x1-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 79);
 });
 
 test('persisted cart prices and identities are rebuilt from canonical UK products', () => {
   const [item] = normalizeCartItems([{ ...x1Grey, id: 'old-line', unitPrice: 1, comparePrice: 2, title: 'Stale', image: '/old.jpg', quantity: 2 }]);
-  assert.equal(item.unitPrice, 59);
-  assert.equal(item.comparePrice, 129);
+  assert.equal(item.unitPrice, 69);
+  assert.equal(item.comparePrice, 139);
   assert.equal(item.title, 'Miroooo X1 (Grey)');
-  assert.equal(item.image, PRODUCTS['miroooo-x'].variants[0].image);
+  assert.equal(item.image, PRODUCTS['miroooo-x'].variants.find((v) => v.color === 'Grey')!.image);
   assert.equal(item.id, 'old-line');
-  assert.equal(totals([item]).finalSubtotal, 108);
+  assert.equal(totals([item]).finalSubtotal, 128);
   assert.deepEqual(normalizeCartItems([{ ...x1Grey, productHandle: 'unknown' }]), []);
 });
 
@@ -115,7 +122,7 @@ function mockStandardCheckout(options: { currency?: string; price?: number; unav
       const isHead = (id: string) => [XPAGE_VARIANTS.x1_heads, XPAGE_VARIANTS.x2_heads].includes(id as any);
       const lines = submitted.map((line) => ({
         quantity: line.quantity + (options.wrongQuantity ? 1 : 0),
-        price: options.price ?? (isHead(line.variant_id) ? 10 : isX1Variant(line.variant_id) ? 59 : 69),
+        price: options.price ?? (isHead(line.variant_id) ? 10 : 69),
         variant: { id: line.variant_id }
       }));
       const amount = lines.reduce((sum, line) => sum + line.price * line.quantity, 0);
@@ -129,15 +136,14 @@ function mockStandardCheckout(options: { currency?: string; price?: number; unav
 const head = (model: 'x1' | 'x2', quantity = 1) => ({ productHandle: `miroooo-${model}-heads`, variantId: PRODUCTS[`miroooo-${model}-heads`].variants[0].id, quantity });
 
 for (const [label, lines, amount] of [
-  ['X1 single', [x1Grey], 59],
   ['both head models', [head('x1', 2), head('x2', 4)], 50],
-  ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 236],
+  ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 276],
   ['X2 five brushes', [{ ...x2Grey, quantity: 5 }], 345],
-  ['mixed brushes', [x1Grey, x2Grey], 128],
-  ['brush and paid heads', [x1Grey, head('x2')], 69],
+  ['mixed brushes', [x1Grey, x2Grey], 138],
+  ['brush and paid heads', [x1Grey, head('x2')], 79],
   ['two brushes plus paid heads outside bundle', [{ ...x2Grey, quantity: 2 }, head('x1')], 138],
-  ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x2')], 157],
-  ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 207],
+  ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x2')], 187],
+  ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 217],
 ] as const) {
   test(`ordinary checkout accepts ${label} at original item prices`, async () => {
     const mock = mockStandardCheckout();
@@ -274,11 +280,155 @@ test('ordinary checkout accepts Option 6 (Buy 3 + 3 Free Heads + 1 Paid Head) vi
   } finally { globalThis.fetch = oldFetch; }
 });
 
+test('ordinary checkout accepts X1 single with 1 free head (Option 1) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `https://x1.miroooo.us/${'c'.repeat(256)}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 1, price: 69, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 1, price: 10, variant: {id: XPAGE_VARIANTS.x1_heads}}];
+      return new Response(`<span class="total font-semibold">£69.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(79, 10)}`);
+    }
+    return new Response(mockPublishedOffer(1, 69, 'x1', 'buy1_freehead'));
+  };
+  try {
+    const response = await POST(request([x1Grey]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts X1 Buy 2 with 2 free heads (Option 2) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `https://x1.miroooo.us/${'c'.repeat(256)}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 2, price: 69, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 2, price: 10, variant: {id: XPAGE_VARIANTS.x1_heads}}];
+      return new Response(`<span class="total font-semibold">£128.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(158, 30)}`);
+    }
+    return new Response(mockPublishedOffer(2, 69, 'x1', 'buy2'));
+  };
+  try {
+    const response = await POST(request([{ ...x1Grey, quantity: 2 }]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts X1 Buy 3 with 3 free heads (Option 3) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `https://x1.miroooo.us/${'c'.repeat(256)}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 3, price: 69, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 3, price: 10, variant: {id: XPAGE_VARIANTS.x1_heads}}];
+      return new Response(`<span class="total font-semibold">£177.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(237, 60)}`);
+    }
+    return new Response(mockPublishedOffer(3, 69, 'x1', 'buy3'));
+  };
+  try {
+    const response = await POST(request([{ ...x1Grey, quantity: 3 }]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts X1 Option 4 (Buy 1 + 1 Free Head + 1 Paid Head) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `https://x1.miroooo.us/${'c'.repeat(256)}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 1, price: 69, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 2, price: 10, variant: {id: XPAGE_VARIANTS.x1_heads}}];
+      return new Response(`<span class="total font-semibold">£79.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(89, 10)}`);
+    }
+    return new Response(mockPublishedOffer(1, 69, 'x1', 'buy1_1head'));
+  };
+  try {
+    const response = await POST(request([x1Grey, head('x1')]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts X1 Option 5 (Buy 2 + 2 Free Heads + 1 Paid Head) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `https://x1.miroooo.us/${'c'.repeat(256)}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 2, price: 69, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 3, price: 10, variant: {id: XPAGE_VARIANTS.x1_heads}}];
+      return new Response(`<span class="total font-semibold">£138.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(168, 30)}`);
+    }
+    return new Response(mockPublishedOffer(2, 69, 'x1', 'buy2_1head'));
+  };
+  try {
+    const response = await POST(request([{ ...x1Grey, quantity: 2 }, head('x1')]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts X1 Option 6 (Buy 3 + 3 Free Heads + 1 Paid Head) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `https://x1.miroooo.us/${'c'.repeat(256)}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 3, price: 69, variant: {id: XPAGE_VARIANTS.x1_grey}}, {quantity: 4, price: 10, variant: {id: XPAGE_VARIANTS.x1_heads}}];
+      return new Response(`<span class="total font-semibold">£187.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(247, 60)}`);
+    }
+    return new Response(mockPublishedOffer(3, 69, 'x1', 'buy3_1head'));
+  };
+  try {
+    const response = await POST(request([{ ...x1Grey, quantity: 3 }, head('x1')]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
 test('legacy XPage variantIds resolves to a standard X1 cart', async () => {
   const mock = mockStandardCheckout();
   try {
     const response = await POST(new Request('http://localhost/api/checkout/prepare', {
-      method: 'POST', body: JSON.stringify({ variantIds: [XPAGE_VARIANTS.x1_grey] }),
+      method: 'POST', body: JSON.stringify({ variantIds: [XPAGE_VARIANTS.x1_grey, XPAGE_VARIANTS.x1_grey, XPAGE_VARIANTS.x1_grey, XPAGE_VARIANTS.x1_grey] }),
     }));
     const body = await response.json();
     assert.equal(response.status, 200, body.error);
@@ -293,7 +443,7 @@ for (const [label, options] of [
   test(`ordinary checkout accepts ${label} when products are present`, async () => {
     const mock = mockStandardCheckout(options);
     try {
-      const response = await POST(request([x1Grey]));
+      const response = await POST(request([{ ...x1Grey, quantity: 4 }]));
       const body = await response.json();
       assert.equal(response.status, 200);
       assert.ok(body.checkoutUrl);
@@ -309,7 +459,7 @@ for (const [label, options, code, status] of [
   test(`ordinary checkout blocks ${label}`, async () => {
     const mock = mockStandardCheckout(options);
     try {
-      const response = await POST(request([x1Grey]));
+      const response = await POST(request([{ ...x1Grey, quantity: 4 }]));
       const body = await response.json();
       assert.equal(response.status, status);
       assert.equal(body.code, code);
@@ -419,7 +569,7 @@ test('cart normalization safely resolves handle aliases and legacy storage items
   const normalized = normalizeCartItems(rawItems);
   assert.equal(normalized.length, 3);
   assert.equal(normalized[0].productHandle, 'miroooo-x');
-  assert.equal(normalized[0].unitPrice, 59);
+  assert.equal(normalized[0].unitPrice, 69);
   assert.equal(normalized[1].productHandle, 'miroooo-x2-heads');
   assert.equal(normalized[1].quantity, 2);
   assert.equal(normalized[2].productHandle, 'miroooo-x1-heads');

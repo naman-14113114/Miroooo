@@ -141,17 +141,17 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isHeadsOnly = hasPaidHeads && x2Count === 0 && x1Count === 0;
 
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
-  const isX1Bundle = x2Count === 0 && (x1Count === 2 || x1Count === 3);
+  const isX1Bundle = x2Count === 0 && (x1Count === 1 || x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: X2 brush 139, X1 brush 129, heads 20)
+  // Compare At calculations (base compare: X2 brush 139, X1 brush 139, heads 20)
   const x2Compare = x2Count * 139;
-  const x1Compare = x1Count * 129;
+  const x1Compare = x1Count * 139;
   const x2HeadsCompare = x2HeadsCount * 20;
   const x1HeadsCompare = x1HeadsCount * 20;
   const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare;
 
   // Base 50% savings on brushes
-  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (129 - 59);
+  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (139 - 69);
   const baseHeadsCompareSavings = x2HeadsCount * (20 - 10) + x1HeadsCount * (20 - 10);
 
   let x2BundlePromoDiscount = 0;
@@ -175,15 +175,22 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   }
 
   let x1BundleDiscount = 0;
+  let x1BundlePromoName = '';
   let extraX1BrushHeadSets = 0;
 
   if (x2Count === 0) {
-    if (x1Count === 2) {
-      x1BundleDiscount = 10;
+    if (x1Count === 1) {
+      x1BundleDiscount = 0;
+      x1BundlePromoName = '';
       extraX1BrushHeadSets = 1;
+    } else if (x1Count === 2) {
+      x1BundleDiscount = 10;
+      x1BundlePromoName = 'Buy 2 bundle (£10 extra saving)';
+      extraX1BrushHeadSets = 2;
     } else if (x1Count === 3) {
       x1BundleDiscount = 30;
-      extraX1BrushHeadSets = 2;
+      x1BundlePromoName = 'Buy 3 bundle (£30 extra saving)';
+      extraX1BrushHeadSets = 3;
     }
   }
 
@@ -205,7 +212,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const headsBundleCount = x1HeadsCount || x2HeadsCount;
 
   const x2Net = x2Count * 69 - x2BundlePromoDiscount;
-  const x1Net = x1Count * 59 - x1BundleDiscount;
+  const x1Net = x1Count * 69 - x1BundleDiscount;
   const brushSubtotal = Math.max(0, x2Net + x1Net);
   const subtotal = Math.max(0, brushSubtotal + headsNet);
 
@@ -216,11 +223,11 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const promoDiscount = hasValidPromo ? Math.round(brushSubtotal * 0.1) : 0;
 
   const finalSubtotal = Math.max(0, Number((subtotal - promoDiscount).toFixed(2)));
-  const bundleSavings = baseBrushCompareSavings + x1BundleDiscount + baseHeadsCompareSavings + headsBundleDiscount;
-  const bundlePromoDiscount = x2BundlePromoDiscount > 0 ? x2BundlePromoDiscount : isHeadsOnly && headsBundleDiscount > 0 ? headsBundleDiscount : 0;
-  const bundlePromoName = x2BundlePromoName || (isHeadsOnly && headsBundleDiscount > 0 ? `Buy ${headsBundleCount} heads bundle (£${headsBundleDiscount} extra saving)` : '');
+  const bundlePromoDiscount = x2BundlePromoDiscount > 0 ? x2BundlePromoDiscount : x1BundleDiscount > 0 ? x1BundleDiscount : isHeadsOnly && headsBundleDiscount > 0 ? headsBundleDiscount : 0;
+  const bundlePromoName = x2BundlePromoName || x1BundlePromoName || (isHeadsOnly && headsBundleDiscount > 0 ? `Buy ${headsBundleCount} heads bundle (£${headsBundleDiscount} extra saving)` : '');
+  const bundleSavings = baseBrushCompareSavings + baseHeadsCompareSavings + headsBundleDiscount;
   const totalSavings = Number(
-    (bundleSavings + (isHeadsOnly ? 0 : x2BundlePromoDiscount) + giftsValue + promoDiscount).toFixed(2)
+    (bundleSavings + (isHeadsOnly ? 0 : (x2BundlePromoDiscount + x1BundleDiscount)) + giftsValue + promoDiscount).toFixed(2)
   );
 
   return {

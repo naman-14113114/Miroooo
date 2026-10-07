@@ -185,12 +185,12 @@ export function ProductHero({
   };
 
   // Pricing calculations
-  const singlePrice = isX2 ? 69 : 59;
-  const singleCompare = isX2 ? 139 : 129;
-  const bundle2Price = isX2 ? 128 : 108;
-  const bundle2Compare = isX2 ? 278 : 258;
-  const bundle3Price = isX2 ? 177 : 147;
-  const bundle3Compare = isX2 ? 417 : 387;
+  const singlePrice = 69;
+  const singleCompare = 139;
+  const bundle2Price = 128;
+  const bundle2Compare = 278;
+  const bundle3Price = 177;
+  const bundle3Compare = 417;
 
   const currentPrice =
     selectedTier === 'single'
@@ -199,15 +199,17 @@ export function ProductHero({
       ? bundle2Price
       : bundle3Price;
 
-  const addToCartLabel = isX2
-    ? (selectedTier === 'bundle-2'
+  const addToCartLabel = isSimpleBuybox
+    ? (quantity === 2
+        ? 'Add to Cart + Free 4 Brush Heads'
+        : quantity === 3
+        ? 'Add to Cart + Free 6 Brush Heads'
+        : 'Add to Cart + 2 Free Heads')
+    : (selectedTier === 'bundle-2'
         ? 'Add to Cart + Free 4 Brush Heads'
         : selectedTier === 'bundle-3'
         ? 'Add to Cart + Free 6 Brush Heads'
-        : 'Add to Cart + 2 Free Heads')
-    : isSimpleBuybox
-    ? `Add to Cart — £${(singlePrice * quantity).toFixed(2)}`
-    : `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
+        : (buy1HeadsChecked ? 'Add to Cart + 4 Heads' : 'Add to Cart + 2 Free Heads'));
 
   // Add to Cart handler
   const handleAddToCart = () => {
@@ -550,7 +552,7 @@ export function ProductHero({
     <div id="shopify-section-template--24203751129433__main-product" className="shopify-section">
       <div className="section section--padding section--rounded relative">
         <div className="page-width relative">
-          {isX2 && <div id="miroooo-x2-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
+          <div id="miroooo-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
             <div className="x2-urgency-banner__left">
               <span className="x2-urgency-banner__icon" aria-hidden="true">🔥</span>
               <div className="x2-urgency-banner__text-wrap">
@@ -576,7 +578,7 @@ export function ProductHero({
                 </span>
               </div>
             </div>
-          </div>}
+          </div>
 
           <div className="featured-product product product--columns flex flex-col items-start lg:grid gap-5 w-full relative">
             {/* Left: Product Gallery */}
@@ -1397,7 +1399,7 @@ export function ProductHero({
                 </div>
               </div>
 
-              {isX2 && <FreeBrushHeadsGift />}
+              <FreeBrushHeadsGift model={isX2 ? 'X2' : 'X1'} />
 
               <ProductAccordions model={isX2 ? 'x2' : 'x1'} />
             </div>

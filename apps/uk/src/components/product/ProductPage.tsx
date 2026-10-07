@@ -30,7 +30,7 @@ interface ProductPageProps {
 }
 
 export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: ProductPageProps) {
-  const defaultColor = handle === 'miroooo-x2' ? 'Silver' : 'Pink';
+  const defaultColor = 'Silver';
   const initialColor = ['Silver', 'Grey', 'Pink'].find((color) => color.toLowerCase() === searchParams?.color?.toLowerCase()) || defaultColor;
   const [selectedColor, setSelectedColor] = useState(initialColor);
   const product = getProduct(handle);

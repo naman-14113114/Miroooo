@@ -8,7 +8,8 @@ function Checkmark() {
   );
 }
 
-export function FreeBrushHeadsGift() {
+export function FreeBrushHeadsGift({ model = 'X2' }: { model?: 'X1' | 'X2' }) {
+  const isX1 = model === 'X1';
   return (
     <section className={styles.section} id="special-flash-sale-gifts" aria-labelledby="free-heads-title">
       <h3 className={styles.heading} id="free-heads-title">Flash Sale</h3>
@@ -21,8 +22,8 @@ export function FreeBrushHeadsGift() {
         <div className={styles.product}>
           <div className={styles.imageWrap}>
             <img
-              src="/assets_ref/x2/heads/B1.webp"
-              alt="One pair of Miroooo X2 replacement brush heads"
+              src={isX1 ? '/assets_ref/x/heads/B1.webp' : '/assets_ref/x2/heads/B1.webp'}
+              alt={isX1 ? 'One pair of Miroooo X1 replacement brush heads' : 'One pair of Miroooo X2 replacement brush heads'}
               width={1254}
               height={1254}
               loading="eager"
