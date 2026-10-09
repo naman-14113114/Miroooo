@@ -558,7 +558,9 @@ export function ProductHero({
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                 <strong className="x2-urgency-banner__headline">
-                  Free pair of brush heads for today only
+                  {isX2
+                    ? 'Get Miroooo X2 at price of Miroooo X1 with free pair of heads for today only'
+                    : 'Free pair of brush heads for today only'}
                 </strong>
               </div>
             </div>
