@@ -44,7 +44,7 @@ export function X2ModesSwipe() {
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % MODES.length);
-    }, 3400);
+    }, 2400);
 
     return () => clearInterval(timer);
   }, []);
@@ -282,7 +282,7 @@ export function X2ModesSwipe() {
                   zIndex: 1,
                   opacity: 0.55,
                   transform: 'translateZ(0)',
-                  transition: 'background-color 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
+                  transition: 'background-color 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               />
               <div
@@ -299,7 +299,7 @@ export function X2ModesSwipe() {
                   zIndex: 1,
                   opacity: 0.28,
                   transform: 'translateZ(0)',
-                  transition: 'background-color 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
+                  transition: 'background-color 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               />
 
@@ -317,7 +317,7 @@ export function X2ModesSwipe() {
                       opacity: isActive ? 1 : 0,
                       transform: isActive ? 'scale(1) translateZ(0)' : 'scale(1.03) translateZ(0)',
                       transition:
-                        'opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)',
                       pointerEvents: isActive ? 'auto' : 'none',
                       zIndex: isActive ? 2 : 1,
                       willChange: 'opacity, transform',

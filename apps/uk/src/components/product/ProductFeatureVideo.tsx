@@ -137,7 +137,7 @@ export function ProductFeatureVideo({ isX2 }: ProductFeatureVideoProps) {
 
         @media (min-width: 1024px) {
           .product-feature-video-grid {
-            grid-template-columns: 1.15fr 0.85fr;
+            grid-template-columns: 1.05fr 0.95fr;
             gap: clamp(28px, 3.5vw, 48px);
             align-items: center;
           }
@@ -171,9 +171,9 @@ export function ProductFeatureVideo({ isX2 }: ProductFeatureVideoProps) {
 
         .product-feature-video-frame--portrait {
           width: 100%;
-          max-width: clamp(210px, 22vw, 250px);
+          max-width: clamp(265px, 26vw, 305px);
           aspect-ratio: 9 / 16;
-          max-height: clamp(370px, 46vh, 440px);
+          max-height: clamp(470px, 52vh, 545px);
           border-radius: 24px;
           overflow: hidden;
           background: #0d0d0d;
@@ -184,7 +184,7 @@ export function ProductFeatureVideo({ isX2 }: ProductFeatureVideoProps) {
 
         .product-feature-video-frame--square {
           width: 100%;
-          max-width: clamp(260px, 28vw, 340px);
+          max-width: clamp(290px, 30vw, 370px);
           aspect-ratio: 1 / 1;
           border-radius: 24px;
           overflow: hidden;
@@ -196,11 +196,11 @@ export function ProductFeatureVideo({ isX2 }: ProductFeatureVideoProps) {
 
         @media (max-width: 1023px) {
           .product-feature-video-frame--portrait {
-            max-width: min(72vw, 240px);
-            max-height: 420px;
+            max-width: min(78vw, 280px);
+            max-height: 495px;
           }
           .product-feature-video-frame--square {
-            max-width: min(80vw, 300px);
+            max-width: min(84vw, 330px);
           }
         }
 
