@@ -11,7 +11,6 @@ import { EnergyBoostSplit } from './EnergyBoostSplit';
 import { CustomerStats } from './CustomerStats';
 import { X2ModesSwipe } from './X2ModesSwipe';
 import { BrushFunctions } from './BrushFunctions';
-import { ArchitectureCollage } from './ArchitectureCollage';
 import { ProductReviews } from './ProductReviews';
 import { ComparisonTable } from './ComparisonTable';
 import { PackageContents } from './PackageContents';
@@ -81,10 +80,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: Pr
           {/* 6. Stacking 3-Mode Cards */}
           <X2ModesSwipe />
 
-          {/* 7. Engineering Architecture Schematic */}
-          <ArchitectureCollage />
-
-          {/* 8. Verified Customer Reviews */}
+          {/* 7. Verified Customer Reviews */}
           <ProductReviews isX2={true} />
 
           {/* 9. Competitor Comparison Table */}
