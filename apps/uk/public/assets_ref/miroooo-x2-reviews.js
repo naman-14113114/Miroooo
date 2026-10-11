@@ -258,7 +258,7 @@
       variant: 'Pink / Double Pack',
       title: '2-hour magnetic fast charge lasts for months',
       body: 'Charged it for 2 hours using my phone\'s USB-C cable when it arrived 10 weeks ago and haven\'t touched the dock since. The cobalt cell battery endurance is truly groundbreaking.',
-      images: ['/assets_ref/reviews/miroooo-x2-review-oliver-harrison.png'],
+      images: [],
       helpful: 31,
       verified: true
     },
