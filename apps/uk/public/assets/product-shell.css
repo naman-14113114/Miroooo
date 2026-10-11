@@ -4946,3 +4946,97 @@ body:has(.product-page-root) .site-header .cart-count { background: #ffffff !imp
   .heads-product-page #shopify-section-template--24203751129433__main-product { padding-top: 32px !important; }
   .heads-product-page #shopify-section-template--24203751129433__main-product { --miroooo-product-column-gap: 42px; }
 }
+
+/* ==========================================================================
+   PRODUCT FEATURE AUTOPLAY VIDEO SPLIT SECTION
+   ========================================================================== */
+.product-feature-video-section {
+  width: 100%;
+  background: #000000;
+  color: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  padding: clamp(24px, 3.5vw, 42px) clamp(20px, 3vw, 44px);
+  margin: 0 0 clamp(24px, 3vw, 36px) 0;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+.product-feature-video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 3.5vw, 36px);
+  align-items: center;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .product-feature-video-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(36px, 4.5vw, 64px);
+    align-items: center;
+  }
+  .product-feature-video-content {
+    order: 1;
+    padding-right: clamp(12px, 2vw, 24px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .product-feature-video-media {
+    order: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 1023px) {
+  .product-feature-video-media {
+    order: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .product-feature-video-content {
+    order: 2;
+    width: 100%;
+  }
+}
+.product-feature-video-frame--portrait {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #0d0d0d;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  position: relative;
+  margin: 0 auto;
+}
+.product-feature-video-frame--square {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #0d0d0d;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  position: relative;
+  margin: 0 auto;
+}
+@media (max-width: 1023px) {
+  .product-feature-video-frame--portrait {
+    max-width: min(80vw, 320px);
+  }
+  .product-feature-video-frame--square {
+    max-width: min(88vw, 360px);
+  }
+}
+.product-feature-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+

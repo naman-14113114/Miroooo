@@ -6939,6 +6939,110 @@ body.nav-open .miroooo-sticky-cart-wrap {
   background: rgba(220, 38, 38, 0.08);
 }
 
+/* Included in the Box Accordion & Cards */
+.cart-line-item__media,
+.miroooo-cart-item-thumb {
+  align-self: flex-start;
+}
+
+.cart-line-included,
+.miroooo-cart-included {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.cart-line-included__btn,
+.miroooo-cart-included__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s ease;
+  line-height: 1;
+}
+
+.cart-line-included__btn:hover,
+.miroooo-cart-included__btn:hover {
+  color: #111827;
+}
+
+.cart-line-included__chevron,
+.miroooo-cart-included__chevron {
+  color: #6b7280;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.cart-line-included__chevron.is-open,
+.miroooo-cart-included__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.cart-line-included__grid,
+.miroooo-cart-included__grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.cart-line-included__card,
+.miroooo-cart-included__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1 1 0;
+  min-width: 56px;
+  max-width: 76px;
+}
+
+.cart-line-included__thumb,
+.miroooo-cart-included__thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.cart-line-included__thumb img,
+.miroooo-cart-included__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 9px;
+}
+
+.cart-line-included__label,
+.miroooo-cart-included__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.2;
+  text-align: center;
+  margin-top: 6px;
+  word-break: break-word;
+}
+
 /* =========================================================
    Cart Footer & Summary Card
    ========================================================= */
@@ -7875,6 +7979,31 @@ button[style*="background: #ffffff"] .miroooo-button-click-loader {
 .shipping-info-tooltip.is-active {
   display: block !important;
 }
+
+.miroooo-card-video-wrap {
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
+
+.miroooo-card-video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.miroooo-card-video-wrap video.miroooo-card-video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
 
 
 \n

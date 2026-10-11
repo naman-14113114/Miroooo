@@ -56,44 +56,60 @@ export function X2ModesSwipe() {
       id="shopify-section-template--miroooo-x2-modes-swipe"
       className="shopify-section x2-modes-section"
       style={{
-        background: '#000000',
-        backgroundColor: '#000000',
-        color: '#ffffff',
+        background: '#e6e6e6',
+        backgroundColor: '#e6e6e6',
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
-        padding: 'clamp(2.5rem, 4vw, 4rem) 0',
+        padding: 'clamp(3rem, 5vw, 5rem) clamp(16px, 4vw, 40px)',
         boxSizing: 'border-box',
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
       <style>{`
         #shopify-section-template--miroooo-x2-modes-swipe {
           display: block !important;
-          background: #000000 !important;
-          background-color: #000000 !important;
+          background: #e6e6e6 !important;
+          background-color: #e6e6e6 !important;
         }
         #shopify-section-template--miroooo-brush-functions {
           display: none !important;
         }
 
+        .x2-modes-card-clipper {
+          max-width: 1320px;
+          margin: 0 auto;
+          width: 100%;
+          border-radius: clamp(22px, 3vw, 32px);
+          overflow: hidden;
+          background: #000000 !important;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
+          position: relative;
+          box-sizing: border-box;
+          padding: 0 !important;
+        }
+
         .x2-modes-layout-grid {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          gap: clamp(1.75rem, 3.5vw, 3.5rem);
           width: 100%;
           box-sizing: border-box;
+          position: relative;
+          z-index: 2;
         }
 
-        /* Mobile: Image on top, data below */
+        /* Mobile (< 992px): Image on top, data below */
         .x2-modes-col-media {
           order: 1;
           width: 100%;
-          max-width: 360px;
+          aspect-ratio: 16 / 10;
+          height: auto;
+          position: relative;
+          overflow: hidden;
           display: flex;
-          justify-content: center;
           box-sizing: border-box;
+          margin: 0;
+          padding: 0;
         }
 
         .x2-modes-col-data {
@@ -101,41 +117,61 @@ export function X2ModesSwipe() {
           width: 100%;
           display: flex;
           flex-direction: column;
+          justify-content: center;
+          box-sizing: border-box;
+          padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.25rem, 3.5vw, 2rem);
+        }
+
+        .x2-modes-media-stage {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          min-height: 100%;
+          overflow: hidden;
+          background: transparent;
+          border: none;
+          box-shadow: none;
           box-sizing: border-box;
         }
 
-        /* Desktop: 2-column grid keeping section in frame */
+        /* Desktop (>= 992px): 2-column grid keeping image and container collinear & equal height */
         @media screen and (min-width: 992px) {
           .x2-modes-layout-grid {
             display: grid;
             grid-template-columns: 1.15fr 1fr;
-            align-items: center;
-            gap: clamp(2.5rem, 4.5vw, 4.5rem);
+            align-items: stretch;
+            min-height: clamp(480px, 48vw, 560px);
+            gap: 0;
           }
           .x2-modes-col-data {
             order: 1 !important;
             width: 100%;
+            padding: clamp(2.5rem, 4.5vw, 4rem) clamp(2rem, 3.5vw, 3.5rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
           }
           .x2-modes-col-media {
             order: 2 !important;
             width: 100%;
-            max-width: 440px;
-            justify-content: flex-end;
+            height: 100%;
+            min-height: 100%;
+            max-width: none;
+            aspect-ratio: unset;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
           }
         }
       `}</style>
 
-      <div
-        style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '0 clamp(16px, 4vw, 40px)',
-          boxSizing: 'border-box',
-        }}
-      >
+      {/* Outer Card Container with black background & shadow on the whitish section background */}
+      <div className="x2-modes-card-clipper">
         <div className="x2-modes-layout-grid">
           
-          {/* DATA COLUMN (NO BOX CONTAINER, JUST CLEAN TYPOGRAPHY & GLOWING DOTS) */}
+          {/* DATA COLUMN */}
           <div className="x2-modes-col-data">
             <div style={{ marginBottom: 'clamp(1rem, 2vw, 1.5rem)' }}>
               <span
@@ -228,22 +264,9 @@ export function X2ModesSwipe() {
             </div>
           </div>
 
-          {/* MEDIA COLUMN - Completely clean, NO text, NO chips, NO navigation on bottom */}
+          {/* MEDIA COLUMN - Seamlessly blends with section: height equals container height, collinear */}
           <div className="x2-modes-col-media">
-            <div
-              style={{
-                position: 'relative',
-                width: '100%',
-                aspectRatio: '1 / 1',
-                borderRadius: 'clamp(20px, 2.5vw, 26px)',
-                overflow: 'hidden',
-                background: '#050505',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                boxShadow: `0 20px 50px rgba(0, 0, 0, 0.85), 0 0 40px ${activeMode.color}20`,
-                transition: 'box-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
-                boxSizing: 'border-box',
-              }}
-            >
+            <div className="x2-modes-media-stage">
               {/* Dynamic Ambient Glow Behind Toothbrush */}
               <div
                 style={{
@@ -300,7 +323,7 @@ export function X2ModesSwipe() {
                       willChange: 'opacity, transform',
                     }}
                   >
-                    <picture>
+                    <picture style={{ display: 'block', width: '100%', height: '100%' }}>
                       <source srcSet={mode.image} type="image/webp" />
                       <img
                         src={mode.image}
@@ -312,6 +335,8 @@ export function X2ModesSwipe() {
                           objectPosition: 'center',
                           display: 'block',
                           transform: 'translateZ(0)',
+                          border: 'none',
+                          borderRadius: 0,
                         }}
                         loading="eager"
                         decoding="async"

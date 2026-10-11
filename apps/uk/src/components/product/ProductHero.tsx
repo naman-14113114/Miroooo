@@ -9,6 +9,7 @@ import { Product } from '@/data/products';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { FreeBrushHeadsGift } from './FreeBrushHeadsGift';
+import { ProductFeatureVideo } from './ProductFeatureVideo';
 
 interface ProductHeroProps {
   product: Product;
@@ -581,6 +582,9 @@ export function ProductHero({
               </div>
             </div>
           </div>
+
+          {/* Autoplay Video Split Section Above Buybox */}
+          <ProductFeatureVideo isX2={isX2} />
 
           <div className="featured-product product product--columns flex flex-col items-start lg:grid gap-5 w-full relative">
             {/* Left: Product Gallery */}
