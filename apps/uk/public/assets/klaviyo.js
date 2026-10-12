@@ -121,7 +121,7 @@
         if (h === "miroooo-x1-heads" || h === "miroooo-x2-heads") {
           lineVal = qty * 10;
         } else {
-          lineVal = qty === 1 ? 69 : (qty === 2 ? 128 : (qty === 3 ? 177 : qty * 59));
+          lineVal = qty === 1 ? 69 : (qty === 2 ? 128 : (qty === 3 ? 177 : qty * 69));
         }
         totalValue += lineVal;
         if (itemNames.indexOf(prod.ProductName) === -1) itemNames.push(prod.ProductName);

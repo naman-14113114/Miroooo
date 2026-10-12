@@ -146,14 +146,14 @@
       pillClass: "quiz-pill-badge",
       title: "Miroooo X1 Essential",
       subtitle: "Ultralight 51g Acoustic Precision & 60-Day Travel Freedom",
-      price: "£59",
-      priceNumber: 59,
+      price: "£69",
+      priceNumber: 69,
       comparePrice: "£119",
       comparePriceNumber: 119,
       saveText: "SAVE 50%",
       image: PRODUCT_ASSETS.x1.silver,
       isBundle: false,
-      ctaText: "Add Miroooo X1 to Cart · £59",
+      ctaText: "Add Miroooo X1 to Cart · £69",
       bullets: [
         {
           strong: "51g Ultra-Featherweight Chassis:",
@@ -552,7 +552,7 @@
       return PROFILES.couple_bundle;
     }
 
-    // Profile 3: Ultralight Minimalist & Travel (X1 Essential £59)
+    // Profile 3: Ultralight Minimalist & Travel (X1 Essential £69)
     const isTravelOrDaily = goal === "daily-routine" || lifestyle === "frequent-travel" || rawAll.includes("travel") || rawAll.includes("minimalist");
     const isManualUpgrade = currentBrush === "manual" || rawAll.includes("manual");
     const hasSevereGumIssue = sensitivity === "heavy-sensitive" || rawAll.includes("bleeding");

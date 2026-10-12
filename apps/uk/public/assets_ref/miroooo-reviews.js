@@ -1147,7 +1147,7 @@
     'I cannot recommend this electric toothbrush highly enough to anyone who values their long-term oral health.',
     'Truly an exceptional piece of modern industrial design and oral care engineering. Five stars all the way.',
     'I have already purchased a second unit in Pink for my partner, and she is just as enamored with it.',
-    'Easily the best £59 investment I have made for my daily wellness routine this year.',
+    'Easily the best £69 investment I have made for my daily wellness routine this year.',
     'If you are on the fence between this and overpriced drugstore brands, get the Miroooo X1 — you will not regret it.',
     'A masterclass in minimalist design, quiet performance, and uncompromising battery longevity.',
     'My only regret is that I did not switch to this acoustic technology years earlier.',

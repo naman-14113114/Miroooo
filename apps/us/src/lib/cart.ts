@@ -149,7 +149,8 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const promoNet = !hasPromo ? brushNet : tier ? cents(tier.promoPrice)
     : x1Count + x2Count === 1 ? cents((x1Count ? x1 : x2).bundles[0].promoPrice)
     : brushNet - Math.round(brushNet * 0.1);
-  const compareAtCents = x1Count * cents(x1.compareAt) + x2Count * cents(x2.compareAt)
+  const x1CompareCents = x1Count * (x1.compareAt > 0 ? cents(x1.compareAt) : cents(x1.price));
+  const compareAtCents = x1CompareCents + x2Count * cents(x2.compareAt)
     + x1HeadsCount * cents(h1.compareAt) + x2HeadsCount * cents(h2.compareAt);
   const giftsValue = roundMoney(extraX1BrushHeadSets * h1.price + extraBrushHeadSets * h2.price);
   const isHeadsOnly = (x1HeadsCount + x2HeadsCount > 0) && x1Count + x2Count === 0;
@@ -161,9 +162,12 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     : isHeadsOnly && headsBundleDiscount > 0
     ? `Buy ${headsBundleCount} heads bundle (${formatUSD(headsBundleDiscount)} extra saving)`
     : '';
-  const bundleSavings = (compareAtCents - brushBase - headsBase) / 100
-    + (isX1Bundle ? (brushBase - brushNet) / 100 : 0)
-    + headsBundleDiscount;
+  const bundleSavings = Math.max(
+    0,
+    (compareAtCents - brushBase - headsBase) / 100
+      + (isX1Bundle ? (brushBase - brushNet) / 100 : 0)
+      + headsBundleDiscount
+  );
   const promoDiscount = (brushNet - promoNet) / 100;
   return {
     itemCount: x1Count + x2Count + x1HeadsCount + x2HeadsCount,

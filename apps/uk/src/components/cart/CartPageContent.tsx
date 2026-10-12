@@ -13,12 +13,12 @@ import {
 import { useCart } from "@/context/CartContext";
 import { formatGBP } from "@/lib/cart";
 import { AnimatedIcon } from "@/components/ui/AnimatedIcon";
+import { ShippingInfoTooltip } from "@/components/ui/ShippingInfoTooltip";
 import { CartLines } from "./CartLines";
 
 function DeliveryBanner() {
   const [seconds, setSeconds] = useState(593);
   const [date, setDate] = useState("");
-  const [tooltip, setTooltip] = useState(false);
   useEffect(() => {
     const target = new Date();
     target.setDate(target.getDate() + 5);
@@ -35,14 +35,7 @@ function DeliveryBanner() {
       () => setSeconds((value) => (value <= 0 ? 599 : value - 1)),
       1000,
     );
-    const escape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setTooltip(false);
-    };
-    document.addEventListener("keydown", escape);
-    return () => {
-      clearInterval(timer);
-      document.removeEventListener("keydown", escape);
-    };
+    return () => clearInterval(timer);
   }, []);
   const clock = `${String(Math.floor(seconds / 60)).padStart(2, "0")}m : ${String(seconds % 60).padStart(2, "0")}s`;
   const truck = (
@@ -56,39 +49,7 @@ function DeliveryBanner() {
       <strong>{date}</strong>
     </p>
   );
-  const info = (
-    <div className="shipping-info-wrapper">
-      <button
-        type="button"
-        className="shipping-info-btn"
-        aria-label="Shipping information"
-        aria-expanded={tooltip}
-        onClick={() => setTooltip(!tooltip)}
-      >
-        ?
-      </button>
-      {tooltip && (
-        <div className="shipping-info-tooltip" role="note">
-          <div>
-            <strong>Delivery Estimate</strong>
-            <button
-              type="button"
-              onClick={() => setTooltip(false)}
-              aria-label="Close delivery estimate"
-            >
-              ×
-            </button>
-          </div>
-          <p>
-            This is the estimated delivery timeframe based on 1–3 business days
-            processing and 7–20 business days standard transit. For more
-            information, please visit our{" "}
-            <Link href="/policies/shipping-policy">shipping policy</Link> page.
-          </p>
-        </div>
-      )}
-    </div>
-  );
+
   return (
     <section
       className="cart-delivery-banner"
@@ -100,7 +61,7 @@ function DeliveryBanner() {
           <span className="cart-delivery-badge-pill">
             FREE TRACKED SHIPPING
           </span>
-          {info}
+          <ShippingInfoTooltip isDark={false} />
         </div>
         {text}
       </div>
@@ -113,7 +74,7 @@ function DeliveryBanner() {
           <span className="cart-delivery-badge-pill">
             FREE TRACKED SHIPPING
           </span>
-          {info}
+          <ShippingInfoTooltip isDark={false} />
         </div>
       </div>
     </section>

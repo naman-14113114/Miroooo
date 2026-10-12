@@ -59,7 +59,9 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
           data-product-link
           aria-label={`View ${finish.name}`}
         >
-          <span className="badge badge--onsale">Save 50%</span>
+          {finish.formattedCompareAt && finish.handle !== 'miroooo-x' && (
+            <span className="badge badge--onsale">Save 50%</span>
+          )}
           <div className="product-card__rating">
             <svg className="icon icon-star icon-xs" viewBox="0 0 16 16" fill="#f59e0b" width="11" height="11">
               <path d="M8 0L9.88914 5.81283H16L11.056 9.40604L12.9452 15.2177L8 11.6245L3.05603 15.2177L4.94397 9.40484L0 5.81163H6.11086L8 0Z" />
@@ -146,7 +148,9 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
         </h3>
         <div className="gb-product-card__price-wrap">
           <strong className="gb-product-card__price">{finish.formattedPrice}</strong>
-          <span className="gb-product-card__compare">{finish.formattedCompareAt}</span>
+          {finish.formattedCompareAt && finish.handle !== 'miroooo-x' && (
+            <span className="gb-product-card__compare">{finish.formattedCompareAt}</span>
+          )}
         </div>
       </div>
     </article>

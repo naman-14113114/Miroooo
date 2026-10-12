@@ -47,8 +47,8 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     headline: "Brushing, elevated to ritual.",
     description:
       "Ultra-precise 32,000 VPM acoustic sonic motor, 51g featherweight unibody chassis, 3 cleaning modes, and 60-day battery life with magnetic travel case included.",
-    basePrice: 59.0,
-    baseCompareAt: 129.0,
+    basePrice: 69.0,
+    baseCompareAt: 0,
     rating: 4.9,
     reviewCount: 4275,
     plusBaseProductId: "1000000675113473",
@@ -82,10 +82,10 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
       {
         quantity: 1,
         name: "BUY 1",
-        basePrice: 59.0,
-        baseCompareAt: 129.0,
+        basePrice: 69.0,
+        baseCompareAt: 0,
         freeHeadsCount: 0,
-        savingText: () => "50% OFF",
+        savingText: () => "",
         description: () => "Includes 1 Miroooo X1 set & 1 Travel Case",
       },
       {
@@ -438,7 +438,7 @@ export function getProductMarketPricing(product: ProductCatalogItem, market: Mar
   const price = convertPrice(product.basePrice, market);
   const compareAt = convertPrice(product.baseCompareAt, market);
   const formattedPrice = formatMoney(price, market.currencySymbol);
-  const formattedCompareAt = formatMoney(compareAt, market.currencySymbol);
+  const formattedCompareAt = compareAt > 0 ? formatMoney(compareAt, market.currencySymbol) : "";
 
   const bundles = (product.bundles || []).map((b) => {
     const bPrice = convertPrice(b.basePrice, market);
@@ -448,7 +448,7 @@ export function getProductMarketPricing(product: ProductCatalogItem, market: Mar
       price: bPrice,
       compareAt: bCompare,
       formattedPrice: formatMoney(bPrice, market.currencySymbol),
-      formattedCompareAt: formatMoney(bCompare, market.currencySymbol),
+      formattedCompareAt: bCompare > 0 ? formatMoney(bCompare, market.currencySymbol) : "",
       saving: b.savingText(market),
       description: b.description(market),
     };
@@ -467,8 +467,7 @@ import type { ProductPageContent } from "./types";
 import { MARKETS } from "./market";
 
 export function getMirooooX(market: MarketConfig): ProductPageContent {
-  const p1 = convertPrice(59.0, market);
-  const c1 = convertPrice(129.0, market);
+  const p1 = convertPrice(69.0, market);
   const p2 = convertPrice(108.0, market);
   const c2 = convertPrice(258.0, market);
   const s2 = convertPrice(150.0, market);
@@ -484,7 +483,7 @@ export function getMirooooX(market: MarketConfig): ProductPageContent {
     checkoutProductId: "1000000675113473",
     checkoutSource: "miroooo",
     price: formatMoney(p1, market.currencySymbol),
-    compareAt: formatMoney(c1, market.currencySymbol),
+    compareAt: "",
     rating: "4.9",
     customerCount: "4,275",
     defaultQuantity: 2,
@@ -501,7 +500,7 @@ export function getMirooooX(market: MarketConfig): ProductPageContent {
       { id: "x-m5", type: "image", src: "/media/products/miroooo-x/gallery/Grey-color-7.jpg", alt: "Miroooo X1 Detail", width: 700, height: 700 },
     ],
     bundles: [
-      { quantity: 1, name: "BUY 1", price: formatMoney(p1, market.currencySymbol), compareAt: formatMoney(c1, market.currencySymbol), saving: "50% OFF", description: "Includes 1 Miroooo X1 set & 1 Travel Case" },
+      { quantity: 1, name: "BUY 1", price: formatMoney(p1, market.currencySymbol), compareAt: "", saving: "", description: "Includes 1 Miroooo X1 set & 1 Travel Case" },
       { quantity: 2, name: "BUY 2", badge: "Most Popular", price: formatMoney(p2, market.currencySymbol), compareAt: formatMoney(c2, market.currencySymbol), saving: `SAVE ${formatMoney(s2, market.currencySymbol)}`, description: "Includes 2 Miroooo X1 sets + 1 FREE 2-Pack Brush Heads Set" },
       { quantity: 3, name: "BUY 3", badge: "BEST VALUE", price: formatMoney(p3, market.currencySymbol), compareAt: formatMoney(c3, market.currencySymbol), saving: `SAVE ${formatMoney(s3, market.currencySymbol)}`, description: "Includes 3 Miroooo X1 sets + 2 FREE 2-Pack Brush Heads Sets" },
     ],

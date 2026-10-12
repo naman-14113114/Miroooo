@@ -9,6 +9,7 @@ import { PRODUCTS, Product } from '@/data/products';
 import { formatUSD, savingPercent } from '@/lib/money';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { ShippingInfoTooltip } from '@/components/ui/ShippingInfoTooltip';
 
 interface ProductHeroProps {
   product: Product;
@@ -62,7 +63,6 @@ export function ProductHero({
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isLightboxZoomed, setIsLightboxZoomed] = useState(false);
-  const [isShippingTooltipOpen, setIsShippingTooltipOpen] = useState(false);
   const [isStickyVisible, setIsStickyVisible] = useState(false);
 
   // Urgency banner countdown timer
@@ -208,7 +208,7 @@ export function ProductHero({
         ? 'Add to Cart + Free 6 Brush Heads'
         : 'Add to Cart + 2 Free Heads')
     : isSimpleBuybox
-    ? `Add to Cart — $${(singlePrice * quantity).toFixed(2)}`
+    ? `Add to Cart — ${!isX2 && quantity === 1 ? '$69' : `$${(singlePrice * quantity).toFixed(2)}`}`
     : `Add to Cart ${selectedTier === 'single' ? (buy1HeadsChecked ? '+ 2 Brush Heads' : '') : selectedTier === 'bundle-2' ? '+ Free 2 Brush Heads' : '+ Free 4 Brush Heads'}`.trim();
 
   // Add to Cart handler
@@ -496,7 +496,6 @@ export function ProductHero({
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsShippingTooltipOpen(false);
         setIsLightboxOpen(false);
         setIsLightboxZoomed(false);
       }
@@ -826,18 +825,22 @@ export function ProductHero({
               <div className="product__price grid gap-2 mt-1" id="main-product-price-section">
                 <div className="flex flex-wrap items-baseline gap-2" style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                    {formatUSD(singlePrice)}
+                    {!isX2 ? product.formattedPrice : formatUSD(singlePrice)}
                   </span>
-                  <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
-                    {formatUSD(singleCompare)}
-                  </span>
-                  <span
-                    className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
-                    id="main-discount-badge"
-                    style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
-                  >
-                    {savingPercent(singlePrice, singleCompare)}% OFF
-                  </span>
+                  {isX2 && (
+                    <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
+                      {formatUSD(singleCompare)}
+                    </span>
+                  )}
+                  {isX2 && (
+                    <span
+                      className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
+                      id="main-discount-badge"
+                      style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
+                    >
+                      {savingPercent(singlePrice, singleCompare)}% OFF
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -1005,15 +1008,19 @@ export function ProductHero({
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-single-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            {formatUSD(singlePrice)}
+                            {!isX2 ? product.formattedPrice : formatUSD(singlePrice)}
                           </span>
-                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
-                            {formatUSD(singleCompare)}
-                          </span>
+                          {isX2 && (
+                            <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                              {formatUSD(singleCompare)}
+                            </span>
+                          )}
                         </div>
-                        <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
-                          {savingPercent(singlePrice, singleCompare)}% OFF
-                        </span>
+                        {isX2 && (
+                          <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
+                            {savingPercent(singlePrice, singleCompare)}% OFF
+                          </span>
+                        )}
                       </div>
                     </div>
                   </button>
@@ -1325,40 +1332,7 @@ export function ProductHero({
                 </div>
 
                 {/* Tooltip / Question Mark Button */}
-                <div className="shipping-info-wrapper" style={{ position: 'relative', flexShrink: 0 }}>
-                  <button
-                    type="button"
-                    className="shipping-info-btn"
-                    aria-label="Shipping information"
-                    aria-expanded={isShippingTooltipOpen}
-                    onClick={() => setIsShippingTooltipOpen((prev) => !prev)}
-                    style={{ width: '18px', height: '18px', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', color: 'rgba(255, 255, 255, 0.6)', fontSize: '10px', fontWeight: 700, lineHeight: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: 0, transition: 'all 0.2s ease' }}
-                  >
-                    ?
-                  </button>
-                  {isShippingTooltipOpen && (
-                    <div
-                      className="shipping-info-tooltip"
-                      style={{ display: 'block', position: 'absolute', right: 0, top: 'calc(100% + 8px)', zIndex: 50, width: '270px', background: '#18191a', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '12px', padding: '12px 14px', boxShadow: '0 12px 30px rgba(0, 0, 0, 0.7)', textAlign: 'left', color: 'rgba(255, 255, 255, 0.85)' }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontWeight: 700, fontSize: '12px', color: '#ffffff' }}>Delivery Estimate</span>
-                        <button
-                          type="button"
-                          className="shipping-info-close"
-                          style={{ background: 'none', border: 'none', color: 'rgba(255, 255, 255, 0.6)', fontSize: '13px', cursor: 'pointer', padding: 0, lineHeight: 1 }}
-                          aria-label="Close"
-                          onClick={() => setIsShippingTooltipOpen(false)}
-                        >
-                          ✕
-                        </button>
-                      </div>
-                      <p style={{ fontSize: '11.5px', lineHeight: 1.5, margin: 0, color: 'rgba(255, 255, 255, 0.8)' }}>
-                        This is the estimated delivery timeframe based on 1–3 business days processing and 7–20 business days standard transit across the US. For more information, please visit our <a href="/policies/shipping-policy" style={{ color: '#ffffff', textDecoration: 'underline' }}>shipping policy</a> page.
-                      </p>
-                    </div>
-                  )}
-                </div>
+                <ShippingInfoTooltip isDark={true} />
               </div>
 
               {/* Add To Cart Main Button */}
@@ -1438,7 +1412,9 @@ export function ProductHero({
                   </p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                     <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                      {isSimpleBuybox ? `$${(singlePrice * quantity).toFixed(2)}` : formatUSD(currentPrice)}
+                      {isSimpleBuybox
+                        ? (!isX2 && quantity === 1 ? '$69' : `$${(singlePrice * quantity).toFixed(2)}`)
+                        : (!isX2 && selectedTier === 'single' && !buy1HeadsChecked ? '$69' : formatUSD(currentPrice))}
                     </span>
                   </p>
                 </div>

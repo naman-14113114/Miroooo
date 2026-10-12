@@ -642,7 +642,7 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
   if (quantity === 1) {
     const total = freeHeadQty + paidHeadQty;
     if (total <= 1) {
-      bundleKey = isPromo ? (product === "x2" ? "promoBuy1" : "promoBuy1_freehead") : (product === "x2" ? "buy1_freehead" : (freeHeadQty === 1 ? "buy1_freehead" : "buy1"));
+      bundleKey = isPromo ? (product === "x2" ? "promoBuy1" : "promoBuy1_freehead") : (product === "x2" ? "buy1_freehead" : (freeHeadQty === 1 ? "buy1_freehead" : null));
     } else if (total === 2) {
       bundleKey = isPromo ? "promoBuy1_1head" : "buy1_1head";
     } else {

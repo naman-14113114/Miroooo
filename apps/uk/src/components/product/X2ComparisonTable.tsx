@@ -580,7 +580,7 @@ export function X2ComparisonTable() {
                 <div className="x2-comp-cell">Aerospace Aluminium</div>
                 <div className="x2-comp-cell x2-comp-cell--price">
                   <div className="x2-price-wrap">
-                    <span className="x2-price-val-standard">£59</span>
+                    <span className="x2-price-val-standard">£69</span>
                   </div>
                 </div>
               </div>
@@ -714,7 +714,7 @@ export function X2ComparisonTable() {
                     </div>
                   </div>
                   <div className="x2-comp-m-val-cell">
-                    <span className="x2-comp-m-price-standard">£59</span>
+                    <span className="x2-comp-m-price-standard">£69</span>
                   </div>
                 </div>
               </div>

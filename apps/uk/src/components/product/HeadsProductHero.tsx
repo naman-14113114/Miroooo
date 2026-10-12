@@ -8,6 +8,7 @@ import { AnimatedIcon } from '@/components/ui/AnimatedIcon';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { formatGBP } from '@/lib/cart';
+import { ShippingInfoTooltip } from '@/components/ui/ShippingInfoTooltip';
 
 interface HeadsProductHeroProps {
   product: Product;
@@ -25,7 +26,6 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isLightboxZoomed, setIsLightboxZoomed] = useState(false);
   const [isStickyVisible, setIsStickyVisible] = useState(false);
-  const [isShippingTooltipOpen, setIsShippingTooltipOpen] = useState(false);
 
   // Accordion state
   const [openAccordion, setOpenAccordion] = useState<number | null>(0); // 0: Details, 1: Package contents, 2: Specs
@@ -109,7 +109,6 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       if (e.key === 'Escape') {
         setIsLightboxOpen(false);
         setIsLightboxZoomed(false);
-        setIsShippingTooltipOpen(false);
       }
       if (isLightboxOpen && ['ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
@@ -504,37 +503,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 <div className="flex-1 text-xs sm:text-sm leading-snug" style={{ fontSize: '13px', lineHeight: 1.4 }}>
                   Order within <strong className="font-mono font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryCountdown}</strong> to receive it by <strong className="font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
                 </div>
-                <div className="shipping-info-wrapper" style={{ position: 'relative', flexShrink: 0 }}>
-                  <button
-                    type="button"
-                    className="shipping-info-btn"
-                    onClick={() => setIsShippingTooltipOpen((prev) => !prev)}
-                    style={{ width: '18px', height: '18px', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', color: 'rgba(255, 255, 255, 0.6)', fontSize: '10px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                    aria-label="Shipping estimate details"
-                  >
-                    <span>?</span>
-                  </button>
-                  {isShippingTooltipOpen ? (
-                    <div
-                      className="shipping-info-tooltip"
-                      style={{ display: 'block', position: 'absolute', right: 0, top: 'calc(100% + 8px)', zIndex: 50, width: '270px', background: '#18191a', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '12px', padding: '12px 14px', boxShadow: '0 12px 30px rgba(0, 0, 0, 0.7)', textAlign: 'left', color: 'rgba(255, 255, 255, 0.85)' }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontWeight: 700, fontSize: '12px', color: '#ffffff' }}>Delivery Estimate</span>
-                        <button
-                          type="button"
-                          style={{ background: 'none', border: 'none', color: 'rgba(255, 255, 255, 0.6)', fontSize: '13px', cursor: 'pointer', float: 'right' }}
-                          onClick={() => setIsShippingTooltipOpen(false)}
-                        >
-                          &times;
-                        </button>
-                      </div>
-                      <p style={{ fontSize: '11.5px', lineHeight: 1.5, margin: 0, color: 'rgba(255, 255, 255, 0.8)' }}>
-                        This is the estimated delivery timeframe based on 1–3 business days processing and 7–20 business days standard transit. For more information, please visit our <Link href="/policies/shipping-policy" style={{ color: '#ffffff', textDecoration: 'underline' }}>shipping policy</Link> page.
-                      </p>
-                    </div>
-                  ) : null}
-                </div>
+                <ShippingInfoTooltip isDark={true} />
               </div>
 
               {/* Main CTA */}

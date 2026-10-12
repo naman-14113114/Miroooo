@@ -1684,8 +1684,8 @@ ${tickerItemSet.repeat(12)}
                 subtitle: (h === "miroooo-x2-heads" ? "DuPont precision heads for Miroooo X2." : (h === "miroooo-x1-heads" ? "DuPont precision heads for Miroooo X1." : (h === "miroooo-x2" ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life." : "Electric Toothbrush with 32,000 VPM acoustic motor & 60-day battery."))),
                 color: color,
                 quantity: qty,
-                unitPrice: item.unitPrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 59 : 69)),
-                comparePrice: item.comparePrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 119 : 139)),
+                unitPrice: item.unitPrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 69 : 69)),
+                comparePrice: item.comparePrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : (h === "miroooo-x" ? 69 : 139)),
                 image: item.image || (h === "miroooo-x2-heads" ? "/assets_ref/x2/heads/B1.webp" : (h === "miroooo-x1-heads" ? "/assets_ref/x/heads/1.webp" : (h === "miroooo-x2" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp" : "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp"))),
                 url: item.url || `/products/${h}`
               };
@@ -1754,8 +1754,8 @@ ${tickerItemSet.repeat(12)}
                 subtitle: isX2 ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life." : "Electric Toothbrush with 32,000 VPM acoustic motor & 60-day battery.",
                 color: normColor,
                 quantity: cCount,
-                unitPrice: isX2 ? 69 : 59,
-                comparePrice: isX2 ? 139 : 119,
+                unitPrice: isX2 ? 69 : 69,
+                comparePrice: isX2 ? 139 : 69,
                 image: img,
                 url: `/products/${handle}`
               });
@@ -1891,8 +1891,8 @@ ${tickerItemSet.repeat(12)}
               subtitle: isX2 ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life." : "Electric Toothbrush with 32,000 VPM acoustic motor & 60-day battery.",
               color: color,
               quantity: count,
-              unitPrice: isX2 ? 69 : 59,
-              comparePrice: isX2 ? 139 : 119,
+              unitPrice: isX2 ? 69 : 69,
+              comparePrice: isX2 ? 139 : 69,
               image: img,
               url: `/products/${handle}`
             });
@@ -2115,10 +2115,10 @@ ${tickerItemSet.repeat(12)}
         }
       }
 
-      const baseBrushCompareSavings = (x2Count * (139 - 69)) + (x1Count * (119 - 59));
+      const baseBrushCompareSavings = (x2Count * (139 - 69));
       const bundleSavings = baseBrushCompareSavings + x1BundleDiscount;
       const x2Net = (x2Count * 69) - x2BundlePromoDiscount;
-      const x1Net = (x1Count * 59) - x1BundleDiscount;
+      const x1Net = (x1Count * 69) - x1BundleDiscount;
       const headsNet = (x2HeadsCount * 10) + (x1HeadsCount * 10);
       const brushSubtotal = Math.max(0, x2Net + x1Net);
       const subtotal = Math.max(0, brushSubtotal + headsNet);

@@ -1881,14 +1881,20 @@ body {
   .gb-product-grid {
     display: flex;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    padding-bottom: 12px;
+    padding-top: 6px;
+    padding-bottom: 24px;
     scrollbar-width: none;
+    -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
   }
 
   .gb-product-grid::-webkit-scrollbar {
     display: none;
+    width: 0;
+    height: 0;
   }
 
   .gb-product-card {
@@ -1897,6 +1903,8 @@ body {
     max-width: 340px;
     flex-shrink: 0;
     scroll-snap-align: start;
+    transform: none !important;
+    overflow: hidden;
   }
 
   .gb-product-card__quick-btn {
