@@ -27,6 +27,8 @@ export function CartLines({
       image: "/assets_ref/x/heads/B1.webp",
     },
   ].filter((gift) => gift.sets > 0);
+  const toothbrushCount = totals.x2Count + totals.x1Count;
+  const hasFreeGiftCard = Boolean(totals.hasFreeGiftCard || toothbrushCount > 0);
   const cls = (page: string, panel: string) => (drawer ? panel : page);
   return (
     <>
@@ -39,8 +41,12 @@ export function CartLines({
               ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life."
               : item.productHandle === "miroooo-x"
                 ? "Electric Toothbrush with 32,000 VPM acoustic motor & 60-day battery."
-                : `DuPont precision heads for Miroooo ${item.productHandle === "miroooo-x2-heads" ? "X2" : "X1"}.`,
+                : item.productHandle === "miroooo-package-protection"
+                  ? "Complete transit damage, loss, and doorstep theft guarantee."
+                  : item.subtitle || (item.productHandle.endsWith('-heads') ? `DuPont precision heads for Miroooo ${item.productHandle === "miroooo-x2-heads" ? "X2" : "X1"}.` : ""),
           gift: false,
+          badgeText: undefined as string | undefined,
+          alt: item.title,
         })),
         ...gifts.map((gift) => ({
           id: `gift-${gift.handle}`,
@@ -52,7 +58,28 @@ export function CartLines({
           comparePrice: gift.sets * PRODUCTS[gift.handle].price,
           quantity: gift.sets,
           gift: true,
+          badgeText: `UNLOCKED ${gift.sets} ${gift.sets > 1 ? "SETS" : "SET"} (${gift.sets * 2} BRUSH HEADS)`,
+          alt: `Free Miroooo ${gift.model} Heads (2-Pack)`,
         })),
+        ...(hasFreeGiftCard
+          ? [
+              {
+                id: "gift-miroooo-gift-card",
+                title: "Free Miroooo Digital Gift Card ($10)",
+                subtitle:
+                  "Official Miroooo digital voucher. Instant email delivery. Never expires.",
+                image: "/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp",
+                url: "/products/miroooo-gift-card",
+                productHandle: "miroooo-gift-card",
+                unitPrice: 0,
+                comparePrice: 10,
+                quantity: 1,
+                gift: true,
+                badgeText: "UNLOCKED 1 COMPLIMENTARY VOUCHER ($10 VALUE)",
+                alt: "Miroooo official digital gift card $10 complimentary voucher",
+              },
+            ]
+          : []),
       ].map((item) => (
         <div
           className={cls("cart-line-item", "miroooo-cart-item")}
@@ -67,7 +94,7 @@ export function CartLines({
               className="cart-line-item__media-link"
               aria-label={`View ${item.title}`}
             >
-              <img src={item.image} alt={item.title} width={112} height={112} />
+              <img src={item.image} alt={item.alt || item.title} width={112} height={112} />
             </Link>
           </div>
           <div
@@ -142,8 +169,8 @@ export function CartLines({
                     "miroooo-cart-gift-badge",
                   )}
                 >
-                  UNLOCKED {item.quantity} {item.quantity > 1 ? "SETS" : "SET"}{" "}
-                  ({item.quantity * 2} BRUSH HEADS)
+                  {item.badgeText ||
+                    `UNLOCKED ${item.quantity} ${item.quantity > 1 ? "SETS" : "SET"} (${item.quantity * 2} BRUSH HEADS)`}
                 </span>
               ) : (
                 <>

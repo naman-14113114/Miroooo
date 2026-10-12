@@ -1375,7 +1375,7 @@ export function ProductHero({
                 </div>
               </div>
 
-              <FreeBrushHeadsGift model={isX2 ? 'X2' : 'X1'} />
+              <FreeBrushHeadsGift model={isX2 ? 'X2' : 'X1'} currency="£" />
 
               <ProductAccordions model={isX2 ? 'x2' : 'x1'} />
             </div>

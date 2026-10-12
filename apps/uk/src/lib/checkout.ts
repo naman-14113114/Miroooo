@@ -16,7 +16,7 @@ const sessionPath = /\/checkout\/[a-f\d]{64}\/?$/i;
 function destination(href: unknown, base = XPAGE_STORE_URL) {
   if (typeof href !== 'string') throw unavailable();
   const url = new URL(href, base);
-  if (!origins.has(url.origin) || url.username || url.password ||
+  if ((!origins.has(url.origin) && !url.hostname.endsWith('.myxpage.shop')) || url.username || url.password ||
       !checkoutPath.test(url.pathname)) throw unavailable();
   url.search = '?currency=GBP';
   url.hash = '';
@@ -77,7 +77,6 @@ function orderLines(html: string): Array<{ quantity: number; price: number | str
 }
 
 export function assertCheckoutOrderQuote(html: string, cart: ProviderLine[], _expectedGBP?: number) {
-  // Verify that bundle or individual products are present on XPage regardless of checkout price.
   const quoted = new Map<string, number>();
   for (const line of orderLines(html)) {
     const id = line.variant?.id;
@@ -106,16 +105,45 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
     XPAGE_VARIANTS.x1_pink_6pc,
     XPAGE_VARIANTS.x1_silver_6pc,
   ]);
-  const isX1HeadsOnly = xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.x1_heads);
-  const isX2HeadsOnly = xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.x2_heads);
-  const product = isX1HeadsOnly ? 'x1_heads' : isX2HeadsOnly ? 'x2_heads' : xpageCart.every((line) => x1.has(line.variant_id) || line.variant_id === XPAGE_VARIANTS.x1_heads) ? 'x1' : 'x2';
+  const nonGiftLines = xpageCart.filter(
+    (line) => line.variant_id !== XPAGE_VARIANTS.gift_card && line.variant_id !== XPAGE_VARIANTS.package_protection
+  );
+  const isX1HeadsOnly = nonGiftLines.length > 0 && nonGiftLines.every((line) => line.variant_id === XPAGE_VARIANTS.x1_heads);
+  const isX2HeadsOnly = nonGiftLines.length > 0 && nonGiftLines.every((line) => line.variant_id === XPAGE_VARIANTS.x2_heads);
+  const isPackageProtectionOnly = xpageCart.length > 0 && xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.package_protection);
+  const isGiftCardOnly = xpageCart.length > 0 && xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.gift_card);
+  const product = isPackageProtectionOnly ? 'package_protection'
+    : isGiftCardOnly ? 'giftcard'
+    : isX1HeadsOnly ? 'x1_heads'
+    : isX2HeadsOnly ? 'x2_heads'
+    : nonGiftLines.every((line) => x1.has(line.variant_id) || line.variant_id === XPAGE_VARIANTS.x1_heads) ? 'x1' : 'x2';
   let checkout: URL;
 
   if (useBundle) {
     const { session, selected, option, condition } = await loadPublishedCheckoutOffer(cart, discountCode);
-    const offered = option.offered?.find((item: { quantity: number; product?: { variants?: Array<{ id: string }> } }) =>
-      item.quantity === selected.offeredQty && item.product?.variants?.some((variant) => variant.id === selected.headsVariant));
-    if (selected.offeredQty && !offered) throw unavailable();
+    const offeredMap: Record<string, string[]> = {};
+    if (Array.isArray(option.offered)) {
+      for (const item of option.offered) {
+        const prodId = (item.product?.id || item.product_id || '').toLowerCase();
+        const slug = (item.product?.slug || item.product?.handle || '').toLowerCase();
+        const isGiftCard =
+          prodId === 'a2f687d2-56cd-4709-95a5-e6d280070c18' ||
+          slug === 'miroooo-gift-card' ||
+          item.product?.variants?.some((v: any) => v.id === XPAGE_VARIANTS.gift_card);
+        const isPackageProtection =
+          prodId === 'a2f6df9e-faf7-438b-a65a-da26ee25ce03' ||
+          slug === 'miroooo-package-protection' ||
+          item.product?.variants?.some((v: any) => v.id === XPAGE_VARIANTS.package_protection);
+
+        if (isPackageProtection) {
+          offeredMap[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.package_protection);
+        } else if (isGiftCard) {
+          offeredMap[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.gift_card);
+        } else {
+          offeredMap[item.id] = Array(item.quantity).fill(selected.headsVariant);
+        }
+      }
+    }
     const response = await fetch(`${session.origin}/create-bundle-order?currency=GBP`, {
       method: 'POST', redirect: 'error', signal: AbortSignal.timeout(15000),
       headers: { 'Content-Type': 'application/json', Accept: 'application/json',
@@ -123,16 +151,18 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
         Cookie: cookies(session.setCookieHeaders) },
       body: JSON.stringify({ bundle_option_id: option.id, landing_page_id: session.landingPageId,
         bundle_selected_variants: { conditions: { [condition.id]: selected.brushes },
-          offered: offered ? { [offered.id]: Array(selected.offeredQty).fill(selected.headsVariant) } : {} } }),
+          offered: offeredMap } }),
     });
     if (!response.ok) throw unavailable();
     const data = await response.json();
     if (data.status !== 'success') throw unavailable();
     checkout = destination(data.checkout_url, session.origin);
   } else {
-    const session = await loadXpageSession('GBP', 'store');
+    const isSingleProductLanding = product === 'package_protection' || product === 'giftcard';
+    const targetOrigin = isSingleProductLanding ? XPAGE_LANDING_URLS[product] : XPAGE_STORE_URL;
+    const session = await loadXpageSession('GBP', isSingleProductLanding ? product : 'store');
     if (!session.csrfToken) throw unavailable();
-    const response = await fetch(`${XPAGE_STORE_URL}/set-cart?checkout=true&currency=GBP`, {
+    const response = await fetch(`${targetOrigin}/set-cart?checkout=true&currency=GBP`, {
       method: 'POST', redirect: 'error', signal: AbortSignal.timeout(15000),
       headers: { 'Content-Type': 'application/json', Accept: 'application/json',
         'X-CSRF-Token': session.csrfToken, Origin: session.origin, Referer: session.url,
@@ -142,9 +172,15 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
     if (!response.ok) throw unavailable();
     const data = await response.json();
     if (data.status !== 'success') throw unavailable();
-    checkout = destination(data.checkout_url);
+    checkout = destination(data.checkout_url, targetOrigin);
     if (!sessionPath.test(checkout.pathname)) {
-      const page = await readCheckout(checkout, cookies(session.setCookieHeaders, response.headers.getSetCookie()));
+      const page = await readCheckout(
+        checkout,
+        cookies(
+          session.setCookieHeaders,
+          (response.headers as any).getSetCookie ? (response.headers as any).getSetCookie() : [response.headers.get('set-cookie')].filter(Boolean) as string[]
+        )
+      );
       // Keep XPage's signed handoff path. Removing its prefix loses currency/session context.
       if (!sessionPath.test(page.url.pathname)) throw unavailable();
       checkout = page.url;
@@ -154,7 +190,8 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
   if (!sessionPath.test(checkout.pathname)) throw unavailable();
   if (/^\/checkout\//.test(checkout.pathname)) {
     // Resolve the native store URL before branding it; this redirect carries the signed prefix.
-    checkout = (await readCheckout(destination(checkout.pathname, XPAGE_STORE_URL))).url;
+    const resolveOrigin = (product === 'package_protection' || product === 'giftcard') ? XPAGE_LANDING_URLS[product] : XPAGE_STORE_URL;
+    checkout = (await readCheckout(destination(checkout.pathname, resolveOrigin))).url;
   }
   // Preserve the native handoff prefix while keeping the existing model-specific destination.
   checkout = destination(checkout.pathname, XPAGE_LANDING_URLS[product]);

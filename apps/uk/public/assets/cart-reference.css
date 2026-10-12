@@ -387,6 +387,31 @@
       color: #000000;
     }
 
+    .cart-protection-badge svg {
+      fill: none !important;
+      stroke: currentColor !important;
+    }
+
+    .cart-upsell-add-btn.is-added,
+    .cart-upsell-add-btn:disabled {
+      background: rgba(0, 0, 0, 0.08);
+      background-color: rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.15);
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .cart-upsell-add-btn.is-added .btn-fill,
+    .cart-upsell-add-btn:disabled .btn-fill {
+      display: none;
+    }
+
+    .cart-upsell-add-btn.is-added .btn-text,
+    .cart-upsell-add-btn:disabled .btn-text {
+      color: #111111;
+      font-weight: 700;
+    }
+
     /* 4. Left Column: Line Items */
     .cart-items-container {
       display: flex;

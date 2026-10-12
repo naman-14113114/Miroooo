@@ -40,6 +40,7 @@ export interface CartTotals {
   x2HeadsCount: number;
   x1HeadsCount: number;
   bundleEligible: boolean;
+  hasFreeGiftCard: boolean;
 }
 
 export const VALID_PROMO_CODES = ['MIROOOO', 'MIROOOO10'];
@@ -63,6 +64,16 @@ const UK_HANDLE_ALIASES: Record<string, string> = {
   'wall-mounted-dock': 'wall-mounted-dock',
   'miroooo-dock': 'wall-mounted-dock',
   'miroooo-wall-mounted-dock': 'wall-mounted-dock',
+  'miroooo-gift-card': 'miroooo-gift-card',
+  'gift-card': 'miroooo-gift-card',
+  'giftcard': 'miroooo-gift-card',
+  'a2f687d2-56cd-4709-95a5-e6d280070c18': 'miroooo-gift-card',
+  'a2f687d5-32cc-427c-81f1-5d153911e592': 'miroooo-gift-card',
+  'miroooo-package-protection': 'miroooo-package-protection',
+  'package-protection': 'miroooo-package-protection',
+  'packageprotection': 'miroooo-package-protection',
+  'shipping-protection': 'miroooo-package-protection',
+  'a2f6dfa1-50ae-46c9-a88e-fdb563e124a2': 'miroooo-package-protection',
   '1000000675113473': 'miroooo-x',
   '1000000675072187': 'miroooo-x2',
   '1000000675471182': 'miroooo-x1-heads',
@@ -126,15 +137,24 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let x2HeadsCount = 0;
   let x1HeadsCount = 0;
 
+  let otherItemsQty = 0;
+  let otherItemsSubtotal = 0;
+  let otherItemsCompareAt = 0;
+
   items.forEach((item) => {
     const qty = item.quantity || 1;
     if (item.productHandle === 'miroooo-x2') x2Count += qty;
     else if (item.productHandle === 'miroooo-x') x1Count += qty;
     else if (item.productHandle === 'miroooo-x2-heads') x2HeadsCount += qty;
     else if (item.productHandle === 'miroooo-x1-heads') x1HeadsCount += qty;
+    else {
+      otherItemsQty += qty;
+      otherItemsSubtotal += (item.unitPrice || 0) * qty;
+      otherItemsCompareAt += ((item.comparePrice || item.unitPrice) || 0) * qty;
+    }
   });
 
-  const totalQty = x2Count + x1Count + x2HeadsCount + x1HeadsCount;
+  const totalQty = x2Count + x1Count + x2HeadsCount + x1HeadsCount + otherItemsQty;
   const isX2 = x2Count > 0;
   const isX1 = x1Count > 0;
   const hasPaidHeads = x2HeadsCount > 0 || x1HeadsCount > 0;
@@ -148,7 +168,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const x1Compare = x1Count * 69;
   const x2HeadsCompare = x2HeadsCount * 20;
   const x1HeadsCompare = x1HeadsCount * 20;
-  const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare;
+  const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare + otherItemsCompareAt;
 
   // Base 50% savings on brushes (X1 has no compare-at markup)
   const baseBrushCompareSavings = x2Count * (139 - 69);
@@ -196,6 +216,13 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
 
   let giftsValue = 0;
   let unlockedGiftsCount = 0;
+  let hasFreeGiftCard = false;
+
+  if (x2Count > 0 || x1Count > 0) {
+    giftsValue += 10;
+    unlockedGiftsCount += 1;
+    hasFreeGiftCard = true;
+  }
 
   if (extraBrushHeadSets > 0) {
     giftsValue += extraBrushHeadSets * 10;
@@ -214,7 +241,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const x2Net = x2Count * 69 - x2BundlePromoDiscount;
   const x1Net = x1Count * 69 - x1BundleDiscount;
   const brushSubtotal = Math.max(0, x2Net + x1Net);
-  const subtotal = Math.max(0, brushSubtotal + headsNet);
+  const subtotal = Math.max(0, brushSubtotal + headsNet + otherItemsSubtotal);
 
   // Promo code MIROOOO10: 10% discount strictly on brush subtotal (heads excluded), rounded integer
   const hasValidPromo = appliedPromoCodes.some((code) =>
@@ -254,6 +281,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     x2HeadsCount,
     x1HeadsCount,
     bundleEligible: isX2Bundle || isX1Bundle || (isHeadsOnly && ((x1HeadsCount >= 1 && x1HeadsCount <= 3 && x2HeadsCount === 0) || (x2HeadsCount >= 1 && x2HeadsCount <= 3 && x1HeadsCount === 0))),
+    hasFreeGiftCard,
   };
 }
 

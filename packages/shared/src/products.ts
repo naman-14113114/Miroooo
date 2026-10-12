@@ -429,6 +429,68 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     ],
     highlights: ["Magnetic Inductive Charging Dock", "Fast 2-Hour Full Charge", "Integrated 1.0m Braided Cable", "Over-Voltage & Surge Protection"],
   },
+
+  "miroooo-gift-card": {
+    id: "miroooo-gift-card",
+    handle: "miroooo-gift-card",
+    name: "Miroooo Gift Card",
+    model: "Gift Card",
+    headline: "Official Miroooo Digital Gift Card.",
+    description:
+      "Instant digital gift voucher delivered via email. Never expires and valid across all Miroooo electric toothbrushes, replacement brush heads, and oral hygiene accessories.",
+    basePrice: 10.0,
+    baseCompareAt: 0,
+    rating: 4.9,
+    reviewCount: 4275,
+    plusBaseProductId: "a2f687d2-56cd-4709-95a5-e6d280070c18",
+    variants: [
+      {
+        id: "a2f687d5-32cc-427c-81f1-5d153911e592",
+        name: "Default",
+        color: "Default",
+        swatch: "#e5e5e5",
+        image: "/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp",
+        checkoutImage: "/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp",
+      },
+    ],
+    specs: [
+      { label: "Delivery", value: "Instant digital delivery to recipient email" },
+      { label: "Expiration", value: "No expiration date" },
+      { label: "Redemption", value: "Valid site-wide on all Miroooo products and replacement heads" },
+    ],
+    highlights: ["Instant Email Delivery", "Never Expires", "Valid Site-Wide"],
+  },
+
+  "miroooo-package-protection": {
+    id: "miroooo-package-protection",
+    handle: "miroooo-package-protection",
+    name: "Miroooo Package Protection",
+    model: "Package Protection",
+    headline: "Complete transit damage, loss, and theft guarantee.",
+    description:
+      "Enjoy total peace of mind for your Miroooo order with official package protection covering damage, loss, or theft during transit with expedited zero-cost unit replacement.",
+    basePrice: 5.0,
+    baseCompareAt: 0,
+    rating: 4.9,
+    reviewCount: 4275,
+    plusBaseProductId: "a2f6df9e-faf7-438b-a65a-da26ee25ce03",
+    variants: [
+      {
+        id: "a2f6dfa1-50ae-46c9-a88e-fdb563e124a2",
+        name: "Default",
+        color: "Default",
+        swatch: "#2ee875",
+        image: "/assets_ref/gifts/miroooo-package-protection-transit-guarantee.webp",
+        checkoutImage: "/assets_ref/gifts/miroooo-package-protection-transit-guarantee.webp",
+      },
+    ],
+    specs: [
+      { label: "Coverage", value: "Transit damage, lost shipments, and doorstep package theft" },
+      { label: "Replacement", value: "Instant brand-new replacement unit with expedited dispatch" },
+      { label: "Claim Process", value: "Hassle-free 24/7 dedicated support priority resolution" },
+    ],
+    highlights: ["Complete Transit Protection", "Expedited Replacement Promise", "24/7 Priority Support"],
+  },
 };
 
 /**

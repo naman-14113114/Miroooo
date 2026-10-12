@@ -127,6 +127,21 @@ const US_COLLECTION_PRODUCTS: CollectionProduct[] = [
     link: '/products/x1-charger',
     buttonText: 'Sold Out',
   },
+  {
+    id: 'miroooo-gift-card',
+    handle: 'miroooo-gift-card',
+    name: 'Miroooo Gift Card',
+    category: 'accessories',
+    eyebrow: 'Digital Voucher',
+    description: 'Instant digital gift voucher delivered via email. Never expires and valid site-wide.',
+    price: '$10',
+    compareAt: '',
+    badge: undefined,
+    isSoldOut: false,
+    image: '/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp',
+    link: '/products/miroooo-gift-card',
+    buttonText: 'View Item',
+  },
 ];
 
 export function ShopPage() {

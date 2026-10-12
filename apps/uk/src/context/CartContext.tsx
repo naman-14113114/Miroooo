@@ -425,6 +425,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         });
       }
 
+      if (totals.hasFreeGiftCard || totals.extraBrushHeadSets > 0 || totals.extraX1BrushHeadSets > 0) {
+        checkoutItems.push({
+          id: 'miroooo-gift-card:free',
+          productHandle: 'miroooo-gift-card',
+          title: 'Miroooo Gift Card',
+          productId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
+          variantId: 'a2f687d5-32cc-427c-81f1-5d153911e592',
+          color: 'Default',
+          quantity: 1,
+        });
+      }
+
       const validDiscountCodes = appliedPromoCodes.filter((c) => VALID_PROMO_CODES.includes(c));
 
       const prepRes = await fetch('/api/checkout/prepare', {

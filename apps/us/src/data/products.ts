@@ -677,6 +677,132 @@ export const PRODUCTS: Record<string, Product> = {
       '1x Safety & Charging Manual',
     ],
   },
+
+  'miroooo-gift-card': {
+    id: 'miroooo-gift-card',
+    handle: 'miroooo-gift-card',
+    name: 'Miroooo Gift Card',
+    model: 'Gift Card',
+    headline: 'Official Miroooo Digital Gift Card.',
+    subtitle: 'Digital gift card delivered instantly via email.',
+    description:
+      'Official Miroooo digital voucher delivered instantly via email. Never expires and valid across all Miroooo electric toothbrushes, replacement brush heads, and oral accessories.',
+    price: 10,
+    compareAt: 0,
+    formattedPrice: '$10',
+    formattedCompareAt: '',
+    rating: 5.0,
+    reviewCount: 320,
+    customerCount: '320',
+    plusBaseProductId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
+    defaultQuantity: 1,
+    variants: [
+      {
+        id: 'a2f687d5-32cc-427c-81f1-5d153911e592',
+        name: 'Default',
+        color: 'Default',
+        swatch: '#111111',
+        image: '/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp',
+        checkoutImage: '/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp',
+      },
+    ],
+    bundles: [
+      {
+        quantity: 1,
+        name: '1x Gift Card',
+        price: 10,
+        compareAt: 0,
+        formattedPrice: '$10',
+        formattedCompareAt: '',
+        freeHeadsCount: 0,
+        promoPrice: 10,
+        savingText: '',
+        description: 'Miroooo Gift Card ($10)',
+      },
+    ],
+    specs: [
+      { label: 'Delivery', value: 'Instant digital delivery to recipient email' },
+      { label: 'Expiration', value: 'Never expires' },
+      { label: 'Redemption', value: 'Valid site-wide on all Miroooo products and replacement heads' },
+    ],
+    highlights: [
+      'Instant Email Delivery',
+      'Never Expires',
+      'Site-Wide Redemption',
+    ],
+    gifts: [],
+    galleryImages: [
+      {
+        src: '/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp',
+        alt: 'Miroooo official digital gift card $10 voucher',
+        width: 800,
+        height: 800,
+      },
+    ],
+  },
+
+  'miroooo-package-protection': {
+    id: 'miroooo-package-protection',
+    handle: 'miroooo-package-protection',
+    name: 'Miroooo Package Protection',
+    model: 'Package Protection',
+    headline: 'Complete transit damage, loss, and theft guarantee.',
+    subtitle: 'Priority zero-hassle replacement coverage in transit.',
+    description:
+      'Complete transit damage, loss, and theft guarantee for your Miroooo order with expedited zero-cost unit replacement.',
+    price: 5,
+    compareAt: 0,
+    formattedPrice: '$5',
+    formattedCompareAt: '',
+    rating: 5.0,
+    reviewCount: 940,
+    customerCount: '940',
+    plusBaseProductId: 'a2f6df9e-faf7-438b-a65a-da26ee25ce03',
+    defaultQuantity: 1,
+    variants: [
+      {
+        id: 'a2f6dfa1-50ae-46c9-a88e-fdb563e124a2',
+        name: 'Default',
+        color: 'Default',
+        swatch: '#111111',
+        image: '/assets_ref/gifts/miroooo-package-protection-transit-guarantee.webp',
+        checkoutImage: '/assets_ref/gifts/miroooo-package-protection-transit-guarantee.webp',
+      },
+    ],
+    bundles: [
+      {
+        quantity: 1,
+        name: '1x Package Protection',
+        price: 5,
+        compareAt: 0,
+        formattedPrice: '$5',
+        formattedCompareAt: '',
+        freeHeadsCount: 0,
+        promoPrice: 5,
+        savingText: '',
+        description: 'Miroooo Package Protection ($5)',
+      },
+    ],
+    specs: [
+      { label: 'Coverage', value: 'Transit damage, lost shipments, and doorstep package theft' },
+      { label: 'Replacement', value: 'Instant brand-new replacement unit with expedited dispatch' },
+      { label: 'Claim Process', value: 'Hassle-free 24/7 dedicated priority resolution' },
+    ],
+    highlights: [
+      'Complete Transit Damage & Theft Protection',
+      'Expedited Zero-Cost Unit Replacement Promise',
+      '24/7 Dedicated Priority Support Resolution',
+    ],
+    gifts: [],
+    galleryImages: [
+      {
+        src: '/assets_ref/gifts/miroooo-package-protection-transit-guarantee.webp',
+        alt: 'Miroooo official transit guarantee package protection',
+        width: 800,
+        height: 800,
+      },
+    ],
+  },
 };
 
 export function getProduct(handle: string): Product | undefined {
@@ -685,6 +811,8 @@ export function getProduct(handle: string): Product | undefined {
   if (handle === 'wall_mounted_dock') return PRODUCTS['wall-mounted-dock'];
   if (handle === 'travel_case') return PRODUCTS['travel-case'];
   if (handle === 'x1_charger') return PRODUCTS['x1-charger'];
+  if (handle === 'miroooo_gift_card' || handle === 'gift_card' || handle === 'gift-card' || handle === 'giftcard') return PRODUCTS['miroooo-gift-card'];
+  if (handle === 'miroooo_package_protection' || handle === 'package_protection' || handle === 'package-protection' || handle === 'packageprotection') return PRODUCTS['miroooo-package-protection'];
   return PRODUCTS[handle];
 }
 
@@ -703,5 +831,7 @@ export function getAccessories(): Product[] {
     PRODUCTS['x1-charger'],
     PRODUCTS['miroooo-x2-heads'],
     PRODUCTS['miroooo-x1-heads'],
+    PRODUCTS['miroooo-gift-card'],
+    PRODUCTS['miroooo-package-protection'],
   ];
 }

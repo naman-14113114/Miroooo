@@ -9,6 +9,7 @@ import { PRODUCTS, Product } from '@/data/products';
 import { formatUSD, savingPercent } from '@/lib/money';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { FreeBrushHeadsGift } from './FreeBrushHeadsGift';
 import { ShippingInfoTooltip } from '@/components/ui/ShippingInfoTooltip';
 
 interface ProductHeroProps {
@@ -1373,6 +1374,8 @@ export function ProductHero({
                   <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br />Shipping</span>
                 </div>
               </div>
+
+              <FreeBrushHeadsGift model={isX2 ? 'X2' : 'X1'} currency="$" />
 
               <ProductAccordions model={isX2 ? 'x2' : 'x1'} />
             </div>

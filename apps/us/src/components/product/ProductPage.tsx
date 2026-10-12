@@ -22,6 +22,7 @@ import { BrushStylePrecision } from './BrushStylePrecision';
 import { DiscoverOralHygiene } from './DiscoverOralHygiene';
 import { LuxuriousProfessionalism } from './LuxuriousProfessionalism';
 import { ProductStickyNav } from './ProductStickyNav';
+import { MinimalProductHero } from './MinimalProductHero';
 
 interface ProductPageProps {
   handle: string;
@@ -36,6 +37,22 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: Pr
   const product = getProduct(handle);
   if (!product) {
     notFound();
+  }
+
+  const isMinimal =
+    handle === 'miroooo-gift-card' ||
+    handle === 'gift-card' ||
+    handle === 'giftcard' ||
+    handle === 'miroooo-package-protection' ||
+    handle === 'package-protection' ||
+    handle === 'packageprotection';
+
+  if (isMinimal) {
+    return (
+      <main className="product-page-root minimal-product-page bg-[#080909] min-h-screen text-white">
+        <MinimalProductHero product={product} />
+      </main>
+    );
   }
 
   const isAccessory =

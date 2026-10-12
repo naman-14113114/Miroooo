@@ -25,6 +25,8 @@ const xpageVariantToLocal: Record<string, { handle: string; color: string }> = {
   [XPAGE_VARIANTS.x2_pink]: { handle: 'miroooo-x2', color: 'Pink' },
   [XPAGE_VARIANTS.x1_heads]: { handle: 'miroooo-x1-heads', color: 'Default' },
   [XPAGE_VARIANTS.x2_heads]: { handle: 'miroooo-x2-heads', color: 'Default' },
+  [XPAGE_VARIANTS.gift_card]: { handle: 'miroooo-gift-card', color: 'Default' },
+  [XPAGE_VARIANTS.package_protection]: { handle: 'miroooo-package-protection', color: 'Default' },
 };
 
 function resolveCheckoutLine(line: any) {
@@ -139,11 +141,28 @@ export async function POST(req: Request) {
     const canonicalCart = canonicalItems.map(({ id, productHandle, productId, variantId, title, color, quantity }) =>
       ({ id, productHandle, productId, variantId, title, color, quantity })
     );
-    if (totals.extraBrushHeadSets || totals.extraX1BrushHeadSets) {
-      const handle = totals.extraBrushHeadSets ? 'miroooo-x2-heads' : 'miroooo-x1-heads';
-      const quantity = totals.extraBrushHeadSets || totals.extraX1BrushHeadSets;
-      const gift = normalizeCartItems([{ productHandle: handle, variantId: handle === 'miroooo-x2-heads' ? '1000020718937117' : '1000020710139724', quantity }], true)[0];
+    if (totals.extraBrushHeadSets > 0) {
+      const handle = 'miroooo-x2-heads';
+      const quantity = totals.extraBrushHeadSets;
+      const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020718937117', quantity }], true)[0];
       canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
+    }
+    if (totals.extraX1BrushHeadSets > 0) {
+      const handle = 'miroooo-x1-heads';
+      const quantity = totals.extraX1BrushHeadSets;
+      const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020710139724', quantity }], true)[0];
+      canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
+    }
+    if (totals.hasFreeGiftCard) {
+      canonicalCart.push({
+        id: 'miroooo-gift-card:free',
+        productHandle: 'miroooo-gift-card',
+        productId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
+        variantId: 'a2f687d5-32cc-427c-81f1-5d153911e592',
+        title: 'Miroooo Gift Card',
+        color: 'Default',
+        quantity: 1,
+      });
     }
     const bundlePayload = detectBundlePayload(canonicalCart, discountCode);
     const result = await prepareUSCheckout({

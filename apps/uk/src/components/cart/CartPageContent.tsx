@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
+  Check,
   ChevronDown,
   Gift,
   LockKeyhole,
   Plus,
+  ShieldCheck,
   ShoppingBag,
   Star,
   X,
@@ -240,6 +242,95 @@ export function CartPageContent() {
                   </div>
                 </div>
               )}
+              {(() => {
+                const isProtectionAdded = items.some(
+                  (item) => item.productHandle === "miroooo-package-protection"
+                );
+                return (
+                  <div
+                    className="cart-luxury-card cart-upsell-card cart-protection-card"
+                    id="cart-protection-container"
+                  >
+                    <div className="cart-upsell-header">
+                      <div className="cart-upsell-badge cart-protection-badge">
+                        <ShieldCheck size={12} strokeWidth={2.5} />
+                        <span>Shipping Guarantee</span>
+                      </div>
+                    </div>
+                    <div className="cart-upsell-body">
+                      <div className="cart-upsell-media">
+                        <Link
+                          href="/products/miroooo-package-protection"
+                          className="cart-upsell-media-link"
+                          aria-label="View Miroooo Package Protection details"
+                        >
+                          <img
+                            src="/assets_ref/gifts/miroooo-package-protection-transit-guarantee.webp"
+                            width={72}
+                            height={72}
+                            alt="Miroooo Package Protection against transit damage, loss, or theft"
+                          />
+                        </Link>
+                      </div>
+                      <div className="cart-upsell-content">
+                        <div className="cart-upsell-info">
+                          <h3 className="cart-upsell-title">
+                            <Link
+                              href="/products/miroooo-package-protection"
+                              className="cart-upsell-title-link"
+                            >
+                              Miroooo Package Protection
+                            </Link>
+                          </h3>
+                          <p className="cart-upsell-subtitle">
+                            Complete transit damage, loss, and doorstep theft guarantee.
+                          </p>
+                        </div>
+                        <div className="cart-upsell-action-row">
+                          <div className="cart-upsell-price-wrap">
+                            <span className="cart-upsell-price">£5</span>
+                          </div>
+                          <button
+                            type="button"
+                            className={`cart-upsell-add-btn ${isProtectionAdded ? "is-added" : ""}`}
+                            id="cart-protection-add-btn"
+                            disabled={isProtectionAdded}
+                            aria-label={
+                              isProtectionAdded
+                                ? "Miroooo Package Protection added to cart"
+                                : "Add Miroooo Package Protection to cart"
+                            }
+                            onClick={() => {
+                              if (!isProtectionAdded) {
+                                addItem({
+                                  productHandle: "miroooo-package-protection",
+                                  color: "Default",
+                                  quantity: 1,
+                                });
+                              }
+                            }}
+                          >
+                            <span className="btn-fill" />
+                            <span className="btn-text">
+                              {isProtectionAdded ? (
+                                <>
+                                  <Check size={13} strokeWidth={2.5} />
+                                  Added ✓
+                                </>
+                              ) : (
+                                <>
+                                  <Plus size={13} strokeWidth={2.5} />
+                                  Add
+                                </>
+                              )}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
             <aside className="cart-sidebar-stack">
               <div className="cart-luxury-card">

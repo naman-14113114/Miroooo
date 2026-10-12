@@ -5,6 +5,8 @@ export const XPAGE_LANDING_URLS: Record<string, string> = {
   x2: "https://offer.miroooo.us",
   x1_heads: "https://x1heads.miroooo.us",
   x2_heads: "https://x2heads.miroooo.us",
+  giftcard: "https://giftcard.miroooo.us",
+  package_protection: "https://packageprotection.miroooo.us",
 };
 
 export const XPAGE_VARIANTS = {
@@ -27,6 +29,9 @@ export const XPAGE_VARIANTS = {
   x2_pink: "a2d08cdd-d5d3-47da-a294-ea8da721fc31",
   // Miroooo X2 Heads (Product: a2d0cb1d-c4f6-492e-a72d-27369d15ec0c)
   x2_heads: "a2d0cb1d-dfcf-425d-9251-7792053c08b8",
+
+  gift_card: "a2f687d5-32cc-427c-81f1-5d153911e592",
+  package_protection: "a2f6dfa1-50ae-46c9-a88e-fdb563e124a2",
 } as const;
 
 export const XPAGE_MIROOOO_VARIANTS = {
@@ -90,6 +95,34 @@ export const XPAGE_BUNDLES = {
       headsVariant: XPAGE_VARIANTS.x2_heads,
       offeredQty: 4,
     },
+    buy1_protection: {
+      optionId: "a2f75d5a-fd80-4c75-a072-0272124c7476",
+      conditionId: "a2f75f87-d6e1-4910-88ed-bb9a62be7211",
+      offeredId: "a2f75f87-f16e-4dc9-9c41-4940e2558c66",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 1,
+    },
+    buy1_1head_protection: {
+      optionId: "a2f75d5a-91b9-45f8-9780-433802869c8e",
+      conditionId: "a2f75f88-2824-42d3-b3b8-96bdec2919fd",
+      offeredId: "a2f75f88-2fbe-444b-9bb6-5a44b8fd3690",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 2,
+    },
+    buy2_protection: {
+      optionId: "a2f75f84-dd5c-41a8-9016-d27713bce8d4",
+      conditionId: "a2f75f85-1d34-4064-a7ac-0f303a548fb2",
+      offeredId: "a2f75f84-e344-41d3-98a2-e29f79ae20d9",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 2,
+    },
+    buy3_protection: {
+      optionId: "a2f75f82-37a2-4465-8f28-edffa20e3f80",
+      conditionId: "a2f75f82-70af-49fa-a078-75808f447852",
+      offeredId: "a2f75f82-3d36-47d5-87dc-6c73699b221b",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 3,
+    },
     promoBuy1: {
       optionId: "a2d0d131-33fd-4d08-aadd-c56b2e8dc30d",
       conditionId: "a2e8badf-fa6c-412e-9ed0-8e2e35730e89",
@@ -131,6 +164,34 @@ export const XPAGE_BUNDLES = {
       offeredId: "a2e8bae1-4037-493b-a66c-b02cb7e1c65f",
       headsVariant: XPAGE_VARIANTS.x2_heads,
       offeredQty: 4,
+    },
+    promoBuy1_protection: {
+      optionId: "a2f75d5a-fd80-4c75-a072-0272124c7476",
+      conditionId: "a2f75f87-d6e1-4910-88ed-bb9a62be7211",
+      offeredId: "a2f75f87-f16e-4dc9-9c41-4940e2558c66",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 1,
+    },
+    promoBuy1_1head_protection: {
+      optionId: "a2f75d5a-91b9-45f8-9780-433802869c8e",
+      conditionId: "a2f75f88-2824-42d3-b3b8-96bdec2919fd",
+      offeredId: "a2f75f88-2fbe-444b-9bb6-5a44b8fd3690",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 2,
+    },
+    promoBuy2_protection: {
+      optionId: "a2f75f84-dd5c-41a8-9016-d27713bce8d4",
+      conditionId: "a2f75f85-1d34-4064-a7ac-0f303a548fb2",
+      offeredId: "a2f75f84-e344-41d3-98a2-e29f79ae20d9",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 2,
+    },
+    promoBuy3_protection: {
+      optionId: "a2f75f82-37a2-4465-8f28-edffa20e3f80",
+      conditionId: "a2f75f82-70af-49fa-a078-75808f447852",
+      offeredId: "a2f75f82-3d36-47d5-87dc-6c73699b221b",
+      headsVariant: XPAGE_VARIANTS.x2_heads,
+      offeredQty: 3,
     },
   },
   x1: {
@@ -301,7 +362,7 @@ function sanitizeHeaderValue(value: unknown): string {
  */
 export async function loadXpageSession(
   currency = "GBP",
-  product: "x1" | "x2" | "x1_heads" | "x2_heads" | "store" = "x2"
+  product: "x1" | "x2" | "x1_heads" | "x2_heads" | "store" | "package_protection" | "giftcard" = "x2"
 ) {
   const origin = product === "store" ? XPAGE_STORE_URL : XPAGE_LANDING_URLS[product];
   if (!origin) throw new Error("Unknown Miroooo XPage offer.");
@@ -340,7 +401,8 @@ export async function loadXpageSession(
 
   const csrfToken = html.match(/["']X-CSRF-Token["']:\s*["']([^"']+)["']/)?.[1] || "";
   const landingPageId = html.match(/orderData\.landing_page_id\s*=\s*["']([\da-f-]{36})["']/)?.[1] || "";
-  const expectedBundleId = product !== "store" ? (XPAGE_BUNDLES as any)[product]?.id : null;
+  const requiresBundle = product !== "store" && product !== "package_protection" && product !== "giftcard";
+  const expectedBundleId = requiresBundle ? (XPAGE_BUNDLES as any)[product]?.id : null;
   let bundle: any = null;
   if (expectedBundleId) {
     for (const match of html.matchAll(/\bx-data\s*=\s*(["'])([\s\S]*?)\1/g)) {
@@ -351,7 +413,7 @@ export async function loadXpageSession(
       } catch {}
     }
   }
-  if (product !== "store" && (!csrfToken || !landingPageId || bundle?.status !== "ACTIVE")) {
+  if (requiresBundle && (!csrfToken || !landingPageId || bundle?.status !== "ACTIVE")) {
     throw new Error("The published Miroooo XPage offer is unavailable.");
   }
   return {
@@ -389,8 +451,33 @@ export function mapCartToXpageVariants(cartLines: any[] = []) {
 
     let targetVariantId: string | null = null;
 
+    // 0. Gift card & Package protection mapping
+    if (
+      variantIdRaw === XPAGE_VARIANTS.gift_card ||
+      productIdRaw === "a2f687d2-56cd-4709-95a5-e6d280070c18" ||
+      handleRaw === "miroooo-gift-card" ||
+      idRaw.startsWith("miroooo-gift-card") ||
+      allText.includes(XPAGE_VARIANTS.gift_card) ||
+      allText.includes("a2f687d2-56cd-4709-95a5-e6d280070c18") ||
+      allText.includes("miroooo-gift-card") ||
+      allText.includes("gift card")
+    ) {
+      targetVariantId = XPAGE_VARIANTS.gift_card;
+    } else if (
+      variantIdRaw === XPAGE_VARIANTS.package_protection ||
+      productIdRaw === "a2f6dfa1-50ae-46c9-a88e-fdb563e124a2" ||
+      handleRaw === "miroooo-package-protection" ||
+      idRaw.startsWith("miroooo-package-protection") ||
+      allText.includes(XPAGE_VARIANTS.package_protection) ||
+      allText.includes("a2f6dfa1-50ae-46c9-a88e-fdb563e124a2") ||
+      allText.includes("miroooo-package-protection") ||
+      allText.includes("package protection") ||
+      allText.includes("shipping protection")
+    ) {
+      targetVariantId = XPAGE_VARIANTS.package_protection;
+    }
     // 1. Direct XPage Variant ID match
-    if (variantIdRaw === XPAGE_VARIANTS.x2_heads || allText.includes(XPAGE_VARIANTS.x2_heads)) {
+    else if (variantIdRaw === XPAGE_VARIANTS.x2_heads || allText.includes(XPAGE_VARIANTS.x2_heads)) {
       targetVariantId = XPAGE_VARIANTS.x2_heads;
     } else if (variantIdRaw === XPAGE_VARIANTS.x2_pink || allText.includes(XPAGE_VARIANTS.x2_pink)) {
       targetVariantId = XPAGE_VARIANTS.x2_pink;
@@ -536,6 +623,24 @@ export function mapCartToXpageVariants(cartLines: any[] = []) {
         targetVariantId = XPAGE_VARIANTS.x1_silver;
       }
     }
+    // 5. Miroooo Gift Card & Package Protection Mapping
+    else if (
+      variantIdRaw === XPAGE_VARIANTS.gift_card ||
+      productIdRaw === "a2f687d2-56cd-4709-95a5-e6d280070c18" ||
+      handleRaw === "miroooo-gift-card" ||
+      allText.includes("gift-card") ||
+      allText.includes("gift card")
+    ) {
+      targetVariantId = XPAGE_VARIANTS.gift_card;
+    } else if (
+      variantIdRaw === XPAGE_VARIANTS.package_protection ||
+      productIdRaw === "a2f6df9e-faf7-438b-a65a-da26ee25ce03" ||
+      handleRaw === "miroooo-package-protection" ||
+      allText.includes("package-protection") ||
+      allText.includes("package protection")
+    ) {
+      targetVariantId = XPAGE_VARIANTS.package_protection;
+    }
 
     if (!targetVariantId) throw new Error("Cart contains an unknown Miroooo product or variant.");
     if (targetVariantId) {
@@ -560,11 +665,54 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
   const brushCounts = { x1: 0, x2: 0 };
   const freeHeads = { x1: 0, x2: 0 };
   const paidHeads = { x1: 0, x2: 0 };
+  let hasPackageProtection = false;
 
   for (const line of cartLines) {
+    const lineId = String(line.id || "").toLowerCase();
+    const isFree = line.isFree === true || /(?:^|:)free(?:$|:)/i.test(lineId);
+
+    // Package protection lines do not invalidate bundle detection
+    if (
+      line.variant_id === XPAGE_VARIANTS.package_protection ||
+      line.variantId === XPAGE_VARIANTS.package_protection ||
+      line.productHandle === "miroooo-package-protection" ||
+      line.handle === "miroooo-package-protection" ||
+      lineId === "miroooo-package-protection" ||
+      lineId.startsWith("miroooo-package-protection")
+    ) {
+      hasPackageProtection = true;
+      continue;
+    }
+
+    // Gift card lines do not invalidate bundle detection
+    if (
+      line.variant_id === XPAGE_VARIANTS.gift_card ||
+      line.variantId === XPAGE_VARIANTS.gift_card ||
+      line.productHandle === "miroooo-gift-card" ||
+      line.handle === "miroooo-gift-card" ||
+      lineId === "miroooo-gift-card" ||
+      lineId.startsWith("miroooo-gift-card") ||
+      lineId === "miroooo-gift-card:free" ||
+      (isFree && (
+        String(line.productHandle || line.handle || "").toLowerCase() === "miroooo-gift-card" ||
+        String(line.variant_id || line.variantId || "").toLowerCase() === XPAGE_VARIANTS.gift_card.toLowerCase()
+      ))
+    ) {
+      continue;
+    }
+
     const mapped = mapCartToXpageVariants([line]);
     if (mapped.length !== 1) throw new Error("Could not identify a checkout item.");
     const { variant_id: variantId, quantity } = mapped[0];
+
+    if (variantId === XPAGE_VARIANTS.gift_card) {
+      continue;
+    }
+    if (variantId === XPAGE_VARIANTS.package_protection) {
+      hasPackageProtection = true;
+      continue;
+    }
+
     const family = (Object.entries({
       x1: [
         XPAGE_VARIANTS.x1_silver,
@@ -582,9 +730,13 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
       if (brushCounts[family] <= 3) brushes[family].push(...Array(quantity).fill(variantId));
       continue;
     }
-    const headFamily = variantId === XPAGE_VARIANTS.x1_heads ? "x1" : "x2";
-    const isFree = line.isFree === true || /(?:^|:)free(?:$|:)/i.test(String(line.id || ""));
-    (isFree ? freeHeads : paidHeads)[headFamily] += quantity;
+    if (variantId === XPAGE_VARIANTS.x1_heads || variantId === XPAGE_VARIANTS.x2_heads) {
+      const headFamily = variantId === XPAGE_VARIANTS.x1_heads ? "x1" : "x2";
+      (isFree ? freeHeads : paidHeads)[headFamily] += quantity;
+      continue;
+    }
+
+    return null;
   }
 
   if (brushCounts.x1 && brushCounts.x2) {
@@ -592,6 +744,9 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
   }
   const product = brushCounts.x1 ? "x1" : brushCounts.x2 ? "x2" : null;
   if (!product) {
+    if (hasPackageProtection) {
+      return null;
+    }
     if (brushCounts.x1 === 0 && brushCounts.x2 === 0) {
       if (paidHeads.x1 > 0 && paidHeads.x1 <= 3 && paidHeads.x2 === 0 && freeHeads.x1 === 0 && freeHeads.x2 === 0) {
         const bundleKey = paidHeads.x1 === 1 ? "buy1" : paidHeads.x1 === 2 ? "buy2" : "buy3";
@@ -639,32 +794,78 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
 
   let bundleKey: string | null = null;
 
-  if (quantity === 1) {
-    const total = freeHeadQty + paidHeadQty;
-    if (total <= 1) {
-      bundleKey = isPromo ? (product === "x2" ? "promoBuy1" : "promoBuy1_freehead") : (product === "x2" ? "buy1_freehead" : (freeHeadQty === 1 ? "buy1_freehead" : null));
-    } else if (total === 2) {
-      bundleKey = isPromo ? "promoBuy1_1head" : "buy1_1head";
-    } else {
+  if (product === "x2") {
+    if (quantity === 1) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 1) {
+        bundleKey = hasPackageProtection
+          ? (isPromo ? "promoBuy1_protection" : "buy1_protection")
+          : (isPromo ? "promoBuy1" : "buy1_freehead");
+      } else if (total === 2) {
+        bundleKey = hasPackageProtection
+          ? (isPromo ? "promoBuy1_1head_protection" : "buy1_1head_protection")
+          : (isPromo ? "promoBuy1_1head" : "buy1_1head");
+      } else {
+        return null;
+      }
+    } else if (quantity === 2) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 2) {
+        bundleKey = hasPackageProtection
+          ? (isPromo ? "promoBuy2_protection" : "buy2_protection")
+          : (isPromo ? "promoBuy2" : "buy2");
+      } else if (total === 3) {
+        bundleKey = hasPackageProtection
+          ? null
+          : (isPromo ? "promoBuy2_1head" : "buy2_1head");
+      } else {
+        return null;
+      }
+    } else if (quantity === 3) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 3) {
+        bundleKey = hasPackageProtection
+          ? (isPromo ? "promoBuy3_protection" : "buy3_protection")
+          : (isPromo ? "promoBuy3" : "buy3");
+      } else if (total === 4) {
+        bundleKey = hasPackageProtection
+          ? null
+          : (isPromo ? "promoBuy3_1head" : "buy3_1head");
+      } else {
+        return null;
+      }
+    }
+  } else if (product === "x1") {
+    if (hasPackageProtection) {
       return null;
     }
-  } else if (quantity === 2) {
-    const total = freeHeadQty + paidHeadQty;
-    if (total <= 2) {
-      bundleKey = isPromo ? "promoBuy2" : "buy2";
-    } else if (total === 3) {
-      bundleKey = isPromo ? "promoBuy2_1head" : "buy2_1head";
-    } else {
-      return null;
-    }
-  } else if (quantity === 3) {
-    const total = freeHeadQty + paidHeadQty;
-    if (total <= 3) {
-      bundleKey = isPromo ? "promoBuy3" : "buy3";
-    } else if (total === 4) {
-      bundleKey = isPromo ? "promoBuy3_1head" : "buy3_1head";
-    } else {
-      return null;
+    if (quantity === 1) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 1) {
+        bundleKey = isPromo ? "promoBuy1_freehead" : (freeHeadQty === 1 ? "buy1_freehead" : null);
+      } else if (total === 2) {
+        bundleKey = isPromo ? "promoBuy1_1head" : "buy1_1head";
+      } else {
+        return null;
+      }
+    } else if (quantity === 2) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 2) {
+        bundleKey = isPromo ? "promoBuy2" : "buy2";
+      } else if (total === 3) {
+        bundleKey = isPromo ? "promoBuy2_1head" : "buy2_1head";
+      } else {
+        return null;
+      }
+    } else if (quantity === 3) {
+      const total = freeHeadQty + paidHeadQty;
+      if (total <= 3) {
+        bundleKey = isPromo ? "promoBuy3" : "buy3";
+      } else if (total === 4) {
+        bundleKey = isPromo ? "promoBuy3_1head" : "buy3_1head";
+      } else {
+        return null;
+      }
     }
   }
 
@@ -743,7 +944,6 @@ function validatePublishedBundle(
     payload.offeredQty > 0
       ? selected?.offered?.find(
           (item: any) =>
-            item.quantity === payload.offeredQty &&
             item.product?.variants?.some((variant: any) => variant.id === payload.headsVariant)
         )
       : null;
@@ -765,11 +965,39 @@ function validatePublishedBundle(
     throw new Error("The published XPage bundle has changed; checkout was not created.");
   }
 
+  const offeredSelections: Record<string, string[]> = {};
+  if (Array.isArray(selected.offered)) {
+    for (const item of selected.offered) {
+      const prodId = (item.product?.id || item.product_id || "").toLowerCase();
+      const slug = (item.product?.slug || item.product?.handle || "").toLowerCase();
+      const isGiftCard =
+        prodId === "a2f687d2-56cd-4709-95a5-e6d280070c18" ||
+        slug === "miroooo-gift-card" ||
+        item.product?.variants?.some((v: any) => v.id === XPAGE_VARIANTS.gift_card) ||
+        (item.product?.name || "").toLowerCase().includes("gift card");
+      const isPackageProtection =
+        prodId === "a2f6df9e-faf7-438b-a65a-da26ee25ce03" ||
+        slug === "miroooo-package-protection" ||
+        item.product?.variants?.some((v: any) => v.id === XPAGE_VARIANTS.package_protection) ||
+        (item.product?.name || "").toLowerCase().includes("package protection");
+
+      if (isPackageProtection) {
+        offeredSelections[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.package_protection);
+      } else if (isGiftCard) {
+        offeredSelections[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.gift_card);
+      } else {
+        offeredSelections[item.id] = Array(item.quantity).fill(payload.headsVariant);
+      }
+    }
+  } else if (offered) {
+    offeredSelections[offered.id] = Array(payload.offeredQty).fill(payload.headsVariant);
+  }
+
   return {
     bundle_option_id: selected.id,
     bundle_selected_variants: {
       conditions: { [condition.id]: chosen },
-      offered: offered ? { [offered.id]: Array(payload.offeredQty).fill(payload.headsVariant) } : {},
+      offered: offeredSelections,
     },
   };
 }
