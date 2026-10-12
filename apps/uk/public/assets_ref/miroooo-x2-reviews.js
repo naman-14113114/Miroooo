@@ -74,7 +74,7 @@
       video: {
         src: '/assets_ref/x2/qb81f4-h264-hd.mp4',
         poster: '/assets_ref/x2/qb81f4-poster.webp',
-        loopSrc: '/assets_ref/x2/qb81f4-review-loop.mp4'
+        loopSrc: '/assets_ref/x2/qb81f4-review-loop.mp4?v=7s'
       },
       images: [],
       helpful: 92,

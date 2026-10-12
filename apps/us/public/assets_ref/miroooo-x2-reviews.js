@@ -68,7 +68,8 @@
       body: 'Everything about this package is top notch. The magnetic box it comes in is super clean, and the included travel capsule fits right into my makeup bag without taking up space. The USB-C charging means I don\'t have to carry a separate brick when I go on trips. Used the Miroooo X2 by Miroooo this morning and my teeth feel polished. You get way more value here than buying the overpriced brand names.',
       video: {
         src: '/assets_ref/x2/qb81f4-h264-hd.mp4',
-        poster: '/assets_ref/x2/qb81f4-poster.webp'
+        poster: '/assets_ref/x2/qb81f4-poster.webp',
+        loopSrc: '/assets_ref/x2/qb81f4-review-loop.mp4?v=7s'
       },
       images: [],
       helpful: 92,
@@ -1039,18 +1040,40 @@
       .join('')
       .toUpperCase();
 
-    // Video HTML on Review Card (Poster thumbnail + centered play badge)
+    // Video HTML on Review Card (Poster thumbnail or autoplaying looping preview + centered play badge)
     let videoHTML = '';
     if (review.video) {
       const posterSrc = typeof review.video === 'object' && review.video.poster ? review.video.poster : '/assets_ref/x2/qb81f4-poster.webp';
-      videoHTML = `
-        <div class="miroooo-card-video-wrap" data-review-id="${review.id}">
-          <img src="${posterSrc}" alt="Customer unboxing video by ${review.name}" class="miroooo-card-video-thumb" />
-          <div class="miroooo-video-play-badge" aria-label="Play unboxing video">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      const loopSrc = typeof review.video === 'object' && review.video.loopSrc ? review.video.loopSrc : null;
+      if (loopSrc) {
+        videoHTML = `
+          <div class="miroooo-card-video-wrap" data-review-id="${review.id}">
+            <video
+              src="${loopSrc}"
+              poster="${posterSrc}"
+              class="miroooo-card-video-thumb"
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="auto"
+              style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; pointer-events: none;"
+            ></video>
+            <div class="miroooo-video-play-badge" aria-label="Play unboxing video">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      } else {
+        videoHTML = `
+          <div class="miroooo-card-video-wrap" data-review-id="${review.id}">
+            <img src="${posterSrc}" alt="Customer unboxing video by ${review.name}" class="miroooo-card-video-thumb" />
+            <div class="miroooo-video-play-badge" aria-label="Play unboxing video">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        `;
+      }
     }
 
     // Gallery HTML
@@ -1376,6 +1399,13 @@
 
     // Attach Event Listeners to Card Action Elements
     attachCardListeners(visibleList);
+
+    // Autoplay looping preview videos on DOM insert
+    const thumbVideos = gridEl.querySelectorAll('video.miroooo-card-video-thumb');
+    thumbVideos.forEach(vid => {
+      vid.muted = true;
+      vid.play().catch(() => {});
+    });
 
     // Update Load More Button & Counter
     const paginationContainer = document.getElementById('miroooo-pagination-container');
