@@ -1586,15 +1586,15 @@ body:has(.product-form__submit) .site-footer__bottom,
 [data-page="product-x2"] .site-footer__bottom,
 [data-page="product-x1-heads"] .site-footer__bottom,
 [data-page="product-x2-heads"] .site-footer__bottom {
-  padding: 28px 0 120px !important;
-  padding-bottom: 120px !important;
+  padding: 28px 0 70px !important;
+  padding-bottom: 70px !important;
 }
 
 body:has(.product) #shopify-section-sections--24203576869209__footer-copyright,
 body:has(.product) .footer-copyright,
 .template-product #shopify-section-sections--24203576869209__footer-copyright,
 .template-product .footer-copyright {
-  padding-bottom: 130px !important;
+  padding-bottom: 70px !important;
 }
 
 @media (max-width: 900px) {
@@ -1667,8 +1667,8 @@ body:has(.product) .footer-copyright,
   [data-page="product-x2"] .site-footer__bottom,
   [data-page="product-x1-heads"] .site-footer__bottom,
   [data-page="product-x2-heads"] .site-footer__bottom {
-    padding: 24px 0 120px !important;
-    padding-bottom: 120px !important;
+    padding: 24px 0 68px !important;
+    padding-bottom: 68px !important;
   }
 
   .site-footer__payments {

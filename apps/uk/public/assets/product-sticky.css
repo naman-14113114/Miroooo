@@ -1,6 +1,7 @@
-.miroooo-sticky-cart-wrap {
+.miroooo-sticky-cart-wrap,
+body .miroooo-sticky-cart-wrap {
         position: fixed !important;
-        bottom: 14px !important;
+        bottom: 5px !important;
         left: 12px !important;
         right: 12px !important;
         z-index: 40 !important;
@@ -27,17 +28,17 @@
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
-        gap: 16px !important;
+        gap: 14px !important;
         width: 100% !important;
         max-width: 850px !important;
-        min-height: 72px !important;
-        padding: 8px 12px 8px 16px !important;
+        min-height: 52px !important;
+        padding: 4px 10px 4px 16px !important;
         border-radius: 9999px !important;
         background: rgba(14, 15, 15, 0.94) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
         border: 1px solid rgba(255, 255, 255, 0.16) !important;
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
         box-sizing: border-box !important;
       }
       .miroooo-sticky-left {
@@ -47,8 +48,8 @@
         min-width: 0 !important;
       }
       .miroooo-sticky-img-wrap {
-        width: 54px !important;
-        height: 54px !important;
+        width: 44px !important;
+        height: 44px !important;
         border-radius: 50% !important;
         overflow: hidden !important;
         flex-shrink: 0 !important;
@@ -71,8 +72,8 @@
       }
       .miroooo-sticky-img-thumb {
         position: relative !important;
-        width: 50px !important;
-        height: 50px !important;
+        width: 42px !important;
+        height: 42px !important;
         border-radius: 50% !important;
         overflow: hidden !important;
         flex-shrink: 0 !important;
@@ -85,7 +86,7 @@
         transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease !important;
       }
       .miroooo-sticky-img-thumb:not(:first-child) {
-        margin-left: -16px !important;
+        margin-left: -14px !important;
       }
       .miroooo-sticky-img-thumb img {
         width: 100% !important;
@@ -100,7 +101,7 @@
         justify-content: center !important;
       }
       .miroooo-sticky-title {
-        font-size: 0.98rem !important;
+        font-size: 0.94rem !important;
         font-weight: 700 !important;
         color: #ffffff !important;
         margin: 0 !important;
@@ -110,9 +111,9 @@
         white-space: nowrap !important;
       }
       .miroooo-sticky-sub {
-        font-size: 0.84rem !important;
+        font-size: 0.8rem !important;
         color: rgba(255, 255, 255, 0.7) !important;
-        margin: 3px 0 0 0 !important;
+        margin: 2px 0 0 0 !important;
         line-height: 1.2 !important;
         display: flex !important;
         align-items: center !important;
@@ -139,21 +140,25 @@
         }
       }
       .miroooo-sticky-btn,
-      #sticky-bar-cta-btn {
+      #sticky-bar-cta-btn,
+      .miroooo-sticky-pill #sticky-bar-cta-btn,
+      .miroooo-sticky-pill .miroooo-sticky-btn,
+      #sticky-bar-cta-btn.button {
         position: relative !important;
         overflow: hidden !important;
         isolation: isolate !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        min-height: 48px !important;
-        padding: 0 28px !important;
+        min-height: 42px !important;
+        height: 42px !important;
+        padding: 0 22px !important;
         border-radius: 9999px !important;
         background: #ffffff !important;
         background-color: #ffffff !important;
         color: #000000 !important;
         font-weight: 700 !important;
-        font-size: 0.95rem !important;
+        font-size: 0.9rem !important;
         border: 2px solid #ffffff !important;
         cursor: pointer !important;
         flex-shrink: 0 !important;
@@ -260,27 +265,206 @@
       #sticky-bar-cta-btn:hover .miroooo-sticky-bag-icon {
         animation: miroooo-cart-bounce 1.6s ease-in-out infinite !important;
       }
-      @media (max-width: 640px) {
-        .miroooo-sticky-cart-wrap {
-          bottom: 8px !important;
+      @media (max-width: 768px) {
+        .miroooo-sticky-cart-wrap,
+        body .miroooo-sticky-cart-wrap {
+          bottom: 4px !important;
           left: 8px !important;
           right: 8px !important;
         }
         .miroooo-sticky-pill {
-          min-height: 52px !important;
-          padding: 6px 8px !important;
+          min-height: 42px !important;
+          padding: 3px 6px !important;
           border-radius: 9999px !important;
         }
         .miroooo-sticky-pill .miroooo-sticky-left {
           display: none !important;
         }
-        .miroooo-sticky-pill #sticky-bar-cta-btn {
+        .miroooo-sticky-pill #sticky-bar-cta-btn,
+        .miroooo-sticky-pill .miroooo-sticky-btn {
           width: 100% !important;
           max-width: none !important;
           min-width: 0 !important;
           flex: 1 1 auto !important;
-          min-height: 44px !important;
+          min-height: 38px !important;
+          height: 38px !important;
           padding: 0 8px !important;
-          font-size: clamp(0.7rem, 3.2vw, 0.9rem) !important;
+          font-size: clamp(0.7rem, 3.2vw, 0.88rem) !important;
         }
       }
+
+      /* ----------------------------------------------------
+         MIROOOO TOP STICKY SECTION NAV (OVAL PILL)
+         ---------------------------------------------------- */
+      .miroooo-sticky-nav-wrap,
+      body .miroooo-sticky-nav-wrap {
+        position: fixed !important;
+        top: 5px !important;
+        left: 12px !important;
+        right: 12px !important;
+        z-index: 45 !important;
+        pointer-events: none !important;
+        display: flex !important;
+        justify-content: center !important;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
+        transform: translateY(calc(-100% - 24px)) !important;
+        opacity: 0 !important;
+      }
+
+      body.overflow-hidden .miroooo-sticky-nav-wrap,
+      body.cart-drawer-open .miroooo-sticky-nav-wrap,
+      body.nav-open .miroooo-sticky-nav-wrap,
+      body.gallery-open .miroooo-sticky-nav-wrap {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateY(calc(-100% - 24px)) !important;
+      }
+
+      .miroooo-sticky-nav-wrap.is-visible {
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+      }
+
+      .miroooo-sticky-nav-pill {
+        pointer-events: auto !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        max-width: min(920px, calc(100vw - 24px)) !important;
+        min-height: 38px !important;
+        padding: 3px 6px 3px 14px !important;
+        border-radius: 9999px !important;
+        background: #e6e6e6 !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+        box-sizing: border-box !important;
+      }
+
+      .miroooo-sticky-nav-label {
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        color: rgba(0, 0, 0, 0.45) !important;
+        padding-right: 4px !important;
+        user-select: none !important;
+        flex-shrink: 0 !important;
+        font-family: inherit !important;
+      }
+
+      .miroooo-sticky-nav-track {
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        overflow-x: auto !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        padding: 1px 0 !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      .miroooo-sticky-nav-track::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      .miroooo-sticky-nav-item {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 4px 12px !important;
+        min-height: 28px !important;
+        border-radius: 9999px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.04em !important;
+        text-transform: uppercase !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
+        border: 1px solid rgba(255, 255, 255, 0.85) !important;
+        background: rgba(255, 255, 255, 0.45) !important;
+        color: #000000 !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        user-select: none !important;
+        outline: none !important;
+        line-height: 1 !important;
+        font-family: inherit !important;
+        text-decoration: none !important;
+      }
+
+      .miroooo-sticky-nav-item:hover {
+        color: #000000 !important;
+        border-color: #ffffff !important;
+        background: #ffffff !important;
+        transform: translateY(-1px) !important;
+      }
+
+      .miroooo-sticky-nav-item:active {
+        transform: scale(0.96) !important;
+      }
+
+      .miroooo-sticky-nav-item.is-active {
+        background: #000000 !important;
+        color: #ffffff !important;
+        border-color: #000000 !important;
+        font-weight: 700 !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
+        transform: none !important;
+      }
+
+      @media (max-width: 768px) {
+        .miroooo-sticky-nav-wrap,
+        body .miroooo-sticky-nav-wrap {
+          top: 4px !important;
+          left: 8px !important;
+          right: 8px !important;
+        }
+        .miroooo-sticky-nav-pill {
+          min-height: 32px !important;
+          padding: 2px 4px 2px 8px !important;
+          gap: 3px !important;
+        }
+        .miroooo-sticky-nav-label {
+          font-size: 9.5px !important;
+          padding-right: 2px !important;
+        }
+        .miroooo-sticky-nav-item {
+          font-size: 9.5px !important;
+          padding: 3px 8px !important;
+        }
+      }
+
+      /* Scoped bottom padding for footer to accommodate compact sticky add to cart bar without overlap */
+      body:has(.product) .site-footer__bottom,
+      body:has([id*="main-product"]) .site-footer__bottom,
+      body:has(.product-sticky-form) .site-footer__bottom,
+      body:has(.product-form__submit) .site-footer__bottom,
+      .template-product .site-footer__bottom,
+      [data-page="product-x"] .site-footer__bottom,
+      [data-page="product-x2"] .site-footer__bottom,
+      [data-page="product-x1-heads"] .site-footer__bottom,
+      [data-page="product-x2-heads"] .site-footer__bottom,
+      .product-page-root ~ footer .site-footer__bottom,
+      body:has(.product-page-root) .site-footer__bottom {
+        padding: 28px 0 70px !important;
+        padding-bottom: 70px !important;
+      }
+
+      @media (max-width: 768px) {
+        body:has(.product) .site-footer__bottom,
+        body:has([id*="main-product"]) .site-footer__bottom,
+        body:has(.product-sticky-form) .site-footer__bottom,
+        body:has(.product-form__submit) .site-footer__bottom,
+        .template-product .site-footer__bottom,
+        [data-page="product-x"] .site-footer__bottom,
+        [data-page="product-x2"] .site-footer__bottom,
+        [data-page="product-x1-heads"] .site-footer__bottom,
+        [data-page="product-x2-heads"] .site-footer__bottom,
+        .product-page-root ~ footer .site-footer__bottom,
+        body:has(.product-page-root) .site-footer__bottom {
+          padding: 24px 0 68px !important;
+          padding-bottom: 68px !important;
+        }
+      }
+

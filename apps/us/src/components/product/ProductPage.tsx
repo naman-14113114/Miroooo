@@ -21,6 +21,7 @@ import { X1TriCleaningModes } from './X1TriCleaningModes';
 import { BrushStylePrecision } from './BrushStylePrecision';
 import { DiscoverOralHygiene } from './DiscoverOralHygiene';
 import { LuxuriousProfessionalism } from './LuxuriousProfessionalism';
+import { ProductStickyNav } from './ProductStickyNav';
 
 interface ProductPageProps {
   handle: string;
@@ -55,8 +56,16 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: Pr
 
   return (
     <main className={`product-page-root ${isX2 ? 'x2-product-page' : 'x1-product-page'} bg-[#080909] min-h-screen text-white`}>
+      {/* 0. Top Fixed Section Navigation (Oval Pill Header) */}
+      <ProductStickyNav isX2={isX2} />
+
       {/* 1. Main Product Hero & Buy Box */}
-      <ProductHero product={product} initialColor={initialColor} onColorChange={setSelectedColor} isSimpleBuybox={isSimpleBuybox} />
+      <ProductHero
+        product={product}
+        initialColor={initialColor}
+        onColorChange={setSelectedColor}
+        isSimpleBuybox={isSimpleBuybox}
+      />
 
       <ShippingMarquee />
 
