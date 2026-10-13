@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
-import { PolicyPage } from "@/components/policies/PolicyPage";
+import { OrderTracking } from "@/components/pages/OrderTracking";
 
 export const metadata: Metadata = {
-  title: "Shipping and Delivery Policy | Miroooo UK",
+  title: "Order Tracking | Miroooo UK",
   description:
-    "Read processing, delivery and tracking guidance for Miroooo UK orders.",
-  alternates: { canonical: "https://www.trymiroooo.com/pages/order-tracking" },
+    "Track your Miroooo sonic electric toothbrush order in real-time. Enter your tracking number or order number for up-to-date delivery progress.",
+  alternates: {
+    canonical: "https://www.trymiroooo.com/pages/order-tracking",
+  },
+  openGraph: {
+    title: "Order Tracking | Miroooo UK",
+    description:
+      "Track your Miroooo sonic electric toothbrush order in real-time. Enter your tracking number or order number for up-to-date delivery progress.",
+    url: "https://www.trymiroooo.com/pages/order-tracking",
+  },
 };
 
 export default function Page() {
-  return <PolicyPage slug="shipping-policy" />;
+  return <OrderTracking />;
 }

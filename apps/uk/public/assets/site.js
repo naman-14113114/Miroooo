@@ -667,6 +667,7 @@ ${tickerItemSet.repeat(12)}
                 <li><a href="/pages/about-us">About Us</a></li>
                 <li><a href="/guides">Oral Care Guides</a></li>
                 <li><a href="/pages/faqs">FAQs</a></li>
+                <li><a href="/pages/order-tracking">Order Tracking</a></li>
                 <li><a href="/policies/cookies-policy">Cookies Policy</a></li>
               </ul>
             </div>

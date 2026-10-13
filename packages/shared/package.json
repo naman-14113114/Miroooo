@@ -10,7 +10,8 @@
     "./xpage": "./src/xpage.ts",
     "./reviews": "./src/reviews.ts",
     "./attribution": "./src/attribution.ts",
-    "./guides": "./src/guides.ts"
+    "./guides": "./src/guides.ts",
+    "./order-tracking": "./src/order-tracking.ts"
   },
   "scripts": {
     "lint": "eslint src --max-warnings=0",

@@ -65,6 +65,8 @@ const nextConfig: NextConfig = {
       { source: "/order-tracking", destination: "/pages/order-tracking", permanent: true },
       { source: "/tracking", destination: "/pages/order-tracking", permanent: true },
       { source: "/pages/tracking", destination: "/pages/order-tracking", permanent: true },
+      { source: "/track", destination: "/pages/order-tracking", permanent: true },
+      { source: "/policies/order-tracking", destination: "/pages/order-tracking", permanent: true },
     ];
   },
   async headers() {

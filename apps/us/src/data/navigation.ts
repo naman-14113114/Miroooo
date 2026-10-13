@@ -125,7 +125,7 @@ export const FOOTER_NAV = {
     links: [
       { label: 'Help & FAQs', href: '/pages/faqs' },
       { label: 'Contact Support', href: '/pages/contact-us' },
-      { label: 'Track Your Order', href: '/pages/order-tracking' },
+      { label: 'Order Tracking', href: '/pages/order-tracking' },
       { label: 'Shipping Policy', href: '/policies/shipping-policy' },
       { label: 'Delivery & Returns', href: '/policies/delivery-returns' },
       { label: 'Return Policy (30-Day)', href: '/policies/return-policy' },

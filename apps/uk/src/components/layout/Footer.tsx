@@ -104,6 +104,7 @@ export function Footer() {
               <li><Link href="/pages/about-us">About Us</Link></li>
               <li><Link href="/guides">Oral Care Guides</Link></li>
               <li><Link href="/pages/faqs">FAQs</Link></li>
+              <li><Link href="/pages/order-tracking">Order Tracking</Link></li>
               <li><Link href="/policies/cookies-policy">Cookies Policy</Link></li>
             </ul>
           </div>
