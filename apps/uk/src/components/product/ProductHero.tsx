@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { AnimatedIcon } from '@/components/ui/AnimatedIcon';
-import { x1Gallery } from '@/data/x1Gallery';
+import { x1Gallery, x1GalleryMirooooX1 } from '@/data/x1Gallery';
 import { x2Gallery } from '@/data/x2Gallery';
 import { ProductAccordions } from './ProductAccordions';
 import { Product } from '@/data/products';
@@ -16,6 +16,7 @@ interface ProductHeroProps {
   initialColor?: string;
   onColorChange?: (color: string) => void;
   isSimpleBuybox?: boolean;
+  isMirooooX1Route?: boolean;
 }
 
 interface InfographicBadge {
@@ -41,6 +42,7 @@ export function ProductHero({
   initialColor = 'Silver',
   onColorChange,
   isSimpleBuybox = false,
+  isMirooooX1Route = false,
 }: ProductHeroProps) {
   const router = useRouter();
   const { addItem, addBundle } = useCart();
@@ -71,6 +73,7 @@ export function ProductHero({
   const [deliveryCountdown, setDeliveryCountdown] = useState('14:38');
   const [deliveryDateStr, setDeliveryDateStr] = useState('Friday 21 Aug');
 
+  const heroSectionRef = useRef<HTMLDivElement | null>(null);
   const heroCtaRef = useRef<HTMLButtonElement | null>(null);
   const navRef = useRef<HTMLDivElement | null>(null);
   const touchStartXRef = useRef<number>(0);
@@ -118,11 +121,12 @@ export function ProductHero({
     setActiveMediaIndex(0);
   };
 
-  // Sticky Bar Scroll Observer
+  // Sticky Bar Scroll Observer: appears only after the whole first section (main product hero) ends
   useEffect(() => {
     const handleScroll = () => {
-      if (!heroCtaRef.current) return;
-      const rect = heroCtaRef.current.getBoundingClientRect();
+      const targetEl = heroSectionRef.current || document.getElementById('shopify-section-template--24203751129433__main-product');
+      if (!targetEl) return;
+      const rect = targetEl.getBoundingClientRect();
       if (rect.bottom < 0) {
         setIsStickyVisible(true);
       } else {
@@ -431,7 +435,8 @@ export function ProductHero({
   };
 
   const getX1Slides = (): GallerySlide[] => {
-    const variant = x1Gallery[selectedColor as keyof typeof x1Gallery] || x1Gallery.Pink;
+    const gallerySource = isMirooooX1Route ? x1GalleryMirooooX1 : x1Gallery;
+    const variant = gallerySource[selectedColor as keyof typeof gallerySource] || gallerySource.Pink;
     return variant.images.map((src, index): GallerySlide => {
       const isVideo = src.endsWith('.mp4');
       const thumb = variant.thumbnails[index];
@@ -439,44 +444,102 @@ export function ProductHero({
       let badge: GallerySlide['badge'] | undefined;
       let isModesBadge = false;
 
-      if (src.includes('Pink-2.webp') || src.includes('Grey-2.webp') || src.includes('Silver-1.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
-          title: 'Whisper-Quiet<br>Operation',
-          sub: 'Sub-50dB Acoustic<br>Sonic Motor',
-        };
-      } else if (src.includes('luxury-travel-case-lifestyle.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
-          title: 'Ultra<br>Lightweight (51g)',
-          sub: 'Travel-Friendly Slim Case',
-        };
-      } else if (src.includes('Pink-4.webp') || src.includes('Grey-8.webp') || src.includes('Silver-2.webp')) {
-        isModesBadge = true;
-      } else if (src.includes('Grey-4.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--top-left',
-          title: 'Aerospace<br>Aluminium Body',
-          sub: 'Precision CNC<br>Anodized Unibody',
-        };
-      } else if (src.includes('Pink-5.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
-          title: 'IPX7 100% Waterproof',
-          sub: 'Shower-Safe & Fully Submersible',
-        };
-      } else if (src.includes('Grey-5.webp') || src.includes('Silver-3.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
-          title: 'IPX7 100% Waterproof',
-          sub: 'Shower-Safe & Fully Submersible',
-        };
-      } else if (src.includes('Pink-8.webp') || src.includes('Silver-11.webp')) {
-        badge = {
-          pos: 'miroooo-infographic-badge--top-left',
-          title: 'DuPont™<br>Precision Bristles',
-          sub: 'End-Rounded For<br>Gentle Enamel Care',
-        };
+      if (isMirooooX1Route) {
+        if (src.includes('luxury-travel-case-lifestyle.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+            title: 'Free Luxury<br>Travel Case',
+            sub: 'Travel-Friendly Slim Case<br>Included For On-The-Go Care',
+          };
+        } else if (src.includes('Silver-3.webp') || src.includes('Pink-5.webp') || src.includes('Grey-5.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
+            title: 'IPX7 100% Waterproof',
+            sub: 'Shower-Safe & Fully Submersible',
+          };
+        } else if (
+          src.includes('fast-charging-dock.webp') ||
+          src.includes('White-toothbrush-with-subtle-MIROOOO-dock-logo.webp') ||
+          src.includes('charging-dock')
+        ) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left',
+            title: 'USB-C Fast<br>Charging',
+            sub: 'Full 2-Hour Quick Charge<br>Universal Type-C Port',
+          };
+        } else if (src.includes('Hand-Holding-Branded-Silver-Toothbrush.webp') || src.includes('Pink-hero.webp') || src.includes('Grey-hero.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: '60-Day Battery<br>Life',
+            sub: '2 Full Months Power<br>On A Single Charge',
+          };
+        } else if (src.includes('smart-pressure-sensor.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: 'Smart Pressure Sensor',
+            sub: 'Intelligent Microchip Protects Gums',
+          };
+        } else if (src.includes('whisper-quiet-acoustic-motor.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: 'Whisper-Quiet<br>Operation',
+            sub: 'Sub-45dB Acoustic<br>Sonic Motor',
+          };
+        } else if (src.includes('Silver-11.webp') || src.includes('Pink-8.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left max-w-[160px]',
+            title: 'DuPont™<br>Precision<br>Bristles',
+            sub: 'End-Rounded For<br>Gentle Enamel Care',
+          };
+        } else if (src.includes('3-cleaning-modes.webp')) {
+          isModesBadge = true;
+        } else if (src.includes('aerospace-aluminium-body.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
+            title: 'Aerospace<br>Aluminium Body',
+            sub: 'Precision CNC<br>Anodized Unibody',
+          };
+        }
+      } else {
+        if (src.includes('Pink-2.webp') || src.includes('Grey-2.webp') || src.includes('Silver-1.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+            title: 'Whisper-Quiet<br>Operation',
+            sub: 'Sub-50dB Acoustic<br>Sonic Motor',
+          };
+        } else if (src.includes('luxury-travel-case-lifestyle.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+            title: 'Ultra<br>Lightweight (51g)',
+            sub: 'Travel-Friendly Slim Case',
+          };
+        } else if (src.includes('Pink-4.webp') || src.includes('Grey-8.webp') || src.includes('Silver-2.webp')) {
+          isModesBadge = true;
+        } else if (src.includes('Grey-4.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left',
+            title: 'Aerospace<br>Aluminium Body',
+            sub: 'Precision CNC<br>Anodized Unibody',
+          };
+        } else if (src.includes('Pink-5.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: 'IPX7 100% Waterproof',
+            sub: 'Shower-Safe & Fully Submersible',
+          };
+        } else if (src.includes('Grey-5.webp') || src.includes('Silver-3.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
+            title: 'IPX7 100% Waterproof',
+            sub: 'Shower-Safe & Fully Submersible',
+          };
+        } else if (src.includes('Pink-8.webp') || src.includes('Silver-11.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left',
+            title: 'DuPont™<br>Precision Bristles',
+            sub: 'End-Rounded For<br>Gentle Enamel Care',
+          };
+        }
       }
 
       return {
@@ -548,7 +611,7 @@ export function ProductHero({
   };
 
   return (
-    <div id="shopify-section-template--24203751129433__main-product" className="shopify-section">
+    <div ref={heroSectionRef} id="shopify-section-template--24203751129433__main-product" className="shopify-section">
       <div className="section section--padding section--rounded relative">
         <div className="page-width relative">
           <div id="miroooo-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
@@ -730,10 +793,16 @@ export function ProductHero({
                                   </div>
                                 ) : null}
                                 {slide.isModesBadge && (
-                                  <div className="miroooo-infographic-badge miroooo-infographic-badge--top-left">
+                                  <div
+                                    className={`miroooo-infographic-badge ${
+                                      isMirooooX1Route
+                                        ? 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white'
+                                        : 'miroooo-infographic-badge--top-left'
+                                    }`}
+                                  >
                                     <div className="miroooo-infographic-badge__header">
                                       <span className="miroooo-infographic-badge__title">
-                                        {isX2 ? (
+                                        {isX2 || isMirooooX1Route ? (
                                           <>3 Tailored<br />Clean Modes</>
                                         ) : (
                                           <>3 Cleaning<br />Modes</>
@@ -743,15 +812,15 @@ export function ProductHero({
                                     <div className="miroooo-infographic-modes">
                                       <div className="miroooo-infographic-mode-item">
                                         <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--purple" aria-hidden="true"></span>
-                                        <span className="miroooo-infographic-mode-text">{isX2 ? 'Standard' : 'Clean'}</span>
+                                        <span className="miroooo-infographic-mode-text">{isX2 || isMirooooX1Route ? 'Standard' : 'Clean'}</span>
                                       </div>
                                       <div className="miroooo-infographic-mode-item">
                                         <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--blue" aria-hidden="true"></span>
-                                        <span className="miroooo-infographic-mode-text">{isX2 ? 'Whitening' : 'Soft'}</span>
+                                        <span className="miroooo-infographic-mode-text">{isX2 || isMirooooX1Route ? 'Whitening' : 'Soft'}</span>
                                       </div>
                                       <div className="miroooo-infographic-mode-item">
                                         <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--green" aria-hidden="true"></span>
-                                        <span className="miroooo-infographic-mode-text">{isX2 ? 'Deep Clean' : 'White'}</span>
+                                        <span className="miroooo-infographic-mode-text">{isX2 || isMirooooX1Route ? 'Deep Clean' : 'White'}</span>
                                       </div>
                                     </div>
                                   </div>
@@ -1574,10 +1643,16 @@ export function ProductHero({
                     </div>
                   ) : null}
                   {gallerySlides[activeMediaIndex].isModesBadge && !isLightboxZoomed && (
-                    <div className="miroooo-infographic-badge miroooo-infographic-badge--top-left">
+                    <div
+                      className={`miroooo-infographic-badge ${
+                        isMirooooX1Route
+                          ? 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white'
+                          : 'miroooo-infographic-badge--top-left'
+                      }`}
+                    >
                       <div className="miroooo-infographic-badge__header">
                         <span className="miroooo-infographic-badge__title">
-                          {isX2 ? (
+                          {isX2 || isMirooooX1Route ? (
                             <>3 Tailored<br />Clean Modes</>
                           ) : (
                             <>3 Cleaning<br />Modes</>
@@ -1587,15 +1662,15 @@ export function ProductHero({
                       <div className="miroooo-infographic-modes">
                         <div className="miroooo-infographic-mode-item">
                           <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--purple" aria-hidden="true"></span>
-                          <span className="miroooo-infographic-mode-text">{isX2 ? 'Standard' : 'Clean'}</span>
+                          <span className="miroooo-infographic-mode-text">{isX2 || isMirooooX1Route ? 'Standard' : 'Clean'}</span>
                         </div>
                         <div className="miroooo-infographic-mode-item">
                           <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--blue" aria-hidden="true"></span>
-                          <span className="miroooo-infographic-mode-text">{isX2 ? 'Whitening' : 'Soft'}</span>
+                          <span className="miroooo-infographic-mode-text">{isX2 || isMirooooX1Route ? 'Whitening' : 'Soft'}</span>
                         </div>
                         <div className="miroooo-infographic-mode-item">
                           <span className="miroooo-infographic-mode-ring miroooo-infographic-mode-ring--green" aria-hidden="true"></span>
-                          <span className="miroooo-infographic-mode-text">{isX2 ? 'Deep Clean' : 'White'}</span>
+                          <span className="miroooo-infographic-mode-text">{isX2 || isMirooooX1Route ? 'Deep Clean' : 'White'}</span>
                         </div>
                       </div>
                     </div>

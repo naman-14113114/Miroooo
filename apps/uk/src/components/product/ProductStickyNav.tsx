@@ -10,7 +10,8 @@ interface NavSection {
 }
 
 const X2_DESKTOP_SECTIONS: NavSection[] = [
-  { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-x2-customer-stories', altTargetId: 'x2-section-energy-boost-split' },
+  { id: 'stories', label: 'Customer Stories', targetId: 'shopify-section-template--miroooo-x2-customer-stories' },
+  { id: 'description', label: 'Description', targetId: 'x2-section-energy-boost-split' },
   { id: 'modes', label: 'Modes', targetId: 'shopify-section-template--miroooo-x2-modes-swipe' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-comparison' },
@@ -31,8 +32,9 @@ const X2_MOBILE_SECTIONS: NavSection[] = [
 ];
 
 const X1_DESKTOP_SECTIONS: NavSection[] = [
-  { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroshine-reels-container' },
+  { id: 'customer-videos', label: 'Real Customer Video', targetId: 'shopify-section-template--miroshine-reels-container' },
   { id: 'modes', label: 'Modes', targetId: 'shopify-section-template--24203751129433__video_with_text_BkMKDR' },
+  { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-brush-style-precision' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-comparison' },
   { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
@@ -40,9 +42,9 @@ const X1_DESKTOP_SECTIONS: NavSection[] = [
 ];
 
 const X1_MOBILE_SECTIONS: NavSection[] = [
-  { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroshine-reels-container' },
+  { id: 'customer-videos', label: 'Real Customer Video', targetId: 'shopify-section-template--miroshine-reels-container' },
   { id: 'modes', label: 'Modes', targetId: 'shopify-section-template--24203751129433__video_with_text_BkMKDR' },
-  { id: 'style', label: 'Style', targetId: 'shopify-section-template--miroooo-brush-style-precision' },
+  { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-brush-style-precision' },
   { id: 'travel', label: 'Travel', targetId: 'shopify-section-template--miroooo-discover-oral-hygiene' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-comparison' },
