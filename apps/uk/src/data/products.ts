@@ -678,7 +678,7 @@ export const PRODUCTS: Record<string, Product> = {
     headline: 'Official Miroooo Digital Gift Card.',
     subtitle: 'Digital gift card delivered instantly via email.',
     description:
-      'Official Miroooo digital voucher delivered instantly via email. Never expires and valid across all Miroooo electric toothbrushes, replacement brush heads, and oral accessories.',
+      'Official Miroooo digital voucher delivered instantly via email. Expires in 3 months and valid across all Miroooo electric toothbrushes, replacement brush heads, and oral accessories.',
     price: 10,
     compareAt: 0,
     formattedPrice: '£10',
@@ -713,12 +713,12 @@ export const PRODUCTS: Record<string, Product> = {
     ],
     specs: [
       { label: 'Delivery', value: 'Instant digital delivery to recipient email' },
-      { label: 'Expiration', value: 'Never expires' },
+      { label: 'Expiration', value: 'Expires in 3 months' },
       { label: 'Redemption', value: 'Valid site-wide on all Miroooo products and replacement heads' },
     ],
     highlights: [
       'Instant Email Delivery',
-      'Never Expires',
+      'Expires in 3 Months',
       'Site-Wide Redemption',
     ],
     gifts: [],

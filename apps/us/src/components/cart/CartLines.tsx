@@ -67,7 +67,7 @@ export function CartLines({
                 id: "gift-miroooo-gift-card",
                 title: "Free Miroooo Digital Gift Card ($10)",
                 subtitle:
-                  "Official Miroooo digital voucher. Instant email delivery. Never expires.",
+                  "Official Miroooo digital voucher. Instant email delivery. Expires in 3 months.",
                 image: "/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp",
                 url: "/products/miroooo-gift-card",
                 productHandle: "miroooo-gift-card",

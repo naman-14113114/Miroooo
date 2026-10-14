@@ -437,7 +437,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     model: "Gift Card",
     headline: "Official Miroooo Digital Gift Card.",
     description:
-      "Instant digital gift voucher delivered via email. Never expires and valid across all Miroooo electric toothbrushes, replacement brush heads, and oral hygiene accessories.",
+      "Instant digital gift voucher delivered via email. Expires in 3 months and valid across all Miroooo electric toothbrushes, replacement brush heads, and oral hygiene accessories.",
     basePrice: 10.0,
     baseCompareAt: 0,
     rating: 4.9,
@@ -455,10 +455,10 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     ],
     specs: [
       { label: "Delivery", value: "Instant digital delivery to recipient email" },
-      { label: "Expiration", value: "No expiration date" },
+      { label: "Expiration", value: "Expires in 3 months" },
       { label: "Redemption", value: "Valid site-wide on all Miroooo products and replacement heads" },
     ],
-    highlights: ["Instant Email Delivery", "Never Expires", "Valid Site-Wide"],
+    highlights: ["Instant Email Delivery", "Expires in 3 Months", "Valid Site-Wide"],
   },
 
   "miroooo-package-protection": {

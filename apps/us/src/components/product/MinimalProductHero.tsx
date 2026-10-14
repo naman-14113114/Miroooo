@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { formatUSD } from '@/lib/money';
@@ -16,8 +15,6 @@ import {
   Plus,
   Minus,
   ChevronDown,
-  ShoppingBag,
-  ArrowRight,
   Star,
 } from 'lucide-react';
 
@@ -26,7 +23,6 @@ interface MinimalProductHeroProps {
 }
 
 export function MinimalProductHero({ product }: MinimalProductHeroProps) {
-  const router = useRouter();
   const { addItem, openCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
@@ -55,7 +51,7 @@ export function MinimalProductHero({ product }: MinimalProductHeroProps) {
   const highlights = isGiftCard
     ? [
         { title: 'Instant Email Delivery', desc: 'Unique digital voucher code dispatched directly to your inbox immediately.' },
-        { title: 'Never Expires', desc: 'Valid at any time with no time limits or dormancy penalties.' },
+        { title: 'Expires in 3 Months', desc: 'Valid for 3 months from purchase date across all Miroooo products.' },
         { title: 'Site-Wide Redemption', desc: 'Applicable across all toothbrushes, replacement brush heads, and accessories.' },
       ]
     : [
@@ -69,7 +65,7 @@ export function MinimalProductHero({ product }: MinimalProductHeroProps) {
         {
           title: 'Voucher Specifications & Terms',
           content:
-            'The Miroooo Digital Gift Card is issued electronically as a secure 16-digit voucher. It holds a cash value of $10 and has no expiry date. It can be redeemed individually or combined with promotional offers across the official Miroooo online store.',
+            'The Miroooo Digital Gift Card is issued electronically as a secure 16-digit voucher. It holds a cash value of $10 and expires in 3 months. It can be redeemed individually or combined with promotional offers across the official Miroooo online store.',
         },
         {
           title: 'How Redemption Works',
@@ -111,15 +107,6 @@ export function MinimalProductHero({ product }: MinimalProductHeroProps) {
       setIsAdding(false);
       openCart();
     }, 150);
-  };
-
-  const handleBuyNow = () => {
-    addItem({
-      productHandle: product.handle,
-      color: 'Default',
-      quantity,
-    });
-    router.push('/cart');
   };
 
   return (
@@ -227,72 +214,147 @@ export function MinimalProductHero({ product }: MinimalProductHeroProps) {
             </div>
 
             {/* Quantity Selector */}
-            <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-white/[0.04] border border-white/10 mb-6">
-              <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-white/70">
-                Quantity
-              </span>
-              <div className="flex items-center gap-3">
+            <div className="quantity-selector-container my-4" style={{ margin: '18px 0 16px 0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Quantity:</span>
+              </div>
+              <div
+                className="inline-flex items-center"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  background: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  borderRadius: '9999px',
+                  padding: '4px 6px',
+                  gap: '8px',
+                }}
+              >
                 <button
                   type="button"
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
                   disabled={quantity <= 1}
                   aria-label="Decrease quantity"
-                  className="w-8 h-8 rounded-full bg-white/10 border border-white/15 text-white flex items-center justify-center hover:bg-white/20 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    border: 'none',
+                    cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
+                    opacity: quantity <= 1 ? 0.4 : 1,
+                    transition: 'all 0.15s ease',
+                  }}
                 >
                   <Minus size={14} strokeWidth={2.5} />
                 </button>
-                <span className="text-base font-bold font-mono text-white min-w-[28px] text-center">
+                <span
+                  style={{
+                    minWidth: '32px',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: '15px',
+                    color: '#ffffff',
+                    userSelect: 'none',
+                    fontFamily: 'ui-monospace, SFMono-Regular, monospace',
+                  }}
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
                   {quantity}
                 </span>
                 <button
                   type="button"
-                  onClick={() => setQuantity((q) => q + 1)}
+                  onClick={() => setQuantity((prev) => prev + 1)}
                   aria-label="Increase quantity"
-                  className="w-8 h-8 rounded-full bg-white/10 border border-white/15 text-white flex items-center justify-center hover:bg-white/20 transition-all"
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                  }}
                 >
                   <Plus size={14} strokeWidth={2.5} />
                 </button>
               </div>
             </div>
 
-            {/* Action Buttons: Add to Cart & Buy Now */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-6">
+            {/* Delivery Countdown Timer Box */}
+            <div
+              className="delivery-timer-box rounded-xl p-3.5 my-4 flex items-center gap-3 text-sm"
+              style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.85)', margin: '16px 0', position: 'relative' }}
+            >
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: 'rgba(255, 255, 255, 0.1)', color: '#ffffff', width: '32px', height: '32px', borderRadius: '9999px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                <Clock size={16} />
+              </div>
+              <div className="flex-1 text-xs sm:text-sm leading-snug" style={{ fontSize: '13px', lineHeight: 1.4 }}>
+                {isGiftCard ? (
+                  <>Instant dispatch: voucher code delivered to your inbox within <strong className="font-mono font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>60 seconds</strong></>
+                ) : (
+                  <>Transit guarantee active: official parcel coverage applied at <strong className="font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>checkout</strong></>
+                )}
+              </div>
+            </div>
+
+            {/* Add To Cart Main Button */}
+            <div className="main-cta-wrapper my-4" style={{ margin: '18px 0 14px 0' }}>
               <button
                 type="button"
+                id="hero-cta"
+                className="button button--primary"
+                style={{ width: '100%', fontSize: '1.05rem' }}
                 onClick={handleAddToCart}
                 disabled={isAdding}
-                className="flex-1 py-4 px-6 rounded-full font-bold text-base bg-white text-black hover:bg-neutral-200 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-white/10 active:scale-[0.99] cursor-pointer"
               >
-                <ShoppingBag size={18} />
-                <span>{isAdding ? 'Adding…' : `Add to Cart · ${formattedTotalPrice}`}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleBuyNow}
-                className="flex-1 py-4 px-6 rounded-full font-bold text-base bg-[#18191b] border border-white/20 text-white hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.99] cursor-pointer"
-              >
-                <span>Buy Now</span>
-                <ArrowRight size={17} />
+                <span className="btn-fill" data-fill></span>
+                <span className="btn-text" id="main-cta-text">
+                  {isAdding ? 'Adding…' : `Add to Cart · ${formattedTotalPrice}`}
+                </span>
               </button>
             </div>
 
-            {/* Trust Guarantee Row */}
-            <div className="grid grid-cols-3 gap-2 pt-4 pb-2 border-t border-white/10 text-center mb-6">
-              <div className="flex flex-col items-center gap-1">
-                <Lock size={15} className="text-white/60" />
-                <span className="text-[11px] font-semibold text-white/70">256-Bit SSL</span>
-                <span className="text-[10px] text-white/40">Secure Checkout</span>
+            {/* Trust Badges Strip */}
+            <div
+              className="grid grid-cols-3 gap-2 py-3 px-1 mb-6 text-center"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+                padding: '12px 0 16px',
+                marginBottom: '24px',
+              }}
+            >
+              <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                <Lock style={{ width: '22px', height: '22px', color: '#ffffff' }} strokeWidth={1.8} />
+                <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                  256-Bit SSL<br />Encrypted
+                </span>
               </div>
-              <div className="flex flex-col items-center gap-1">
-                <Clock size={15} className="text-white/60" />
-                <span className="text-[11px] font-semibold text-white/70">Instant</span>
-                <span className="text-[10px] text-white/40">Fulfillment</span>
+              <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                <Clock style={{ width: '22px', height: '22px', color: '#ffffff' }} strokeWidth={1.8} />
+                <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                  {isGiftCard ? <>Instant<br />Email Delivery</> : <>Instant<br />Fulfillment</>}
+                </span>
               </div>
-              <div className="flex flex-col items-center gap-1">
-                <ShieldCheck size={15} className="text-white/60" />
-                <span className="text-[11px] font-semibold text-white/70">Official</span>
-                <span className="text-[10px] text-white/40">Miroooo Guarantee</span>
+              <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                <ShieldCheck style={{ width: '22px', height: '22px', color: '#ffffff' }} strokeWidth={1.8} />
+                <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                  Official Miroooo<br />Guarantee
+                </span>
               </div>
             </div>
 

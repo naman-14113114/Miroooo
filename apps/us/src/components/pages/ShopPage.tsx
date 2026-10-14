@@ -133,7 +133,7 @@ const US_COLLECTION_PRODUCTS: CollectionProduct[] = [
     name: 'Miroooo Gift Card',
     category: 'accessories',
     eyebrow: 'Digital Voucher',
-    description: 'Instant digital gift voucher delivered via email. Never expires and valid site-wide.',
+    description: 'Instant digital gift voucher delivered via email. Expires in 3 months and valid site-wide.',
     price: '$10',
     compareAt: '',
     badge: undefined,

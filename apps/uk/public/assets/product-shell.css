@@ -4632,26 +4632,26 @@ div[class*="tawk"],
 
 /* 1. Standard Mode: Purple Ring */
 .miroooo-infographic-mode-ring--purple {
-  color: #a855f7 !important;
-  border-color: #a855f7 !important;
-  background-color: rgba(168, 85, 247, 0.18) !important;
-  box-shadow: 0 0 7px rgba(168, 85, 247, 0.65), inset 0 0 2px rgba(168, 85, 247, 0.35) !important;
+  color: #c084fc !important;
+  border-color: #ffffff !important;
+  background-color: #a855f7 !important;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.9), 0 0 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* 2. Whitening Mode: Blue Ring */
 .miroooo-infographic-mode-ring--blue {
-  color: #3b82f6 !important;
-  border-color: #3b82f6 !important;
-  background-color: rgba(59, 130, 246, 0.18) !important;
-  box-shadow: 0 0 7px rgba(59, 130, 246, 0.65), inset 0 0 2px rgba(59, 130, 246, 0.35) !important;
+  color: #60a5fa !important;
+  border-color: #ffffff !important;
+  background-color: #3b82f6 !important;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.9), 0 0 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* 3. Deep Clean Mode: Green Ring */
 .miroooo-infographic-mode-ring--green {
-  color: #22c55e !important;
-  border-color: #22c55e !important;
-  background-color: rgba(34, 197, 94, 0.18) !important;
-  box-shadow: 0 0 7px rgba(34, 197, 94, 0.65), inset 0 0 2px rgba(34, 197, 94, 0.35) !important;
+  color: #4ade80 !important;
+  border-color: #ffffff !important;
+  background-color: #22c55e !important;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.9), 0 0 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 .miroooo-infographic-mode-text {
@@ -4659,8 +4659,8 @@ div[class*="tawk"],
   font-size: 13.5px !important;
   font-weight: 600 !important;
   letter-spacing: -0.01em !important;
-  color: #0f172a !important;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   text-rendering: optimizeLegibility !important;

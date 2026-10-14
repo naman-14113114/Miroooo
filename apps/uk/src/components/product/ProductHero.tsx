@@ -467,7 +467,13 @@ export function ProductHero({
             title: 'USB-C Fast<br>Charging',
             sub: 'Full 2-Hour Quick Charge<br>Universal Type-C Port',
           };
-        } else if (src.includes('Hand-Holding-Branded-Silver-Toothbrush.webp') || src.includes('Pink-hero.webp') || src.includes('Grey-hero.webp')) {
+        } else if (
+          src.includes('Hand-Holding-Branded-Silver-Toothbrush.webp') ||
+          src.includes('Pink-hero.webp') ||
+          src.includes('Grey-hero.webp') ||
+          src.includes('silver_5.webp') ||
+          src.includes('390f19e3-c9d8-4ec1-a9b0-4360f7860c48')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
             title: '60-Day Battery<br>Life',
@@ -492,7 +498,12 @@ export function ProductHero({
             sub: 'End-Rounded For<br>Gentle Enamel Care',
           };
         } else if (src.includes('3-cleaning-modes.webp')) {
-          isModesBadge = true;
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+            title: '3 Tailored<br>Clean Modes',
+            sub: 'Standard, Whitening &<br>Deep Clean Precision',
+          };
+          isModesBadge = false;
         } else if (src.includes('aerospace-aluminium-body.webp')) {
           badge = {
             pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
