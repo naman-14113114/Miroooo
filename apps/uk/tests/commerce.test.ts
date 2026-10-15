@@ -581,13 +581,15 @@ test('X1 simple variants map accurately and support all 12 bundle options', () =
   assert.equal(pink, 'a2ce527a-ac20-4a6d-888a-ada52bc9d509');
   assert.equal(grey, 'a2ce527c-3b55-45a4-b832-9915d637ba8b');
 
-  // Verify all 12 options exist in XPAGE_BUNDLES.x1
+  // Verify all options exist in XPAGE_BUNDLES.x1
   const keys = [
-    'buy1', 'buy2', 'buy3',
-    'promoBuy1', 'promoBuy2', 'promoBuy3',
+    'buy1', 'buy1_freehead', 'buy2', 'buy3',
+    'buy1_1head', 'buy2_1head', 'buy3_1head',
+    'buy1_protection', 'buy1_1head_protection',
+    'promoBuy1', 'promoBuy1_freehead', 'promoBuy2', 'promoBuy3',
     'promoBuy1_1head', 'promoBuy1_2head',
-    'buy2_1head', 'promoBuy2_1head',
-    'buy3_1head', 'promoBuy3_1head',
+    'promoBuy2_1head', 'promoBuy3_1head',
+    'promoBuy1_protection', 'promoBuy1_1head_protection',
   ] as const;
 
   for (const k of keys) {
@@ -664,6 +666,56 @@ test('bundle checkout with package protection calls create-bundle-order with off
       quantity: 1,
     };
     const response = await POST(request([x2Grey, protectionItem]));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+    assert.equal(postCalls.length, 1);
+    assert.ok(postCalls[0].url.includes('/create-bundle-order'));
+    const offered = postCalls[0].body.bundle_selected_variants.offered;
+    assert.ok(offered['offered-gift-card']);
+    assert.deepEqual(offered['offered-gift-card'], [XPAGE_VARIANTS.gift_card]);
+    assert.ok(offered['offered-package-protection']);
+    assert.deepEqual(offered['offered-package-protection'], [XPAGE_VARIANTS.package_protection]);
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
+test('X1 bundle checkout with package protection calls create-bundle-order with offered map including package protection', async () => {
+  const oldFetch = globalThis.fetch;
+  const postCalls: Array<{ url: string; body: any }> = [];
+  globalThis.fetch = async (input, init) => {
+    const url = String(input);
+    if (init?.method === 'POST') {
+      const body = JSON.parse(String(init.body || '{}'));
+      postCalls.push({ url, body });
+      return Response.json({
+        status: 'success',
+        checkout_url: `https://x1.miroooo.us/${'c'.repeat(256)}/checkout/${'b'.repeat(64)}`,
+      });
+    }
+    if (url.includes('/checkout/')) {
+      const rows = [
+        { quantity: 1, price: 69, variant: { id: XPAGE_VARIANTS.x1_grey } },
+        { quantity: 1, price: 5, variant: { id: XPAGE_VARIANTS.package_protection } },
+        { quantity: 1, price: 10, variant: { id: XPAGE_VARIANTS.x1_heads } },
+        { quantity: 1, price: 0, variant: { id: XPAGE_VARIANTS.gift_card } },
+      ];
+      return new Response(
+        `<span class="total font-semibold">£74.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(74, 0)}`
+      );
+    }
+    return new Response(mockPublishedOffer(1, 69, 'x1', 'buy1_protection'));
+  };
+  try {
+    const protectionItem = {
+      productHandle: 'miroooo-package-protection',
+      variantId: XPAGE_VARIANTS.package_protection,
+      color: 'Default',
+      quantity: 1,
+    };
+    const response = await POST(request([x1Grey, protectionItem]));
     const body = await response.json();
     assert.equal(response.status, 200, body.error);
     assert.equal(body.offerType, 'native_bundle');

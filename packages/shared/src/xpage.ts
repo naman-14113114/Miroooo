@@ -197,109 +197,137 @@ export const XPAGE_BUNDLES = {
   x1: {
     id: "a2cea7c5-4c36-4f88-a757-4f93d767dfe3",
     buy1: {
-      optionId: "a2ec6609-4e3b-4bd7-bc9e-7b08727a3833",
-      conditionId: "a2ec6609-5e0b-4426-b42d-762d4db12651",
-      offeredId: "a2ec6609-5b59-4c33-8c3c-925a238fdcad",
+      optionId: "a2cea7c5-54d1-4b8a-bcdc-6a7770bb62cc",
+      conditionId: "a2fc2b44-ad89-4130-ad1f-5f8ccdb48bb6",
+      offeredId: "a2fc2b44-bc39-46bf-b374-0b66c9328556",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 1,
     },
     buy1_freehead: {
-      optionId: "a2ec6609-4e3b-4bd7-bc9e-7b08727a3833",
-      conditionId: "a2ec6609-5e0b-4426-b42d-762d4db12651",
-      offeredId: "a2ec6609-5b59-4c33-8c3c-925a238fdcad",
+      optionId: "a2cea7c5-54d1-4b8a-bcdc-6a7770bb62cc",
+      conditionId: "a2fc2b44-ad89-4130-ad1f-5f8ccdb48bb6",
+      offeredId: "a2fc2b44-bc39-46bf-b374-0b66c9328556",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 1,
     },
     buy1_1head: {
-      optionId: "a2ec660b-fe9d-4ec6-90aa-2da0af0fdd14",
-      conditionId: "a2ec660c-0cdc-4ee7-ab1b-371874228964",
-      offeredId: "a2ec660c-09b2-46ca-80a6-0f1cfd278298",
+      optionId: "a2dc271a-fd9c-42f3-b45d-025cd35e0529",
+      conditionId: "a2fc2b44-bc90-4db0-b8b9-2156681034fd",
+      offeredId: "a2fc2b44-c4ff-4055-aae9-f77e0e873b3f",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 2,
     },
     buy2: {
-      optionId: "a2ec6608-e8b5-4cce-b4a3-b6f60d4b2160",
-      conditionId: "a2ec6608-fa5a-4e19-baa3-f137daa4bc48",
-      offeredId: "a2ec6608-f5f8-4a3e-a123-793c4232afb4",
+      optionId: "a2cea7c5-639d-47bd-b9d9-f376089d336b",
+      conditionId: "a2fc2b44-ade2-4453-90de-2fd729884711",
+      offeredId: "a2fc2b44-bd68-4473-b519-309a91a0f665",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 2,
     },
     buy2_1head: {
-      optionId: "a2ec660a-5392-45ad-811c-4de82c2e8d35",
-      conditionId: "a2ec660a-624b-4298-b4a8-02ffa0f919af",
-      offeredId: "a2ec660a-5d2d-41a1-bdd5-0bda49aba553",
+      optionId: "a2dc271a-e294-4a2d-85c1-4e0f9d3599d8",
+      conditionId: "a2fc2b44-bcec-42d0-8381-35bde0bcb9e8",
+      offeredId: "a2fc2b44-c519-4139-a19a-55c423e2fac5",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 3,
     },
     buy3: {
-      optionId: "a2ec660c-f350-4c3f-ac9c-4e4a4a914e26",
-      conditionId: "a2ec660d-0f1e-415d-bcf6-b56d8bbee50e",
-      offeredId: "a2ec660d-06c2-4fd2-b6b8-77662a258896",
+      optionId: "a2cea7c5-6ea0-484b-bb28-a74048d6c9bd",
+      conditionId: "a2fc2b42-587a-46eb-a88f-9f8fbd5867c1",
+      offeredId: "a2fc2b42-6de1-476d-ab87-0a674a2a56b0",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 3,
     },
     buy3_1head: {
-      optionId: "a2ec660c-8ad1-4696-8012-148ad3e86082",
-      conditionId: "a2ec660c-97d3-416f-b0ee-fdc9a951faeb",
-      offeredId: "a2ec660c-94f4-4364-a9be-0287a13a8b6c",
+      optionId: "a2dc271b-0eaf-4f64-a474-e14bee288f66",
+      conditionId: "a2fc2b44-9f0f-4167-a32a-5523229c1aa6",
+      offeredId: "a2fc2b44-ad93-4c1c-be6c-b61b48aa80c7",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 4,
     },
+    buy1_protection: {
+      optionId: "a2fc2574-bb2c-4bfc-9571-f510c2cac8c0",
+      conditionId: "a2fc2b45-b062-4e71-903b-2e44a5d8a414",
+      offeredId: "a2fc2b45-bc9b-4b0e-b502-05fbed24e501",
+      headsVariant: XPAGE_VARIANTS.x1_heads,
+      offeredQty: 1,
+    },
+    buy1_1head_protection: {
+      optionId: "a2fc2575-057d-4aa7-8451-6fdff4922ed2",
+      conditionId: "a2fc2b45-b822-4f9d-9961-f3df066011f6",
+      offeredId: "a2fc2b45-c1f6-429d-a659-10e4e0b955fc",
+      headsVariant: XPAGE_VARIANTS.x1_heads,
+      offeredQty: 2,
+    },
     promoBuy1: {
-      optionId: "a2ec6609-4e3b-4bd7-bc9e-7b08727a3833",
-      conditionId: "a2ec6609-5e0b-4426-b42d-762d4db12651",
-      offeredId: "a2ec6609-5b59-4c33-8c3c-925a238fdcad",
+      optionId: "a2cea7c5-54d1-4b8a-bcdc-6a7770bb62cc",
+      conditionId: "a2fc2b44-ad89-4130-ad1f-5f8ccdb48bb6",
+      offeredId: "a2fc2b44-bc39-46bf-b374-0b66c9328556",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 1,
     },
     promoBuy1_freehead: {
-      optionId: "a2ec6609-4e3b-4bd7-bc9e-7b08727a3833",
-      conditionId: "a2ec6609-5e0b-4426-b42d-762d4db12651",
-      offeredId: "a2ec6609-5b59-4c33-8c3c-925a238fdcad",
+      optionId: "a2cea7c5-54d1-4b8a-bcdc-6a7770bb62cc",
+      conditionId: "a2fc2b44-ad89-4130-ad1f-5f8ccdb48bb6",
+      offeredId: "a2fc2b44-bc39-46bf-b374-0b66c9328556",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 1,
     },
     promoBuy1_1head: {
-      optionId: "a2ec660b-fe9d-4ec6-90aa-2da0af0fdd14",
-      conditionId: "a2ec660c-0cdc-4ee7-ab1b-371874228964",
-      offeredId: "a2ec660c-09b2-46ca-80a6-0f1cfd278298",
+      optionId: "a2dc271a-fd9c-42f3-b45d-025cd35e0529",
+      conditionId: "a2fc2b44-bc90-4db0-b8b9-2156681034fd",
+      offeredId: "a2fc2b44-c4ff-4055-aae9-f77e0e873b3f",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 2,
     },
     promoBuy1_2head: {
-      optionId: "a2ec660b-fe9d-4ec6-90aa-2da0af0fdd14",
-      conditionId: "a2ec660c-0cdc-4ee7-ab1b-371874228964",
-      offeredId: "a2ec660c-09b2-46ca-80a6-0f1cfd278298",
+      optionId: "a2dc271a-fd9c-42f3-b45d-025cd35e0529",
+      conditionId: "a2fc2b44-bc90-4db0-b8b9-2156681034fd",
+      offeredId: "a2fc2b44-c4ff-4055-aae9-f77e0e873b3f",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 2,
     },
     promoBuy2: {
-      optionId: "a2ec6608-e8b5-4cce-b4a3-b6f60d4b2160",
-      conditionId: "a2ec6608-fa5a-4e19-baa3-f137daa4bc48",
-      offeredId: "a2ec6608-f5f8-4a3e-a123-793c4232afb4",
+      optionId: "a2cea7c5-639d-47bd-b9d9-f376089d336b",
+      conditionId: "a2fc2b44-ade2-4453-90de-2fd729884711",
+      offeredId: "a2fc2b44-bd68-4473-b519-309a91a0f665",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 2,
     },
     promoBuy2_1head: {
-      optionId: "a2ec660a-5392-45ad-811c-4de82c2e8d35",
-      conditionId: "a2ec660a-624b-4298-b4a8-02ffa0f919af",
-      offeredId: "a2ec660a-5d2d-41a1-bdd5-0bda49aba553",
+      optionId: "a2dc271a-e294-4a2d-85c1-4e0f9d3599d8",
+      conditionId: "a2fc2b44-bcec-42d0-8381-35bde0bcb9e8",
+      offeredId: "a2fc2b44-c519-4139-a19a-55c423e2fac5",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 3,
     },
     promoBuy3: {
-      optionId: "a2ec660c-f350-4c3f-ac9c-4e4a4a914e26",
-      conditionId: "a2ec660d-0f1e-415d-bcf6-b56d8bbee50e",
-      offeredId: "a2ec660d-06c2-4fd2-b6b8-77662a258896",
+      optionId: "a2cea7c5-6ea0-484b-bb28-a74048d6c9bd",
+      conditionId: "a2fc2b42-587a-46eb-a88f-9f8fbd5867c1",
+      offeredId: "a2fc2b42-6de1-476d-ab87-0a674a2a56b0",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 3,
     },
     promoBuy3_1head: {
-      optionId: "a2ec660c-8ad1-4696-8012-148ad3e86082",
-      conditionId: "a2ec660c-97d3-416f-b0ee-fdc9a951faeb",
-      offeredId: "a2ec660c-94f4-4364-a9be-0287a13a8b6c",
+      optionId: "a2dc271b-0eaf-4f64-a474-e14bee288f66",
+      conditionId: "a2fc2b44-9f0f-4167-a32a-5523229c1aa6",
+      offeredId: "a2fc2b44-ad93-4c1c-be6c-b61b48aa80c7",
       headsVariant: XPAGE_VARIANTS.x1_heads,
       offeredQty: 4,
+    },
+    promoBuy1_protection: {
+      optionId: "a2fc2574-bb2c-4bfc-9571-f510c2cac8c0",
+      conditionId: "a2fc2b45-b062-4e71-903b-2e44a5d8a414",
+      offeredId: "a2fc2b45-bc9b-4b0e-b502-05fbed24e501",
+      headsVariant: XPAGE_VARIANTS.x1_heads,
+      offeredQty: 1,
+    },
+    promoBuy1_1head_protection: {
+      optionId: "a2fc2575-057d-4aa7-8451-6fdff4922ed2",
+      conditionId: "a2fc2b45-b822-4f9d-9961-f3df066011f6",
+      offeredId: "a2fc2b45-c1f6-429d-a659-10e4e0b955fc",
+      headsVariant: XPAGE_VARIANTS.x1_heads,
+      offeredQty: 2,
     },
   },
   x1_heads: {
@@ -836,19 +864,23 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
       }
     }
   } else if (product === "x1") {
-    if (hasPackageProtection) {
-      return null;
-    }
     if (quantity === 1) {
       const total = freeHeadQty + paidHeadQty;
       if (total <= 1) {
-        bundleKey = isPromo ? "promoBuy1_freehead" : (freeHeadQty === 1 ? "buy1_freehead" : null);
+        bundleKey = hasPackageProtection
+          ? (isPromo ? "promoBuy1_protection" : "buy1_protection")
+          : (isPromo ? "promoBuy1_freehead" : (freeHeadQty === 1 ? "buy1_freehead" : null));
       } else if (total === 2) {
-        bundleKey = isPromo ? "promoBuy1_1head" : "buy1_1head";
+        bundleKey = hasPackageProtection
+          ? (isPromo ? "promoBuy1_1head_protection" : "buy1_1head_protection")
+          : (isPromo ? "promoBuy1_1head" : "buy1_1head");
       } else {
         return null;
       }
     } else if (quantity === 2) {
+      if (hasPackageProtection) {
+        return null;
+      }
       const total = freeHeadQty + paidHeadQty;
       if (total <= 2) {
         bundleKey = isPromo ? "promoBuy2" : "buy2";
@@ -858,6 +890,9 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
         return null;
       }
     } else if (quantity === 3) {
+      if (hasPackageProtection) {
+        return null;
+      }
       const total = freeHeadQty + paidHeadQty;
       if (total <= 3) {
         bundleKey = isPromo ? "promoBuy3" : "buy3";

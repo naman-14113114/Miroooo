@@ -438,13 +438,15 @@ test('X1 simple variants map accurately and support all 12 bundle options', () =
   assert.equal(pink, 'a2ce527a-ac20-4a6d-888a-ada52bc9d509');
   assert.equal(grey, 'a2ce527c-3b55-45a4-b832-9915d637ba8b');
 
-  // Verify all 12 options exist in XPAGE_BUNDLES.x1
+  // Verify all options exist in XPAGE_BUNDLES.x1
   const keys = [
-    'buy1', 'buy2', 'buy3',
-    'promoBuy1', 'promoBuy2', 'promoBuy3',
+    'buy1', 'buy1_freehead', 'buy2', 'buy3',
+    'buy1_1head', 'buy2_1head', 'buy3_1head',
+    'buy1_protection', 'buy1_1head_protection',
+    'promoBuy1', 'promoBuy1_freehead', 'promoBuy2', 'promoBuy3',
     'promoBuy1_1head', 'promoBuy1_2head',
-    'buy2_1head', 'promoBuy2_1head',
-    'buy3_1head', 'promoBuy3_1head',
+    'promoBuy2_1head', 'promoBuy3_1head',
+    'promoBuy1_protection', 'promoBuy1_1head_protection',
   ] as const;
 
   for (const k of keys) {
