@@ -777,9 +777,9 @@ export const PRODUCTS: Record<string, Product> = {
     subtitle: 'Priority zero-hassle replacement coverage in transit.',
     description:
       'Complete transit damage, loss, and theft guarantee for your Miroooo order with expedited zero-cost unit replacement.',
-    price: 5,
+    price: 3,
     compareAt: 0,
-    formattedPrice: '£5',
+    formattedPrice: '£3',
     formattedCompareAt: '',
     rating: 5.0,
     reviewCount: 940,
@@ -800,13 +800,13 @@ export const PRODUCTS: Record<string, Product> = {
       {
         quantity: 1,
         name: '1x Package Protection',
-        price: 5,
+        price: 3,
         compareAt: 0,
-        formattedPrice: '£5',
+        formattedPrice: '£3',
         formattedCompareAt: '',
         freeHeadsCount: 0,
         savingText: '',
-        description: 'Miroooo Package Protection (£5)',
+        description: 'Miroooo Package Protection (£3)',
       },
     ],
     specs: [

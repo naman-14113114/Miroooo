@@ -389,37 +389,92 @@ export function CartPageContent() {
                           userSelect: "none",
                         }}
                       >
-                        <input
-                          type="checkbox"
-                          id="cart-package-protection-checkbox"
-                          checked={isProtectionAdded}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              if (!isProtectionAdded) {
-                                addItem({
-                                  productHandle: "miroooo-package-protection",
-                                  color: "Default",
-                                  quantity: 1,
-                                });
-                              }
-                            } else {
-                              const protectionItem = items.find(
-                                (item) => item.productHandle === "miroooo-package-protection"
-                              );
-                              if (protectionItem) {
-                                removeItem(protectionItem.id);
-                              }
-                            }
-                          }}
+                        <span
                           style={{
-                            marginTop: "3px",
-                            width: "18px",
-                            height: "18px",
-                            accentColor: "#000000",
-                            cursor: "pointer",
+                            position: "relative",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "20px",
+                            height: "20px",
                             flexShrink: 0,
+                            marginTop: "2px",
+                            cursor: "pointer",
                           }}
-                        />
+                        >
+                          <input
+                            type="checkbox"
+                            id="cart-package-protection-checkbox"
+                            checked={isProtectionAdded}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                if (!isProtectionAdded) {
+                                  addItem({
+                                    productHandle: "miroooo-package-protection",
+                                    color: "Default",
+                                    quantity: 1,
+                                  });
+                                }
+                              } else {
+                                const protectionItem = items.find(
+                                  (item) => item.productHandle === "miroooo-package-protection"
+                                );
+                                if (protectionItem) {
+                                  removeItem(protectionItem.id);
+                                }
+                              }
+                            }}
+                            style={{
+                              position: "absolute",
+                              inset: 0,
+                              opacity: 0,
+                              width: "100%",
+                              height: "100%",
+                              margin: 0,
+                              padding: 0,
+                              cursor: "pointer",
+                              zIndex: 2,
+                            }}
+                            aria-label="Add Miroooo Package Protection"
+                          />
+                          <span
+                            aria-hidden="true"
+                            style={{
+                              position: "absolute",
+                              inset: 0,
+                              width: "20px",
+                              height: "20px",
+                              borderRadius: "4px",
+                              border: "2px solid #000000",
+                              background: isProtectionAdded ? "#000000" : "#ffffff",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              transition: "all 0.18s ease",
+                              boxSizing: "border-box",
+                              pointerEvents: "none",
+                              zIndex: 1,
+                            }}
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#ffffff"
+                              strokeWidth="3.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              style={{
+                                width: "13px",
+                                height: "13px",
+                                opacity: isProtectionAdded ? 1 : 0,
+                                transform: isProtectionAdded ? "scale(1)" : "scale(0.6)",
+                                transition: "all 0.18s cubic-bezier(0.16, 1, 0.3, 1)",
+                              }}
+                            >
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          </span>
+                        </span>
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <div
                             style={{
@@ -450,17 +505,7 @@ export function CartPageContent() {
                                 whiteSpace: "nowrap",
                               }}
                             >
-                              <span
-                                style={{
-                                  textDecoration: "line-through",
-                                  color: "#888888",
-                                  fontSize: "0.78rem",
-                                  marginRight: "4px",
-                                }}
-                              >
-                                £5
-                              </span>
-                              <span>+£3</span>
+                              +£3
                             </span>
                           </div>
                           <p

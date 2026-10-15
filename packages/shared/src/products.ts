@@ -492,7 +492,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     headline: "Complete transit damage, loss, and theft guarantee.",
     description:
       "Enjoy total peace of mind for your Miroooo order with official package protection covering damage, loss, or theft during transit with expedited zero-cost unit replacement.",
-    basePrice: 5.0,
+    basePrice: 3.0,
     baseCompareAt: 0,
     rating: 4.9,
     reviewCount: 4275,

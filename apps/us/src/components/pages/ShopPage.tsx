@@ -896,8 +896,8 @@ export function ShopPage() {
                   <td><span style={{ fontWeight: 800, color: '#ffffff' }}>$69</span></td>
                   <td>
                     <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '6px' }}>
-                      <span style={{ color: '#4ade80', fontWeight: 800 }}>$69</span>
-                      <s style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: '13px' }}>$139</s>
+                      <span style={{ color: '#4ade80', fontWeight: 800 }}>$79</span>
+                      <s style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: '13px' }}>$159</s>
                     </div>
                     <span style={{ display: 'block', fontSize: '11px', color: '#4ade80', fontWeight: 700, marginTop: '2px' }}>(50% OFF)</span>
                   </td>
@@ -923,7 +923,7 @@ export function ShopPage() {
                 <div style={{ flex: 1, textAlign: 'center' }}>
                   <span style={{ display: 'inline-block', background: '#16a34a', color: '#fff', fontSize: '10px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px', textTransform: 'uppercase', marginBottom: '4px' }}>★ Flagship</span>
                   <div style={{ fontWeight: 800, fontSize: '15px', color: '#ffffff' }}>Miroooo X2</div>
-                  <div style={{ fontSize: '12px', color: '#4ade80', fontWeight: 700 }}>$69 <s style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>$139</s></div>
+                  <div style={{ fontSize: '12px', color: '#4ade80', fontWeight: 700 }}>$79 <s style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>$159</s></div>
                 </div>
                 <div style={{ flex: 1, textAlign: 'center', borderLeft: '1px solid rgba(255, 255, 255, 0.08)' }}>
                   <span style={{ display: 'inline-block', visibility: 'hidden', fontSize: '10px', padding: '2px 8px' }}>-</span>

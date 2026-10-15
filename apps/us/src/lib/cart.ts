@@ -159,7 +159,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
       const isPackageProtection = item.productHandle === 'miroooo-package-protection';
       const effectiveUnitPrice = isPackageProtection ? 3 : item.unitPrice;
       otherItemsCents += cents(effectiveUnitPrice) * qty;
-      otherItemsCompareCents += cents((item.comparePrice || (isPackageProtection ? 5 : item.unitPrice)) || 0) * qty;
+      otherItemsCompareCents += cents((item.comparePrice || (isPackageProtection ? 3 : item.unitPrice)) || 0) * qty;
     }
   });
 

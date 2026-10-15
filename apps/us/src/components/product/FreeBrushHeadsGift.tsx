@@ -18,7 +18,7 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '$' }: FreeBrushHe
 
   return (
     <section className={styles.section} id="special-flash-sale-gifts" aria-labelledby="free-heads-title">
-      <h3 className={styles.heading} id="free-heads-title">Flash Sale</h3>
+      <h3 className={styles.heading} id="free-heads-title">Halloween Smile sale</h3>
 
       <div className={styles.cardList}>
         {/* Card 1: Free Brush Heads */}

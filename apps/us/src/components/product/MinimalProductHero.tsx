@@ -30,7 +30,7 @@ export function MinimalProductHero({ product }: MinimalProductHeroProps) {
 
   const isGiftCard = product.handle === 'miroooo-gift-card';
 
-  const unitPrice = product.price || (isGiftCard ? 10 : 5);
+  const unitPrice = product.price || (isGiftCard ? 10 : 3);
   const totalPrice = unitPrice * quantity;
   const formattedTotalPrice = formatUSD(totalPrice);
 
@@ -182,7 +182,7 @@ export function MinimalProductHero({ product }: MinimalProductHeroProps) {
             {/* Single Direct Price (NO compare-at, NO discount badge) */}
             <div className="flex items-baseline gap-3 py-3 border-y border-white/10 mb-5">
               <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                {product.formattedPrice || (isGiftCard ? '$10' : '$5')}
+                {product.formattedPrice || (isGiftCard ? '$10' : '$3')}
               </span>
               <span className="text-xs text-white/50 uppercase tracking-wider font-medium">
                 Single Price · No Hidden Fees
