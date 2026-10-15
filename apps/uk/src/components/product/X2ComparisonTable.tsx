@@ -554,8 +554,8 @@ export function X2ComparisonTable() {
                 <div className="x2-comp-cell x2-comp-cell--price">
                   <div className="x2-price-wrap">
                     <div className="x2-price-line">
-                      <span className="x2-price-old">£99</span>
-                      <span className="x2-price-val">£69</span>
+                      <span className="x2-price-old">£159</span>
+                      <span className="x2-price-val">£79</span>
                     </div>
                     <span className="x2-price-note">(for today only)</span>
                   </div>
@@ -708,8 +708,8 @@ export function X2ComparisonTable() {
                 <div className="x2-comp-m-values-row">
                   <div className="x2-comp-m-val-cell x2-comp-m-val-cell--x2">
                     <div>
-                      <div className="x2-comp-m-price-winner">£69</div>
-                      <span className="x2-comp-m-price-old">£99</span>
+                      <div className="x2-comp-m-price-winner">£79</div>
+                      <span className="x2-comp-m-price-old">£159</span>
                       <span style={{ fontSize: '0.58rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1, marginTop: '1px' }}>(for today only)</span>
                     </div>
                   </div>

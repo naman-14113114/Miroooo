@@ -192,8 +192,10 @@ export function ProductHero({
   };
 
   // Pricing calculations
-  const singlePrice = product.price;
-  const singleCompare = product.compareAt;
+  const activeColor = isSimpleBuybox ? selectedColor : (selectedTier === 'single' ? singleColor : selectedColor);
+  const activeVariant = product.variants.find((v) => v.color.toLowerCase() === (activeColor || '').toLowerCase()) || product.variants[0];
+  const singlePrice = activeVariant?.price ?? product.price;
+  const singleCompare = activeVariant?.compareAt ?? product.compareAt;
   const bundle2Price = product.bundles[1].price;
   const bundle2Compare = product.compareAt * 2;
   const bundle3Price = product.bundles[2].price;
@@ -731,9 +733,7 @@ export function ProductHero({
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                 <strong className="x2-urgency-banner__headline">
-                  {isX2
-                    ? 'Get Miroooo X2 at price of Miroooo X1 with free pair of heads for today only'
-                    : 'Free pair of brush heads for today only'}
+                  Free pair of brush heads for today only
                 </strong>
               </div>
             </div>

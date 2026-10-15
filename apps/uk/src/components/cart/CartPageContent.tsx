@@ -96,6 +96,7 @@ export function CartPageContent() {
     isCheckoutLoading,
     checkoutError,
     addItem,
+    removeItem,
     isHydrated,
   } = useCart();
   const [promoInput, setPromoInput] = useState("");
@@ -242,95 +243,6 @@ export function CartPageContent() {
                   </div>
                 </div>
               )}
-              {(() => {
-                const isProtectionAdded = items.some(
-                  (item) => item.productHandle === "miroooo-package-protection"
-                );
-                return (
-                  <div
-                    className="cart-luxury-card cart-upsell-card cart-protection-card"
-                    id="cart-protection-container"
-                  >
-                    <div className="cart-upsell-header">
-                      <div className="cart-upsell-badge cart-protection-badge">
-                        <ShieldCheck size={12} strokeWidth={2.5} />
-                        <span>Shipping Guarantee</span>
-                      </div>
-                    </div>
-                    <div className="cart-upsell-body">
-                      <div className="cart-upsell-media">
-                        <Link
-                          href="/products/miroooo-package-protection"
-                          className="cart-upsell-media-link"
-                          aria-label="View Miroooo Package Protection details"
-                        >
-                          <img
-                            src="/assets_ref/gifts/miroooo-package-protection-transit-guarantee.webp"
-                            width={72}
-                            height={72}
-                            alt="Miroooo Package Protection against transit damage, loss, or theft"
-                          />
-                        </Link>
-                      </div>
-                      <div className="cart-upsell-content">
-                        <div className="cart-upsell-info">
-                          <h3 className="cart-upsell-title">
-                            <Link
-                              href="/products/miroooo-package-protection"
-                              className="cart-upsell-title-link"
-                            >
-                              Miroooo Package Protection
-                            </Link>
-                          </h3>
-                          <p className="cart-upsell-subtitle">
-                            Complete transit damage, loss, and doorstep theft guarantee.
-                          </p>
-                        </div>
-                        <div className="cart-upsell-action-row">
-                          <div className="cart-upsell-price-wrap">
-                            <span className="cart-upsell-price">£5</span>
-                          </div>
-                          <button
-                            type="button"
-                            className={`cart-upsell-add-btn ${isProtectionAdded ? "is-added" : ""}`}
-                            id="cart-protection-add-btn"
-                            disabled={isProtectionAdded}
-                            aria-label={
-                              isProtectionAdded
-                                ? "Miroooo Package Protection added to cart"
-                                : "Add Miroooo Package Protection to cart"
-                            }
-                            onClick={() => {
-                              if (!isProtectionAdded) {
-                                addItem({
-                                  productHandle: "miroooo-package-protection",
-                                  color: "Default",
-                                  quantity: 1,
-                                });
-                              }
-                            }}
-                          >
-                            <span className="btn-fill" />
-                            <span className="btn-text">
-                              {isProtectionAdded ? (
-                                <>
-                                  <Check size={13} strokeWidth={2.5} />
-                                  Added ✓
-                                </>
-                              ) : (
-                                <>
-                                  <Plus size={13} strokeWidth={2.5} />
-                                  Add
-                                </>
-                              )}
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })()}
             </div>
             <aside className="cart-sidebar-stack">
               <div className="cart-luxury-card">
@@ -451,6 +363,121 @@ export function CartPageContent() {
                     </div>
                   )}
                 </div>
+                {(() => {
+                  const isProtectionAdded = items.some(
+                    (item) => item.productHandle === "miroooo-package-protection"
+                  );
+                  return (
+                    <div
+                      className="cart-protection-optin"
+                      id="cart-package-protection-section"
+                      style={{
+                        padding: "12px 14px",
+                        marginBottom: "16px",
+                        background: "#ffffff",
+                        border: "1px solid rgba(0, 0, 0, 0.1)",
+                        borderRadius: "12px",
+                      }}
+                    >
+                      <label
+                        htmlFor="cart-package-protection-checkbox"
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "10px",
+                          cursor: "pointer",
+                          userSelect: "none",
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          id="cart-package-protection-checkbox"
+                          checked={isProtectionAdded}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              if (!isProtectionAdded) {
+                                addItem({
+                                  productHandle: "miroooo-package-protection",
+                                  color: "Default",
+                                  quantity: 1,
+                                });
+                              }
+                            } else {
+                              const protectionItem = items.find(
+                                (item) => item.productHandle === "miroooo-package-protection"
+                              );
+                              if (protectionItem) {
+                                removeItem(protectionItem.id);
+                              }
+                            }
+                          }}
+                          style={{
+                            marginTop: "3px",
+                            width: "18px",
+                            height: "18px",
+                            accentColor: "#000000",
+                            cursor: "pointer",
+                            flexShrink: 0,
+                          }}
+                        />
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              gap: "8px",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: "0.88rem",
+                                fontWeight: 700,
+                                color: "#000000",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "6px",
+                              }}
+                            >
+                              <ShieldCheck size={16} strokeWidth={2.2} style={{ color: "#16a34a" }} />
+                              Package Protection
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "0.88rem",
+                                fontWeight: 700,
+                                color: "#000000",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  textDecoration: "line-through",
+                                  color: "#888888",
+                                  fontSize: "0.78rem",
+                                  marginRight: "4px",
+                                }}
+                              >
+                                £5
+                              </span>
+                              <span>+£3</span>
+                            </span>
+                          </div>
+                          <p
+                            style={{
+                              margin: "2px 0 0",
+                              fontSize: "0.75rem",
+                              color: "#666666",
+                              lineHeight: 1.35,
+                            }}
+                          >
+                            Complete transit damage, loss & theft guarantee
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                  );
+                })()}
                 <div className="cart-subtotal-section">
                   <span className="cart-subtotal-label">SUBTOTAL</span>
                   <span

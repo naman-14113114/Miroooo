@@ -33,7 +33,9 @@ export function CartLines({
   return (
     <>
       {[
-        ...items.map((item) => ({
+        ...items
+          .filter((item) => item.productHandle !== "miroooo-package-protection")
+          .map((item) => ({
           ...item,
           comparePrice: item.comparePrice,
           subtitle:

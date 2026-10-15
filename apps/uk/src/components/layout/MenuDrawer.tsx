@@ -21,8 +21,8 @@ const sections = [
         eyebrow: "Flagship Pro",
         image:
           "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-upright-grip.webp",
-        price: 69,
-        comparePrice: 139,
+        price: 79,
+        comparePrice: 159,
       },
     ],
   },

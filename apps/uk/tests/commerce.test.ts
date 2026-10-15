@@ -99,8 +99,12 @@ function browserQuote(subtotal: number, discount = 0) {
 }
 
 test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', () => {
+  const x2Silver = { productHandle: 'miroooo-x2', variantId: PRODUCTS['miroooo-x2'].variants.find((v) => v.color === 'Silver')!.id, color: 'Silver', quantity: 1 };
+  const x1Pink = { productHandle: 'miroooo-x', variantId: PRODUCTS['miroooo-x'].variants.find((v) => v.color === 'Pink')!.id, color: 'Pink', quantity: 1 };
+
   // X2 tests
-  assert.equal(totals([x2Grey]).finalSubtotal, 69);
+  assert.equal(totals([x2Silver]).finalSubtotal, 79);
+  assert.equal(totals([x2Grey]).finalSubtotal, 99);
   assert.equal(totals([{ ...x2Grey, quantity: 2 }]).finalSubtotal, 128);
   assert.equal(totals([{ ...x2Grey, quantity: 3 }]).finalSubtotal, 177);
   assert.equal(totals([{ ...x2Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);
@@ -108,11 +112,12 @@ test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', ()
   assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 4);
   assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 3);
   assert.equal(totals([x2Grey]).unlockedGiftsCount, 2);
-  assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 62);
-  assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 79);
+  assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 89);
+  assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 109);
 
   // X1 tests
   assert.equal(totals([x1Grey]).finalSubtotal, 69);
+  assert.equal(totals([x1Pink]).finalSubtotal, 89);
   assert.equal(totals([{ ...x1Grey, quantity: 2 }]).finalSubtotal, 128);
   assert.equal(totals([{ ...x1Grey, quantity: 3 }]).finalSubtotal, 177);
   assert.equal(totals([{ ...x1Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);
@@ -174,12 +179,12 @@ const head = (model: 'x1' | 'x2', quantity = 1) => ({ productHandle: `miroooo-${
 for (const [label, lines, amount] of [
   ['both head models', [head('x1', 2), head('x2', 4)], 50],
   ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 276],
-  ['X2 five brushes', [{ ...x2Grey, quantity: 5 }], 345],
-  ['mixed brushes', [x1Grey, x2Grey], 138],
+  ['X2 five brushes', [{ ...x2Grey, quantity: 5 }], 495],
+  ['mixed brushes', [x1Grey, x2Grey], 168],
   ['brush and paid heads', [x1Grey, head('x2')], 79],
   ['two brushes plus paid heads outside bundle', [{ ...x2Grey, quantity: 2 }, head('x1')], 138],
   ['three brushes plus paid heads outside bundle', [{ ...x1Grey, quantity: 3 }, head('x2')], 187],
-  ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 217],
+  ['recording mixed cart', [{ ...x2Grey, quantity: 2 }, x1Grey, head('x1')], 277],
 ] as const) {
   test(`ordinary checkout accepts ${label} at original item prices`, async () => {
     const mock = mockStandardCheckout();

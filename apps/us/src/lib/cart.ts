@@ -120,8 +120,8 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
       subtitle: product.subtitle,
       color: variant.color,
       quantity,
-      unitPrice: product.price,
-      comparePrice: product.compareAt,
+      unitPrice: variant.price ?? product.price,
+      comparePrice: variant.compareAt ?? product.compareAt,
       image: variant.image,
       url: `/products/${product.handle}${isBrush ? `?color=${variant.color}` : ''}`,
     }];
@@ -156,8 +156,10 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     ) {
       const qty = item.quantity || 1;
       otherItemsQty += qty;
-      otherItemsCents += cents(item.unitPrice) * qty;
-      otherItemsCompareCents += cents(item.comparePrice || item.unitPrice) * qty;
+      const isPackageProtection = item.productHandle === 'miroooo-package-protection';
+      const effectiveUnitPrice = isPackageProtection ? 3 : item.unitPrice;
+      otherItemsCents += cents(effectiveUnitPrice) * qty;
+      otherItemsCompareCents += cents((item.comparePrice || (isPackageProtection ? 5 : item.unitPrice)) || 0) * qty;
     }
   });
 

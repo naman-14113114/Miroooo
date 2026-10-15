@@ -7,6 +7,11 @@ export interface ProductVariant {
   swatch: string;
   image: string;
   checkoutImage: string;
+  price?: number;
+  compareAt?: number;
+  formattedPrice?: string;
+  formattedCompareAt?: string;
+  discountBadge?: string;
 }
 
 export interface BundleTier {

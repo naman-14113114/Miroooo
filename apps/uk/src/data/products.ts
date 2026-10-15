@@ -5,6 +5,11 @@ export interface ProductVariant {
   swatch: string;
   image: string;
   checkoutImage: string;
+  price?: number;
+  compareAt?: number;
+  formattedPrice?: string;
+  formattedCompareAt?: string;
+  discountBadge?: string;
 }
 
 export interface BundleTier {
@@ -100,6 +105,11 @@ export const PRODUCTS: Record<string, Product> = {
         swatch: '#e5e5e5',
         image: '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp',
         checkoutImage: '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp',
+        price: 69.0,
+        compareAt: 139.0,
+        formattedPrice: '£69',
+        formattedCompareAt: '£139',
+        discountBadge: '50% OFF',
       },
       {
         id: '1000020700958564',
@@ -108,6 +118,11 @@ export const PRODUCTS: Record<string, Product> = {
         swatch: '#737373',
         image: '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp',
         checkoutImage: '/assets_ref/x/gallery/Miroooo_x_Grey-2.webp',
+        price: 69.0,
+        compareAt: 139.0,
+        formattedPrice: '£69',
+        formattedCompareAt: '£139',
+        discountBadge: '50% OFF',
       },
       {
         id: '1000020700958562',
@@ -116,6 +131,11 @@ export const PRODUCTS: Record<string, Product> = {
         swatch: '#f2a7b3',
         image: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
         checkoutImage: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
+        price: 89.0,
+        compareAt: 139.0,
+        formattedPrice: '£89',
+        formattedCompareAt: '£139',
+        discountBadge: '36% OFF',
       },
     ],
     bundles: [
@@ -208,10 +228,10 @@ export const PRODUCTS: Record<string, Product> = {
     subtitle: 'Dynamic 45° Bass sweep vibration & smart 360° red halo pressure feedback defense.',
     description:
       'Engineered with dynamic 45° Bass sweep vibration, smart 360° red halo pressure feedback defense, aerospace aluminium unibody, 90-day battery life, and luxury magnetic travel dock.',
-    price: 69.0,
-    compareAt: 139.0,
-    formattedPrice: '£69',
-    formattedCompareAt: '£139',
+    price: 79.0,
+    compareAt: 159.0,
+    formattedPrice: '£79',
+    formattedCompareAt: '£159',
     rating: 4.9,
     reviewCount: 4275,
     customerCount: '4,275',
@@ -225,6 +245,11 @@ export const PRODUCTS: Record<string, Product> = {
         swatch: '#e5e5e5',
         image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
         checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp',
+        price: 79.0,
+        compareAt: 159.0,
+        formattedPrice: '£79',
+        formattedCompareAt: '£159',
+        discountBadge: '50% OFF',
       },
       {
         id: '1000020700182883',
@@ -233,6 +258,11 @@ export const PRODUCTS: Record<string, Product> = {
         swatch: '#737373',
         image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp',
         checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp',
+        price: 99.0,
+        compareAt: 159.0,
+        formattedPrice: '£99',
+        formattedCompareAt: '£159',
+        discountBadge: '29% OFF',
       },
       {
         id: '1000020700182882',
@@ -241,16 +271,21 @@ export const PRODUCTS: Record<string, Product> = {
         swatch: '#f2a7b3',
         image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp',
         checkoutImage: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp',
+        price: 99.0,
+        compareAt: 159.0,
+        formattedPrice: '£99',
+        formattedCompareAt: '£159',
+        discountBadge: '29% OFF',
       },
     ],
     bundles: [
       {
         quantity: 1,
         name: 'BUY 1',
-        price: 69.0,
-        compareAt: 139.0,
-        formattedPrice: '£69',
-        formattedCompareAt: '£139',
+        price: 79.0,
+        compareAt: 159.0,
+        formattedPrice: '£79',
+        formattedCompareAt: '£159',
         freeHeadsCount: 1,
         savingText: '50% OFF',
         description: 'Includes 1 Miroooo X2 set & 1 FREE 2-Pack Brush Heads Set',

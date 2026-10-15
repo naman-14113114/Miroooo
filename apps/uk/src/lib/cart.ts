@@ -118,8 +118,8 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
       subtitle: product.subtitle,
       color: variant.color,
       quantity,
-      unitPrice: product.price,
-      comparePrice: product.compareAt,
+      unitPrice: variant.price ?? product.price,
+      comparePrice: variant.compareAt ?? product.compareAt,
       image: variant.image,
       url: `/products/${product.handle}${isBrush ? `?color=${variant.color}` : ''}`,
     }];
@@ -143,17 +143,31 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let otherItemsQty = 0;
   let otherItemsSubtotal = 0;
   let otherItemsCompareAt = 0;
+  let x2ItemSubtotal = 0;
+  let x1ItemSubtotal = 0;
+  let x2ItemCompare = 0;
+  let x1ItemCompare = 0;
 
   items.forEach((item) => {
     const qty = item.quantity || 1;
-    if (item.productHandle === 'miroooo-x2') x2Count += qty;
-    else if (item.productHandle === 'miroooo-x') x1Count += qty;
+    if (item.productHandle === 'miroooo-x2') {
+      x2Count += qty;
+      x2ItemSubtotal += (item.unitPrice || 79) * qty;
+      x2ItemCompare += (item.comparePrice || 159) * qty;
+    }
+    else if (item.productHandle === 'miroooo-x') {
+      x1Count += qty;
+      x1ItemSubtotal += (item.unitPrice || 69) * qty;
+      x1ItemCompare += (item.comparePrice || 139) * qty;
+    }
     else if (item.productHandle === 'miroooo-x2-heads') x2HeadsCount += qty;
     else if (item.productHandle === 'miroooo-x1-heads') x1HeadsCount += qty;
     else {
       otherItemsQty += qty;
-      otherItemsSubtotal += (item.unitPrice || 0) * qty;
-      otherItemsCompareAt += ((item.comparePrice || item.unitPrice) || 0) * qty;
+      const isPackageProtection = item.productHandle === 'miroooo-package-protection';
+      const effectiveUnitPrice = isPackageProtection ? 3 : (item.unitPrice || 0);
+      otherItemsSubtotal += effectiveUnitPrice * qty;
+      otherItemsCompareAt += ((item.comparePrice || (isPackageProtection ? 5 : item.unitPrice)) || 0) * qty;
     }
   });
 
@@ -166,15 +180,15 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = x2Count === 0 && (x1Count === 1 || x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: X2 brush 139, X1 brush 139, heads 20)
-  const x2Compare = x2Count * 139;
-  const x1Compare = x1Count * 139;
+  // Compare At calculations (base compare: X2 brush 159, X1 brush 139, heads 20)
+  const x2Compare = x2ItemCompare || (x2Count * 159);
+  const x1Compare = x1ItemCompare || (x1Count * 139);
   const x2HeadsCompare = x2HeadsCount * 20;
   const x1HeadsCompare = x1HeadsCount * 20;
   const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare + otherItemsCompareAt;
 
-  // Base 50% savings on brushes
-  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (139 - 69);
+  // Base savings on brushes (reference canonical: x1Count * 69, x2Count * 69)
+  const baseBrushCompareSavings = Math.max(0, (x2Compare - (x2Count === 1 ? x2ItemSubtotal : (x2Count === 2 ? 128 : (x2Count === 3 ? 177 : x2ItemSubtotal)))) + (x1Compare - (x1Count === 1 ? x1ItemSubtotal : (x1Count === 2 ? 128 : (x1Count === 3 ? 177 : x1ItemSubtotal)))));
   const baseHeadsCompareSavings = x2HeadsCount * (20 - 10) + x1HeadsCount * (20 - 10);
 
   let x2BundlePromoDiscount = 0;
@@ -241,8 +255,13 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const headsBundleDiscount = headsBase - headsNet;
   const headsBundleCount = x1HeadsCount || x2HeadsCount;
 
-  const x2Net = x2Count * 69 - x2BundlePromoDiscount;
-  const x1Net = x1Count * 69 - x1BundleDiscount;
+  // Net calculation per brush model (reference rule: x2Count * 69, x1Count * 69)
+  const x2Net = x1Count === 0
+    ? (x2Count === 1 ? x2ItemSubtotal : (x2Count === 2 ? 128 : (x2Count === 3 ? 177 : Math.max(0, x2ItemSubtotal - x2BundlePromoDiscount))))
+    : x2ItemSubtotal;
+  const x1Net = x2Count === 0
+    ? (x1Count === 1 ? x1ItemSubtotal : (x1Count === 2 ? 128 : (x1Count === 3 ? 177 : Math.max(0, x1ItemSubtotal - x1BundleDiscount))))
+    : x1ItemSubtotal;
   const brushSubtotal = Math.max(0, x2Net + x1Net);
   const subtotal = Math.max(0, brushSubtotal + headsNet + otherItemsSubtotal);
 

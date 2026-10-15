@@ -193,15 +193,20 @@ export function ProductHero({
   };
 
   // Pricing calculations
-  const singlePrice = 69;
-  const singleCompare = 139;
+  const activeColor = isSimpleBuybox ? selectedColor : (selectedTier === 'single' ? singleColor : selectedColor);
+  const activeVariant = product.variants.find((v) => v.color.toLowerCase() === (activeColor || '').toLowerCase()) || product.variants[0];
+  const singlePrice = activeVariant?.price ?? product.price;
+  const singleCompare = activeVariant?.compareAt ?? product.compareAt;
+  const singleDiscountBadge = activeVariant?.discountBadge ?? `${Math.round((1 - singlePrice / singleCompare) * 100)}% OFF`;
   const bundle2Price = 128;
   const bundle2Compare = 278;
   const bundle3Price = 177;
   const bundle3Compare = 417;
 
   const currentPrice =
-    selectedTier === 'single'
+    isSimpleBuybox
+      ? singlePrice * quantity
+      : selectedTier === 'single'
       ? singlePrice + (buy1HeadsChecked ? 10 : 0)
       : selectedTier === 'bundle-2'
       ? bundle2Price
@@ -736,9 +741,7 @@ export function ProductHero({
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                 <strong className="x2-urgency-banner__headline">
-                  {isX2
-                    ? 'Get Miroooo X2 at price of Miroooo X1 with free pair of heads for today only'
-                    : 'Free pair of brush heads for today only'}
+                  Free pair of brush heads for today only
                 </strong>
               </div>
             </div>
@@ -1020,7 +1023,7 @@ export function ProductHero({
                     id="main-discount-badge"
                     style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
                   >
-                    50% OFF
+                    {singleDiscountBadge}
                   </span>
                 </div>
               </div>
@@ -1197,7 +1200,7 @@ export function ProductHero({
                           </span>
                         </div>
                         <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
-                          50% OFF
+                          {singleDiscountBadge}
                         </span>
                       </div>
                     </div>
