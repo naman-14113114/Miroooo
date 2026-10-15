@@ -407,8 +407,8 @@ export const PRODUCTS: Record<string, Product> = {
     gifts: [],
     galleryImages: [
       { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Replacement Heads 2-Pack', width: 800, height: 800 },
-      { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Heads DuPont Bristles Detail', width: 800, height: 800 },
-      { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Heads Packaging', width: 800, height: 800 },
+      { src: '/assets_ref/x/heads/miroooo-x1-replacement-brush-head-in-hand.webp', alt: 'Miroooo X1 DuPont Replacement Brush Head In Hand', width: 800, height: 800 },
+      { src: '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-replacement-heads-counter.webp', alt: 'Miroooo X1 Replacement Heads on Bathroom Vanity Counter', width: 1254, height: 1254 },
     ],
     boxContents: [
       '2x Miroooo X1 Replacement Brush Heads',

@@ -458,19 +458,54 @@ export function ProductHero({
         } else if (
           src.includes('Silver-3.webp') ||
           src.includes('Pink-5.webp') ||
-          src.includes('Grey-5.webp') ||
-          src.includes('Sonic toothbrush floating on glossy black water-2')
+          src.includes('Grey-5.webp')
         ) {
           badge = {
             pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
             title: 'IPX7 100% Waterproof',
             sub: 'Shower-Safe & Fully Submersible',
           };
+        } else if (src.includes('Sonic toothbrush floating on glossy black water-2')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: 'IPX7 100% Waterproof',
+            sub: 'Shower-Safe & Fully Submersible',
+          };
+        } else if (src.includes('grey-twin-lava-rock.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: 'Aerospace<br>Aluminium Body',
+            sub: 'Precision CNC<br>Anodized Unibody',
+          };
         } else if (src.includes('grey-flat-lay-water-glass.webp')) {
           badge = {
-            pos: 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white',
+            pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
             title: '2 Free<br>Brush Heads',
             sub: 'Included Free For Today Only',
+          };
+        } else if (src.includes('grey-replacement-heads-counter.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+            title: '2 Free<br>Brush Heads',
+            sub: 'Included Free For Today Only',
+          };
+        } else if (src.includes('pink-lifestyle-in-hand.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+            title: '51g Ultra<br>Lightweight',
+            sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
+          };
+        } else if (src.includes('390f19e3-c9d8-4ec1-a9b0-4360f7860c48')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: '51g Ultra<br>Lightweight',
+            sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
+          };
+        } else if (src.includes('pink-beach-lifestyle.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+            title: 'Whisper-Quiet<br>Operation',
+            sub: 'Sub-50dB Acoustic<br>Sonic Motor',
           };
         } else if (
           src.includes('fast-charging-dock.webp') ||
@@ -485,7 +520,6 @@ export function ProductHero({
         } else if (
           src.includes('Hand-Holding-Branded-Silver-Toothbrush.webp') ||
           src.includes('Pink-hero.webp') ||
-          src.includes('pink-beach-lifestyle.webp') ||
           src.includes('Grey-hero.webp') ||
           src.includes('silver_5.webp')
         ) {
@@ -514,11 +548,18 @@ export function ProductHero({
           };
         } else if (src.includes('Silver-11.webp') || src.includes('Pink-8.webp')) {
           badge = {
-            pos: 'miroooo-infographic-badge--top-left max-w-[160px]',
+            pos: 'miroooo-infographic-badge--top-left max-w-[160px] miroooo-infographic-badge--white',
             title: 'DuPont™<br>Precision<br>Bristles',
             sub: 'End-Rounded For<br>Gentle Enamel Care',
           };
-        } else if (src.includes('3-cleaning-modes.webp') || src.includes('Pink-4.webp') || src.includes('Grey-8.webp')) {
+        } else if (src.includes('Grey-8.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
+            title: '3 Tailored<br>Clean Modes',
+            sub: 'Standard, Whitening &<br>Deep Clean Precision',
+          };
+          isModesBadge = false;
+        } else if (src.includes('3-cleaning-modes.webp') || src.includes('Pink-4.webp')) {
           badge = {
             pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: '3 Tailored<br>Clean Modes',
@@ -641,7 +682,11 @@ export function ProductHero({
           ? '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-beach-lifestyle.webp'
           : '/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp';
       }
-      if (col === 'grey') return '/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp';
+      if (col === 'grey') {
+        return isMirooooX1Route
+          ? '/assets_ref/x/gallery/Blue-grey-toothbrush-with-crisp-handle-inscription.webp'
+          : '/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp';
+      }
       return isMirooooX1Route
         ? '/assets_ref/x/gallery/Silver-toothbrush-beside-MIROOOO-Pulse-X1-box.webp'
         : '/assets_ref/x/gallery/Hand-Holding-Branded-Silver-Toothbrush.webp';
