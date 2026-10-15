@@ -30,7 +30,7 @@ export const x1Gallery = {
   Grey: {
     images: [
       "/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp",
-      "/assets_ref/x/gallery/Blue-grey-toothbrush-with-crisp-handle-inscription.webp",
+      "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp",
       "/assets_ref/x/gallery/Miroooo_x_Pink-video.mp4",
       "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
@@ -44,7 +44,7 @@ export const x1Gallery = {
     ],
     thumbnails: [
       "/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp",
-      "/assets_ref/x/gallery/Blue-grey-toothbrush-with-crisp-handle-inscription.webp",
+      "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp",
       "/assets_ref/x/gallery/Miroooo_x_Pink-3.webp",
       "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",

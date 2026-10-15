@@ -489,7 +489,7 @@ export function ProductHero({
           src.includes('grey-flat-lay-included-brush-heads')
         ) {
           badge = {
-            pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: '2 Free<br>Brush Heads',
             sub: 'Included Free For Today Only',
           };
@@ -513,7 +513,8 @@ export function ProductHero({
           };
         } else if (
           src.includes('390f19e3-c9d8-4ec1-a9b0-4360f7860c48') ||
-          src.includes('silver-51g-ultralight-wall')
+          src.includes('silver-51g-ultralight-wall') ||
+          src.includes('grey-dark-metallic-vanity')
         ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
@@ -532,7 +533,7 @@ export function ProductHero({
           src.includes('charging-dock')
         ) {
           badge = {
-            pos: 'miroooo-infographic-badge--top-left',
+            pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
             title: 'USB-C Fast<br>Charging',
             sub: 'Full 2-Hour Quick Charge<br>Universal Type-C Port',
           };
@@ -544,6 +545,15 @@ export function ProductHero({
         ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+            title: '60-Day Battery<br>Life',
+            sub: '2 Full Months Power<br>On A Single Charge',
+          };
+        } else if (
+          src.includes('pink-robe-routine-lifestyle') ||
+          src.includes('grey-set-branded-speckled-stone')
+        ) {
+          badge = {
+            pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: '60-Day Battery<br>Life',
             sub: '2 Full Months Power<br>On A Single Charge',
           };
@@ -559,11 +569,13 @@ export function ProductHero({
             title: 'Whisper-Quiet<br>Operation',
             sub: 'Sub-45dB Acoustic<br>Sonic Motor',
           };
-        } else if (
-          src.includes('Pink-2.webp') ||
-          src.includes('Grey-2.webp') ||
-          (src.includes('pink-robe-routine-lifestyle') && index === 9)
-        ) {
+        } else if (src.includes('Grey-2.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
+            title: 'Whisper-Quiet<br>Operation',
+            sub: 'Sub-45dB Acoustic<br>Sonic Motor',
+          };
+        } else if (src.includes('Pink-2.webp')) {
           badge = {
             pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: 'Whisper-Quiet<br>Operation',
@@ -582,18 +594,21 @@ export function ProductHero({
             sub: 'Standard, Whitening &<br>Deep Clean Precision',
           };
           isModesBadge = false;
-        } else if (src.includes('3-cleaning-modes.webp') || src.includes('Pink-4.webp')) {
+        } else if (src.includes('3-cleaning-modes.webp')) {
           badge = {
             pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: '3 Tailored<br>Clean Modes',
             sub: 'Standard, Whitening &<br>Deep Clean Precision',
           };
           isModesBadge = false;
-        } else if (
-          src.includes('aerospace-aluminium-body.webp') ||
-          src.includes('silver-aerospace-aluminium-body') ||
-          src.includes('Grey-4.webp')
-        ) {
+        } else if (src.includes('Pink-4.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white',
+            title: '3 Tailored<br>Clean Modes',
+            sub: 'Standard, Whitening &<br>Deep Clean Precision',
+          };
+          isModesBadge = false;
+        } else if (src.includes('Grey-4.webp')) {
           badge = {
             pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
             title: 'Aerospace<br>Aluminium Body',
@@ -711,7 +726,7 @@ export function ProductHero({
       }
       if (col === 'grey') {
         return isMirooooX1Route
-          ? '/assets_ref/x/gallery/Blue-grey-toothbrush-with-crisp-handle-inscription.webp'
+          ? '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp'
           : '/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp';
       }
       return isMirooooX1Route
