@@ -28,9 +28,10 @@ interface ProductPageProps {
   handle: string;
   searchParams?: { color?: string };
   isSimpleBuybox?: boolean;
+  isMirooooX1Route?: boolean;
 }
 
-export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: ProductPageProps) {
+export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMirooooX1Route = true }: ProductPageProps) {
   const defaultColor = handle === 'miroooo-x2' ? 'Silver' : 'Pink';
   const initialColor = ['Silver', 'Grey', 'Pink'].find((color) => color.toLowerCase() === searchParams?.color?.toLowerCase()) || defaultColor;
   const [selectedColor, setSelectedColor] = useState(initialColor);
@@ -84,6 +85,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false }: Pr
         initialColor={initialColor}
         onColorChange={setSelectedColor}
         isSimpleBuybox={isSimpleBuybox}
+        isMirooooX1Route={isMirooooX1Route}
       />
 
       <ShippingMarquee />

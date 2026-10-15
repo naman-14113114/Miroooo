@@ -31,7 +31,7 @@ interface ProductPageProps {
   isMirooooX1Route?: boolean;
 }
 
-export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMirooooX1Route = false }: ProductPageProps) {
+export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMirooooX1Route = true }: ProductPageProps) {
   const defaultColor = 'Silver';
   const initialColor = ['Silver', 'Grey', 'Pink'].find((color) => color.toLowerCase() === searchParams?.color?.toLowerCase()) || defaultColor;
   const [selectedColor, setSelectedColor] = useState(initialColor);

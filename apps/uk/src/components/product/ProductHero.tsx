@@ -42,7 +42,7 @@ export function ProductHero({
   initialColor = 'Silver',
   onColorChange,
   isSimpleBuybox = false,
-  isMirooooX1Route = false,
+  isMirooooX1Route = true,
 }: ProductHeroProps) {
   const router = useRouter();
   const { addItem, addBundle } = useCart();
@@ -538,9 +538,6 @@ export function ProductHero({
             sub: 'Full 2-Hour Quick Charge<br>Universal Type-C Port',
           };
         } else if (
-          src.includes('Hand-Holding-Branded-Silver-Toothbrush.webp') ||
-          src.includes('Pink-hero.webp') ||
-          src.includes('Grey-hero.webp') ||
           src.includes('silver-60-day-battery-counter')
         ) {
           badge = {
@@ -720,18 +717,12 @@ export function ProductHero({
       return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp';
     } else {
       if (col === 'pink') {
-        return isMirooooX1Route
-          ? '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-whisper-quiet-beach-lifestyle.webp'
-          : '/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp';
+        return '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-whisper-quiet-beach-lifestyle.webp';
       }
       if (col === 'grey') {
-        return isMirooooX1Route
-          ? '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp'
-          : '/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp';
+        return '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp';
       }
-      return isMirooooX1Route
-        ? '/assets_ref/x/gallery/Silver-toothbrush-beside-MIROOOO-Pulse-X1-box.webp'
-        : '/assets_ref/x/gallery/Hand-Holding-Branded-Silver-Toothbrush.webp';
+      return '/assets_ref/x/gallery/Silver-toothbrush-beside-MIROOOO-Pulse-X1-box.webp';
     }
   };
 

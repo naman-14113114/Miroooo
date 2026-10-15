@@ -1,92 +1,3 @@
-export const x1Gallery = {
-  Pink: {
-    images: [
-      "/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp",
-      "/assets_ref/x/gallery/Rose-Gold-Toothbrush-and-Pink-Retail-Packaging.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-video.mp4",
-      "/assets_ref/x/gallery/Rose-gold-toothbrush-on-MIROOOO-charging-dock.png",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-5.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-2.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-4.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-8.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp",
-      "/assets_ref/x/gallery/miroooo-video-1.mp4",
-    ],
-    thumbnails: [
-      "/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp",
-      "/assets_ref/x/gallery/Rose-Gold-Toothbrush-and-Pink-Retail-Packaging.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-3.webp",
-      "/assets_ref/x/gallery/Rose-gold-toothbrush-on-MIROOOO-charging-dock.png",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-5.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-2.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-4.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-8.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp",
-      "/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp",
-    ],
-  },
-  Grey: {
-    images: [
-      "/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp",
-      "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-video.mp4",
-      "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-5.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-4.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-8.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-11.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp",
-      "/assets_ref/x/gallery/miroooo-video-1.mp4",
-    ],
-    thumbnails: [
-      "/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp",
-      "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-3.webp",
-      "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-5.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-4.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Grey-8.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-11.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp",
-      "/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp",
-    ],
-  },
-  Silver: {
-    images: [
-      "/assets_ref/x/gallery/Hand-Holding-Branded-Silver-Toothbrush.webp",
-      "/assets_ref/x/gallery/Silver-toothbrush-beside-MIROOOO-Pulse-X1-box.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-video.mp4",
-      "/assets_ref/x/gallery/White-toothbrush-with-subtle-MIROOOO-dock-logo.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-3.webp",
-      "/assets_ref/x/gallery/waga-51g.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-2.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-11.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp",
-      "/assets_ref/x/gallery/miroooo-video-1.mp4",
-    ],
-    thumbnails: [
-      "/assets_ref/x/gallery/Hand-Holding-Branded-Silver-Toothbrush.webp",
-      "/assets_ref/x/gallery/Silver-toothbrush-beside-MIROOOO-Pulse-X1-box.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Pink-3.webp",
-      "/assets_ref/x/gallery/White-toothbrush-with-subtle-MIROOOO-dock-logo.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-3.webp",
-      "/assets_ref/x/gallery/waga-51g.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-2.webp",
-      "/assets_ref/x/gallery/Miroooo_x_Silver-11.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp",
-      "/assets_ref/x/gallery/miroooo-x-electric-toothbrush-video-thumbnail.webp",
-    ],
-  },
-} as const;
-
 export const x1GalleryMirooooX1 = {
   Pink: {
     images: [
@@ -257,4 +168,6 @@ export const x1GalleryMirooooX1 = {
     ],
   },
 } as const;
+
+export const x1Gallery = x1GalleryMirooooX1;
 
