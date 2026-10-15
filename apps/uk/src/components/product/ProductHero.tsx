@@ -457,6 +457,7 @@ export function ProductHero({
           };
         } else if (
           src.includes('Silver-3.webp') ||
+          src.includes('silver-twin-wet-stone') ||
           src.includes('Pink-5.webp') ||
           src.includes('Grey-5.webp')
         ) {
@@ -465,50 +466,68 @@ export function ProductHero({
             title: 'IPX7 100% Waterproof',
             sub: 'Shower-Safe & Fully Submersible',
           };
-        } else if (src.includes('Sonic toothbrush floating on glossy black water-2')) {
+        } else if (
+          src.includes('Sonic toothbrush floating on glossy black water-2') ||
+          src.includes('grey-ipx7-waterproof-floating')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
             title: 'IPX7 100% Waterproof',
             sub: 'Shower-Safe & Fully Submersible',
           };
-        } else if (src.includes('grey-twin-lava-rock.webp')) {
+        } else if (
+          src.includes('grey-twin-lava-rock.webp') ||
+          (src.includes('silver-grey-twin-lava-rock') && selectedColor === 'Grey')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
             title: 'Aerospace<br>Aluminium Body',
             sub: 'Precision CNC<br>Anodized Unibody',
           };
-        } else if (src.includes('grey-flat-lay-water-glass.webp')) {
+        } else if (
+          src.includes('grey-flat-lay-water-glass.webp') ||
+          src.includes('grey-flat-lay-included-brush-heads')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
             title: '2 Free<br>Brush Heads',
             sub: 'Included Free For Today Only',
           };
-        } else if (src.includes('grey-replacement-heads-counter.webp')) {
+        } else if (
+          src.includes('grey-replacement-heads-counter.webp') ||
+          src.includes('replacement-brush-heads-beside-retail-carton')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: '2 Free<br>Brush Heads',
             sub: 'Included Free For Today Only',
           };
-        } else if (src.includes('pink-lifestyle-in-hand.webp')) {
+        } else if (
+          src.includes('pink-lifestyle-in-hand.webp') ||
+          src.includes('pink-51g-ultralight-in-hand')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: '51g Ultra<br>Lightweight',
             sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
           };
-        } else if (src.includes('390f19e3-c9d8-4ec1-a9b0-4360f7860c48')) {
+        } else if (
+          src.includes('390f19e3-c9d8-4ec1-a9b0-4360f7860c48') ||
+          src.includes('silver-51g-ultralight-wall')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
             title: '51g Ultra<br>Lightweight',
             sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
           };
-        } else if (src.includes('pink-beach-lifestyle.webp')) {
+        } else if (src.includes('pink-whisper-quiet-beach-lifestyle')) {
           badge = {
             pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: 'Whisper-Quiet<br>Operation',
             sub: 'Sub-50dB Acoustic<br>Sonic Motor',
           };
         } else if (
-          src.includes('fast-charging-dock.webp') ||
+          src.includes('fast-charging-dock') ||
           src.includes('White-toothbrush-with-subtle-MIROOOO-dock-logo.webp') ||
           src.includes('charging-dock')
         ) {
@@ -521,7 +540,7 @@ export function ProductHero({
           src.includes('Hand-Holding-Branded-Silver-Toothbrush.webp') ||
           src.includes('Pink-hero.webp') ||
           src.includes('Grey-hero.webp') ||
-          src.includes('silver_5.webp')
+          src.includes('silver-60-day-battery-counter')
         ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
@@ -540,7 +559,11 @@ export function ProductHero({
             title: 'Whisper-Quiet<br>Operation',
             sub: 'Sub-45dB Acoustic<br>Sonic Motor',
           };
-        } else if (src.includes('Pink-2.webp') || src.includes('Grey-2.webp')) {
+        } else if (
+          src.includes('Pink-2.webp') ||
+          src.includes('Grey-2.webp') ||
+          (src.includes('pink-robe-routine-lifestyle') && index === 9)
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
             title: 'Whisper-Quiet<br>Operation',
@@ -566,7 +589,11 @@ export function ProductHero({
             sub: 'Standard, Whitening &<br>Deep Clean Precision',
           };
           isModesBadge = false;
-        } else if (src.includes('aerospace-aluminium-body.webp') || src.includes('Grey-4.webp')) {
+        } else if (
+          src.includes('aerospace-aluminium-body.webp') ||
+          src.includes('silver-aerospace-aluminium-body') ||
+          src.includes('Grey-4.webp')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
             title: 'Aerospace<br>Aluminium Body',
@@ -679,7 +706,7 @@ export function ProductHero({
     } else {
       if (col === 'pink') {
         return isMirooooX1Route
-          ? '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-beach-lifestyle.webp'
+          ? '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-whisper-quiet-beach-lifestyle.webp'
           : '/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp';
       }
       if (col === 'grey') {
@@ -1543,7 +1570,7 @@ export function ProductHero({
                       ))}
                       {selectedTier === 'single' && buy1HeadsChecked && (
                         <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                          <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
+                          <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
                         </div>
                       )}
                     </>

@@ -30,7 +30,7 @@ export function FreeGiftsSection({ isX2 = false }: FreeGiftsSectionProps) {
       id: 'brush-heads',
       title: '2x DuPont™ Brush Heads',
       regularPrice: '£20',
-      image: isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/B1.webp',
+      image: isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp',
       alt: isX2 ? '2x Authentic DuPont 45 Degree Bass Replacement Brush Heads' : '2x Authentic DuPont Precision Replacement Brush Heads',
       benefit: isX2
         ? 'Two authentic DuPont™ 45° Bass angled bristle heads with end-rounded enamel defense.'

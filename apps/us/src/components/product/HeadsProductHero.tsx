@@ -49,7 +49,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
         { src: '/assets_ref/x2/heads/B2.webp', alt: 'Miroooo X2 Heads Precision Bristles' },
       ]
     : [
-        { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Heads DuPont Pack' },
+        { src: '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp', alt: 'Miroooo X1 Heads DuPont Pack' },
       ];
 
   const basePrice = product.price || 10;
@@ -677,7 +677,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
             <div className="split-section-grid" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(2rem, 4vw, 4.5rem)' }}>
               <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
                 <div style={{ position: 'relative', width: '100%', borderRadius: '20px', overflow: 'hidden', background: '#0d0d0d', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }}>
-                  <img src={isX2 ? '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head.webp' : '/assets_ref/x/heads/B1.webp'} alt={`Miroooo ${isX2 ? 'X2' : 'X1'} Precision DuPont Replacement Bristle Head`} style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} loading="lazy" decoding="async" />
+                  <img src={isX2 ? '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head.webp' : '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp'} alt={`Miroooo ${isX2 ? 'X2' : 'X1'} Precision DuPont Replacement Bristle Head`} style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} loading="lazy" decoding="async" />
                 </div>
               </div>
 

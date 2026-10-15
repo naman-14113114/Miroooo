@@ -32,7 +32,7 @@
       ProductID: "1000000675471182",
       SKU: "MIROOOO-X1-HEADS-2PK",
       Categories: ["Brush Heads", "Oral Care"],
-      ImageURL: "https://www.trymiroooo.com/assets_ref/x/heads/B1.webp",
+      ImageURL: "https://www.trymiroooo.com/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
       URL: "https://www.trymiroooo.com/products/miroooo-x1-heads",
       Brand: "MIROOOO",
       Price: 10,

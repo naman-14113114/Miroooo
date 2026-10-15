@@ -24,7 +24,7 @@ export function CartLines({
       model: "X1",
       sets: totals.extraX1BrushHeadSets,
       handle: "miroooo-x1-heads",
-      image: "/assets_ref/x/heads/B1.webp",
+      image: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
     },
   ].filter((gift) => gift.sets > 0);
   const toothbrushCount = totals.x2Count + totals.x1Count;

@@ -184,7 +184,7 @@ export const PRODUCTS: Record<string, Product> = {
         value: 13.15,
         formattedValue: formatUSD(13.15),
         minimumQuantity: 2,
-        image: '/assets_ref/x/heads/B1.webp',
+        image: '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp',
         subtitle: 'DuPont precision replacement heads for Miroooo X1',
       },
     ],
@@ -357,8 +357,8 @@ export const PRODUCTS: Record<string, Product> = {
         name: 'Default',
         color: 'Default',
         swatch: '#888888',
-        image: '/assets_ref/x/heads/B1.webp',
-        checkoutImage: '/assets_ref/x/heads/B1.webp',
+        image: '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp',
+        checkoutImage: '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp',
       },
     ],
     bundles: [
@@ -414,9 +414,9 @@ export const PRODUCTS: Record<string, Product> = {
     ],
     gifts: [],
     galleryImages: [
-      { src: '/assets_ref/x/heads/B1.webp', alt: 'Miroooo X1 Replacement Heads 2-Pack', width: 800, height: 800 },
+      { src: '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp', alt: 'Miroooo X1 Replacement Heads 2-Pack', width: 800, height: 800 },
       { src: '/assets_ref/x/heads/miroooo-x1-replacement-brush-head-in-hand.webp', alt: 'Miroooo X1 DuPont Replacement Brush Head In Hand', width: 800, height: 800 },
-      { src: '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-replacement-heads-counter.webp', alt: 'Miroooo X1 Replacement Heads on Bathroom Vanity Counter', width: 1254, height: 1254 },
+      { src: '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp', alt: 'Miroooo X1 Replacement Heads on Bathroom Vanity Counter', width: 1254, height: 1254 },
     ],
     boxContents: [
       '2x Miroooo X1 Replacement Brush Heads',

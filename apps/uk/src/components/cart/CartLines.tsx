@@ -31,7 +31,7 @@ const INCLUDED_IN_BOX: Record<string, { name: string; image: string }[]> = {
     },
     {
       name: "2 Free Heads",
-      image: "/assets_ref/x/heads/B1.webp",
+      image: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
     },
   ],
   "miroooo-x1": [
@@ -45,7 +45,7 @@ const INCLUDED_IN_BOX: Record<string, { name: string; image: string }[]> = {
     },
     {
       name: "2 Free Heads",
-      image: "/assets_ref/x/heads/B1.webp",
+      image: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
     },
   ],
 };
@@ -146,7 +146,7 @@ export function CartLines({
       model: "X1",
       sets: totals.extraX1BrushHeadSets,
       handle: "miroooo-x1-heads",
-      image: "/assets_ref/x/heads/B1.webp",
+      image: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
     },
   ].filter((gift) => gift.sets > 0);
   const toothbrushCount = totals.x2Count + totals.x1Count;
