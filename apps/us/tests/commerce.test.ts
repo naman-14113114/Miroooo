@@ -115,7 +115,7 @@ test('X1 and X2 displayed USD offers, gifts, and post-bundle promo rounding', ()
 test('persisted cart prices and identities are rebuilt from canonical US products', () => {
   const [item] = normalizeCartItems([{ ...x1Grey, id: 'old-line', unitPrice: 1, comparePrice: 2, title: 'Stale', image: '/old.jpg', quantity: 2 }]);
   assert.equal(item.unitPrice, 91.15);
-  assert.equal(item.comparePrice, 0);
+  assert.equal(item.comparePrice, 129.88);
   assert.equal(item.title, 'Miroooo X1 (Grey)');
   assert.equal(item.image, PRODUCTS['miroooo-x'].variants[0].image);
   assert.equal(item.id, 'old-line');

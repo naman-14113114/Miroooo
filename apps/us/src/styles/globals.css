@@ -216,3 +216,65 @@ body:has(.product-page-root) .site-header__right .header__buttons { margin: 0 !i
   cursor: pointer !important;
 }
 
+/* Gallery thumbnail layout stability & checkmark guard */
+.miroooo-gallery__nav-wrap {
+  flex: 0 0 84px;
+  width: 84px;
+}
+.miroooo-gallery__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 440px;
+  max-height: 440px;
+}
+.miroooo-gallery__thumb {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+.miroooo-gallery__thumb .thumb-inner {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .miroooo-gallery__nav-wrap {
+    width: 100%;
+    flex-direction: row;
+  }
+  .miroooo-gallery__nav {
+    flex-direction: row;
+    height: auto;
+    max-height: none;
+  }
+  .miroooo-gallery__thumb {
+    width: 68px;
+    height: 68px;
+  }
+}
+.tier-addon-custom-check svg {
+  opacity: 0;
+}
+.tier-addon-checkbox:checked + .tier-addon-custom-check svg {
+  opacity: 1;
+}
+
+/* Product Hero Spacing: eliminate excessive section padding above urgency banner */
+#shopify-section-template--24203751129433__main-product {
+  padding-top: 16px !important;
+  margin-top: 0 !important;
+}
+
+#shopify-section-template--24203751129433__main-product .section,
+#shopify-section-template--24203751129433__main-product .section--padding {
+  padding-top: 0 !important;
+  padding-block-start: 0 !important;
+  padding-bottom: 0 !important;
+  padding-block-end: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+
+

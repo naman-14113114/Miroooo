@@ -163,15 +163,15 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = x2Count === 0 && (x1Count === 1 || x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: X2 brush 139, X1 brush 69, heads 20)
+  // Compare At calculations (base compare: X2 brush 139, X1 brush 139, heads 20)
   const x2Compare = x2Count * 139;
-  const x1Compare = x1Count * 69;
+  const x1Compare = x1Count * 139;
   const x2HeadsCompare = x2HeadsCount * 20;
   const x1HeadsCompare = x1HeadsCount * 20;
   const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare + otherItemsCompareAt;
 
-  // Base 50% savings on brushes (X1 has no compare-at markup)
-  const baseBrushCompareSavings = x2Count * (139 - 69);
+  // Base 50% savings on brushes
+  const baseBrushCompareSavings = x2Count * (139 - 69) + x1Count * (139 - 69);
   const baseHeadsCompareSavings = x2HeadsCount * (20 - 10) + x1HeadsCount * (20 - 10);
 
   let x2BundlePromoDiscount = 0;

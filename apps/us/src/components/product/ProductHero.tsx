@@ -70,7 +70,11 @@ export function ProductHero({
   const [urgencyTime, setUrgencyTime] = useState('09:15:54');
   // Delivery timer countdown
   const [deliveryCountdown, setDeliveryCountdown] = useState('14:38');
-  const [deliveryDateStr, setDeliveryDateStr] = useState('Friday 21 Aug');
+  const [deliveryDateStr, setDeliveryDateStr] = useState(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 5);
+    return targetDate.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' }).replace(',', '');
+  });
 
   const heroCtaRef = useRef<HTMLButtonElement | null>(null);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -550,7 +554,7 @@ export function ProductHero({
 
   return (
     <div id="shopify-section-template--24203751129433__main-product" className="shopify-section">
-      <div className="section section--padding section--rounded relative">
+      <div className="section section--padding section--rounded relative" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <div className="page-width relative">
           {isX2 && <div id="miroooo-x2-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
             <div className="x2-urgency-banner__left">
@@ -826,22 +830,18 @@ export function ProductHero({
               <div className="product__price grid gap-2 mt-1" id="main-product-price-section">
                 <div className="flex flex-wrap items-baseline gap-2" style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                    {!isX2 ? product.formattedPrice : formatUSD(singlePrice)}
+                    {formatUSD(singlePrice)}
                   </span>
-                  {isX2 && (
-                    <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
-                      {formatUSD(singleCompare)}
-                    </span>
-                  )}
-                  {isX2 && (
-                    <span
-                      className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
-                      id="main-discount-badge"
-                      style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
-                    >
-                      {savingPercent(singlePrice, singleCompare)}% OFF
-                    </span>
-                  )}
+                  <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
+                    {formatUSD(singleCompare)}
+                  </span>
+                  <span
+                    className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
+                    id="main-discount-badge"
+                    style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
+                  >
+                    {savingPercent(singlePrice, singleCompare)}% OFF
+                  </span>
                 </div>
               </div>
 
@@ -1009,19 +1009,15 @@ export function ProductHero({
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-single-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            {!isX2 ? product.formattedPrice : formatUSD(singlePrice)}
+                            {formatUSD(singlePrice)}
                           </span>
-                          {isX2 && (
-                            <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
-                              {formatUSD(singleCompare)}
-                            </span>
-                          )}
+                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                            {formatUSD(singleCompare)}
+                          </span>
                         </div>
-                        {isX2 && (
-                          <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
-                            {savingPercent(singlePrice, singleCompare)}% OFF
-                          </span>
-                        )}
+                        <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
+                          {savingPercent(singlePrice, singleCompare)}% OFF
+                        </span>
                       </div>
                     </div>
                   </button>
@@ -1070,7 +1066,7 @@ export function ProductHero({
                           aria-label="Add 2 brush heads"
                         />
                         <span className="tier-addon-custom-check" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: buy1HeadsChecked ? 1 : 0 }}>
                             <polyline points="20 6 9 17 4 12"></polyline>
                           </svg>
                         </span>

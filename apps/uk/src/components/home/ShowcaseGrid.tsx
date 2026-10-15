@@ -59,7 +59,7 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
           data-product-link
           aria-label={`View ${finish.name}`}
         >
-          {finish.formattedCompareAt && finish.handle !== 'miroooo-x' && (
+          {finish.formattedCompareAt && (
             <span className="badge badge--onsale">Save 50%</span>
           )}
           <div className="product-card__rating">
@@ -148,7 +148,7 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
         </h3>
         <div className="gb-product-card__price-wrap">
           <strong className="gb-product-card__price">{finish.formattedPrice}</strong>
-          {finish.formattedCompareAt && finish.handle !== 'miroooo-x' && (
+          {finish.formattedCompareAt && (
             <span className="gb-product-card__compare">{finish.formattedCompareAt}</span>
           )}
         </div>

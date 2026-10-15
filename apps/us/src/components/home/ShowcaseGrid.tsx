@@ -39,7 +39,7 @@ function FinishCard({ finish }: { finish: ShowcaseProductFinish }) {
   const images = finish.images || [];
   const totalSlides = images.length;
 
-  const hasCompare = Boolean(finish.formattedCompareAt && finish.compareAt > finish.price && finish.handle !== 'miroooo-x');
+  const hasCompare = Boolean(finish.formattedCompareAt && finish.compareAt > finish.price);
 
   return (
     <article className="gb-product-card reveal">

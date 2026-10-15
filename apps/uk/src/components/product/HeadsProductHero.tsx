@@ -32,7 +32,11 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
 
   // Delivery timer countdown
   const [deliveryCountdown, setDeliveryCountdown] = useState('14:38');
-  const [deliveryDateStr, setDeliveryDateStr] = useState('Friday 21 Aug');
+  const [deliveryDateStr, setDeliveryDateStr] = useState(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 5);
+    return targetDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' }).replace(',', '');
+  });
 
   const heroCtaRef = useRef<HTMLButtonElement | null>(null);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -165,7 +169,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
 
   return (
     <div id="shopify-section-template--24203751129433__main-product" className="shopify-section" style={{ paddingTop: 16, marginTop: 0, paddingBottom: 0, marginBottom: 0 }}>
-      <div className="section section--padding section--rounded relative">
+      <div className="section section--padding section--rounded relative" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <div className="page-width relative">
           <div className="featured-product product product--columns flex flex-col items-start lg:grid gap-5 w-full relative">
             {/* Gallery */}

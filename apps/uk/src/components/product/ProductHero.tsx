@@ -71,7 +71,11 @@ export function ProductHero({
   const [urgencyTime, setUrgencyTime] = useState('09:15:54');
   // Delivery timer countdown
   const [deliveryCountdown, setDeliveryCountdown] = useState('14:38');
-  const [deliveryDateStr, setDeliveryDateStr] = useState('Friday 21 Aug');
+  const [deliveryDateStr, setDeliveryDateStr] = useState(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 5);
+    return targetDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' }).replace(',', '');
+  });
 
   const heroSectionRef = useRef<HTMLDivElement | null>(null);
   const heroCtaRef = useRef<HTMLButtonElement | null>(null);
@@ -634,7 +638,7 @@ export function ProductHero({
 
   return (
     <div ref={heroSectionRef} id="shopify-section-template--24203751129433__main-product" className="shopify-section">
-      <div className="section section--padding section--rounded relative">
+      <div className="section section--padding section--rounded relative" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <div className="page-width relative">
           <div id="miroooo-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
             <div className="x2-urgency-banner__left">
@@ -918,20 +922,16 @@ export function ProductHero({
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
                     £{singlePrice}
                   </span>
-                  {isX2 && (
-                    <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
-                      £{singleCompare}
-                    </span>
-                  )}
-                  {isX2 && (
-                    <span
-                      className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
-                      id="main-discount-badge"
-                      style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
-                    >
-                      50% OFF
-                    </span>
-                  )}
+                  <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
+                    £{singleCompare}
+                  </span>
+                  <span
+                    className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
+                    id="main-discount-badge"
+                    style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
+                  >
+                    50% OFF
+                  </span>
                 </div>
               </div>
 
@@ -1102,17 +1102,13 @@ export function ProductHero({
                           <span className="font-bold text-base sm:text-lg" id="tier-single-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
                             £{singlePrice}
                           </span>
-                          {isX2 && (
-                            <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
-                              £{singleCompare}
-                            </span>
-                          )}
-                        </div>
-                        {isX2 && (
-                          <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
-                            50% OFF
+                          <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
+                            £{singleCompare}
                           </span>
-                        )}
+                        </div>
+                        <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
+                          50% OFF
+                        </span>
                       </div>
                     </div>
                   </button>
@@ -1161,7 +1157,7 @@ export function ProductHero({
                           aria-label="Add 2 brush heads"
                         />
                         <span className="tier-addon-custom-check" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: buy1HeadsChecked ? 1 : 0 }}>
                             <polyline points="20 6 9 17 4 12"></polyline>
                           </svg>
                         </span>

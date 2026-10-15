@@ -238,16 +238,12 @@ export function DentalQuiz() {
                       <strong style={{ fontSize: '22px', fontWeight: 900, color: '#111111' }}>
                         {formatGBP(isBundle ? recommendedProduct.price * 2 - 10 : recommendedProduct.price)}
                       </strong>
-                      {recommendedProduct.handle !== 'miroooo-x' && (
-                        <>
-                          <s style={{ fontSize: '14px', color: '#888888' }}>
-                            {formatGBP(isBundle ? recommendedProduct.compareAt * 2 : recommendedProduct.compareAt)}
-                          </s>
-                          <span style={{ fontSize: '12px', fontWeight: 800, color: '#15803d', background: 'rgba(21,128,61,0.1)', padding: '2px 8px', borderRadius: '4px' }}>
-                            Save 50%
-                          </span>
-                        </>
-                      )}
+                      <s style={{ fontSize: '14px', color: '#888888' }}>
+                        {formatGBP(isBundle ? recommendedProduct.compareAt * 2 : recommendedProduct.compareAt)}
+                      </s>
+                      <span style={{ fontSize: '12px', fontWeight: 800, color: '#15803d', background: 'rgba(21,128,61,0.1)', padding: '2px 8px', borderRadius: '4px' }}>
+                        Save 50%
+                      </span>
                     </div>
                   </div>
 

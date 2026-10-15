@@ -397,12 +397,10 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell miroooo-comp-cell--price">
                 <div>
                   <div style={{ color: '#15803d', fontSize: '1.25rem', fontWeight: 900 }}>{currentPrice}</div>
-                  {isX2 && oldPrice && (
+                  {oldPrice && (
                     <span style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'line-through' }}>{oldPrice}</span>
                   )}
-                  {isX2 && (
-                    <span style={{ fontSize: '0.62rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1 }}>(for today only)</span>
-                  )}
+                  <span style={{ fontSize: '0.62rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1 }}>(for today only)</span>
                 </div>
               </div>
             </div>
@@ -674,14 +672,12 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner miroooo-comp-m-val-cell--winner-last">
                   <div>
                     <div className="miroooo-comp-m-price-winner">{currentPrice}</div>
-                    {isX2 && oldPrice && (
+                    {oldPrice && (
                       <span className="miroooo-comp-m-price-old">{oldPrice}</span>
                     )}
-                    {isX2 && (
-                      <span style={{ fontSize: '0.58rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1, marginTop: '1px' }}>
-                        (for today only)
-                      </span>
-                    )}
+                    <span style={{ fontSize: '0.58rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1, marginTop: '1px' }}>
+                      (for today only)
+                    </span>
                   </div>
                 </div>
                 <div className="miroooo-comp-m-val-cell">
