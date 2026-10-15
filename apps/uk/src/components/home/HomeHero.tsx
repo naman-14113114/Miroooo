@@ -49,7 +49,7 @@ export function HomeHero() {
           </Link>
         </div>
       </div>
-      <a className="gb-scroll-cue" href="#finish-range-x2" aria-label="Continue to product showcase">
+      <a className="gb-scroll-cue" href="#finish-range" aria-label="Continue to product showcase">
         <span />
       </a>
     </section>
