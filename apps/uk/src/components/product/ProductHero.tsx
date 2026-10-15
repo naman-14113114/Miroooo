@@ -212,12 +212,12 @@ export function ProductHero({
         ? 'Add to Cart + Free 4 Brush Heads'
         : quantity === 3
         ? 'Add to Cart + Free 6 Brush Heads'
-        : 'Add to Cart + 2 Free Heads')
+        : 'Add to Cart + 2 Free Gifts')
     : (selectedTier === 'bundle-2'
         ? 'Add to Cart + Free 4 Brush Heads'
         : selectedTier === 'bundle-3'
         ? 'Add to Cart + Free 6 Brush Heads'
-        : (buy1HeadsChecked ? 'Add to Cart + 4 Heads' : 'Add to Cart + 2 Free Heads'));
+        : (buy1HeadsChecked ? 'Add to Cart + 4 Heads' : 'Add to Cart + 2 Free Gifts'));
 
   // Add to Cart handler
   const handleAddToCart = () => {
@@ -1428,7 +1428,7 @@ export function ProductHero({
                   </svg>
                 </div>
                 <div className="flex-1 text-xs sm:text-sm leading-snug" style={{ fontSize: '13px', lineHeight: 1.4 }}>
-                  Order within <strong className="font-mono font-bold" id="bundle-countdown-timer" style={{ color: '#ffffff', fontWeight: 700, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{deliveryCountdown}</strong> to receive it by <strong className="font-bold" id="bundle-delivery-date" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
+                  Order within <strong className="font-mono font-bold" id="bundle-countdown-timer" style={{ color: '#ffffff', fontWeight: 700, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{deliveryCountdown}</strong> to get as fast as <strong className="font-bold" id="bundle-delivery-date" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
                 </div>
 
                 {/* Tooltip / Question Mark Button */}

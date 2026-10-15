@@ -61,7 +61,9 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
     handle === 'miroooo-x2-heads' ||
     handle === 'wall-mounted-dock' ||
     handle === 'travel-case' ||
-    handle === 'x1-charger';
+    handle === 'x1-charger' ||
+    handle === 'miroooo-x1-charging-dock' ||
+    handle === 'x1-charging-dock';
   const isX2 = handle === 'miroooo-x2';
 
   if (isAccessory) {

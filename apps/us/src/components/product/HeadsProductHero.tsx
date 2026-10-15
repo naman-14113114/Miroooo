@@ -19,7 +19,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   const { addItem } = useCart();
   const isX2 = product.handle === 'miroooo-x2-heads';
   const isHeads = product.handle === 'miroooo-x1-heads' || product.handle === 'miroooo-x2-heads';
-  const isOutOfStock = product.handle === 'wall-mounted-dock' || product.handle === 'travel-case' || product.handle === 'x1-charger';
+  const isOutOfStock = product.handle === 'wall-mounted-dock' || product.handle === 'travel-case' || product.handle === 'x1-charger' || product.handle === 'miroooo-x1-charging-dock' || product.handle === 'x1-charging-dock';
 
   const [quantity, setQuantity] = useState(1);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
@@ -498,7 +498,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   </svg>
                 </div>
                 <div className="flex-1 text-xs sm:text-sm leading-snug" style={{ fontSize: '13px', lineHeight: 1.4 }}>
-                  Order within <strong className="font-mono font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryCountdown}</strong> to receive it by <strong className="font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
+                  Order within <strong className="font-mono font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryCountdown}</strong> to get as fast as <strong className="font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
                 </div>
                 <ShippingInfoTooltip isDark={true} />
               </div>

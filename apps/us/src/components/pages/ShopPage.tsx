@@ -115,7 +115,7 @@ const US_COLLECTION_PRODUCTS: CollectionProduct[] = [
   {
     id: 'x1-charger',
     handle: 'x1-charger',
-    name: 'X1 Fast Charger',
+    name: 'Miroooo X1 Charging Dock',
     category: 'accessories',
     eyebrow: 'Charging',
     description: 'Rapid magnetic induction charging dock with durable high-speed braided USB power cable.',
@@ -123,8 +123,8 @@ const US_COLLECTION_PRODUCTS: CollectionProduct[] = [
     compareAt: '$40',
     badge: 'SOLD OUT',
     isSoldOut: true,
-    image: '/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png',
-    link: '/products/x1-charger',
+    image: '/assets_ref/x/gallery/miroooo-x1-charging-dock.webp',
+    link: '/products/miroooo-x1-charging-dock',
     buttonText: 'Sold Out',
   },
   {

@@ -349,7 +349,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
               <div className="miroooo-comp-cell">Ultra-Light Weight</div>
               <div className="miroooo-comp-cell">Battery Life</div>
               <div className="miroooo-comp-cell">{isX2 ? 'Luxury travel case' : 'Free Travel Case'}</div>
-              <div className="miroooo-comp-cell">Wall-mounted storage</div>
+              <div className="miroooo-comp-cell">{isX2 ? 'Wall-mounted storage' : 'Charging dock'}</div>
               <div className="miroooo-comp-cell">Miroooo dental care app</div>
               <div className="miroooo-comp-cell">Aluminium Alloy Body</div>
               <div className="miroooo-comp-cell">Free Extra Brush Heads</div>
@@ -587,7 +587,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
 
             {/* Feature: Wall-mounted storage */}
             <div className="miroooo-comp-m-row-group">
-              <div className="miroooo-comp-m-feature-title">{isX2 ? 'Wall-mounted storage' : 'Aluminium Alloy Body'}</div>
+              <div className="miroooo-comp-m-feature-title">{isX2 ? 'Wall-mounted storage' : 'Charging dock'}</div>
               <div className="miroooo-comp-m-values-row">
                 <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>

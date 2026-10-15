@@ -59,11 +59,11 @@ const sections = [
         fallbackCompareAt: "$18",
       },
       {
-        handle: "x1-charger",
-        title: "X1 Fast Charger",
+        handle: "miroooo-x1-charging-dock",
+        title: "Miroooo X1 Charging Dock",
         eyebrow: "Charging",
         image:
-          "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
+          "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
         fallbackPrice: "$20",
         fallbackCompareAt: "$40",
       },

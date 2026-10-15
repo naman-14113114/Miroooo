@@ -26,8 +26,8 @@ const INCLUDED_IN_BOX: Record<string, { name: string; image: string }[]> = {
       image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
     },
     {
-      name: "Wall Mounted",
-      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp",
+      name: "Charging Dock",
+      image: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
     },
     {
       name: "2 Free Heads",
@@ -40,8 +40,8 @@ const INCLUDED_IN_BOX: Record<string, { name: string; image: string }[]> = {
       image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
     },
     {
-      name: "Wall Mounted",
-      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp",
+      name: "Charging Dock",
+      image: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
     },
     {
       name: "2 Free Heads",

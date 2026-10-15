@@ -48,7 +48,7 @@ function DeliveryBanner() {
   );
   const text = (
     <p className="cart-delivery-text">
-      Order in next <strong>{clock}</strong> and receive it by{" "}
+      Order in next <strong>{clock}</strong> to get as early as{" "}
       <strong>{date}</strong>
     </p>
   );

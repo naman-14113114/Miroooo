@@ -401,9 +401,9 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
   "x1-charger": {
     id: "x1-charger",
     handle: "x1-charger",
-    name: "Miroooo X1 Magnetic Fast Charger",
-    model: "X1 Charger",
-    headline: "High-speed magnetic inductive charging dock.",
+    name: "Miroooo X1 Charging Dock",
+    model: "X1 Charging Dock",
+    headline: "Minimalist magnetic inductive charging dock.",
     description:
       "Fast 2-hour full charge for 60+ days battery. High-speed magnetic inductive charging dock exclusively for Miroooo X1 Sonic Electric Toothbrush.",
     basePrice: 20.0,
@@ -417,8 +417,8 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         name: "Default",
         color: "Default",
         swatch: "#888888",
-        image: "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
-        checkoutImage: "/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png",
+        image: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
+        checkoutImage: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
       },
     ],
     specs: [
@@ -638,7 +638,7 @@ export function getProduct(handle: string): ProductCatalogItem | undefined {
   if (handle === "miroooo_x2") return PRODUCTS["miroooo-x2"];
   if (handle === "wall_mounted_dock") return PRODUCTS["wall-mounted-dock"];
   if (handle === "travel_case") return PRODUCTS["travel-case"];
-  if (handle === "x1_charger") return PRODUCTS["x1-charger"];
+  if (handle === "x1_charger" || handle === "miroooo-x1-charging-dock" || handle === "x1-charging-dock" || handle === "charging-dock") return PRODUCTS["x1-charger"];
   return PRODUCTS[handle];
 }
 

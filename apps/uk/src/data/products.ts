@@ -619,8 +619,8 @@ export const PRODUCTS: Record<string, Product> = {
   'x1-charger': {
     id: 'x1-charger',
     handle: 'x1-charger',
-    name: 'Miroooo X1 Magnetic Fast Charger',
-    model: 'X1 Charger',
+    name: 'Miroooo X1 Charging Dock',
+    model: 'X1 Charging Dock',
     headline: 'High-speed magnetic inductive charging dock.',
     subtitle: 'Fast 2-hour full charge for 60+ days battery.',
     description:
@@ -640,8 +640,8 @@ export const PRODUCTS: Record<string, Product> = {
         name: 'Default',
         color: 'Default',
         swatch: '#888888',
-        image: '/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png',
-        checkoutImage: '/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png',
+        image: '/assets_ref/x/gallery/miroooo-x1-charging-dock.webp',
+        checkoutImage: '/assets_ref/x/gallery/miroooo-x1-charging-dock.webp',
       },
     ],
     bundles: [],
@@ -659,6 +659,7 @@ export const PRODUCTS: Record<string, Product> = {
     ],
     gifts: [],
     galleryImages: [
+      { src: '/assets_ref/x/gallery/miroooo-x1-charging-dock.webp', alt: 'Miroooo X1 Charging Dock Receptacle and USB Cable', width: 800, height: 800 },
       { src: '/assets_ref/x/gallery/MIROOOO-toothbrush-on-white-charging-dock.png', alt: 'Miroooo Toothbrush on White Charging Dock', width: 800, height: 800 },
       { src: '/assets_ref/x/gallery/Rose-gold-toothbrush-on-MIROOOO-charging-dock.png', alt: 'Rose Gold Toothbrush on Miroooo Charging Dock', width: 800, height: 800 },
       { src: '/assets_ref/x/gallery/White-toothbrush-with-subtle-MIROOOO-dock-logo.webp', alt: 'White Toothbrush with Subtle Miroooo Dock Logo', width: 800, height: 800 },
@@ -800,7 +801,7 @@ export function getProduct(handle: string): Product | undefined {
   if (handle === 'miroooo_x2') return PRODUCTS['miroooo-x2'];
   if (handle === 'wall_mounted_dock') return PRODUCTS['wall-mounted-dock'];
   if (handle === 'travel_case') return PRODUCTS['travel-case'];
-  if (handle === 'x1_charger') return PRODUCTS['x1-charger'];
+  if (handle === 'x1_charger' || handle === 'miroooo-x1-charging-dock' || handle === 'x1-charging-dock' || handle === 'charging-dock') return PRODUCTS['x1-charger'];
   if (handle === 'miroooo_gift_card' || handle === 'gift_card' || handle === 'gift-card' || handle === 'giftcard') return PRODUCTS['miroooo-gift-card'];
   if (handle === 'miroooo_package_protection' || handle === 'package_protection' || handle === 'package-protection' || handle === 'packageprotection') return PRODUCTS['miroooo-package-protection'];
   return PRODUCTS[handle];
