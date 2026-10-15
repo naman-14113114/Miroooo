@@ -455,11 +455,22 @@ export function ProductHero({
             title: 'Free Luxury<br>Travel Case',
             sub: 'Travel-Friendly Slim Case<br>Included For On-The-Go Care',
           };
-        } else if (src.includes('Silver-3.webp') || src.includes('Pink-5.webp') || src.includes('Grey-5.webp')) {
+        } else if (
+          src.includes('Silver-3.webp') ||
+          src.includes('Pink-5.webp') ||
+          src.includes('Grey-5.webp') ||
+          src.includes('Sonic toothbrush floating on glossy black water-2')
+        ) {
           badge = {
             pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
             title: 'IPX7 100% Waterproof',
             sub: 'Shower-Safe & Fully Submersible',
+          };
+        } else if (src.includes('grey-flat-lay-water-glass.webp')) {
+          badge = {
+            pos: 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white',
+            title: '2 Free<br>Brush Heads',
+            sub: 'Included Free For Today Only',
           };
         } else if (
           src.includes('fast-charging-dock.webp') ||
@@ -476,8 +487,7 @@ export function ProductHero({
           src.includes('Pink-hero.webp') ||
           src.includes('pink-beach-lifestyle.webp') ||
           src.includes('Grey-hero.webp') ||
-          src.includes('silver_5.webp') ||
-          src.includes('390f19e3-c9d8-4ec1-a9b0-4360f7860c48')
+          src.includes('silver_5.webp')
         ) {
           badge = {
             pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
@@ -632,7 +642,9 @@ export function ProductHero({
           : '/assets_ref/x/gallery/Miroooo_x_Pink-hero.webp';
       }
       if (col === 'grey') return '/assets_ref/x/gallery/Miroooo_x_Grey-hero.webp';
-      return '/assets_ref/x/gallery/Hand-Holding-Branded-Silver-Toothbrush.webp';
+      return isMirooooX1Route
+        ? '/assets_ref/x/gallery/Silver-toothbrush-beside-MIROOOO-Pulse-X1-box.webp'
+        : '/assets_ref/x/gallery/Hand-Holding-Branded-Silver-Toothbrush.webp';
     }
   };
 
