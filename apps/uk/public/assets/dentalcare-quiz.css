@@ -1343,6 +1343,106 @@ body[data-page="dentalcare-quiz"] {
   .results-secondary-row .button {
     width: 100% !important;
   }
+
+  /* Quiz Results Mobile Centering & Image Radius */
+  .quiz-results-card {
+    padding: 20px 14px !important;
+    text-align: center !important;
+  }
+
+  .quiz-results-box {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 20px 16px !important;
+    gap: 16px !important;
+    border-radius: 18px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .quiz-results-media {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin-bottom: 4px !important;
+  }
+
+  .quiz-results-img {
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 190px !important;
+    object-fit: contain !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    margin: 0 auto 12px auto !important;
+    display: block !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .quiz-results-pricing {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+
+  .quiz-results-details {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .quiz-highlights-title {
+    text-align: center !important;
+    margin: 6px 0 12px 0 !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    width: 100% !important;
+  }
+
+  .quiz-highlights-list {
+    display: block !important;
+    text-align: left !important;
+    margin: 0 auto 18px auto !important;
+    padding-left: 20px !important;
+    max-width: 290px !important;
+    width: fit-content !important;
+    box-sizing: border-box !important;
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+  }
+
+  .quiz-highlights-list li {
+    margin-bottom: 6px !important;
+  }
+
+  .quiz-results-actions {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+
+  .quiz-results-actions .button {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+}
+
 /* Specific Refinements for Very Narrow Phones (< 400px / 360px viewport) */
 @media (max-width: 400px) {
   .quiz-card-container {
@@ -1387,6 +1487,20 @@ body[data-page="dentalcare-quiz"] {
 
   .quiz-controls .button--primary {
     padding: 8px 12px !important;
+    font-size: 12.5px !important;
+  }
+
+  .quiz-results-box {
+    padding: 16px 12px !important;
+  }
+
+  .quiz-results-img {
+    max-height: 170px !important;
+    border-radius: 12px !important;
+  }
+
+  .quiz-highlights-list {
+    max-width: 260px !important;
     font-size: 12.5px !important;
   }
 }

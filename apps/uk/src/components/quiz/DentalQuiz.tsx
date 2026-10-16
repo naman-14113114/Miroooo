@@ -47,15 +47,7 @@ export function DentalQuiz() {
   };
 
   // Determine recommendation
-  const isX2Recommended =
-    answers.goal === 'plaque-tartar' ||
-    answers.goal === 'sensitive-gums' ||
-    answers.sensitivity === 'heavy-sensitive' ||
-    answers.sensitivity === 'active-feedback' ||
-    answers.lifestyle === 'frequent-travel' ||
-    answers.lifestyle === 'shower-brushing';
-
-  const recommendedProduct = isX2Recommended ? PRODUCTS['miroooo-x2'] : PRODUCTS['miroooo-x'];
+  const recommendedProduct = PRODUCTS['miroooo-x'];
   const isBundle = answers.finish === 'bundle-two';
   const recommendedColor =
     answers.finish === 'pink' ? 'Pink' : answers.finish === 'grey' ? 'Grey' : 'Silver';
@@ -216,6 +208,7 @@ export function DentalQuiz() {
                 </div>
 
                 <div
+                  className="quiz-results-box"
                   style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
@@ -228,13 +221,14 @@ export function DentalQuiz() {
                     marginBottom: '24px',
                   }}
                 >
-                  <div style={{ textAlign: 'center' }}>
+                  <div className="quiz-results-media" style={{ textAlign: 'center' }}>
                     <img
                       src={productImage}
                       alt={recommendedProduct.name}
+                      className="quiz-results-img"
                       style={{ width: '100%', maxHeight: '220px', objectFit: 'contain', margin: '0 auto 12px' }}
                     />
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                    <div className="quiz-results-pricing" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                       <strong style={{ fontSize: '22px', fontWeight: 900, color: '#111111' }}>
                         {formatGBP(isBundle ? recommendedProduct.price * 2 - 10 : recommendedProduct.price)}
                       </strong>
@@ -247,17 +241,17 @@ export function DentalQuiz() {
                     </div>
                   </div>
 
-                  <div>
-                    <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#111111', margin: '0 0 10px 0' }}>
+                  <div className="quiz-results-details">
+                    <h3 className="quiz-highlights-title" style={{ fontSize: '16px', fontWeight: 700, color: '#111111', margin: '0 0 10px 0' }}>
                       Key Tailored Highlights
                     </h3>
-                    <ul style={{ margin: '0 0 16px 0', paddingLeft: '20px', fontSize: '13.5px', color: '#444444', lineHeight: 1.7 }}>
+                    <ul className="quiz-highlights-list" style={{ margin: '0 0 16px 0', paddingLeft: '20px', fontSize: '13.5px', color: '#444444', lineHeight: 1.7 }}>
                       {recommendedProduct.highlights.map((h) => (
                         <li key={h}>{h}</li>
                       ))}
                     </ul>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div className="quiz-results-actions" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <button
                         type="button"
                         className="button button--primary"
