@@ -34,7 +34,7 @@ export function RouteChrome({
   const isCart = pathname === '/cart';
   const isHome = pathname === '/';
   const isCoach = pathname === '/pages/smile-coach';
-  const referenceStyle = isCart ? '/assets/cart-reference.css' : isHome
+  const referenceStyle = isHome
     ? '/assets/home-reference.css'
     : pathname === '/about-us' || pathname === '/pages/about-us'
       ? '/assets/about-reference.css'

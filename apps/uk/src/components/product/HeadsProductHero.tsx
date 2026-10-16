@@ -79,6 +79,10 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    router.prefetch('/cart');
+  }, [router]);
+
   // Sticky Bar Scroll Observer
   useEffect(() => {
     if (isOutOfStock) return;

@@ -688,6 +688,10 @@ export function ProductHero({
     return () => window.removeEventListener('keydown', onKey);
   }, [isLightboxOpen, totalSlides]);
 
+  useEffect(() => {
+    router.prefetch('/cart');
+  }, [router]);
+
 
   // Touch handlers for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {

@@ -23,6 +23,10 @@ export function StickyBuyBox({ product }: StickyBuyBoxProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    router.prefetch('/cart');
+  }, [router]);
+
   if (!isVisible) return null;
 
   return (

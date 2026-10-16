@@ -1,5 +1,6 @@
 /* Miroooo Luxury Pure Dark Cart Page Palette */
-    body[data-page="cart"] {
+    body[data-page="cart"],
+    .cart-page {
       background-color: #080909;
       color: #ffffff;
       min-height: 100vh;
@@ -7,7 +8,8 @@
 
     /* Minimal Centered Cart Header */
     body[data-page="cart"] .site-header,
-    body[data-page="cart"] .site-header--cart {
+    body[data-page="cart"] .site-header--cart,
+    .site-header--cart {
       position: sticky !important;
       top: 0 !important;
       z-index: 1000 !important;
@@ -23,7 +25,8 @@
     }
 
     body[data-page="cart"] .site-header .header__logo,
-    body[data-page="cart"] .site-header--cart .header__logo {
+    body[data-page="cart"] .site-header--cart .header__logo,
+    .site-header--cart .header__logo {
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
@@ -621,6 +624,110 @@
       font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+    }
+
+    /* Included in the Box Accordion & Cards */
+    .cart-line-item__media,
+    .miroooo-cart-item-thumb {
+      align-self: flex-start;
+    }
+
+    .cart-line-included,
+    .miroooo-cart-included {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      width: 100%;
+    }
+
+    .cart-line-included__btn,
+    .miroooo-cart-included__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s ease;
+      line-height: 1;
+    }
+
+    .cart-line-included__btn:hover,
+    .miroooo-cart-included__btn:hover {
+      color: #111827;
+    }
+
+    .cart-line-included__chevron,
+    .miroooo-cart-included__chevron {
+      color: #6b7280;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .cart-line-included__chevron.is-open,
+    .miroooo-cart-included__chevron.is-open {
+      transform: rotate(180deg);
+    }
+
+    .cart-line-included__grid,
+    .miroooo-cart-included__grid {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cart-line-included__card,
+    .miroooo-cart-included__card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1 1 0;
+      min-width: 56px;
+      max-width: 76px;
+    }
+
+    .cart-line-included__thumb,
+    .miroooo-cart-included__thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 10px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .cart-line-included__thumb img,
+    .miroooo-cart-included__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 9px;
+    }
+
+    .cart-line-included__label,
+    .miroooo-cart-included__label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #374151;
+      line-height: 1.2;
+      text-align: center;
+      margin-top: 6px;
+      word-break: break-word;
     }
 
     /* 5. Right Column: Sticky Sidebar */

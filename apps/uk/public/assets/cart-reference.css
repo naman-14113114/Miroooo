@@ -1,5 +1,6 @@
 /* Miroooo Luxury Pure Dark Cart Page Palette */
-    body[data-page="cart"] {
+    body[data-page="cart"],
+    .cart-page {
       background-color: #080909;
       color: #ffffff;
       min-height: 100vh;
@@ -7,7 +8,8 @@
 
     /* Minimal Centered Cart Header */
     body[data-page="cart"] .site-header,
-    body[data-page="cart"] .site-header--cart {
+    body[data-page="cart"] .site-header--cart,
+    .site-header--cart {
       position: sticky !important;
       top: 0 !important;
       z-index: 1000 !important;
@@ -23,7 +25,8 @@
     }
 
     body[data-page="cart"] .site-header .header__logo,
-    body[data-page="cart"] .site-header--cart .header__logo {
+    body[data-page="cart"] .site-header--cart .header__logo,
+    .site-header--cart .header__logo {
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
