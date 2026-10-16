@@ -71,8 +71,8 @@ button { color: inherit; }
 .x1-package .page-width { box-sizing: border-box; width: 100%; max-width: none; margin: 0; padding-inline: 20px; }
 .x1-package .image-with-text { display: flex; flex-direction: column; width: 100%; }
 .x1-package .image-with-text__item { width: 100%; min-width: 0; }
-.x1-package .image-with-text__media { width: 100%; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 14px; }
-.x1-package .image-with-text__media img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+.x1-package .image-with-text__media { width: 100%; max-width: 580px; margin: 0 auto; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px; }
+.x1-package .image-with-text__media img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 14px; }
 .x1-package .x1-package__text { display: flex; align-items: center; }
 .x1-package .rich-text { width: 100%; padding: 40px 0 0 !important; text-align: center; }
 .x1-package .rich-text h2 { font-size: 23px; line-height: 23px; font-weight: 600; margin-bottom: 30px; }

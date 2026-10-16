@@ -17,7 +17,7 @@ export function PackageContents({ isX2 = true, color = 'Silver' }: PackageConten
             <div className="image-with-text">
               <div className="image-with-text__item">
                 <div className="image-with-text__media">
-                  <img src="/assets_ref/x/miroooo-x-package-box.webp" alt="Package Contents" width="1000" height="667" loading="lazy" decoding="async" />
+                  <img src="/assets_ref/x/miroooo-x1-sonic-electric-toothbrush-package-contents-kit-flat-lay.webp" alt="Miroooo X1 Sonic Electric Toothbrush Package Contents &amp; Flat Lay Kit" width="1254" height="1254" loading="lazy" decoding="async" />
                 </div>
               </div>
               <div className="image-with-text__item x1-package__text">
@@ -37,7 +37,7 @@ export function PackageContents({ isX2 = true, color = 'Silver' }: PackageConten
 
   const imgSrc = isX2
     ? (x2Gallery[color as keyof typeof x2Gallery] || x2Gallery.Silver).packagingImage
-    : '/assets_ref/x/miroooo-x-package-box.webp';
+    : '/assets_ref/x/miroooo-x1-sonic-electric-toothbrush-package-contents-kit-flat-lay.webp';
 
   const desc = isX2
     ? 'Miroooo X2 electric toothbrush in selected finish, 2x DuPont replacement brush heads, Luxury travel case, wall-mounted storage dock, and USB-C charging cable (adapter not included).'
