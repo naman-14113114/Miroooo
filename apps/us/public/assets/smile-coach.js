@@ -17,7 +17,7 @@
   const modelAssets = {
     x: {
       label: "Miroooo X",
-      today: "/assets_ref/x/gallery/Miroooo_x_Silver-1.webp",
+      today: "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp",
       care: "/assets_ref/x/gallery/Miroooo_x_Silver-5.webp"
     },
     x2: {

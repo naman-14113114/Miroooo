@@ -10,7 +10,7 @@
       ProductID: "1000000675113473",
       SKU: "MIROOOO-X1",
       Categories: ["Electric Toothbrushes", "Oral Care"],
-      ImageURL: "https://www.trymiroooo.com/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
+      ImageURL: "https://www.trymiroooo.com/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp",
       URL: "https://www.trymiroooo.com/products/miroooo-x",
       Brand: "MIROOOO",
       Price: 69,

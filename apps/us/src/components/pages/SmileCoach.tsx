@@ -183,7 +183,7 @@ export function SmileCoach() {
   const modelImage =
     (profile?.model || model) === 'x2'
       ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp'
-      : '/assets_ref/x/gallery/Miroooo_x_Silver-1.webp';
+      : '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp';
 
   const zoneNames = ['Upper right', 'Upper left', 'Lower left', 'Lower right'];
   const progressDeg = Math.round(((120 - timerSecondsLeft) / 120) * 360);
@@ -252,7 +252,7 @@ export function SmileCoach() {
                       />
                       <span className="model-option__media">
                         <img
-                          src="/assets_ref/x/gallery/Miroooo_x_Silver-1.webp"
+                          src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp"
                           alt="Silver Miroooo X toothbrush"
                           width={900}
                           height={1200}

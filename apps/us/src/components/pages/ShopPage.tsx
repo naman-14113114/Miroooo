@@ -48,7 +48,7 @@ const US_COLLECTION_PRODUCTS: CollectionProduct[] = [
     compareAt: '$139',
     badge: '50% OFF',
     isSoldOut: false,
-    image: '/assets_ref/x/gallery/Miroooo_x_Pink-1.webp',
+    image: '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp',
     link: '/products/miroooo-x',
     buttonText: 'Choose Miroooo X1',
   },

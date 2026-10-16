@@ -936,7 +936,7 @@ ${tickerItemSet.repeat(12)}
                 <li>
                   <a href="/products/miroooo-x" class="shop-drawer__card" data-shop-item="brush-x1">
                     <div class="shop-drawer__thumb">
-                      <img src="/assets_ref/x/gallery/Miroooo_x_Pink-1.webp" alt="Miroooo X1" width="140" height="140" loading="lazy" />
+                      <img src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp" alt="Miroooo X1" width="140" height="140" loading="lazy" />
                     </div>
                     <div class="shop-drawer__info">
                       <span class="shop-drawer__eyebrow">The Essential</span>
@@ -1687,7 +1687,7 @@ ${tickerItemSet.repeat(12)}
                 quantity: qty,
                 unitPrice: item.unitPrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : 69),
                 comparePrice: item.comparePrice || (h === "miroooo-x1-heads" || h === "miroooo-x2-heads" ? 10 : 139),
-                image: item.image || (h === "miroooo-x2-heads" ? "/assets_ref/x2/heads/B1.webp" : (h === "miroooo-x1-heads" ? "/assets_ref/x/heads/1.webp" : (h === "miroooo-x2" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp" : "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp"))),
+                image: item.image || (h === "miroooo-x2-heads" ? "/assets_ref/x2/heads/B1.webp" : (h === "miroooo-x1-heads" ? "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp" : (h === "miroooo-x2" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp" : "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-retail-packaging.webp"))),
                 url: item.url || `/products/${h}`
               };
             });
@@ -1744,7 +1744,7 @@ ${tickerItemSet.repeat(12)}
                 : (normColor === "Pink" ? "1000020700958562" : (normColor === "Silver" ? "1000020700958563" : "1000020700958564"));
               const img = isX2
                 ? (normColor === "Pink" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp" : (normColor === "Silver" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp" : "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp"))
-                : (normColor === "Pink" ? "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp" : (normColor === "Silver" ? "/assets_ref/x/gallery/Miroooo_x_Silver-1.webp" : "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp"));
+                : (normColor === "Pink" ? "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-retail-packaging.webp" : (normColor === "Silver" ? "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp" : "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-retail-packaging.webp"));
 
               items.push({
                 id: `${handle}:${normColor}`,
@@ -1877,7 +1877,7 @@ ${tickerItemSet.repeat(12)}
             : (color === "Pink" ? "1000020700958562" : (color === "Silver" ? "1000020700958563" : "1000020700958564"));
           const img = isX2
             ? (color === "Pink" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp" : (color === "Silver" ? "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp" : "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp"))
-            : (color === "Pink" ? "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp" : (color === "Silver" ? "/assets_ref/x/gallery/Miroooo_x_Silver-1.webp" : "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp"));
+            : (color === "Pink" ? "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-retail-packaging.webp" : (color === "Silver" ? "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp" : "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-retail-packaging.webp"));
 
           const existingIndex = cart.items.findIndex(i => i.productHandle === handle && i.color === color);
           if (existingIndex > -1) {

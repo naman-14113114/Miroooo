@@ -27,9 +27,9 @@
       grey: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp"
     },
     x1: {
-      silver: "/assets_ref/x/gallery/Miroooo_x_Silver-1.webp",
-      pink: "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
-      grey: "/assets_ref/x/gallery/Miroooo_x_Grey-2.webp"
+      silver: "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp",
+      pink: "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-retail-packaging.webp",
+      grey: "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-retail-packaging.webp"
     }
   };
 

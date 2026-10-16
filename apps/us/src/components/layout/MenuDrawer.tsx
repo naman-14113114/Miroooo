@@ -12,7 +12,7 @@ const sections = [
         handle: "miroooo-x",
         title: "Miroooo X1",
         eyebrow: "The Essential",
-        image: "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
+        image: "/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp",
       },
       {
         handle: "miroooo-x2",
