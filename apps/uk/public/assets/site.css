@@ -7629,20 +7629,37 @@ body.nav-open .miroooo-sticky-cart-wrap {
   display: block !important;
 }
 
-.miroooo-sticky-pill .miroooo-sticky-left {
-  display: flex !important;
-  align-items: center !important;
-  gap: 14px !important;
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
+@media (min-width: 769px) {
+  .miroooo-sticky-pill .miroooo-sticky-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  .miroooo-sticky-pill .miroooo-sticky-btn,
+  .miroooo-sticky-pill #sticky-bar-cta-btn {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: fit-content !important;
+    min-width: fit-content !important;
+  }
 }
 
-.miroooo-sticky-pill .miroooo-sticky-btn,
-.miroooo-sticky-pill #sticky-bar-cta-btn {
-  flex: 0 0 auto !important;
-  width: auto !important;
-  max-width: fit-content !important;
-  min-width: fit-content !important;
+@media (max-width: 768px) {
+  .miroooo-sticky-pill .miroooo-sticky-left {
+    display: none !important;
+  }
+
+  .miroooo-sticky-pill .miroooo-sticky-btn,
+  .miroooo-sticky-pill #sticky-bar-cta-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+    justify-content: center !important;
+  }
 }
 
 /* Bundle 2 Most Popular Spacing Fix */

@@ -640,7 +640,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
           {!isOutOfStock && (
             <div className={`miroooo-sticky-cart-wrap ${isStickyVisible ? 'is-visible' : ''}`} id="miroooo-sticky-cart" aria-hidden={!isStickyVisible}>
               <div className="miroooo-sticky-pill">
-                <div className="miroooo-sticky-left">
+                <div className="miroooo-sticky-left hidden md:flex">
                   <div className="miroooo-sticky-img-wrap">
                     <img id="sticky-bar-img" src={images[0].src} alt={product.name} width="54" height="54" loading="eager" decoding="async" />
                   </div>
