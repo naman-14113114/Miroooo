@@ -726,12 +726,12 @@ export function ProductHero({
       return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp';
     } else {
       if (col === 'pink') {
-        return '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-whisper-quiet-beach-lifestyle.webp';
+        return '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-pink-retail-packaging.webp';
       }
       if (col === 'grey') {
-        return '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-unboxing-retail-packaging.webp';
+        return '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-grey-retail-packaging.webp';
       }
-      return '/assets_ref/x/gallery/Silver-toothbrush-beside-MIROOOO-Pulse-X1-box.webp';
+      return '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp';
     }
   };
 
