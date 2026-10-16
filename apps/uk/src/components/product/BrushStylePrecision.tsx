@@ -121,7 +121,7 @@ export function BrushStylePrecision({ color = 'Pink' }: { color?: string }) {
             <div style={{ maxWidth: '340px', width: '100%', position: 'relative', display: 'flex', justifyContent: 'center' }}>
               <img
                 id="brush-with-style-img"
-                src={`/assets_ref/x/${color === 'Grey' ? 'gray' : color.toLowerCase()}_brush_with_style.webp`}
+                src={`/assets_ref/x/${color === 'Grey' ? 'gray' : color.toLowerCase()}_brush_with_style.webp?v=3`}
                 alt="Miroooo X1 Electric Toothbrush"
                 style={{ maxHeight: '600px', width: '100%', objectFit: 'contain', background: '#e6e6e6', display: 'block' }}
                 loading="lazy"
