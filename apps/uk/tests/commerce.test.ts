@@ -117,7 +117,7 @@ test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', ()
 
   // X1 tests
   assert.equal(totals([x1Grey]).finalSubtotal, 69);
-  assert.equal(totals([x1Pink]).finalSubtotal, 89);
+  assert.equal(totals([x1Pink]).finalSubtotal, 69);
   assert.equal(totals([{ ...x1Grey, quantity: 2 }]).finalSubtotal, 128);
   assert.equal(totals([{ ...x1Grey, quantity: 3 }]).finalSubtotal, 177);
   assert.equal(totals([{ ...x1Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);

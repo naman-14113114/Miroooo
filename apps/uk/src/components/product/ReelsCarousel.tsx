@@ -6,12 +6,12 @@ import { Volume2, VolumeX } from 'lucide-react';
 import { useLoopingCarousel } from './useLoopingCarousel';
 
 const reelSources = [
-  '/assets_ref/x/reels/V5.mp4',
+  '/assets_ref/x/reels/miroooo-x1-sonic-electric-toothbrush-unboxing-customer-reel.mp4',
+  '/assets_ref/x/reels/miroooo-x1-sonic-electric-toothbrush-complete-unboxing-reel.mp4',
   '/assets_ref/x/reels/miroooo-8.mp4',
   '/assets_ref/x/reels/V4.mp4',
   '/assets_ref/x/reels/miroooo-6.mp4',
   '/assets_ref/x/reels/miroooo-5.mp4',
-  '/assets_ref/x/reels/V2.mp4',
 ];
 
 export function ReelsCarousel() {

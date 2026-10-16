@@ -48,7 +48,7 @@ for (const value of ['normalizeCartItems', 'cents(tier.promoPrice)', 'x1Count * 
 const checkout = read('apps/us/src/app/api/checkout/prepare/route.ts');
 const checkoutAdapter = read('apps/us/src/lib/checkout.ts');
 check(checkout.includes('prepareUSCheckout') && checkoutAdapter.includes('assertCheckoutOrderQuote'), 'US checkout compares the generated live USD order');
-for (const clip of ['V5', 'miroooo-8', 'V4', 'miroooo-6', 'miroooo-5', 'V2']) {
+for (const clip of ['miroooo-x1-sonic-electric-toothbrush-unboxing-customer-reel', 'miroooo-x1-sonic-electric-toothbrush-complete-unboxing-reel', 'miroooo-8', 'V4', 'miroooo-6', 'miroooo-5']) {
   const poster = join(publicRoot, 'assets_ref/x/reels', `${clip}-poster.webp`);
   check(existsSync(poster) && statSync(poster).size > 0, `US reel poster: ${clip}`);
 }

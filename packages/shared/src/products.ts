@@ -87,9 +87,9 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         swatch: "#f2a7b3",
         image: "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
         checkoutImage: "/assets_ref/x/gallery/Miroooo_x_Pink-1.webp",
-        price: 89.0,
+        price: 69.0,
         compareAt: 139.0,
-        discountBadge: "36% OFF",
+        discountBadge: "50% OFF",
       },
     ],
     bundles: [

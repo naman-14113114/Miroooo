@@ -103,9 +103,9 @@ export const X1_FINISHES: ShowcaseProductFinish[] = [
     handle: 'miroooo-x',
     name: 'Miroooo X1 Pink',
     color: 'Pink',
-    price: 89,
+    price: 69,
     compareAt: 139,
-    formattedPrice: '£89',
+    formattedPrice: '£69',
     formattedCompareAt: '£139',
     rating: 4.8,
     images: [
