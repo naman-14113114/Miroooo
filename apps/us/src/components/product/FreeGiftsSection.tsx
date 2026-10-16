@@ -25,7 +25,7 @@ export function FreeGiftsSection({ isX2 = false }: FreeGiftsSectionProps) {
     {
       title: '2x DuPont™ Precision Brush Heads',
       normalPrice: 'Normally $26',
-      image: isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp',
+      image: isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp',
       alt: isX2 ? 'Miroooo X2 DuPont 45-degree Bass Brush Heads' : 'Miroooo X1 DuPont Precision Brush Heads',
       benefit: isX2
         ? 'Genuine DuPont™ 45° Bass angled bristles for clinical gum-line plaque defense.'

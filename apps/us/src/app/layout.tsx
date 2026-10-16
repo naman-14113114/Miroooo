@@ -89,7 +89,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="preconnect" href="https://buudy.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://buudy.com" />
         <link rel="prefetch" href="/assets_ref/x2/heads/B1.webp" as="image" />
-        <link rel="prefetch" href="/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp" as="image" />
+        <link rel="prefetch" href="/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp" as="image" />
         <link rel="prefetch" href="/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp" as="image" />
       </head>
       <body style={{ backgroundColor: "#080909" }}>

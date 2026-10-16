@@ -250,8 +250,8 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         name: "Default",
         color: "Default",
         swatch: "#888888",
-        image: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
-        checkoutImage: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
+        image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
+        checkoutImage: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
       },
     ],
     bundles: [
@@ -591,7 +591,7 @@ export function getMirooooX(market: MarketConfig): ProductPageContent {
       { quantity: 3, name: "BUY 3", badge: "BEST VALUE", price: formatMoney(p3, market.currencySymbol), compareAt: formatMoney(c3, market.currencySymbol), saving: `SAVE ${formatMoney(s3, market.currencySymbol)}`, description: "Includes 3 Miroooo X1 sets + 2 FREE 2-Pack Brush Heads Sets" },
     ],
     gifts: [
-      { id: "gift-x-heads", name: "Free 2-Pack Replacement Heads", value: formatMoney(giftVal, market.currencySymbol), minimumQuantity: 2, image: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp" },
+      { id: "gift-x-heads", name: "Free 2-Pack Replacement Heads", value: formatMoney(giftVal, market.currencySymbol), minimumQuantity: 2, image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp" },
     ],
     highlights: [
       "32,000 VPM Acoustic Motor",

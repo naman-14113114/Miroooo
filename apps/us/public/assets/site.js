@@ -969,7 +969,7 @@ ${tickerItemSet.repeat(12)}
                 <li>
                   <a href="/products/miroooo-x1-heads" class="shop-drawer__card" data-shop-item="brush-x1-heads">
                     <div class="shop-drawer__thumb">
-                      <img src="/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp" alt="Miroooo X1 Heads" width="140" height="140" loading="lazy" />
+                      <img src="/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp" alt="Miroooo X1 Heads" width="140" height="140" loading="lazy" />
                     </div>
                     <div class="shop-drawer__info">
                       <span class="shop-drawer__eyebrow">Replacement</span>

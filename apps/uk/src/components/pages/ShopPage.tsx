@@ -78,7 +78,7 @@ const UK_COLLECTION_PRODUCTS: CollectionProduct[] = [
     compareAt: '£20',
     badge: '50% OFF',
     isSoldOut: false,
-    image: '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp',
+    image: '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp',
     link: '/products/miroooo-x1-heads',
     buttonText: 'View Item',
   },

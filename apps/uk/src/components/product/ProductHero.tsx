@@ -1583,7 +1583,7 @@ export function ProductHero({
                       ))}
                       {selectedTier === 'single' && buy1HeadsChecked && (
                         <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                          <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
+                          <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
                         </div>
                       )}
                     </>

@@ -40,7 +40,7 @@ const sections = [
         handle: "miroooo-x1-heads",
         title: "Miroooo X1 Heads",
         eyebrow: "Replacement",
-        image: "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp",
+        image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
         price: 10,
       },
       {

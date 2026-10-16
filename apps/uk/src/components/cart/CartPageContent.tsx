@@ -117,7 +117,7 @@ export function CartPageContent() {
   const upsellImage =
     model === "X2"
       ? "/assets_ref/x2/heads/B1.webp"
-      : "/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp";
+      : "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp";
   const discountRows: [string, number][] = ([
     ["Bundle Special Offer", totals.bundleSavings],
     [totals.bundlePromoName, totals.bundlePromoDiscount],

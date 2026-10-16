@@ -34,7 +34,7 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '$' }: FreeBrushHe
           <div className={styles.product}>
             <div className={styles.imageWrap}>
               <img
-                src={isX1 ? '/assets_ref/x/heads/miroooo-x1-dupont-replacement-brush-heads-2pack.webp' : '/assets_ref/x2/heads/B1.webp'}
+                src={isX1 ? '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp' : '/assets_ref/x2/heads/B1.webp'}
                 alt={isX1 ? 'One pair of Miroooo X1 replacement brush heads' : 'One pair of Miroooo X2 replacement brush heads'}
                 width={1254}
                 height={1254}
