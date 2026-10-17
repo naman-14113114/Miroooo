@@ -3058,13 +3058,8 @@ body.is-ready [data-hero-reveal] {
 }
 
 .gb-coach-promo .gb-button {
-  background: #000000;
-  color: #ffffff;
-  border: 1.5px solid #ffffff;
-}
-
-.gb-coach-promo .gb-button:hover {
-  border-color: #ffffff;
+  background: #f4f2ec;
+  color: #111311;
 }
 
 .gb-story__media {
@@ -6312,6 +6307,17 @@ body.nav-open .miroooo-sticky-cart-wrap {
   text-decoration: none !important;
   box-sizing: border-box !important;
   transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.gb-coach-promo .gb-button,
+.gb-dental-app-section .gb-button {
+  border: 1.5px solid #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+.gb-coach-promo .gb-button:hover,
+.gb-dental-app-section .gb-button:hover {
+  border-color: #ffffff !important;
 }
 
 .button--secondary:not(.button--close):not(.drawer__close):hover,

@@ -8,12 +8,13 @@ export function CoachPromo() {
     <section className="gb-coach-promo" aria-labelledby="coach-promo-title">
       <style>{`
         .gb-coach-promo .gb-button {
-          background: #000000;
-          color: #ffffff;
-          border: 1.5px solid #ffffff;
+          background: #000000 !important;
+          color: #ffffff !important;
+          border: 1.5px solid #ffffff !important;
+          border-color: #ffffff !important;
         }
         .gb-coach-promo .gb-button:hover {
-          border-color: #ffffff;
+          border-color: #ffffff !important;
         }
       `}</style>
       <div className="gb-coach-promo__content reveal">
