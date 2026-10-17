@@ -68,21 +68,22 @@ button { color: inherit; }
 .x1-comparison .miroooo-comp-col > .miroooo-comp-cell:nth-child(6),
 .x1-comparison .miroooo-comp-col > .miroooo-comp-cell:nth-child(8),
 .x1-comparison .miroooo-comp-m-table > .miroooo-comp-m-row-group:nth-child(6) { display: none !important; }
-.x1-package .page-width { box-sizing: border-box; width: 100%; max-width: none; margin: 0; padding-inline: 20px; }
-.x1-package .image-with-text { display: flex; flex-direction: column; width: 100%; }
-.x1-package .image-with-text__item { width: 100%; min-width: 0; }
-.x1-package .image-with-text__media { width: 100%; max-width: 580px; margin: 0 auto; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px; }
-.x1-package .image-with-text__media img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 14px; }
+.x1-package .page-width { box-sizing: border-box; width: 100%; max-width: 1200px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 48px); }
+.x1-package .image-with-text { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 1.5rem; }
+.x1-package .image-with-text__item { width: 100%; min-width: 0; display: flex; justify-content: center; }
+.x1-package .image-with-text__media { width: 100%; max-width: min(420px, calc(100vh - 220px)); max-height: min(420px, calc(100vh - 220px)); margin: 0 auto; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 16px; background: #0d0d0d; }
+.x1-package .image-with-text__media img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 16px; }
 .x1-package .x1-package__text { display: flex; align-items: center; }
-.x1-package .rich-text { width: 100%; padding: 40px 0 0 !important; text-align: center; }
-.x1-package .rich-text h2 { font-size: 23px; line-height: 23px; font-weight: 600; margin-bottom: 30px; }
-.x1-package .rich-text p { font-size: 15px; line-height: 24px; }
+.x1-package .rich-text { width: 100%; padding: 10px 0 0 !important; text-align: center; }
+.x1-package .rich-text h2 { font-size: 22px; line-height: 1.2; font-weight: 600; margin-bottom: 16px; }
+.x1-package .rich-text p { font-size: 14.5px; line-height: 1.6; color: rgba(255, 255, 255, 0.82); margin: 0; }
 @media (min-width: 1024px) {
-  .x1-package .page-width { padding-inline: 48px; }
-  .x1-package .image-with-text { flex-direction: row; }
-  .x1-package .image-with-text__item { width: 50%; }
-  .x1-package .rich-text { padding: 0 0 0 60px !important; text-align: left; }
-  .x1-package .rich-text h2 { font-size: clamp(23px, 2.53vw, 36.3744px); line-height: 1; margin-bottom: 40px; }
+  .x1-package .image-with-text { flex-direction: row; gap: clamp(2.5rem, 5vw, 5rem); }
+  .x1-package .image-with-text__item { flex: 1; }
+  .x1-package .image-with-text__item.x1-package__text { justify-content: flex-start; }
+  .x1-package .rich-text { padding: 0 !important; text-align: left; max-width: 480px; }
+  .x1-package .rich-text h2 { font-size: clamp(24px, 2.4vw, 36px); line-height: 1.15; margin-bottom: 24px; }
+  .x1-package .rich-text p { font-size: clamp(14px, 1.1vw, 16.5px); line-height: 1.65; }
 }
 
 .miroshine-reels-section { background: #000; color: #fff; width: 100%; overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); padding: clamp(3rem, 5vw, 5rem) 0; }
