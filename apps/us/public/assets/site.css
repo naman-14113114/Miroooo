@@ -3058,8 +3058,13 @@ body.is-ready [data-hero-reveal] {
 }
 
 .gb-coach-promo .gb-button {
-  background: #f4f2ec;
-  color: #111311;
+  background: #000000;
+  color: #ffffff;
+  border: 1.5px solid #ffffff;
+}
+
+.gb-coach-promo .gb-button:hover {
+  border-color: #ffffff;
 }
 
 .gb-story__media {

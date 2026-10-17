@@ -106,8 +106,12 @@ export function DentalAppSection({ isX2 = false }: DentalAppSectionProps) {
           font-weight: 700;
         }
         .gb-dental-app-section .gb-button {
-          background: #f4f2ec;
-          color: #111311;
+          background: #000000;
+          color: #ffffff;
+          border: 1.5px solid #ffffff;
+        }
+        .gb-dental-app-section .gb-button:hover {
+          border-color: #ffffff;
         }
         @media (max-width: 900px) {
           .gb-dental-app-section {

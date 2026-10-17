@@ -6,6 +6,16 @@ import Link from 'next/link';
 export function CoachPromo() {
   return (
     <section className="gb-coach-promo" aria-labelledby="coach-promo-title">
+      <style>{`
+        .gb-coach-promo .gb-button {
+          background: #000000;
+          color: #ffffff;
+          border: 1.5px solid #ffffff;
+        }
+        .gb-coach-promo .gb-button:hover {
+          border-color: #ffffff;
+        }
+      `}</style>
       <div className="gb-coach-promo__content reveal">
         <p className="gb-kicker">Free customer app</p>
         <h2 id="coach-promo-title">Your routine, made personal.</h2>
