@@ -99,41 +99,12 @@ export function getFlosserGalleryForColor(color?: string): FlosserGalleryVariant
 export function getFlosserHeroSlides(selectedColor?: string): FlosserGallerySlide[] {
   const variant = getFlosserGalleryForColor(selectedColor);
 
-  const badgesList: Array<FlosserInfographicBadge | undefined> = [
-    {
-      pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
-      title: '7 Precision<br>Nozzles',
-      sub: 'Complete Care For Braces & Gums',
-    },
-    {
-      pos: 'miroooo-infographic-badge--bottom-left miroooo-infographic-badge--white',
-      title: '138 PSI<br>Peak Power',
-      sub: 'Medical-Grade Piston Pump Deep Clean',
-    },
-    {
-      pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
-      title: 'Targeted Care<br>Specialists',
-      sub: 'Periodontal & Orthodontic Heads',
-    },
-    {
-      pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
-      title: 'IPX7 100%<br>Waterproof',
-      sub: 'Shower-Safe & Fully Submersible',
-    },
-    {
-      pos: 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white',
-      title: '60-Day<br>Battery Life',
-      sub: '2000mAh Battery On 1 Quick Charge',
-    },
-  ];
-
   return variant.images.map((src, index): FlosserGallerySlide => {
     return {
       type: 'image',
       src,
       thumbImg: variant.thumbnails[index] || src,
       alt: variant.alts[index] || `Miroooo Water Flosser view ${index + 1}`,
-      badge: badgesList[index],
     };
   });
 }

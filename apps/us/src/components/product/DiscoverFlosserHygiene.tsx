@@ -78,25 +78,9 @@ export function DiscoverFlosserHygiene() {
               BUILT FOR DEEP HYGIENE &amp; TRAVEL
             </h2>
 
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '580px' }}>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.25rem', maxWidth: '580px' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-                <span
-                  style={{
-                    fontFamily: "var(--font-inter), sans-serif",
-                    fontSize: '0.85rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.08em',
-                    color: '#c3f06a',
-                    padding: '2px 8px',
-                    borderRadius: '4px',
-                    background: 'rgba(195, 240, 106, 0.12)',
-                    border: '1px solid rgba(195, 240, 106, 0.25)',
-                    marginTop: '2px',
-                    flexShrink: 0,
-                  }}
-                >
-                  01
-                </span>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
                 <div>
                   <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block', marginBottom: '4px' }}>
                     2,000 Pulses/Min Micro-Jets
@@ -107,23 +91,7 @@ export function DiscoverFlosserHygiene() {
                 </div>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-                <span
-                  style={{
-                    fontFamily: "var(--font-inter), sans-serif",
-                    fontSize: '0.85rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.08em',
-                    color: '#c3f06a',
-                    padding: '2px 8px',
-                    borderRadius: '4px',
-                    background: 'rgba(195, 240, 106, 0.12)',
-                    border: '1px solid rgba(195, 240, 106, 0.25)',
-                    marginTop: '2px',
-                    flexShrink: 0,
-                  }}
-                >
-                  02
-                </span>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
                 <div>
                   <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block', marginBottom: '4px' }}>
                     320ml Reservoir for full sessions
@@ -134,23 +102,7 @@ export function DiscoverFlosserHygiene() {
                 </div>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-                <span
-                  style={{
-                    fontFamily: "var(--font-inter), sans-serif",
-                    fontSize: '0.85rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.08em',
-                    color: '#c3f06a',
-                    padding: '2px 8px',
-                    borderRadius: '4px',
-                    background: 'rgba(195, 240, 106, 0.12)',
-                    border: '1px solid rgba(195, 240, 106, 0.25)',
-                    marginTop: '2px',
-                    flexShrink: 0,
-                  }}
-                >
-                  03
-                </span>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffffff', marginTop: '6px', flexShrink: 0 }}></div>
                 <div>
                   <strong style={{ color: '#ffffff', fontSize: 'clamp(1rem, 1.15vw, 1.15rem)', display: 'block', marginBottom: '4px' }}>
                     Ergonomic unibody grip
