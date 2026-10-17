@@ -12,7 +12,7 @@ export function PackageContents({ isX2 = true, color = 'Silver' }: PackageConten
   if (!isX2) {
     return (
       <div id="shopify-section-template--24203751129433__image-with-text-1" className="shopify-section x1-package" style={{ background: '#000', color: '#fff', borderTop: '1px solid rgba(255,255,255,.08)' }}>
-        <div className="section section--padding" style={{ background: '#000', paddingTop: 'clamp(1.5rem, 3.5vh, 2.75rem)', paddingBottom: 'clamp(1.5rem, 3.5vh, 2.75rem)' }}>
+        <div className="section section--padding" style={{ background: '#000', paddingTop: 'clamp(10px, 1.8vh, 20px)', paddingBottom: 'clamp(10px, 1.8vh, 20px)' }}>
           <div className="page-width relative">
             <div className="image-with-text">
               <div className="image-with-text__item">
