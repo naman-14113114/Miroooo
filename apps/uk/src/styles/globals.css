@@ -77,8 +77,6 @@ button { color: inherit; }
 .x1-package .rich-text { width: 100%; padding: 10px 0 0 !important; text-align: center; }
 .x1-package .rich-text h2 { font-size: 22px; line-height: 1.2; font-weight: 600; margin-bottom: 16px; }
 .x1-package .rich-text p { font-size: 14.5px; line-height: 1.6; color: rgba(255, 255, 255, 0.82); margin: 0; }
-.x1-package .rich-text ul { list-style: none; padding: 0; margin: 0 auto; display: inline-flex; flex-direction: column; gap: 8px; text-align: left; }
-.x1-package .rich-text li { font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.85); }
 @media (min-width: 1024px) {
   .x1-package .image-with-text { flex-direction: row; gap: clamp(2.5rem, 5vw, 5rem); }
   .x1-package .image-with-text__item { flex: 1; }
@@ -86,8 +84,6 @@ button { color: inherit; }
   .x1-package .rich-text { padding: 0 !important; text-align: left; max-width: 480px; }
   .x1-package .rich-text h2 { font-size: clamp(24px, 2.4vw, 36px); line-height: 1.15; margin-bottom: 24px; }
   .x1-package .rich-text p { font-size: clamp(14px, 1.1vw, 16.5px); line-height: 1.65; }
-  .x1-package .rich-text ul { display: flex; margin: 0; }
-  .x1-package .rich-text li { font-size: clamp(14px, 1.1vw, 15px); }
 }
 
 .miroshine-reels-section { background: #000; color: #fff; width: 100%; overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); padding: clamp(3rem, 5vw, 5rem) 0; }
