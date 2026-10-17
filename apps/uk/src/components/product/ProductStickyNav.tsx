@@ -52,6 +52,25 @@ const X1_MOBILE_SECTIONS: NavSection[] = [
   { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
 ];
 
+const FLOSSER_DESKTOP_SECTIONS: NavSection[] = [
+  { id: 'modes', label: 'Modes', targetId: 'flosser-modes-section', altTargetId: 'shopify-section-template--flosser_cleaning_modes' },
+  { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-flosser-style-precision' },
+  { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
+  { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-flosser-comparison' },
+  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
+  { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
+];
+
+const FLOSSER_MOBILE_SECTIONS: NavSection[] = [
+  { id: 'modes', label: 'Modes', targetId: 'flosser-modes-section', altTargetId: 'shopify-section-template--flosser_cleaning_modes' },
+  { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-flosser-style-precision' },
+  { id: 'travel', label: 'Travel', targetId: 'shopify-section-template--miroooo-discover-flosser-hygiene' },
+  { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
+  { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-flosser-comparison' },
+  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
+  { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
+];
+
 function getTargetElement(targetId: string, altTargetId?: string): HTMLElement | null {
   const el1 = document.getElementById(targetId);
   const el2 = altTargetId ? document.getElementById(altTargetId) : null;
@@ -66,10 +85,11 @@ function getTargetElement(targetId: string, altTargetId?: string): HTMLElement |
 }
 
 interface ProductStickyNavProps {
-  isX2: boolean;
+  isX2?: boolean;
+  isFlosser?: boolean;
 }
 
-export function ProductStickyNav({ isX2 }: ProductStickyNavProps) {
+export function ProductStickyNav({ isX2 = false, isFlosser = false }: ProductStickyNavProps) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -81,9 +101,11 @@ export function ProductStickyNav({ isX2 }: ProductStickyNavProps) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const sections = isX2
-    ? (isMobile ? X2_MOBILE_SECTIONS : X2_DESKTOP_SECTIONS)
-    : (isMobile ? X1_MOBILE_SECTIONS : X1_DESKTOP_SECTIONS);
+  const sections = isFlosser
+    ? (isMobile ? FLOSSER_MOBILE_SECTIONS : FLOSSER_DESKTOP_SECTIONS)
+    : (isX2
+        ? (isMobile ? X2_MOBILE_SECTIONS : X2_DESKTOP_SECTIONS)
+        : (isMobile ? X1_MOBILE_SECTIONS : X1_DESKTOP_SECTIONS));
   const [isVisible, setIsVisible] = useState(false);
   const [activeId, setActiveId] = useState(sections[0].id);
   const trackRef = useRef<HTMLDivElement>(null);

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { PRODUCTS } from '../src/data/products';
 import { calculateTotals, normalizeCartItems } from '../src/lib/cart';
-import { POST } from '../src/app/api/checkout/prepare/route';
+import { POST, KNOWN_VARIANTS } from '../src/app/api/checkout/prepare/route';
 import { assertCheckoutOrderQuote } from '../src/lib/checkout';
 import { XPAGE_BUNDLES, XPAGE_STORE_URL, XPAGE_VARIANTS } from '@miroooo/shared';
 
@@ -819,6 +819,94 @@ test('gift card only cart routes to giftcard landing URL set-cart', async () => 
   } finally {
     globalThis.fetch = oldFetch;
   }
+});
+
+test('KNOWN_VARIANTS maps all four water flosser variants to miroooo-water-flosser', () => {
+  assert.deepEqual(KNOWN_VARIANTS[XPAGE_VARIANTS.flosser_black_7], { handle: 'miroooo-water-flosser', color: 'Black' });
+  assert.deepEqual(KNOWN_VARIANTS[XPAGE_VARIANTS.flosser_black_4], { handle: 'miroooo-water-flosser', color: 'Black' });
+  assert.deepEqual(KNOWN_VARIANTS[XPAGE_VARIANTS.flosser_white_7], { handle: 'miroooo-water-flosser', color: 'White' });
+  assert.deepEqual(KNOWN_VARIANTS[XPAGE_VARIANTS.flosser_white_4], { handle: 'miroooo-water-flosser', color: 'White' });
+});
+
+test('flosser cart routes to flosser landing URL with complimentary gift card and backend package protection', async () => {
+  const oldFetch = globalThis.fetch;
+  const postCalls: Array<{ url: string; body: any }> = [];
+  globalThis.fetch = async (input, init) => {
+    const url = String(input);
+    if (init?.method === 'POST') {
+      const body = JSON.parse(String(init.body || '{}'));
+      postCalls.push({ url, body });
+      return Response.json({
+        status: 'success',
+        checkout_url: `https://flosser.miroooo.us/${'a'.repeat(256)}/checkout/${'f'.repeat(64)}`,
+      });
+    }
+    if (url.includes('/checkout/')) {
+      const rows = [
+        { quantity: 1, price: 69, variant: { id: XPAGE_VARIANTS.flosser_black_7 } },
+        { quantity: 1, price: 3, variant: { id: XPAGE_VARIANTS.package_protection } },
+      ];
+      return new Response(
+        `<span class="total font-semibold">£72.00</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(72, 0)}`
+      );
+    }
+    return new Response(
+      `<script>"X-CSRF-Token": "test-token"; orderData.landing_page_id = "11111111-1111-1111-1111-111111111111";</script>`
+    );
+  };
+  try {
+    const flosserItem = {
+      productHandle: 'miroooo-water-flosser',
+      variantId: XPAGE_VARIANTS.flosser_black_7,
+      color: 'Black',
+      quantity: 1,
+    };
+    const req = new Request('http://localhost/api/checkout/prepare', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ items: [flosserItem], packageProtection: true }),
+    });
+    const response = await POST(req);
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(body.offerType, 'standard_cart');
+    assert.ok(body.checkoutUrl.includes('flosser.miroooo.us'));
+    assert.equal(postCalls.length, 1);
+    assert.ok(postCalls[0].url.includes('/set-cart'));
+    // Verify paid variants set on XPage checkout
+    const cartVariantIds = body.cart.map((c: any) => c.variant_id);
+    assert.ok(cartVariantIds.includes(XPAGE_VARIANTS.flosser_black_7));
+    assert.ok(cartVariantIds.includes(XPAGE_VARIANTS.package_protection));
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
+test('Miroooo Water Flosser has £69 canonical price, £139 compareAt, 50% discount and bundle pricing', () => {
+  const flosser = PRODUCTS['miroooo-water-flosser'];
+  assert.equal(flosser.price, 69.0);
+  assert.equal(flosser.compareAt, 139.0);
+  assert.equal(flosser.formattedPrice, '£69');
+  assert.equal(flosser.formattedCompareAt, '£139');
+  for (const variant of flosser.variants) {
+    assert.equal(variant.price, 69.0);
+    assert.equal(variant.compareAt, 139.0);
+    assert.equal(variant.formattedPrice, '£69');
+    assert.equal(variant.formattedCompareAt, '£139');
+    assert.equal(variant.discountBadge, '50% OFF');
+  }
+  assert.equal(flosser.bundles[0].price, 69.0);
+  assert.equal(flosser.bundles[0].compareAt, 139.0);
+  assert.equal(flosser.bundles[0].formattedPrice, '£69');
+  assert.equal(flosser.bundles[0].formattedCompareAt, '£139');
+  assert.equal(flosser.bundles[0].promoPrice, 62.10);
+  assert.equal(flosser.bundles[0].savingText, '50% OFF');
+
+  assert.equal(flosser.bundles[1].price, 124.20);
+  assert.equal(flosser.bundles[1].compareAt, 278.0);
+  assert.equal(flosser.bundles[1].formattedPrice, '£124.20');
+  assert.equal(flosser.bundles[1].formattedCompareAt, '£278');
+  assert.equal(flosser.bundles[1].savingText, 'SAVE £153.80');
 });
 
 

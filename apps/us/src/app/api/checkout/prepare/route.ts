@@ -13,7 +13,7 @@ const corsHeaders = {
 };
 
 const validDiscountCodes = ["MIROOOO", "MIROOOO10"];
-const xpageVariantToLocal: Record<string, { handle: string; color: string }> = {
+const KNOWN_VARIANTS: Record<string, { handle: string; color: string }> = {
   [XPAGE_VARIANTS.x1_silver]: { handle: 'miroooo-x', color: 'Silver' },
   [XPAGE_VARIANTS.x1_grey]: { handle: 'miroooo-x', color: 'Grey' },
   [XPAGE_VARIANTS.x1_pink]: { handle: 'miroooo-x', color: 'Pink' },
@@ -27,20 +27,29 @@ const xpageVariantToLocal: Record<string, { handle: string; color: string }> = {
   [XPAGE_VARIANTS.x2_heads]: { handle: 'miroooo-x2-heads', color: 'Default' },
   [XPAGE_VARIANTS.gift_card]: { handle: 'miroooo-gift-card', color: 'Default' },
   [XPAGE_VARIANTS.package_protection]: { handle: 'miroooo-package-protection', color: 'Default' },
+  // Miroooo Water Flosser variants
+  'a2f69a19-e45d-48ab-9d9d-8f837f327b23': { handle: 'miroooo-water-flosser', color: 'Black 7 Nozzles' },
+  'a2f69a19-d524-4360-b333-91a4fd350f2d': { handle: 'miroooo-water-flosser', color: 'Black 4 Nozzles' },
+  'a2f69a19-c917-4de3-9d64-3db9502ee9a6': { handle: 'miroooo-water-flosser', color: 'White 7 Nozzles' },
+  'a2f69a19-b908-40c1-8214-2b6922aa4617': { handle: 'miroooo-water-flosser', color: 'White 4 Nozzles' },
 };
+const xpageVariantToLocal = KNOWN_VARIANTS;
 
 function resolveCheckoutLine(line: any) {
   if (!line || typeof line !== 'object') throw new Error('Invalid checkout item.');
   const requestedId = String(line.variantId || line.variant_id || '');
-  const xpageVariant = xpageVariantToLocal[requestedId];
+  const xpageVariant = KNOWN_VARIANTS[requestedId] || xpageVariantToLocal[requestedId];
   const inferred = xpageVariant || Object.values(PRODUCTS).flatMap((product) =>
     product.variants.map((variant) => ({ handle: product.handle, color: variant.color, id: variant.id }))
   ).find((variant) => variant.id === requestedId);
   if (!inferred) return line;
   if (line.productHandle && line.productHandle !== inferred.handle) throw new Error('Invalid checkout variant.');
   const product = PRODUCTS[inferred.handle];
-  const variant = product.variants.find((item) => item.color === inferred.color);
-  return { ...line, productHandle: product.handle, variantId: variant?.id };
+  if (!product) {
+    return { ...line, productHandle: inferred.handle, variantId: requestedId, color: inferred.color || line.color };
+  }
+  const variant = product.variants.find((item) => item.color === (inferred.color as any) || item.id === requestedId);
+  return { ...line, productHandle: product.handle, variantId: variant?.id || requestedId, color: variant?.color || inferred.color || line.color };
 }
 
 function normalizeDiscountCode(code: unknown): string {
@@ -160,6 +169,24 @@ export async function POST(req: Request) {
         productId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
         variantId: 'a2f687d5-32cc-427c-81f1-5d153911e592',
         title: 'Miroooo Gift Card',
+        color: 'Default',
+        quantity: 1,
+      });
+    }
+    const hasProtectionAlready = canonicalCart.some(
+      (item) => item.productHandle === 'miroooo-package-protection' || item.variantId === XPAGE_VARIANTS.package_protection
+    );
+    const isGiftCardOnly = canonicalCart.length > 0 && canonicalCart.every(
+      (item) => item.productHandle === 'miroooo-gift-card' || item.variantId === XPAGE_VARIANTS.gift_card
+    );
+    const isProtectionActive = body.packageProtection !== false && body.hasPackageProtection !== false && !isGiftCardOnly;
+    if (isProtectionActive && !hasProtectionAlready) {
+      canonicalCart.push({
+        id: 'miroooo-package-protection:auto',
+        productHandle: 'miroooo-package-protection',
+        productId: 'a2f6df9e-faf7-438b-a65a-da26ee25ce03',
+        variantId: XPAGE_VARIANTS.package_protection,
+        title: 'Miroooo Package Protection',
         color: 'Default',
         quantity: 1,
       });

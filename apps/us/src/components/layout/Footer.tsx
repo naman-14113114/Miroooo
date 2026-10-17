@@ -84,6 +84,7 @@ export function Footer() {
               <li><Link href="/">Home</Link></li>
               <li><Link href="/products/miroooo-x">Miroooo X1</Link></li>
               <li><Link href="/products/miroooo-x2">Miroooo X2</Link></li>
+              <li><Link href="/products/miroooo-water-flosser">Miroooo Water Flosser</Link></li>
               <li><Link href="/products/miroooo-x1-heads">Miroooo X1 Heads</Link></li>
               <li><Link href="/products/miroooo-x2-heads">Miroooo X2 Heads</Link></li>
               <li><Link href="/policies/privacy-policy">Privacy Policy</Link></li>

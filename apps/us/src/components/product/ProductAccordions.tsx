@@ -1,9 +1,12 @@
 import { productAccordions } from '@/data/productAccordions';
 
-export function ProductAccordions({ model }: { model: 'x1' | 'x2' }) {
+export type ProductAccordionModel = keyof typeof productAccordions;
+
+export function ProductAccordions({ model }: { model: ProductAccordionModel }) {
+  const accordions = productAccordions[model] || [];
   return (
     <div className="product__accordions" style={{ display: 'flex', flexDirection: 'column', gap: 0, marginTop: '14px' }}>
-      {productAccordions[model].map((accordion, index) => (
+      {accordions.map((accordion, index) => (
         <details
           key={`${model}-${index}`}
           className="product__accordion details"

@@ -150,7 +150,7 @@ export function CartLines({
     },
   ].filter((gift) => gift.sets > 0);
   const toothbrushCount = totals.x2Count + totals.x1Count;
-  const hasFreeGiftCard = Boolean(totals.hasFreeGiftCard || toothbrushCount > 0);
+  const hasFreeGiftCard = Boolean(totals.hasFreeGiftCard || toothbrushCount > 0 || items.some((i) => i.productHandle === 'miroooo-water-flosser'));
   const cls = (page: string, panel: string) => (drawer ? panel : page);
   return (
     <>

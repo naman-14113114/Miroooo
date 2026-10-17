@@ -68,8 +68,64 @@ const FAQS_X1: FaqItem[] = [
   }
 ];
 
-export function ProductFaqs({ isX2 = true }: ProductFaqsProps) {
-  const faqs = isX2 ? FAQS_X2 : FAQS_X1;
+const FAQS_FLOSSER: FaqItem[] = [
+  {
+    "id": "miroooo-flosser-faq-1",
+    "question": "What are the 4 operating modes and how do I choose?",
+    "answer": "<p>The Miroooo Water Flosser features 4 intelligent cleaning modes tailored to your oral care needs: <strong>Clean / Normal (90 PSI)</strong> for everyday deep interdental plaque and food debris removal; <strong>White / Intense (138 PSI)</strong> for high-frequency stain clearing, deep tartar defence, and extrinsic coffee/tea stain lifting; <strong>Nurse / Pulse (60–100 PSI)</strong> for rhythmic intermittent hydro-massage to stimulate periodontal microcirculation and soothe sensitive gums; and <strong>Soft (60 PSI)</strong> low-turbulence gentle pressure engineered for first-time users, sensitive teeth, braces, and veneers. The one-touch selector button easily cycles through modes with an automatic memory chip that recalls your preferred setting.</p>"
+  },
+  {
+    "id": "miroooo-flosser-faq-2",
+    "question": "How often should I use the Miroooo Water Flosser?",
+    "answer": "<p>Dentists recommend using the Miroooo Water Flosser once to twice daily, ideally in the evening alongside your regular brushing routine. Daily hydro-flossing dislodges plaque biofilm, bacteria, and trapped food particles from deep interproximal gaps and periodontal pockets where standard toothbrush bristles cannot reach, actively preventing gingivitis, bleeding, and interdental decay.</p>"
+  },
+  {
+    "id": "miroooo-flosser-faq-3",
+    "question": "What is the water pressure range?",
+    "answer": "<p>The Miroooo Water Flosser delivers a precision-calibrated pressure range of <strong>60 to 138 PSI</strong> with <strong>1,400 to 2,000 micro-pulses per minute</strong>. It is powered by a high-precision medical-grade stainless steel piston pump that provides consistent fluid velocity across all water levels without pressure stuttering or power drop-off.</p>"
+  },
+  {
+    "id": "miroooo-flosser-faq-4",
+    "question": "Is the Miroooo Water Flosser waterproof?",
+    "answer": "<p>Yes! The Miroooo Water Flosser is certified <strong>IPX7 fully immersion waterproof</strong> with dual-layer ultrasonic silicone perimeter seals. It is 100% submersible and completely safe for shower use, and the entire device can be easily rinsed clean under running tap water. Always ensure the USB-C charging port cover is securely sealed before water exposure.</p>"
+  },
+  {
+    "id": "miroooo-flosser-faq-5",
+    "question": "How long does the battery last?",
+    "answer": "<p>Powered by a high-density <strong>2000mAh lithium-ion battery cell</strong>, a single 3-hour USB-C fast charge provides <strong>up to 60 days of daily use</strong> (based on standard 1-minute daily sessions). Universal USB-C fast charging allows you to power up using any standard charger, laptop, or power bank with no bulky charging cradles required.</p>"
+  },
+  {
+    "id": "miroooo-flosser-faq-6",
+    "question": "What are the 7 nozzles used for?",
+    "answer": "<p>Every complete set includes 7 specialized 360° quick-release nozzles:</p><ul><li><strong>Standard Cleaning Nozzle:</strong> 0.6mm calibrated jet for everyday interdental and gumline flossing.</li><li><strong>Interdental Nozzle:</strong> Slim 0.45mm needle profile to access tight spaces and crowded contacts.</li><li><strong>Periodontal Pocket Nozzle:</strong> Soft silicone elastomeric tip for gentle subgingival sulcus irrigation.</li><li><strong>Orthodontic Nozzle:</strong> Integrated micro-tuft nylon bristle ring for braces, archwires, and retainers.</li><li><strong>Tongue Coating Scraper Nozzle:</strong> Contoured spoon scraper with fan-spray water curtain for fresh breath and lingual biofilm removal.</li><li><strong>Precision Jet Nozzle:</strong> Pinpoint 0.4mm aperture for crowns, bridge margins, and dental implants.</li><li><strong>Toothbrush Hybrid Nozzle:</strong> Dual-action DuPont bristles with central hydro-core for simultaneous brushing and flossing.</li></ul>"
+  },
+  {
+    "id": "miroooo-flosser-faq-7",
+    "question": "What is included in the box?",
+    "answer": "<p>The complete retail package includes: <strong>1x Miroooo Precision Water Flosser</strong> main handle in your chosen finish (Obsidian Black or Pristine White), <strong>7x specialized 360° rotating nozzles</strong>, <strong>1x hygienic nozzle storage case</strong>, <strong>1x 320ml detachable high-capacity reservoir</strong>, <strong>1x USB-C fast charging cable</strong>, and <strong>1x luxury gift box with user manual</strong>.</p>"
+  },
+  {
+    "id": "miroooo-flosser-faq-8",
+    "question": "What is your return policy?",
+    "answer": "<p>Returns may be requested within 30 days of delivery for damaged, defective, incorrect, or missing items. Please contact our support team at <a href=\"mailto:support@trymiroooo.com\">support@trymiroooo.com</a> or via our <a href=\"/pages/contact-us#contact-form\">Contact Form</a> to obtain written return authorization and instructions prior to sending any product back.</p>"
+  }
+];
+
+interface ProductFaqsProps {
+  isX2?: boolean;
+  isFlosser?: boolean;
+  model?: 'x1' | 'x2' | 'flosser' | 'miroooo-water-flosser';
+}
+
+export function ProductFaqs({ isX2 = true, isFlosser = false, model }: ProductFaqsProps) {
+  const isFlosserProduct = isFlosser || model === 'flosser' || model === 'miroooo-water-flosser';
+  const faqs = isFlosserProduct
+    ? FAQS_FLOSSER
+    : model === 'x1'
+      ? FAQS_X1
+      : model === 'x2'
+        ? FAQS_X2
+        : isX2 ? FAQS_X2 : FAQS_X1;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleIndex = (index: number) => {

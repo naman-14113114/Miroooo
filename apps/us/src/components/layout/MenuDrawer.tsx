@@ -24,6 +24,19 @@ const sections = [
     ],
   },
   {
+    title: "Water Flosser",
+    products: [
+      {
+        handle: "miroooo-water-flosser",
+        title: "Miroooo Water Flosser",
+        eyebrow: "New Release",
+        image: "/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp",
+        fallbackPrice: "$69",
+        fallbackCompareAt: "$139",
+      },
+    ],
+  },
+  {
     title: "Accessories",
     products: [
       {

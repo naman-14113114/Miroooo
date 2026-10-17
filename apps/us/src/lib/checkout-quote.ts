@@ -12,7 +12,7 @@ export async function loadPublishedCheckoutOffer(cart: unknown[], discountCode: 
   if (!selected) {
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The selected bundle is unavailable. Please try again later.');
   }
-  const product = selected.product as 'x1' | 'x2' | 'x1_heads' | 'x2_heads';
+  const product = selected.product as 'x1' | 'x2' | 'x1_heads' | 'x2_heads' | 'flosser';
   let session;
   try {
     session = await loadXpageSession('USD', product);
@@ -38,7 +38,9 @@ export async function loadPublishedCheckoutOffer(cart: unknown[], discountCode: 
   }
   if (selected.offeredQty > 0) {
     const offered = option.offered?.find((item: { quantity: number }) => item.quantity === selected.offeredQty);
-    const head = offered?.product?.variants?.find((item: { id: string; is_visible: boolean }) => item.id === selected.headsVariant && item.is_visible);
+    const head = offered?.product?.variants?.find((item: { id: string; is_visible: boolean }) =>
+      (selected.product === 'flosser' ? item.is_visible : item.id === selected.headsVariant && item.is_visible)
+    );
     const headDiscount = Number(offered?.discount_amount);
     const isPercentage = offered?.discount_type === 'PERCENTAGE';
     const isFixed = offered?.discount_type === 'FIXED' || offered?.discount_type === 'FIXED_AMOUNT';

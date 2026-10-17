@@ -139,3 +139,51 @@ export const PRODUCT_FAQS_X1: FaqItem[] = [
       'Miroooo X1 delivers 60+ days of standard brushing on a single USB-C charge.',
   },
 ];
+
+export const PRODUCT_FAQS_FLOSSER: FaqItem[] = [
+  {
+    id: 'flosser-modes',
+    question: 'What are the 4 operating modes and how do I choose?',
+    answer:
+      'The Miroooo Water Flosser features 4 intelligent modes: Clean/Normal (90 PSI) for daily balanced plaque and debris removal; White/Intense (138 PSI) for stubborn surface stains, coffee/tea residue, and high-frequency polishing; Nurse/Pulse (60–100 PSI) for rhythmic gumline hydro-massage and improved periodontal circulation; and Soft (60 PSI) for first-time users, sensitive teeth, or delicate gingival tissues. Use the one-touch mode selector to cycle between modes, with automatic memory recalling your last setting.',
+  },
+  {
+    id: 'flosser-frequency',
+    question: 'How often should I use the Miroooo Water Flosser?',
+    answer:
+      'Dentists recommend using the Miroooo Water Flosser once to twice daily, ideally in the evening before or after brushing. Regular hydro-flossing dislodges plaque biofilm, bacteria, and trapped food particles from deep interdental contacts and periodontal pockets where standard toothbrush bristles cannot reach.',
+  },
+  {
+    id: 'flosser-pressure',
+    question: 'What is the water pressure range?',
+    answer:
+      'The Miroooo Water Flosser delivers a calibrated hydrodynamic pressure range of 60 to 138 PSI with 1,400 to 2,000 micro-pulses per minute. It is powered by a high-precision medical-grade stainless steel piston pump that maintains steady, non-stuttering fluid delivery across all tank levels.',
+  },
+  {
+    id: 'flosser-waterproof',
+    question: 'Is the Miroooo Water Flosser waterproof?',
+    answer:
+      'Yes, the Miroooo Water Flosser is certified IPX7 fully immersion waterproof with dual-layer ultrasonic silicone perimeter seals. It is completely safe to use in the shower and can be rinsed under running tap water. Always ensure the USB-C charging port cover is securely sealed before water exposure.',
+  },
+  {
+    id: 'flosser-battery',
+    question: 'How long does the battery last?',
+    answer:
+      'Powered by a high-density 2000mAh lithium-ion battery, a single 3-hour USB-C fast charge delivers up to 60 days of regular use (based on standard 1-minute daily sessions). No bulky charging docks or proprietary adapters required.',
+  },
+  {
+    id: 'flosser-nozzles',
+    question: 'What are the 7 nozzles used for?',
+    answer:
+      'The Miroooo Water Flosser includes 7 specialized 360° rotating nozzles: (1) Standard Cleaning Nozzle for daily interdental and gumline flossing; (2) Interdental Nozzle with needle jet for tight anatomical contacts; (3) Periodontal Pocket Nozzle with soft silicone tip for gentle subgingival sulcus irrigation; (4) Orthodontic Nozzle with micro-tufts for braces and retainers; (5) Tongue Coating Scraper Nozzle for fresh breath and lingual biofilm removal; (6) Precision Jet Nozzle for crowns, bridges, and implant margins; and (7) Toothbrush Hybrid Nozzle for simultaneous brushing and hydrodynamic flossing.',
+  },
+  {
+    id: 'flosser-box',
+    question: 'What is included in the box?',
+    answer:
+      'Each set includes 1x Miroooo Precision Water Flosser main unit in selected finish, 7x specialized 360° rotating nozzles, 1x hygienic nozzle storage case, 1x 320ml detachable high-capacity water reservoir, 1x USB-C fast charging cable, and 1x luxury gift box with quick-start user manual.',
+  },
+];
+
+export const PRODUCT_FAQS_WATER_FLOSSER = PRODUCT_FAQS_FLOSSER;
+

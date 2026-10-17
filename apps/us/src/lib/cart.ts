@@ -141,6 +141,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     .reduce((sum, item) => sum + item.quantity, 0);
   const x1Count = count('miroooo-x');
   const x2Count = count('miroooo-x2');
+  const flosserCount = count('miroooo-water-flosser');
   const x1HeadsCount = count('miroooo-x1-heads');
   const x2HeadsCount = count('miroooo-x2-heads');
 
@@ -190,7 +191,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let unlockedGiftsCount = extraX1BrushHeadSets + extraBrushHeadSets;
   let hasFreeGiftCard = false;
 
-  if (x2Count > 0 || x1Count > 0) {
+  if (x2Count > 0 || x1Count > 0 || flosserCount > 0) {
     giftsValue = roundMoney(giftsValue + 10);
     unlockedGiftsCount += 1;
     hasFreeGiftCard = true;

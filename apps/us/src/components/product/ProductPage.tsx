@@ -24,6 +24,10 @@ import { DiscoverOralHygiene } from './DiscoverOralHygiene';
 import { LuxuriousProfessionalism } from './LuxuriousProfessionalism';
 import { ProductStickyNav } from './ProductStickyNav';
 import { MinimalProductHero } from './MinimalProductHero';
+import { FlosserModesSection } from './FlosserModesSection';
+import { FlosserStylePrecision } from './FlosserStylePrecision';
+import { DiscoverFlosserHygiene } from './DiscoverFlosserHygiene';
+import { FlosserComparisonTable } from './FlosserComparisonTable';
 
 interface ProductPageProps {
   handle: string;
@@ -33,8 +37,10 @@ interface ProductPageProps {
 }
 
 export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMirooooX1Route = true }: ProductPageProps) {
-  const defaultColor = handle === 'miroooo-x2' ? 'Silver' : 'Pink';
-  const initialColor = ['Silver', 'Grey', 'Pink'].find((color) => color.toLowerCase() === searchParams?.color?.toLowerCase()) || defaultColor;
+  const isFlosser = handle === 'miroooo-water-flosser' || handle === 'water-flosser';
+  const defaultColor = isFlosser ? 'Black' : (handle === 'miroooo-x2' ? 'Silver' : 'Pink');
+  const validColors = isFlosser ? ['Black', 'White'] : ['Silver', 'Grey', 'Pink'];
+  const initialColor = validColors.find((color) => color.toLowerCase() === searchParams?.color?.toLowerCase()) || defaultColor;
   const [selectedColor, setSelectedColor] = useState(initialColor);
   const product = getProduct(handle);
   if (!product) {
@@ -76,9 +82,9 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
   }
 
   return (
-    <main className={`product-page-root ${isX2 ? 'x2-product-page' : 'x1-product-page'} bg-[#080909] min-h-screen text-white`}>
+    <main className={`product-page-root ${isFlosser ? 'flosser-product-page' : (isX2 ? 'x2-product-page' : 'x1-product-page')} bg-[#080909] min-h-screen text-white`}>
       {/* 0. Top Fixed Section Navigation (Oval Pill Header) */}
-      <ProductStickyNav isX2={isX2} />
+      <ProductStickyNav isX2={isX2} isFlosser={isFlosser} />
 
       {/* 1. Main Product Hero & Buy Box */}
       <ProductHero
@@ -91,7 +97,38 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
 
       <ShippingMarquee />
 
-      {isX2 ? (
+      {isFlosser ? (
+        /* Miroooo Water Flosser Complete Section Sequence */
+        <>
+          {/* 4. 4 Intelligent Cleaning Modes */}
+          <FlosserModesSection />
+
+          {/* 5. Floss with Style & Precision */}
+          <FlosserStylePrecision color={selectedColor} />
+
+          {/* 6. Built for Deep Hygiene & Travel */}
+          <DiscoverFlosserHygiene />
+
+
+          {/* 10. Luxurious Professionalism (95%, 98%, 91% Clinical Proof) */}
+          <LuxuriousProfessionalism isFlosser={true} />
+
+          {/* 11. Verified Customer Reviews */}
+          <ProductReviews isFlosser={true} isX2={false} />
+
+          {/* 12. Miroooo Dental App (Smile Coach) */}
+          <DentalAppSection isX2={false} />
+
+          {/* 13. Competitor Comparison Table */}
+          <FlosserComparisonTable />
+
+          {/* 14. Package Contents */}
+          <PackageContents isFlosser={true} color={selectedColor} />
+
+          {/* 15. Flosser FAQs Accordion */}
+          <ProductFaqs isFlosser={true} isX2={false} />
+        </>
+      ) : isX2 ? (
         /* Miroooo X2 Complete Section Sequence */
         <>
           {/* 3. Real Customer Stories & Experiences Carousel */}

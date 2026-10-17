@@ -13,7 +13,7 @@ const corsHeaders = {
 };
 
 const validDiscountCodes = ["MIROOOO", "MIROOOO10"];
-const xpageVariantToLocal: Record<string, { handle: string; color: string }> = {
+export const KNOWN_VARIANTS: Record<string, { handle: string; color: string }> = {
   [XPAGE_VARIANTS.x1_silver]: { handle: 'miroooo-x', color: 'Silver' },
   [XPAGE_VARIANTS.x1_grey]: { handle: 'miroooo-x', color: 'Grey' },
   [XPAGE_VARIANTS.x1_pink]: { handle: 'miroooo-x', color: 'Pink' },
@@ -27,20 +27,29 @@ const xpageVariantToLocal: Record<string, { handle: string; color: string }> = {
   [XPAGE_VARIANTS.x2_heads]: { handle: 'miroooo-x2-heads', color: 'Default' },
   [XPAGE_VARIANTS.gift_card]: { handle: 'miroooo-gift-card', color: 'Default' },
   [XPAGE_VARIANTS.package_protection]: { handle: 'miroooo-package-protection', color: 'Default' },
+  // Miroooo Water Flosser
+  [XPAGE_VARIANTS.flosser_black_7]: { handle: 'miroooo-water-flosser', color: 'Black' },
+  [XPAGE_VARIANTS.flosser_black_4]: { handle: 'miroooo-water-flosser', color: 'Black' },
+  [XPAGE_VARIANTS.flosser_white_7]: { handle: 'miroooo-water-flosser', color: 'White' },
+  [XPAGE_VARIANTS.flosser_white_4]: { handle: 'miroooo-water-flosser', color: 'White' },
 };
+
+const xpageVariantToLocal = KNOWN_VARIANTS;
 
 function resolveCheckoutLine(line: any) {
   if (!line || typeof line !== 'object') throw new Error('Invalid checkout item.');
   const requestedId = String(line.variantId || line.variant_id || '');
-  const xpageVariant = xpageVariantToLocal[requestedId];
+  const xpageVariant = KNOWN_VARIANTS[requestedId];
   const inferred = xpageVariant || Object.values(PRODUCTS).flatMap((product) =>
     product.variants.map((variant) => ({ handle: product.handle, color: variant.color, id: variant.id }))
   ).find((variant) => variant.id === requestedId);
   if (!inferred) return line;
   if (line.productHandle && line.productHandle !== inferred.handle) throw new Error('Invalid checkout variant.');
   const product = PRODUCTS[inferred.handle];
-  const variant = product.variants.find((item) => item.color === inferred.color);
-  return { ...line, productHandle: product.handle, variantId: variant?.id };
+  const variant = product?.variants?.find((item) => item.id === requestedId) ||
+    product?.variants?.find((item) => item.color === inferred.color) ||
+    product?.variants?.[0];
+  return { ...line, productHandle: product?.handle || inferred.handle, variantId: variant?.id || requestedId };
 }
 
 function normalizeDiscountCode(code: unknown): string {
@@ -153,23 +162,51 @@ export async function POST(req: Request) {
       const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020710139724', quantity }], true)[0];
       canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
     }
-    if (totals.hasFreeGiftCard) {
-      canonicalCart.push({
-        id: 'miroooo-gift-card:free',
-        productHandle: 'miroooo-gift-card',
-        productId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
-        variantId: 'a2f687d5-32cc-427c-81f1-5d153911e592',
-        title: 'Miroooo Gift Card',
-        color: 'Default',
-        quantity: 1,
-      });
+    const hasFlosser = canonicalItems.some(
+      (item) => item.productHandle === 'miroooo-water-flosser' || item.productHandle === 'water-flosser' || item.productHandle === 'flosser'
+    );
+    if (totals.hasFreeGiftCard || hasFlosser) {
+      if (!canonicalCart.some((line) => line.id === 'miroooo-gift-card:free' || line.productHandle === 'miroooo-gift-card')) {
+        canonicalCart.push({
+          id: 'miroooo-gift-card:free',
+          productHandle: 'miroooo-gift-card',
+          productId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
+          variantId: 'a2f687d5-32cc-427c-81f1-5d153911e592',
+          title: 'Miroooo Gift Card',
+          color: 'Default',
+          quantity: 1,
+        });
+      }
+    }
+    const requestedProtection = Boolean(
+      body?.packageProtection || body?.cart?.packageProtection || body?.protection || body?.package_protection
+    );
+    if (requestedProtection && !canonicalCart.some((line) => line.productHandle === 'miroooo-package-protection')) {
+      const protectionProduct = PRODUCTS['miroooo-package-protection'];
+      const protectionVariant = protectionProduct?.variants?.[0];
+      if (protectionProduct && protectionVariant) {
+        canonicalCart.push({
+          id: 'miroooo-package-protection',
+          productHandle: 'miroooo-package-protection',
+          productId: protectionProduct.plusBaseProductId || XPAGE_VARIANTS.package_protection,
+          variantId: protectionVariant.id,
+          title: protectionProduct.name,
+          color: protectionVariant.color || 'Default',
+          quantity: 1,
+        });
+      }
+    }
+    let expectedGBP = totals.finalSubtotal;
+    if (requestedProtection && !canonicalItems.some((i) => i.productHandle === 'miroooo-package-protection')) {
+      expectedGBP += 3;
     }
     const bundlePayload = detectBundlePayload(canonicalCart, discountCode);
+    const useBundle = Boolean(bundlePayload && bundlePayload.product !== 'flosser');
     const result = await prepareUKCheckout({
       cart: canonicalCart,
       attribution,
-      expectedGBP: totals.finalSubtotal,
-      useBundle: Boolean(bundlePayload),
+      expectedGBP,
+      useBundle,
       discountCode: discountCode === "MIROOOO" ? "MIROOOO10" : discountCode,
     });
 

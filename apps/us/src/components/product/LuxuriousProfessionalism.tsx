@@ -3,7 +3,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ViewportVideo } from '@/components/media/ViewportVideo';
 
-export function LuxuriousProfessionalism() {
+interface LuxuriousProfessionalismProps {
+  isFlosser?: boolean;
+}
+
+export function LuxuriousProfessionalism({ isFlosser = false }: LuxuriousProfessionalismProps) {
   const statRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [values, setValues] = useState([0, 0, 0]);
 
@@ -72,18 +76,28 @@ export function LuxuriousProfessionalism() {
       `}</style>
       <div style={{ width: '100%', maxWidth: '1856px', margin: '0 auto' }}>
         <div className="luxurious-grid">
-          {/* Left Column: Video */}
+          {/* Left Column: Media */}
           <div className="luxurious-media">
-            <ViewportVideo
-              id="luxurious-video"
-              src="/assets_ref/x/miroooo-video-2s.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="none"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000', pointerEvents: 'none' }}
-            ></ViewportVideo>
+            {isFlosser ? (
+              <img
+                src="/assets_ref/flosser/gallery/miroooo-water-flosser-dual-upright-silhouette.webp"
+                alt="Miroooo Water Flosser Clinical Results"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000' }}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <ViewportVideo
+                id="luxurious-video"
+                src="/assets_ref/x/miroooo-video-2s.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="none"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000', pointerEvents: 'none' }}
+              ></ViewportVideo>
+            )}
           </div>
 
           {/* Right Column: Content & Typography */}
@@ -142,7 +156,9 @@ export function LuxuriousProfessionalism() {
                   </span>
                 </div>
                 <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
-                  Found brushing significantly gentler on gums while cleaning deeper than their previous electric brush.
+                  {isFlosser
+                    ? 'Reported up to 99.9% interdental plaque and food debris cleared from between tight teeth and along the gumline.'
+                    : 'Found brushing significantly gentler on gums while cleaning deeper than their previous electric brush.'}
                 </p>
               </div>
 
@@ -169,7 +185,9 @@ export function LuxuriousProfessionalism() {
                   </span>
                 </div>
                 <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
-                  Reported a tidier, clutter-free bathroom sink thanks to the magnetic charging dock and compact design.
+                  {isFlosser
+                    ? 'Experienced noticeably healthier, firmer gums and reduced bleeding within 2 weeks of hydrodynamic flossing.'
+                    : 'Reported a tidier, clutter-free bathroom sink thanks to the magnetic charging dock and compact design.'}
                 </p>
               </div>
 
@@ -196,7 +214,9 @@ export function LuxuriousProfessionalism() {
                   </span>
                 </div>
                 <p style={{ margin: 0, fontFamily: "var(--font-inter), sans-serif", fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
-                  Noticed visibly brighter, cleaner teeth and healthier gums within just 3 weeks of daily use.
+                  {isFlosser
+                    ? 'Felt lasting dentist-clean freshness, healthier breath, and total comfort compared to string floss.'
+                    : 'Noticed visibly brighter, cleaner teeth and healthier gums within just 3 weeks of daily use.'}
                 </p>
               </div>
             </div>

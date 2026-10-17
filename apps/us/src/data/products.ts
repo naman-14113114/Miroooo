@@ -3,7 +3,7 @@ import { formatUSD, savingPercent } from '@/lib/money';
 export interface ProductVariant {
   id: string;
   name: string;
-  color: 'Grey' | 'Pink' | 'Silver' | 'Default';
+  color: 'Grey' | 'Pink' | 'Silver' | 'Default' | 'Black' | 'White';
   swatch: string;
   image: string;
   checkoutImage: string;
@@ -70,7 +70,7 @@ export interface Product {
     alt: string;
     width: number;
     height: number;
-    variantColor?: 'Grey' | 'Pink' | 'Silver';
+    variantColor?: 'Grey' | 'Pink' | 'Silver' | 'Black' | 'White';
   }>;
   boxContents?: string[];
   features?: Array<{
@@ -811,11 +811,193 @@ export const PRODUCTS: Record<string, Product> = {
       },
     ],
   },
+  'miroooo-water-flosser': {
+    id: 'miroooo-water-flosser',
+    handle: 'miroooo-water-flosser',
+    name: 'Miroooo Water Flosser',
+    model: 'Water Flosser',
+    headline: 'Deep interdental precision, engineered.',
+    subtitle: 'High-frequency 2,000 pulses/min piston pump & 138 PSI deep plaque removal.',
+    description:
+      'Featuring a medical-grade piston pump delivering 60–138 PSI pressurized micro-jets, 4 cleaning modes, 320ml high-capacity reservoir, and 60-day battery life with IPX7 waterproof unibody.',
+    price: 69.00,
+    compareAt: 139.00,
+    formattedPrice: '$69.00',
+    formattedCompareAt: '$139.00',
+    rating: 4.9,
+    reviewCount: 3840,
+    customerCount: '3,840',
+    plusBaseProductId: 'a2f69a15-e357-403b-a11c-b3912eb49b1d',
+    defaultQuantity: 1,
+    variants: [
+      {
+        id: 'a2f69a19-e45d-48ab-9d9d-8f837f327b23',
+        name: 'Black (7 Nozzles)',
+        color: 'Black',
+        swatch: '#1a1a1a',
+        image: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp',
+        checkoutImage: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp',
+        price: 69.00,
+        compareAt: 139.00,
+        formattedPrice: '$69.00',
+        formattedCompareAt: '$139.00',
+      },
+      {
+        id: 'a2f69a19-d524-4360-b333-91a4fd350f2d',
+        name: 'Black (4 Nozzles)',
+        color: 'Black',
+        swatch: '#1a1a1a',
+        image: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp',
+        checkoutImage: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp',
+        price: 69.00,
+        compareAt: 139.00,
+        formattedPrice: '$69.00',
+        formattedCompareAt: '$139.00',
+      },
+      {
+        id: 'a2f69a19-c917-4de3-9d64-3db9502ee9a6',
+        name: 'White (7 Nozzles)',
+        color: 'White',
+        swatch: '#f5f5f5',
+        image: '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp',
+        checkoutImage: '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp',
+        price: 69.00,
+        compareAt: 139.00,
+        formattedPrice: '$69.00',
+        formattedCompareAt: '$139.00',
+      },
+      {
+        id: 'a2f69a19-b908-40c1-8214-2b6922aa4617',
+        name: 'White (4 Nozzles)',
+        color: 'White',
+        swatch: '#f5f5f5',
+        image: '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp',
+        checkoutImage: '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp',
+        price: 69.00,
+        compareAt: 139.00,
+        formattedPrice: '$69.00',
+        formattedCompareAt: '$139.00',
+      },
+    ],
+    bundles: [
+      {
+        quantity: 1,
+        name: 'BUY 1',
+        price: 69.00,
+        compareAt: 139.00,
+        formattedPrice: '$69.00',
+        formattedCompareAt: '$139.00',
+        freeHeadsCount: 0,
+        promoPrice: 62.10,
+        savingText: '50% OFF',
+        description: 'Includes 1 Miroooo Water Flosser & Free $10 Gift Card',
+      },
+      {
+        quantity: 2,
+        name: 'BUY 2',
+        badge: 'Save 10%',
+        price: 124.20,
+        compareAt: 278.00,
+        formattedPrice: '$124.20',
+        formattedCompareAt: '$278.00',
+        freeHeadsCount: 0,
+        promoPrice: 111.78,
+        savingText: 'SAVE $153.80',
+        description: 'Includes 2 Miroooo Water Flosser sets & Free Gifts',
+      },
+      {
+        quantity: 3,
+        name: 'BUY 3',
+        badge: 'Best Value',
+        price: 175.95,
+        compareAt: 417.00,
+        formattedPrice: '$175.95',
+        formattedCompareAt: '$417.00',
+        freeHeadsCount: 0,
+        promoPrice: 158.35,
+        savingText: 'SAVE $241.05',
+        description: 'Includes 3 Miroooo Water Flosser sets & Free Gifts',
+      },
+    ],
+    specs: [
+      { label: 'Rated Power', value: '5W' },
+      { label: 'Battery Capacity', value: '2000mAh High-density lithium' },
+      { label: 'Battery Life', value: '60 Days on a single USB-C charge' },
+      { label: 'Pump Type', value: 'Medical-grade high-frequency piston pump' },
+      { label: 'Waterproof Rating', value: 'IPX7 Immersion waterproof unibody' },
+      { label: 'Charging Time', value: '3 Hours fast USB Type-C charging' },
+      { label: 'Water Tank Capacity', value: '320ml High-capacity detachable reservoir' },
+      { label: 'Rated Water Pressure', value: '60–138 PSI Pressurized micro-jets' },
+      { label: 'Operating Modes', value: '4 Modes (Normal, Soft, Pulse, Custom)' },
+      { label: 'Pulse Frequency', value: '1,800–2,000 Pulses / minute' },
+    ],
+    highlights: [
+      '2,000 Pulses/min Piston Pump',
+      '60–138 PSI Precision Micro-Jets',
+      '320ml High-Capacity Tank',
+      '60-Day Battery & IPX7 Waterproof',
+    ],
+    gifts: [
+      {
+        id: 'gift-card-10',
+        name: 'Free Miroooo Gift Card',
+        value: 10.00,
+        formattedValue: '$10.00',
+        minimumQuantity: 1,
+        image: '/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp',
+        subtitle: '$10 digital gift card delivered with your order',
+      },
+    ],
+    galleryImages: [
+      {
+        src: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp',
+        alt: 'Miroooo Water Flosser Black and White Duo Studio View',
+        width: 1200,
+        height: 1200,
+      },
+      {
+        src: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp',
+        alt: 'Miroooo Water Flosser Black Complete Set',
+        width: 1200,
+        height: 1200,
+        variantColor: 'Black',
+      },
+      {
+        src: '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp',
+        alt: 'Miroooo Water Flosser White Complete Set',
+        width: 1200,
+        height: 1200,
+        variantColor: 'White',
+      },
+      {
+        src: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-7-precision-nozzles.webp',
+        alt: 'Miroooo Water Flosser 7 Specialized Precision Dental Nozzles',
+        width: 1200,
+        height: 1200,
+      },
+    ],
+    boxContents: [
+      '1x Miroooo Water Flosser unit in selected finish',
+      '7x Precision dental nozzles (or 4x based on selected set)',
+      '1x USB Type-C fast charging cable',
+      '1x Free Miroooo Gift Card ($10 complimentary voucher)',
+      '1x User manual & warranty documentation',
+    ],
+  },
 };
 
 export function getProduct(handle: string): Product | undefined {
   if (handle === 'miroooo_x1') return PRODUCTS['miroooo-x'];
   if (handle === 'miroooo_x2') return PRODUCTS['miroooo-x2'];
+  if (
+    handle === 'miroooo-water-flosser' ||
+    handle === 'miroooo_water_flosser' ||
+    handle === 'water-flosser' ||
+    handle === 'water_flosser' ||
+    handle === 'flosser'
+  ) {
+    return PRODUCTS['miroooo-water-flosser'];
+  }
   if (handle === 'wall_mounted_dock') return PRODUCTS['wall-mounted-dock'];
   if (handle === 'travel_case') return PRODUCTS['travel-case'];
   if (handle === 'x1_charger' || handle === 'miroooo-x1-charging-dock' || handle === 'x1-charging-dock' || handle === 'charging-dock') return PRODUCTS['x1-charger'];
@@ -824,12 +1006,18 @@ export function getProduct(handle: string): Product | undefined {
   return PRODUCTS[handle];
 }
 
+export const ALL_PRODUCTS: Product[] = Object.values(PRODUCTS);
+
 export function getAllProducts(): Product[] {
-  return Object.values(PRODUCTS);
+  return ALL_PRODUCTS;
 }
 
 export function getBrushes(): Product[] {
   return [PRODUCTS['miroooo-x2'], PRODUCTS['miroooo-x']];
+}
+
+export function getFlossers(): Product[] {
+  return [PRODUCTS['miroooo-water-flosser']];
 }
 
 export function getAccessories(): Product[] {

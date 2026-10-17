@@ -6,7 +6,13 @@ import { loadPublishedCheckoutOffer, CheckoutQuoteError } from './checkout-quote
 
 type CartLine = { id: string; productHandle: string; variantId: string; quantity: number };
 type ProviderLine = { variant_id: string; quantity: number };
-const origins = new Set<string>([XPAGE_STORE_URL, ...Object.values(XPAGE_LANDING_URLS)]);
+const flosserLandingUrl = XPAGE_LANDING_URLS.flosser || 'https://flosser.miroooo.us';
+const origins = new Set<string>([
+  XPAGE_STORE_URL,
+  ...Object.values(XPAGE_LANDING_URLS),
+  flosserLandingUrl,
+  'https://flosser.miroooo.us',
+]);
 const unavailable = (message = 'The live GBP checkout could not be verified. Please try again. No order has been placed.') =>
   new CheckoutQuoteError('QUOTE_UNAVAILABLE', message);
 const pennies = (value: number) => Math.round((value + Number.EPSILON) * 100);
@@ -105,14 +111,22 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
     XPAGE_VARIANTS.x1_pink_6pc,
     XPAGE_VARIANTS.x1_silver_6pc,
   ]);
+  const flosserVariants = new Set<string>([
+    XPAGE_VARIANTS.flosser_black_7,
+    XPAGE_VARIANTS.flosser_black_4,
+    XPAGE_VARIANTS.flosser_white_7,
+    XPAGE_VARIANTS.flosser_white_4,
+  ]);
   const nonGiftLines = xpageCart.filter(
     (line) => line.variant_id !== XPAGE_VARIANTS.gift_card && line.variant_id !== XPAGE_VARIANTS.package_protection
   );
+  const isFlosser = nonGiftLines.length > 0 && nonGiftLines.some((line) => flosserVariants.has(line.variant_id));
   const isX1HeadsOnly = nonGiftLines.length > 0 && nonGiftLines.every((line) => line.variant_id === XPAGE_VARIANTS.x1_heads);
   const isX2HeadsOnly = nonGiftLines.length > 0 && nonGiftLines.every((line) => line.variant_id === XPAGE_VARIANTS.x2_heads);
   const isPackageProtectionOnly = xpageCart.length > 0 && xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.package_protection);
   const isGiftCardOnly = xpageCart.length > 0 && xpageCart.every((line) => line.variant_id === XPAGE_VARIANTS.gift_card);
-  const product = isPackageProtectionOnly ? 'package_protection'
+  const product = isFlosser ? 'flosser'
+    : isPackageProtectionOnly ? 'package_protection'
     : isGiftCardOnly ? 'giftcard'
     : isX1HeadsOnly ? 'x1_heads'
     : isX2HeadsOnly ? 'x2_heads'
@@ -134,11 +148,18 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
           prodId === 'a2f6df9e-faf7-438b-a65a-da26ee25ce03' ||
           slug === 'miroooo-package-protection' ||
           item.product?.variants?.some((v: any) => v.id === XPAGE_VARIANTS.package_protection);
+        const isFlosserItem =
+          prodId === 'a2f69a15-e357-403b-a11c-b3912eb49b1d' ||
+          slug === 'miroooo-water-flosser' ||
+          item.product?.variants?.some((v: any) => flosserVariants.has(v.id));
 
         if (isPackageProtection) {
           offeredMap[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.package_protection);
         } else if (isGiftCard) {
           offeredMap[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.gift_card);
+        } else if (isFlosserItem) {
+          const flosserVarId = item.product?.variants?.[0]?.id || XPAGE_VARIANTS.flosser_black_7;
+          offeredMap[item.id] = Array(item.quantity).fill(flosserVarId);
         } else {
           offeredMap[item.id] = Array(item.quantity).fill(selected.headsVariant);
         }
@@ -194,7 +215,8 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
     checkout = (await readCheckout(destination(checkout.pathname, resolveOrigin))).url;
   }
   // Preserve the native handoff prefix while keeping the existing model-specific destination.
-  checkout = destination(checkout.pathname, XPAGE_LANDING_URLS[product]);
+  const targetLanding = product === 'flosser' ? flosserLandingUrl : (XPAGE_LANDING_URLS[product] || XPAGE_STORE_URL);
+  checkout = destination(checkout.pathname, targetLanding);
   // Verify exactly what a new customer's browser receives, without our server cookies.
   const page = await readCheckout(checkout);
   assertCheckoutOrderQuote(page.html, xpageCart, expectedGBP);

@@ -137,6 +137,7 @@ function getHeadsNetGBP(count: number): number {
 export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]): CartTotals {
   let x2Count = 0;
   let x1Count = 0;
+  let flosserCount = 0;
   let x2HeadsCount = 0;
   let x1HeadsCount = 0;
 
@@ -159,6 +160,13 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
       x1Count += qty;
       x1ItemSubtotal += (item.unitPrice || 69) * qty;
       x1ItemCompare += (item.comparePrice || 139) * qty;
+    }
+    else if (item.productHandle === 'miroooo-water-flosser') {
+      flosserCount += qty;
+      otherItemsQty += qty;
+      const effectiveUnitPrice = item.unitPrice || 0;
+      otherItemsSubtotal += effectiveUnitPrice * qty;
+      otherItemsCompareAt += (item.comparePrice || effectiveUnitPrice) * qty;
     }
     else if (item.productHandle === 'miroooo-x2-heads') x2HeadsCount += qty;
     else if (item.productHandle === 'miroooo-x1-heads') x1HeadsCount += qty;
@@ -235,7 +243,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let unlockedGiftsCount = 0;
   let hasFreeGiftCard = false;
 
-  if (x2Count > 0 || x1Count > 0) {
+  if (x2Count > 0 || x1Count > 0 || flosserCount > 0) {
     giftsValue += 10;
     unlockedGiftsCount += 1;
     hasFreeGiftCard = true;

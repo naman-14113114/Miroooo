@@ -4,9 +4,10 @@ import React, { useEffect } from 'react';
 
 interface ProductReviewsProps {
   isX2?: boolean;
+  isFlosser?: boolean;
 }
 
-export function ProductReviews({ isX2 = true }: ProductReviewsProps) {
+export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReviewsProps) {
   useEffect(() => {
     let active = true;
     let dispose: (() => void) | undefined;

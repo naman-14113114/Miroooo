@@ -7,6 +7,7 @@ export const XPAGE_LANDING_URLS: Record<string, string> = {
   x2_heads: "https://x2heads.miroooo.us",
   giftcard: "https://giftcard.miroooo.us",
   package_protection: "https://packageprotection.miroooo.us",
+  flosser: "https://flosser.miroooo.us",
 };
 
 export const XPAGE_VARIANTS = {
@@ -30,6 +31,16 @@ export const XPAGE_VARIANTS = {
   // Miroooo X2 Heads (Product: a2d0cb1d-c4f6-492e-a72d-27369d15ec0c)
   x2_heads: "a2d0cb1d-dfcf-425d-9251-7792053c08b8",
 
+  // Miroooo Water Flosser (Product: a2f69a15-e357-403b-a11c-b3912eb49b1d)
+  flosser_black_7: "a2f69a19-e45d-48ab-9d9d-8f837f327b23",
+  flosser_black_4: "a2f69a19-d524-4360-b333-91a4fd350f2d",
+  flosser_white_7: "a2f69a19-c917-4de3-9d64-3db9502ee9a6",
+  flosser_white_4: "a2f69a19-b908-40c1-8214-2b6922aa4617",
+
+  // Aliases for flosser
+  flosser_black: "a2f69a19-d524-4360-b333-91a4fd350f2d",
+  flosser_white: "a2f69a19-b908-40c1-8214-2b6922aa4617",
+
   gift_card: "a2f687d5-32cc-427c-81f1-5d153911e592",
   package_protection: "a2f6dfa1-50ae-46c9-a88e-fdb563e124a2",
 } as const;
@@ -41,6 +52,10 @@ export const XPAGE_MIROOOO_VARIANTS = {
   grey: XPAGE_VARIANTS.x1_grey,
   gray: XPAGE_VARIANTS.x1_grey,
   heads: XPAGE_VARIANTS.x1_heads,
+  flosser_black_7: XPAGE_VARIANTS.flosser_black_7,
+  flosser_black_4: XPAGE_VARIANTS.flosser_black_4,
+  flosser_white_7: XPAGE_VARIANTS.flosser_white_7,
+  flosser_white_4: XPAGE_VARIANTS.flosser_white_4,
 };
 
 export const XPAGE_BUNDLES = {
@@ -366,6 +381,24 @@ export const XPAGE_BUNDLES = {
       offeredQty: 0,
     },
   },
+  flosser: {
+    productId: "a2f69a15-e357-403b-a11c-b3912eb49b1d",
+    id: "a3014906-57b5-405d-8d9e-7e3b15d9782b",
+    buy1: {
+      optionId: "a3014906-5e8f-4b65-a55a-f3f03cb94954",
+      conditionId: "a3014906-69d3-4326-a995-45a30656e6a2",
+      offeredId: "a3014906-6624-4fbc-89a0-205a2635e7f8",
+      offeredQty: 1,
+    },
+    buy2: {
+      optionId: "a3014906-6f00-4af1-9c91-99030c112703",
+      conditionId: "a3014906-7dd6-4028-905d-f5f00b48adf1",
+      offeredProtectionId: "a3014906-7a49-4a52-8ff1-bd6f51129976",
+      offeredFlosserId: "a3014906-75ac-4f6f-8957-07f655d1ffa2",
+      offeredId: "a3014906-7a49-4a52-8ff1-bd6f51129976",
+      offeredQty: 1,
+    },
+  },
 } as const;
 
 export const ALLOWED_ATTRIBUTION_KEYS = [
@@ -390,7 +423,7 @@ function sanitizeHeaderValue(value: unknown): string {
  */
 export async function loadXpageSession(
   currency = "GBP",
-  product: "x1" | "x2" | "x1_heads" | "x2_heads" | "store" | "package_protection" | "giftcard" = "x2"
+  product: "x1" | "x2" | "x1_heads" | "x2_heads" | "store" | "package_protection" | "giftcard" | "flosser" = "x2"
 ) {
   const origin = product === "store" ? XPAGE_STORE_URL : XPAGE_LANDING_URLS[product];
   if (!origin) throw new Error("Unknown Miroooo XPage offer.");
@@ -473,9 +506,11 @@ export function mapCartToXpageVariants(cartLines: any[] = []) {
     const idRaw = (line.id || "").toString().toLowerCase().trim();
     const handleRaw = (line.productHandle || line.handle || "").toString().toLowerCase().trim();
     const titleRaw = (line.title || line.name || "").toString().toLowerCase().trim();
-    const colorRaw = (line.color || line.variant || "").toString().toLowerCase().trim();
+    const colorRaw = (line.color || "").toString().toLowerCase().trim();
+    const variantTitleRaw = (line.variant || line.variantTitle || line.variantName || "").toString().toLowerCase().trim();
+    const specRaw = (line.specifications || line.specification || "").toString().toLowerCase().trim();
 
-    const allText = `${variantIdRaw} ${productIdRaw} ${idRaw} ${handleRaw} ${titleRaw} ${colorRaw}`.toLowerCase();
+    const allText = `${variantIdRaw} ${productIdRaw} ${idRaw} ${handleRaw} ${titleRaw} ${colorRaw} ${variantTitleRaw} ${specRaw}`.toLowerCase();
 
     let targetVariantId: string | null = null;
 
@@ -505,7 +540,15 @@ export function mapCartToXpageVariants(cartLines: any[] = []) {
       targetVariantId = XPAGE_VARIANTS.package_protection;
     }
     // 1. Direct XPage Variant ID match
-    else if (variantIdRaw === XPAGE_VARIANTS.x2_heads || allText.includes(XPAGE_VARIANTS.x2_heads)) {
+    else if (variantIdRaw === XPAGE_VARIANTS.flosser_black_7 || allText.includes(XPAGE_VARIANTS.flosser_black_7)) {
+      targetVariantId = XPAGE_VARIANTS.flosser_black_7;
+    } else if (variantIdRaw === XPAGE_VARIANTS.flosser_black_4 || allText.includes(XPAGE_VARIANTS.flosser_black_4)) {
+      targetVariantId = XPAGE_VARIANTS.flosser_black_4;
+    } else if (variantIdRaw === XPAGE_VARIANTS.flosser_white_7 || allText.includes(XPAGE_VARIANTS.flosser_white_7)) {
+      targetVariantId = XPAGE_VARIANTS.flosser_white_7;
+    } else if (variantIdRaw === XPAGE_VARIANTS.flosser_white_4 || allText.includes(XPAGE_VARIANTS.flosser_white_4)) {
+      targetVariantId = XPAGE_VARIANTS.flosser_white_4;
+    } else if (variantIdRaw === XPAGE_VARIANTS.x2_heads || allText.includes(XPAGE_VARIANTS.x2_heads)) {
       targetVariantId = XPAGE_VARIANTS.x2_heads;
     } else if (variantIdRaw === XPAGE_VARIANTS.x2_pink || allText.includes(XPAGE_VARIANTS.x2_pink)) {
       targetVariantId = XPAGE_VARIANTS.x2_pink;
@@ -541,6 +584,31 @@ export function mapCartToXpageVariants(cartLines: any[] = []) {
       allText.includes(XPAGE_VARIANTS.x1_silver_6pc)
     ) {
       targetVariantId = XPAGE_VARIANTS.x1_silver;
+    }
+    // 1.5 Miroooo Water Flosser Mapping
+    else if (
+      productIdRaw === "a2f69a15-e357-403b-a11c-b3912eb49b1d" ||
+      handleRaw.includes("flosser") ||
+      idRaw.includes("flosser") ||
+      allText.includes("water-flosser") ||
+      allText.includes("water flosser") ||
+      allText.includes("flosser") ||
+      allText.includes("a2f69a15-e357-403b-a11c-b3912eb49b1d")
+    ) {
+      const isWhite = colorRaw.includes("white") || allText.includes("white");
+      const is7Nozzles =
+        allText.includes("7 nozzle") ||
+        allText.includes("7-nozzle") ||
+        allText.includes("7 nozzles") ||
+        allText.includes("7nozzle") ||
+        allText.includes("7pc") ||
+        allText.includes("7 pc");
+
+      if (isWhite) {
+        targetVariantId = is7Nozzles ? XPAGE_VARIANTS.flosser_white_7 : XPAGE_VARIANTS.flosser_white_4;
+      } else {
+        targetVariantId = is7Nozzles ? XPAGE_VARIANTS.flosser_black_7 : XPAGE_VARIANTS.flosser_black_4;
+      }
     }
     // 2. Brush Heads Mapping (Differentiate X2 Heads vs X1 Heads)
     else if (
@@ -690,7 +758,9 @@ export function mapCartToXpageVariants(cartLines: any[] = []) {
 // XPage creates the complimentary and paid head sets from the selected bundle option.
 export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
   const brushes: { x1: string[]; x2: string[] } = { x1: [], x2: [] };
+  const flossers: string[] = [];
   const brushCounts = { x1: 0, x2: 0 };
+  let flosserCount = 0;
   const freeHeads = { x1: 0, x2: 0 };
   const paidHeads = { x1: 0, x2: 0 };
   let hasPackageProtection = false;
@@ -764,6 +834,56 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
       continue;
     }
 
+    const flosserVariants = [
+      XPAGE_VARIANTS.flosser_black_7,
+      XPAGE_VARIANTS.flosser_black_4,
+      XPAGE_VARIANTS.flosser_white_7,
+      XPAGE_VARIANTS.flosser_white_4,
+    ];
+    if (flosserVariants.includes(variantId as any)) {
+      flosserCount += quantity;
+      if (flosserCount <= 2) flossers.push(...Array(quantity).fill(variantId));
+      continue;
+    }
+
+    return null;
+  }
+
+  if (flosserCount > 0) {
+    if (
+      brushCounts.x1 > 0 ||
+      brushCounts.x2 > 0 ||
+      paidHeads.x1 > 0 ||
+      paidHeads.x2 > 0 ||
+      freeHeads.x1 > 0 ||
+      freeHeads.x2 > 0
+    ) {
+      return null;
+    }
+    if (flosserCount === 1) {
+      const option = XPAGE_BUNDLES.flosser.buy1;
+      return {
+        bundle_option_id: option.optionId,
+        product: "flosser" as const,
+        flossers,
+        brushes: flossers,
+        headsVariant: "",
+        offeredQty: option.offeredQty,
+        matchedKey: "buy1",
+      };
+    }
+    if (flosserCount === 2) {
+      const option = XPAGE_BUNDLES.flosser.buy2;
+      return {
+        bundle_option_id: option.optionId,
+        product: "flosser" as const,
+        flossers,
+        brushes: flossers,
+        headsVariant: "",
+        offeredQty: 1,
+        matchedKey: "buy2",
+      };
+    }
     return null;
   }
 
@@ -911,7 +1031,7 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
 
   return {
     bundle_option_id: option.optionId,
-    product: product as "x1" | "x2" | "x1_heads" | "x2_heads",
+    product: product as "x1" | "x2" | "x1_heads" | "x2_heads" | "flosser",
     brushes: brushes[product],
     headsVariant: option.headsVariant || (product === "x1" ? XPAGE_VARIANTS.x1_heads : XPAGE_VARIANTS.x2_heads),
     offeredQty: option.offeredQty || 0,
@@ -930,8 +1050,9 @@ export function buildCheckoutUrl(
 ) {
   const url = new URL(baseCheckoutUrl);
 
-  if (currency) {
-    url.searchParams.set("currency", currency);
+  const effectiveCurrency = currency || url.searchParams.get("currency") || "GBP";
+  if (effectiveCurrency) {
+    url.searchParams.set("currency", effectiveCurrency);
   }
 
   if (discountCode) {
@@ -950,7 +1071,7 @@ export function buildCheckoutUrl(
   return url.toString();
 }
 
-export function brandedCheckoutUrl(href: string, product: "x1" | "x2" | "x1_heads" | "x2_heads" = "x2") {
+export function brandedCheckoutUrl(href: string, product: "x1" | "x2" | "x1_heads" | "x2_heads" | "flosser" = "x2") {
   if (typeof href !== "string") throw new Error("XPage did not return a checkout session.");
   const url = new URL(href);
   const brandedOrigin = XPAGE_LANDING_URLS[product];
@@ -969,10 +1090,62 @@ export function brandedCheckoutUrl(href: string, product: "x1" | "x2" | "x1_head
 
 function validatePublishedBundle(
   session: any,
-  product: "x1" | "x2" | "x1_heads" | "x2_heads",
+  product: "x1" | "x2" | "x1_heads" | "x2_heads" | "flosser",
   payload: any
 ) {
   const selected = session.bundle?.options?.find((option: any) => option.id === payload.bundle_option_id);
+  if (!selected) {
+    throw new Error("The published XPage bundle has changed; checkout was not created.");
+  }
+
+  if (product === "flosser") {
+    const flosserList = payload.flossers || payload.brushes || [];
+    const condition = selected.conditions?.[0];
+    if (!condition || condition.product?.status !== "ACTIVE") {
+      throw new Error("The published XPage bundle has changed; checkout was not created.");
+    }
+    const variants = condition.product?.variants || [];
+    const firstFlosser = flosserList[0];
+    if (!firstFlosser || !variants.some((v: any) => v.id === firstFlosser && v.is_visible)) {
+      throw new Error("The published XPage bundle has changed; checkout was not created.");
+    }
+
+    const offeredSelections: Record<string, string[]> = {};
+    if (Array.isArray(selected.offered)) {
+      for (const item of selected.offered) {
+        const prodId = (item.product?.id || item.product_id || "").toLowerCase();
+        const slug = (item.product?.slug || item.product?.handle || "").toLowerCase();
+        const isGiftCard =
+          prodId === "a2f687d2-56cd-4709-95a5-e6d280070c18" ||
+          slug === "miroooo-gift-card" ||
+          item.product?.variants?.some((v: any) => v.id === XPAGE_VARIANTS.gift_card) ||
+          (item.product?.name || "").toLowerCase().includes("gift card");
+        const isPackageProtection =
+          prodId === "a2f6df9e-faf7-438b-a65a-da26ee25ce03" ||
+          slug === "miroooo-package-protection" ||
+          item.product?.variants?.some((v: any) => v.id === XPAGE_VARIANTS.package_protection) ||
+          (item.product?.name || "").toLowerCase().includes("package protection");
+
+        if (isPackageProtection) {
+          offeredSelections[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.package_protection);
+        } else if (isGiftCard) {
+          offeredSelections[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.gift_card);
+        } else {
+          const secondFlosser = flosserList[1] || firstFlosser;
+          offeredSelections[item.id] = Array(item.quantity).fill(secondFlosser);
+        }
+      }
+    }
+
+    return {
+      bundle_option_id: selected.id,
+      bundle_selected_variants: {
+        conditions: { [condition.id]: [firstFlosser] },
+        offered: offeredSelections,
+      },
+    };
+  }
+
   const quantity = payload.brushes?.length || 0;
   const condition = selected?.conditions?.find((item: any) => item.quantity === quantity);
   const offered =
@@ -1057,7 +1230,7 @@ export async function createXpageCartCheckout({
   const bundlePayload = forceStandardCart ? null : detectBundlePayload(cart, discountCode);
 
   if (bundlePayload) {
-    const product: "x1" | "x2" | "x1_heads" | "x2_heads" = bundlePayload.product;
+    const product: "x1" | "x2" | "x1_heads" | "x2_heads" | "flosser" = bundlePayload.product;
     const session = await loadXpageSession(currency, product);
     const publishedPayload = validatePublishedBundle(session, product, bundlePayload);
     const response = await fetch(`${session.origin}/create-bundle-order`, {
@@ -1175,7 +1348,17 @@ export async function createXpageCartCheckout({
     XPAGE_VARIANTS.x1_silver_6pc,
     XPAGE_VARIANTS.x1_heads,
   ]);
-  const product: "x1" | "x2" | "x1_heads" | "x2_heads" = xpageLines.every((line) => line.variant_id === XPAGE_VARIANTS.x1_heads)
+  const flosserVariants = new Set([
+    XPAGE_VARIANTS.flosser_black_7,
+    XPAGE_VARIANTS.flosser_black_4,
+    XPAGE_VARIANTS.flosser_white_7,
+    XPAGE_VARIANTS.flosser_white_4,
+  ]);
+  const product: "x1" | "x2" | "x1_heads" | "x2_heads" | "flosser" = xpageLines.some((line) =>
+    flosserVariants.has(line.variant_id as any)
+  )
+    ? "flosser"
+    : xpageLines.every((line) => line.variant_id === XPAGE_VARIANTS.x1_heads)
     ? "x1_heads"
     : xpageLines.every((line) => line.variant_id === XPAGE_VARIANTS.x2_heads)
     ? "x2_heads"

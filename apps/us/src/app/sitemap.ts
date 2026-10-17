@@ -13,6 +13,7 @@ const routes = [
   // Products
   ["/products/miroooo-x", "weekly", 0.9],
   ["/products/miroooo-x2", "weekly", 0.9],
+  ["/products/miroooo-water-flosser", "weekly", 0.9],
   ["/products/miroooo-x1-heads", "weekly", 0.8],
   ["/products/miroooo-x2-heads", "weekly", 0.8],
 

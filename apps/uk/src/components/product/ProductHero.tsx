@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { AnimatedIcon } from '@/components/ui/AnimatedIcon';
 import { x1Gallery, x1GalleryMirooooX1 } from '@/data/x1Gallery';
 import { x2Gallery } from '@/data/x2Gallery';
+import { getFlosserHeroSlides } from '@/data/flosserGallery';
 import { ProductAccordions } from './ProductAccordions';
 import { Product } from '@/data/products';
 import { useRouter } from 'next/navigation';
@@ -47,9 +48,11 @@ export function ProductHero({
   const router = useRouter();
   const { addItem, addBundle } = useCart();
   const isX2 = product.handle === 'miroooo-x2';
+  const isWaterFlosser = product.handle === 'miroooo-water-flosser' || product.handle === 'water-flosser';
+  const defaultInitialColor = initialColor && initialColor !== 'Silver' ? initialColor : (isWaterFlosser ? 'Black' : 'Silver');
 
   // Active color & tier state
-  const [selectedColor, setSelectedColor] = useState<string>(initialColor);
+  const [selectedColor, setSelectedColor] = useState<string>(defaultInitialColor);
   const [selectedTier, setSelectedTier] = useState<'single' | 'bundle-2' | 'bundle-3'>('single');
   const [quantity, setQuantity] = useState(1);
 
@@ -212,7 +215,9 @@ export function ProductHero({
       ? bundle2Price
       : bundle3Price;
 
-  const addToCartLabel = isSimpleBuybox
+  const addToCartLabel = isWaterFlosser
+    ? 'Add to Cart + Free Gift Card'
+    : isSimpleBuybox
     ? (quantity === 2
         ? 'Add to Cart + Free 4 Brush Heads'
         : quantity === 3
@@ -226,6 +231,28 @@ export function ProductHero({
 
   // Add to Cart handler
   const handleAddToCart = () => {
+    if (isWaterFlosser) {
+      if (isSimpleBuybox) {
+        addItem({
+          productHandle: product.handle,
+          color: selectedColor,
+          quantity,
+        });
+      } else if (selectedTier === 'single') {
+        addItem({
+          productHandle: product.handle,
+          color: singleColor,
+          quantity: 1,
+        });
+      } else if (selectedTier === 'bundle-2') {
+        addBundle(product.handle, 2, bundle2Colors);
+      } else {
+        addBundle(product.handle, 3, bundle3Colors);
+      }
+      router.push('/cart');
+      return;
+    }
+
     if (isSimpleBuybox) {
       addItem({
         productHandle: product.handle,
@@ -663,14 +690,18 @@ export function ProductHero({
         type: isVideo ? 'video' : 'image',
         ...(isVideo ? { videoSrc: src, poster: thumb } : { src }),
         thumbImg: thumb,
-        alt: (variant as any).alts?.[index] || `Miroooo X1 ${selectedColor} product view ${index + 1}`,
+        alt: (variant as unknown as { alts?: readonly string[] }).alts?.[index] || `Miroooo X1 ${selectedColor} product view ${index + 1}`,
         badge,
         isModesBadge,
       };
     });
   };
 
-  const gallerySlides = isX2 ? getX2Slides() : getX1Slides();
+  const gallerySlides: GallerySlide[] = isX2
+    ? getX2Slides()
+    : isWaterFlosser
+    ? (getFlosserHeroSlides(selectedColor) as GallerySlide[])
+    : getX1Slides();
   const totalSlides = gallerySlides.length;
 
   useEffect(() => {
@@ -720,6 +751,12 @@ export function ProductHero({
   // Helper to get checkout thumbnail image for sticky bar
   const getColorThumbnail = (color: string) => {
     const col = color.toLowerCase();
+    if (isWaterFlosser) {
+      if (col.includes('white')) {
+        return '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp';
+      }
+      return '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp';
+    }
     if (isX2) {
       if (col === 'pink') return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp';
       if (col === 'grey') return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp';
@@ -745,7 +782,7 @@ export function ProductHero({
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                 <strong className="x2-urgency-banner__headline">
-                  Free pair of brush heads for today only
+                  {isWaterFlosser ? 'Free Miroooo Digital Gift Card ($10 Value) Included' : 'Free pair of brush heads for today only'}
                 </strong>
               </div>
             </div>
@@ -1035,41 +1072,72 @@ export function ProductHero({
               {/* 3. Bullet Features */}
               <div className="product__features-list my-4" style={{ margin: '16px 0' }}>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: 'rgba(255, 255, 255, 0.9)', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.95rem' }}>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
-                    </span>
-                    <span>{isX2 ? <><strong>Ultra Lightweight</strong> ergonomic aerospace-grade aluminium body.</> : <><strong>Ultra Lightweight</strong> at only 51g for effortless daily handling.</>}</span>
-                  </li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><polyline points="11 9 9 12 12 12 10 15"></polyline></svg>
-                    </span>
-                    <span>Brushes up to <strong>{isX2 ? '90 days' : '60 days'}</strong> on a single charge.</span>
-                  </li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"></rect><path d="M8 7V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3"></path><line x1="3" y1="13" x2="21" y2="13"></line></svg>
-                    </span>
-                    <span>{isX2 ? <>Includes <strong>free luxury travel case</strong>.</> : <>Includes free luxury <strong>Travel Case</strong>.</>}</span>
-                  </li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v4"></path><path d="M6 7v10"></path><path d="M10 4v16"></path><path d="M14 7v10"></path><path d="M18 10v4"></path><path d="M22 12v0"></path></svg>
-                    </span>
-                    <span><strong>Whisper Quiet</strong> acoustic motor operating below {isX2 ? '45' : '50'} dB.</span>
-                  </li>
+                  {isWaterFlosser ? (
+                    <>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                        </span>
+                        <span><strong>60–138 PSI Precision Micro-Jets</strong> powered by high-frequency piston pump.</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><polyline points="11 9 9 12 12 12 10 15"></polyline></svg>
+                        </span>
+                        <span>Up to <strong>60 days battery life</strong> (2000mAh) on a single 3-hour USB-C charge.</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+                        </span>
+                        <span>Includes <strong>7 specialized precision nozzles</strong> + Free £10 Miroooo Gift Voucher.</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </span>
+                        <span><strong>320ml High-Capacity Reservoir</strong> with IPX7 100% submersible waterproof rating.</span>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
+                        </span>
+                        <span>{isX2 ? <><strong>Ultra Lightweight</strong> ergonomic aerospace-grade aluminium body.</> : <><strong>Ultra Lightweight</strong> at only 51g for effortless daily handling.</>}</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><polyline points="11 9 9 12 12 12 10 15"></polyline></svg>
+                        </span>
+                        <span>Brushes up to <strong>{isX2 ? '90 days' : '60 days'}</strong> on a single charge.</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"></rect><path d="M8 7V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3"></path><line x1="3" y1="13" x2="21" y2="13"></line></svg>
+                        </span>
+                        <span>{isX2 ? <>Includes <strong>free luxury travel case</strong>.</> : <>Includes free luxury <strong>Travel Case</strong>.</>}</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ color: '#ffffff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0, background: 'rgba(255, 255, 255, 0.08)', borderRadius: '50%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v4"></path><path d="M6 7v10"></path><path d="M10 4v16"></path><path d="M14 7v10"></path><path d="M18 10v4"></path><path d="M22 12v0"></path></svg>
+                        </span>
+                        <span><strong>Whisper Quiet</strong> acoustic motor operating below {isX2 ? '45' : '50'} dB.</span>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
 
-              {/* Standalone 3-Color Selector (Silver, Pink, Grey) */}
+              {/* Standalone Color Selector */}
               <div className="standalone-color-selector my-4" style={{ margin: '20px 0 16px 0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', fontSize: '14px' }}>
                   <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Color:</span>
                   <span id="standalone-color-name" style={{ color: '#ffffff', fontWeight: 700 }}>{selectedColor}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} id="standalone-swatches-group">
-                  {['Silver', 'Pink', 'Grey'].map((col) => (
+                  {(isWaterFlosser ? ['Black', 'White'] : ['Silver', 'Pink', 'Grey']).map((col) => (
                     <button
                       key={col}
                       type="button"
@@ -1078,6 +1146,13 @@ export function ProductHero({
                       onClick={() => handleSelectStandaloneColor(col)}
                       title={col}
                       aria-label={col}
+                      style={
+                        col === 'Black'
+                          ? { background: '#111111', border: selectedColor === 'Black' ? '2px solid #ffffff' : '1px solid #444444' }
+                          : col === 'White'
+                          ? { background: '#f5f5f5', border: selectedColor === 'White' ? '2px solid #ffffff' : '1px solid #cccccc' }
+                          : undefined
+                      }
                     ></button>
                   ))}
                 </div>
@@ -1233,38 +1308,40 @@ export function ProductHero({
                   </div>
 
                   {/* Embedded Addon Strip (Buy 1) */}
-                  <div
-                    className="tier-gift-strip tier-addon-strip"
-                    id="buy1-heads-addon-strip"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setBuy1HeadsChecked(selectedTier !== 'single' || !buy1HeadsChecked);
-                      setSelectedTier('single');
-                    }}
-                    title="Add 2 Brush Heads"
-                  >
-                    <div className="tier-gift-strip-left">
-                      <label className="tier-addon-checkbox-wrap" onClick={(e) => e.stopPropagation()}>
-                        <input
-                          type="checkbox"
-                          id="buy1-heads-checkbox"
-                          className="tier-addon-checkbox"
-                          checked={buy1HeadsChecked}
-                          onChange={(e) => { setBuy1HeadsChecked(e.target.checked); setSelectedTier('single'); }}
-                          aria-label="Add 2 brush heads"
-                        />
-                        <span className="tier-addon-custom-check" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: buy1HeadsChecked ? 1 : 0 }}>
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </span>
-                      </label>
-                      <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
+                  {!isWaterFlosser && (
+                    <div
+                      className="tier-gift-strip tier-addon-strip"
+                      id="buy1-heads-addon-strip"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setBuy1HeadsChecked(selectedTier !== 'single' || !buy1HeadsChecked);
+                        setSelectedTier('single');
+                      }}
+                      title="Add 2 Brush Heads"
+                    >
+                      <div className="tier-gift-strip-left">
+                        <label className="tier-addon-checkbox-wrap" onClick={(e) => e.stopPropagation()}>
+                          <input
+                            type="checkbox"
+                            id="buy1-heads-checkbox"
+                            className="tier-addon-checkbox"
+                            checked={buy1HeadsChecked}
+                            onChange={(e) => { setBuy1HeadsChecked(e.target.checked); setSelectedTier('single'); }}
+                            aria-label="Add 2 brush heads"
+                          />
+                          <span className="tier-addon-custom-check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: buy1HeadsChecked ? 1 : 0 }}>
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </span>
+                        </label>
+                        <span className="tier-gift-strip-title">+ 2 Brush Heads</span>
+                      </div>
+                      <div className="tier-gift-strip-right">
+                        <span className="tier-addon-price-tag" id="tier-single-heads-price">+£10</span>
+                      </div>
                     </div>
-                    <div className="tier-gift-strip-right">
-                      <span className="tier-addon-price-tag" id="tier-single-heads-price">+£10</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Tier 2: Buy 2 (Most Popular) */}
@@ -1354,24 +1431,26 @@ export function ProductHero({
                   </div>
 
                   {/* Free Gift Strip (Buy 2) */}
-                  <a className="tier-gift-strip" href={isX2 ? '/products/miroooo-x2-heads' : '/products/miroooo-x1-heads'} onClick={(event) => event.stopPropagation()}>
-                    <div className="tier-gift-strip-left">
-                      <span className="tier-gift-strip-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <polyline points="20 12 20 22 4 22 4 12"></polyline>
-                          <rect x="2" y="7" width="20" height="5"></rect>
-                          <line x1="12" y1="22" x2="12" y2="7"></line>
-                          <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
-                          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
-                        </svg>
-                      </span>
-                      <span className="tier-gift-strip-title">{isX2 ? '+ 4 Brush Heads (2 Sets)' : '+ 2 Brush Heads'}</span>
-                    </div>
-                    <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">{isX2 ? '£20' : '£10'}</span>
-                      <span className="tier-gift-free-badge">FREE</span>
-                    </div>
-                  </a>
+                  {!isWaterFlosser && (
+                    <a className="tier-gift-strip" href={isX2 ? '/products/miroooo-x2-heads' : '/products/miroooo-x1-heads'} onClick={(event) => event.stopPropagation()}>
+                      <div className="tier-gift-strip-left">
+                        <span className="tier-gift-strip-icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                            <rect x="2" y="7" width="20" height="5"></rect>
+                            <line x1="12" y1="22" x2="12" y2="7"></line>
+                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                          </svg>
+                        </span>
+                        <span className="tier-gift-strip-title">{isX2 ? '+ 4 Brush Heads (2 Sets)' : '+ 2 Brush Heads'}</span>
+                      </div>
+                      <div className="tier-gift-strip-right">
+                        <span className="tier-gift-original-price" id="tier-bundle-2-gift-price">{isX2 ? '£20' : '£10'}</span>
+                        <span className="tier-gift-free-badge">FREE</span>
+                      </div>
+                    </a>
+                  )}
                 </div>
 
                 {/* Tier 3: Buy 3 (Best Value) */}
@@ -1475,24 +1554,26 @@ export function ProductHero({
                   </div>
 
                   {/* Free Gift Strip (Buy 3) */}
-                  <a className="tier-gift-strip" href={isX2 ? '/products/miroooo-x2-heads' : '/products/miroooo-x1-heads'} onClick={(event) => event.stopPropagation()}>
-                    <div className="tier-gift-strip-left">
-                      <span className="tier-gift-strip-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <polyline points="20 12 20 22 4 22 4 12"></polyline>
-                          <rect x="2" y="7" width="20" height="5"></rect>
-                          <line x1="12" y1="22" x2="12" y2="7"></line>
-                          <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
-                          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
-                        </svg>
-                      </span>
-                      <span className="tier-gift-strip-title">{isX2 ? '+ 6 Brush Heads (3 Sets)' : '+ 4 Brush Heads (2 Sets)'}</span>
-                    </div>
-                    <div className="tier-gift-strip-right">
-                      <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">{isX2 ? '£30' : '£20'}</span>
-                      <span className="tier-gift-free-badge">FREE</span>
-                    </div>
-                  </a>
+                  {!isWaterFlosser && (
+                    <a className="tier-gift-strip" href={isX2 ? '/products/miroooo-x2-heads' : '/products/miroooo-x1-heads'} onClick={(event) => event.stopPropagation()}>
+                      <div className="tier-gift-strip-left">
+                        <span className="tier-gift-strip-icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                            <rect x="2" y="7" width="20" height="5"></rect>
+                            <line x1="12" y1="22" x2="12" y2="7"></line>
+                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                          </svg>
+                        </span>
+                        <span className="tier-gift-strip-title">{isX2 ? '+ 6 Brush Heads (3 Sets)' : '+ 4 Brush Heads (2 Sets)'}</span>
+                      </div>
+                      <div className="tier-gift-strip-right">
+                        <span className="tier-gift-original-price" id="tier-bundle-3-gift-price">{isX2 ? '£30' : '£20'}</span>
+                        <span className="tier-gift-free-badge">FREE</span>
+                      </div>
+                    </a>
+                  )}
                 </div>
               </div>
               </>
@@ -1559,7 +1640,7 @@ export function ProductHero({
                 </div>
               </div>
 
-              <FreeBrushHeadsGift model={isX2 ? 'X2' : 'X1'} currency="£" />
+              <FreeBrushHeadsGift model={isX2 ? 'X2' : isWaterFlosser ? 'WaterFlosser' : 'X1'} currency="£" onlyGiftCard={isWaterFlosser} />
 
               <ProductAccordions model={isX2 ? 'x2' : 'x1'} />
             </div>
