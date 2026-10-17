@@ -201,11 +201,13 @@ export const PRODUCTS: Record<string, Product> = {
       { src: '/assets_ref/x/G2.webp', alt: 'Miroooo X1 Fine Details', width: 700, height: 700 },
     ],
     boxContents: [
-      '1x Miroooo X1 Sonic Electric Toothbrush Handle',
-      '1x DuPont™ Precision Brush Head',
-      '1x Slim Magnetic Protective Travel Case',
-      '1x USB-C Fast-Charging Cable',
-      '1x User Manual & Warranty Guide',
+      '1x Miroooo X1 sonic electric toothbrush in selected finish',
+      '1x Magnetic wireless charger dock',
+      '1x Fluted travel case',
+      '3x DuPont™ replacement brush heads (1x extra head + 2x free gift heads)',
+      '1x Protective hygiene travel cap',
+      '1x USB-C fast charging cable (power adapter not included)',
+      '1x Luxury presentation packaging box & user manual',
     ],
   },
 

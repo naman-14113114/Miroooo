@@ -22,9 +22,40 @@ export function PackageContents({ isX2 = true, color = 'Silver' }: PackageConten
               </div>
               <div className="image-with-text__item x1-package__text">
                 <div className="rich-text">
-                  <h2 className="heading leading-none title-sm"><em className="highlighted-text inline-block not-italic relative" style={{ color: '#fff', WebkitTextFillColor: '#fff' }}>Package Contents</em></h2>
-                  <div className="rte leading-normal body subtext-md text-opacity" style={{ color: 'rgba(255,255,255,.8)' }}>
-                    <p>Miroooo X1 electric toothbrush in chosen colour, brush heads, Travel case, and USB-C charging cable (adapter not included).</p>
+                  <h2 className="heading leading-none title-sm" style={{ marginBottom: '1.25rem' }}>
+                    <em className="highlighted-text inline-block not-italic relative" style={{ color: '#fff', WebkitTextFillColor: '#fff' }}>Package Contents</em>
+                  </h2>
+                  <div className="rte leading-normal body subtext-md text-opacity" style={{ color: 'rgba(255,255,255,.85)' }}>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600, lineHeight: 1.4 }}>•</span>
+                        <span>1x Miroooo X1 sonic electric toothbrush in selected finish</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600, lineHeight: 1.4 }}>•</span>
+                        <span>1x Magnetic wireless charger dock</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600, lineHeight: 1.4 }}>•</span>
+                        <span>1x Fluted travel case</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600, lineHeight: 1.4 }}>•</span>
+                        <span>3x DuPont™ replacement brush heads (1x extra head + 2x free gift heads)</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600, lineHeight: 1.4 }}>•</span>
+                        <span>1x Protective hygiene travel cap</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600, lineHeight: 1.4 }}>•</span>
+                        <span>1x USB-C fast charging cable (power adapter not included)</span>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        <span style={{ color: '#fff', fontWeight: 600, lineHeight: 1.4 }}>•</span>
+                        <span>1x Luxury presentation packaging box &amp; user manual</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -41,7 +72,7 @@ export function PackageContents({ isX2 = true, color = 'Silver' }: PackageConten
 
   const desc = isX2
     ? 'Miroooo X2 electric toothbrush in selected finish, 2x DuPont replacement brush heads, Luxury travel case, wall-mounted storage dock, and USB-C charging cable (adapter not included).'
-    : 'Miroooo X1 electric toothbrush in selected finish, 2x DuPont replacement brush heads, Slim travel case, and USB-C charging cable (adapter not included).';
+    : 'Miroooo X1 sonic electric toothbrush in selected finish, 1x Magnetic wireless charger dock, 1x Fluted travel case, 3x DuPont™ replacement brush heads (1x extra head + 2x free gift heads), 1x Protective hygiene travel cap, 1x USB-C fast charging cable (power adapter not included), and 1x Luxury presentation packaging box & user manual.';
 
   return (
     <div
