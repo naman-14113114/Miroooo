@@ -13,6 +13,7 @@ import { X2ModesSwipe } from './X2ModesSwipe';
 import { BrushFunctions } from './BrushFunctions';
 import { ProductReviews } from './ProductReviews';
 import { ComparisonTable } from './ComparisonTable';
+import { DentalAppSection } from './DentalAppSection';
 import { PackageContents } from './PackageContents';
 import { X2ComparisonTable } from './X2ComparisonTable';
 import { ProductFaqs } from './ProductFaqs';
@@ -108,6 +109,9 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
           {/* 7. Verified Customer Reviews */}
           <ProductReviews isX2={true} />
 
+          {/* 8. Miroooo Dental App */}
+          <DentalAppSection isX2={true} />
+
           {/* 9. Competitor Comparison Table */}
           <ComparisonTable isX2={true} />
 
@@ -144,7 +148,10 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
           {/* 9. Verified Customer Reviews */}
           <ProductReviews isX2={false} />
 
-          {/* 10. Competitor Comparison Table */}
+          {/* 10. Miroooo Dental App */}
+          <DentalAppSection isX2={false} />
+
+          {/* 11. Competitor Comparison Table */}
           <ComparisonTable isX2={false} />
 
           {/* 11. Package Contents */}

@@ -33,8 +33,8 @@ export function CoachPromo() {
       </div>
       <div className="gb-coach-promo__media reveal">
         <img
-          src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp"
-          alt="Miroooo X2 toothbrush held beside the Smile Coach app"
+          src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-smile-coach-app.webp"
+          alt="Miroooo sonic electric toothbrush held beside the Smile Coach companion app"
           width={1254}
           height={1254}
           loading="lazy"
