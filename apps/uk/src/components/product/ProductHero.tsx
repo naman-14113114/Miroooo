@@ -18,6 +18,7 @@ interface ProductHeroProps {
   onColorChange?: (color: string) => void;
   isSimpleBuybox?: boolean;
   isMirooooX1Route?: boolean;
+  isHalloween?: boolean;
 }
 
 interface InfographicBadge {
@@ -44,6 +45,7 @@ export function ProductHero({
   onColorChange,
   isSimpleBuybox = false,
   isMirooooX1Route = true,
+  isHalloween = false,
 }: ProductHeroProps) {
   const router = useRouter();
   const { addItem, addBundle } = useCart();
@@ -776,33 +778,103 @@ export function ProductHero({
     <div ref={heroSectionRef} id="shopify-section-template--24203751129433__main-product" className="shopify-section">
       <div className="section section--padding section--rounded relative" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <div className="page-width relative">
-          <div id="miroooo-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
-            <div className="x2-urgency-banner__left">
-              <span className="x2-urgency-banner__icon" aria-hidden="true">🔥</span>
-              <div className="x2-urgency-banner__text-wrap">
-                <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
-                <strong className="x2-urgency-banner__headline">
-                  {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : 'Free pair of brush heads for today only'}
-                </strong>
+          {isHalloween ? (
+            <div
+              id="miroooo-urgency-banner"
+              className="x2-urgency-banner x2-urgency-banner--halloween"
+              role="region"
+              aria-label="Limited Time Upgrade Offer"
+              style={{
+                background: "#09040e url('/assets/halloween-banner-bg.jpg') no-repeat center center / cover",
+                backgroundImage: "linear-gradient(rgba(10, 5, 18, 0.25), rgba(10, 5, 18, 0.45)), url('/assets/halloween-banner-bg.jpg')",
+                backgroundColor: '#09040e',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center center',
+                backgroundRepeat: 'no-repeat',
+                border: '1.5px solid #ff7a00',
+                borderRadius: '14px',
+                boxShadow: '0 0 24px rgba(255, 122, 0, 0.4), inset 0 0 15px rgba(255, 122, 0, 0.15)',
+                color: '#ffffff',
+              }}
+            >
+              <div className="x2-urgency-banner__left">
+                <div className="x2-urgency-banner__text-wrap" style={{ paddingLeft: 'clamp(52px, 5.5vw, 68px)' }}>
+                  <span className="x2-urgency-banner__eyebrow" style={{ color: '#ff8c00', fontWeight: 800, textTransform: 'uppercase' }}>
+                    HALLOWEEN LIMITED-TIME SAVINGS
+                  </span>
+                  <strong className="x2-urgency-banner__headline" style={{ color: '#ffffff', fontWeight: 700 }}>
+                    Free pair of brush heads for today only
+                  </strong>
+                </div>
+              </div>
+
+              <div className="x2-urgency-banner__right">
+                <div
+                  className="x2-urgency-banner__applied"
+                  id="x2BannerApplied"
+                  role="status"
+                  aria-label="Discount applied"
+                  style={{
+                    background: '#000000',
+                    border: '1.5px solid #ff7a00',
+                    color: '#ffffff',
+                  }}
+                >
+                  <svg className="x2-applied-icon" viewBox="0 0 20 20" fill="none" stroke="#ff7a00" aria-hidden="true" style={{ color: '#ff7a00', stroke: '#ff7a00' }}>
+                    <path d="M16.667 5 7.5 14.167 3.333 10" stroke="#ff7a00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="x2-applied-text" style={{ color: '#ffffff' }}>APPLIED</span>
+                </div>
+
+                <div className="x2-urgency-banner__timer-block">
+                  <span className="x2-timer-label" style={{ color: '#ff8c00', fontWeight: 800, textTransform: 'uppercase' }}>
+                    OFFER ENDS IN
+                  </span>
+                  <span
+                    className="x2-timer-digits"
+                    id="x2CountdownTimer"
+                    aria-live="off"
+                    aria-label="Offer ends at UK midnight"
+                    style={{
+                      color: '#ff7a00',
+                      fontWeight: 800,
+                      textShadow: '0 0 8px rgba(255, 122, 0, 0.5)',
+                    }}
+                  >
+                    {urgencyTime}
+                  </span>
+                </div>
               </div>
             </div>
-
-            <div className="x2-urgency-banner__right">
-              <div className="x2-urgency-banner__applied" id="x2BannerApplied" role="status" aria-label="Discount applied">
-                <svg className="x2-applied-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" aria-hidden="true">
-                  <path d="M16.667 5 7.5 14.167 3.333 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span className="x2-applied-text">APPLIED</span>
+          ) : (
+            <div id="miroooo-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
+              <div className="x2-urgency-banner__left">
+                <span className="x2-urgency-banner__icon" aria-hidden="true">🔥</span>
+                <div className="x2-urgency-banner__text-wrap">
+                  <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
+                  <strong className="x2-urgency-banner__headline">
+                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : 'Free pair of brush heads for today only'}
+                  </strong>
+                </div>
               </div>
 
-              <div className="x2-urgency-banner__timer-block">
-                <span className="x2-timer-label">OFFER ENDS IN</span>
-                <span className="x2-timer-digits" id="x2CountdownTimer" aria-live="off" aria-label="Offer ends at UK midnight">
-                  {urgencyTime}
-                </span>
+              <div className="x2-urgency-banner__right">
+                <div className="x2-urgency-banner__applied" id="x2BannerApplied" role="status" aria-label="Discount applied">
+                  <svg className="x2-applied-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path d="M16.667 5 7.5 14.167 3.333 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="x2-applied-text">APPLIED</span>
+                </div>
+
+                <div className="x2-urgency-banner__timer-block">
+                  <span className="x2-timer-label">OFFER ENDS IN</span>
+                  <span className="x2-timer-digits" id="x2CountdownTimer" aria-live="off" aria-label="Offer ends at UK midnight">
+                    {urgencyTime}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div className="featured-product product product--columns flex flex-col items-start lg:grid gap-5 w-full relative">
             {/* Left: Product Gallery */}
@@ -1024,7 +1096,7 @@ export function ProductHero({
                     {[1, 2, 3, 4, 5].map((i) => (
                       <img
                         key={i}
-                        src="/assets/star.png"
+                        src={isHalloween ? '/assets/star-halloween.png' : '/assets/star.png'}
                         alt="★"
                         width="16"
                         height="15"
@@ -1036,18 +1108,73 @@ export function ProductHero({
                   </div>
                   <span
                     className="product__reviews-text"
-                    style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}
+                    style={{
+                      color: isHalloween ? '#ffffff' : 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      letterSpacing: '0.04em',
+                      textTransform: 'uppercase',
+                    }}
                   >
                     4.9 · TRUSTED BY 40,000+ CUSTOMERS
                   </span>
                 </a>
-                <h1
-                  className="heading leading-none product-title-sm mobile:product-title-sm col-span-full font-bold"
-                  id="main-product-title"
-                  style={{ fontSize: '40px', fontWeight: 700, lineHeight: 1.08, letterSpacing: '-0.03em', margin: '4px 0 2px 0', color: '#ffffff' }}
-                >
-                  {product.name} - {selectedColor}
-                </h1>
+                <div style={{ position: 'relative' }}>
+                  <h1
+                    className="heading leading-none product-title-sm mobile:product-title-sm col-span-full font-bold"
+                    id="main-product-title"
+                    style={{ fontSize: '40px', fontWeight: 700, lineHeight: 1.08, letterSpacing: '-0.03em', margin: '4px 0 2px 0', color: '#ffffff' }}
+                  >
+                    {product.name} - {selectedColor}
+                  </h1>
+                  {isHalloween && (
+                    <div
+                      className="halloween-bats-container"
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute',
+                        top: '-8px',
+                        right: 0,
+                        pointerEvents: 'none',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        gap: '2px',
+                        animation: 'halloweenBatHover 3.5s ease-in-out infinite',
+                      }}
+                    >
+                      {/* Bat 1: Larger at top right */}
+                      <svg
+                        width="42"
+                        height="24"
+                        viewBox="0 0 64 36"
+                        fill="#9333ea"
+                        style={{
+                          display: 'block',
+                          filter: 'drop-shadow(0 0 6px rgba(147, 51, 234, 0.6))',
+                          transform: 'rotate(-4deg)',
+                        }}
+                      >
+                        <path d="M32 14c1.2-3 2.8-5 4-5s1.8 1.5 2 3c3.5-3.5 9-6 16-3-2.5 3.5-3.5 7.5-3 12 3-1 6.5-1 9 1-4 4.5-9 6-14 4.5-2 3-5 5-8 7.5-1.5-3.5-4-6-6-7.5-2 1.5-4.5 4-6 7.5-3-2.5-6-4.5-8-7.5-5 1.5-10 0-14-4.5 2.5-2 6-2 9-1 .5-4.5-.5-8.5-3-12 7-3 12.5-.5 16 3 .2-1.5.8-3 2-3s2.8 2 4 5z" />
+                      </svg>
+                      {/* Bat 2: Smaller below it angled up */}
+                      <svg
+                        width="28"
+                        height="17"
+                        viewBox="0 0 64 36"
+                        fill="#a855f7"
+                        style={{
+                          display: 'block',
+                          marginRight: '12px',
+                          filter: 'drop-shadow(0 0 5px rgba(168, 85, 247, 0.5))',
+                          transform: 'rotate(12deg)',
+                        }}
+                      >
+                        <path d="M32 14c1.2-3 2.8-5 4-5s1.8 1.5 2 3c3.5-3.5 9-6 16-3-2.5 3.5-3.5 7.5-3 12 3-1 6.5-1 9 1-4 4.5-9 6-14 4.5-2 3-5 5-8 7.5-1.5-3.5-4-6-6-7.5-2 1.5-4.5 4-6 7.5-3-2.5-6-4.5-8-7.5-5 1.5-10 0-14-4.5 2.5-2 6-2 9-1 .5-4.5-.5-8.5-3-12 7-3 12.5-.5 16 3 .2-1.5.8-3 2-3s2.8 2 4 5z" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* 2. Price Display */}

@@ -395,3 +395,400 @@ body:has(.product-page-root) .site-header__right .header__buttons { margin: 0 !i
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+
+/* ==========================================================================
+   HALLOWEEN THEME (Strictly scoped to Miroooo X1 Halloween route)
+   ========================================================================== */
+
+@keyframes halloweenBatHover {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-3deg);
+  }
+}
+
+@keyframes halloweenPumpkinGlow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.8));
+  }
+  25% {
+    transform: scale(1.08) rotate(-4deg);
+    filter: drop-shadow(0 0 14px rgba(255, 140, 0, 1));
+  }
+  50% {
+    transform: scale(0.96) rotate(2deg);
+    filter: drop-shadow(0 0 6px rgba(255, 122, 0, 0.7));
+  }
+  75% {
+    transform: scale(1.05) rotate(-2deg);
+    filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.95));
+  }
+}
+
+/* Announcement Bar Halloween Variant */
+#miroooo-announcement-bar.announcement--halloween,
+.header--halloween #miroooo-announcement-bar,
+body:not([data-page="home"]) .header--halloween .announcement,
+body:not([data-page="home"]) .announcement--halloween,
+body .header--halloween .announcement,
+body .announcement--halloween,
+.header--halloween .announcement,
+.announcement.announcement--halloween {
+  background: #0a0510 !important;
+  background-color: #0a0510 !important;
+  border-bottom: 1px solid rgba(255, 122, 0, 0.35) !important;
+  color: #ffffff !important;
+}
+
+#miroooo-announcement-bar.announcement--halloween .miroooo-ticker-item,
+body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-item,
+body .header--halloween .announcement .miroooo-ticker-item,
+.announcement--halloween .miroooo-ticker-item {
+  color: #ffffff !important;
+}
+
+#miroooo-announcement-bar.announcement--halloween .miroooo-ticker-dot,
+body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-dot,
+body .header--halloween .announcement .miroooo-ticker-dot,
+.announcement--halloween .miroooo-ticker-dot {
+  border-color: rgba(255, 122, 0, 0.6) !important;
+}
+
+/* Urgency Banner Halloween Variant */
+#shopify-section-template--24203751129433__main-product #miroooo-urgency-banner.x2-urgency-banner--halloween,
+#shopify-section-template--24203751129433__main-product #miroooo-x2-urgency-banner.x2-urgency-banner--halloween,
+.halloween-theme #miroooo-urgency-banner,
+.halloween-theme .x2-urgency-banner,
+.halloween-theme #miroooo-x2-urgency-banner,
+.x2-urgency-banner.x2-urgency-banner--halloween {
+  background: #09040e url('/assets/halloween-banner-bg.jpg') no-repeat center center / cover !important;
+  background-image: linear-gradient(rgba(10, 5, 18, 0.25), rgba(10, 5, 18, 0.45)), url('/assets/halloween-banner-bg.jpg') !important;
+  background-color: #09040e !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  border: 1.5px solid #ff7a00 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0 24px rgba(255, 122, 0, 0.4), inset 0 0 15px rgba(255, 122, 0, 0.15) !important;
+  color: #ffffff !important;
+}
+
+#shopify-section-template--24203751129433__main-product #miroooo-urgency-banner.x2-urgency-banner--halloween:hover,
+.halloween-theme #miroooo-urgency-banner:hover,
+.halloween-theme .x2-urgency-banner:hover,
+.x2-urgency-banner.x2-urgency-banner--halloween:hover {
+  box-shadow: 0 0 30px rgba(255, 122, 0, 0.55), inset 0 0 18px rgba(255, 122, 0, 0.22) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__icon {
+  animation: halloweenPumpkinGlow 2.5s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.8)) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__eyebrow {
+  color: #ff8c00 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__headline {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__applied {
+  background: #000000 !important;
+  border: 1.5px solid #ff7a00 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(255, 122, 0, 0.25) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__applied:hover {
+  box-shadow: 0 0 14px rgba(255, 122, 0, 0.4) !important;
+}
+
+.x2-urgency-banner--halloween .x2-applied-icon {
+  color: #ff7a00 !important;
+  stroke: #ff7a00 !important;
+}
+
+.x2-urgency-banner--halloween .x2-applied-text {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+.x2-urgency-banner--halloween .x2-timer-label {
+  color: #ff8c00 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.x2-urgency-banner--halloween .x2-timer-digits {
+  color: #ff7a00 !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 8px rgba(255, 122, 0, 0.5) !important;
+}
+
+@media (max-width: 767px) {
+  .x2-urgency-banner--halloween {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 11px 14px !important;
+    gap: 10px !important;
+  }
+  .x2-urgency-banner--halloween .x2-urgency-banner__headline {
+    white-space: normal !important;
+    line-height: 1.3 !important;
+  }
+  .x2-urgency-banner--halloween .x2-urgency-banner__right {
+    border-top: 1px solid rgba(255, 122, 0, 0.25) !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding-top: 6px !important;
+  }
+}
+
+/* ==========================================================================
+   HALLOWEEN THEME: REVIEWS COMPONENT STYLING (.halloween-theme)
+   ========================================================================== */
+
+/* Star Image Swapping & Hue-Tone */
+.halloween-theme .miroooo-star-img:not(.is-empty),
+.halloween-theme .miroooo-stars-row img:not(.is-empty),
+.halloween-theme .miroooo-score-stars img:not(.is-empty),
+.halloween-theme .miroooo-breakdown-row img,
+.halloween-theme .miroooo-section-eyebrow img,
+.halloween-theme .miroooo-card-stars img:not(.is-empty) {
+  content: url('/assets/star-halloween.png') !important;
+  filter: drop-shadow(0 0 3px rgba(255, 122, 0, 0.45)) !important;
+}
+
+.halloween-theme .miroooo-star-img.is-empty,
+.halloween-theme .miroooo-stars-row img.is-empty,
+.halloween-theme .miroooo-card-stars img.is-empty {
+  content: url('/assets/star-halloween.png') !important;
+  opacity: 0.22 !important;
+  filter: grayscale(1) !important;
+}
+
+.halloween-theme .miroooo-section-eyebrow {
+  color: #ff7a00 !important;
+}
+
+/* Rating Score */
+.halloween-theme .miroooo-score-number {
+  color: #ff7a00 !important;
+  text-shadow: 0 0 16px rgba(255, 122, 0, 0.35) !important;
+}
+
+/* Progress Bar Fills */
+.halloween-theme .miroooo-bar-fill,
+.halloween-theme .miroooo-progress-bar,
+.halloween-theme .miroooo-progress-fill,
+.halloween-theme div.miroooo-progress-bar {
+  background: linear-gradient(90deg, #ff7a00 0%, #ea580c 100%) !important;
+  background-color: #ff7a00 !important;
+  box-shadow: 0 0 8px rgba(255, 122, 0, 0.4) !important;
+}
+
+/* Review Cards: Borders & Hovers */
+.halloween-theme .miroooo-review-card {
+  border: 1px solid rgba(255, 122, 0, 0.25) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 122, 0, 0.08) !important;
+}
+
+.halloween-theme .miroooo-review-card:hover {
+  border-color: #ff7a00 !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 122, 0, 0.28) !important;
+}
+
+/* Verified Badges & Trust Accents */
+.halloween-theme .miroooo-card-verified-badge,
+.halloween-theme .miroooo-modal-badge-verified,
+.halloween-theme .miroooo-badge-guarantee,
+.halloween-theme .miroooo-modal-verified-tag,
+.halloween-theme .miroooo-rating-badge {
+  color: #ff7a00 !important;
+  border-color: #ff7a00 !important;
+  background: rgba(255, 122, 0, 0.12) !important;
+}
+
+.halloween-theme .miroooo-card-verified-badge svg,
+.halloween-theme .miroooo-modal-badge-verified svg,
+.halloween-theme .miroooo-badge-guarantee svg {
+  color: #ff7a00 !important;
+  fill: #ff7a00 !important;
+}
+
+/* Active Filter Pills */
+.halloween-theme .miroooo-filter-pill.active {
+  background: #ff7a00 !important;
+  border-color: #ff7a00 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 12px rgba(255, 122, 0, 0.4) !important;
+}
+
+.halloween-theme .miroooo-filter-pill.active .miroooo-pill-checkbox {
+  background: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.halloween-theme .miroooo-filter-pill.active .miroooo-pill-checkbox svg {
+  color: #ff7a00 !important;
+  stroke: #ff7a00 !important;
+  display: block !important;
+}
+
+.halloween-theme .miroooo-dropdown-item.active {
+  background: rgba(255, 122, 0, 0.18) !important;
+  color: #ff7a00 !important;
+  font-weight: 700 !important;
+}
+
+.halloween-theme .miroooo-breakdown-row.active {
+  background: rgba(255, 122, 0, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.halloween-theme .miroooo-row-label .star-char {
+  color: #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-filter-status {
+  background: rgba(255, 122, 0, 0.1) !important;
+  border: 1px solid rgba(255, 122, 0, 0.3) !important;
+}
+
+.halloween-theme .miroooo-filter-status button {
+  color: #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-read-more-btn:hover {
+  color: #ff7a00 !important;
+}
+
+/* ==========================================================================
+   HALLOWEEN THEME: ACCENT STYLING
+   ========================================================================== */
+
+
+/* Comparison Table: Winner Column (Miroooo X1) */
+.halloween-theme .miroooo-comp-col--winner {
+  border: 2px solid #ff7a00 !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 122, 0, 0.4) !important;
+}
+
+.halloween-theme .miroooo-comp-col--winner .miroooo-comp-cell--head {
+  border-bottom: 2px solid #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-comp-col--winner circle[fill="#22c55e"] {
+  fill: #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-comp-col--winner .miroooo-comp-cell--price div div[style*="color: #15803d"],
+.halloween-theme .miroooo-comp-col--winner .miroooo-comp-cell--price span[style*="color: #15803d"] {
+  color: #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-comp-col--winner .miroooo-comp-cell--price {
+  background: #fff7ed !important;
+}
+
+/* Mobile Comparison Table Winner */
+.halloween-theme .miroooo-comp-m-head-col--winner {
+  border-top: 2px solid #ff7a00 !important;
+  border-left: 2px solid #ff7a00 !important;
+  border-right: 2px solid #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-comp-m-val-cell--winner {
+  border-left: 2px solid #ff7a00 !important;
+  border-right: 2px solid #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-comp-m-val-cell--winner-last {
+  border-bottom: 2px solid #ff7a00 !important;
+  border-left: 2px solid #ff7a00 !important;
+  border-right: 2px solid #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-comp-m-val-cell--winner circle[fill="#22c55e"] {
+  fill: #ff7a00 !important;
+}
+
+.halloween-theme .miroooo-comp-m-price-winner {
+  color: #ff7a00 !important;
+}
+
+/* Header Halloween Variant */
+.site-header.header--halloween,
+header.header--halloween {
+  background: rgba(8, 4, 13, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 122, 0, 0.25) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.header--halloween .cart-count {
+  background: #ff7a00 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 10px rgba(255, 122, 0, 0.6) !important;
+}
+
+.header--halloween .nav-link:hover,
+.header--halloween .menu__item:hover,
+.header--halloween .header__shop-drawer-btn:hover,
+.header--halloween .btn-text:hover,
+.header--halloween .nav-link:hover .btn-text {
+  color: #ff7a00 !important;
+}
+
+.header--halloween .site-actions__bag:hover svg,
+.header--halloween .nav-toggle:hover svg {
+  color: #ff7a00 !important;
+}
+
+/* Footer Halloween Variant */
+.footer--halloween,
+.footer-group.footer--halloween,
+.footer--halloween .footer-group,
+.footer--halloween .site-footer,
+.footer--halloween .service-strip {
+  background-color: #08040d !important;
+  background: #08040d !important;
+  border-color: rgba(255, 122, 0, 0.2) !important;
+}
+
+.footer--halloween .site-footer__heading {
+  color: #ff7a00 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.footer--halloween .service-strip__item strong {
+  color: #ffffff !important;
+}
+
+.footer--halloween .service-strip__icon {
+  color: #ff7a00 !important;
+}
+
+.footer--halloween a:hover,
+.footer--halloween .site-footer__links a:hover,
+.footer--halloween .site-footer__email a:hover {
+  color: #ff7a00 !important;
+}
+
+.footer--halloween .site-footer__social-btn:hover {
+  color: #ff7a00 !important;
+  border-color: #ff7a00 !important;
+  background: rgba(255, 122, 0, 0.15) !important;
+}
+

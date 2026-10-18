@@ -2000,10 +2000,14 @@
 
   // Review Star Rating Generator (Uses identical /assets/star.png with transparent background)
   function getTrustpilotStarsHTML(rating) {
+    const isHalloween = document.body.classList.contains('halloween-theme') ||
+                        document.querySelector('.halloween-theme') !== null ||
+                        (typeof window !== 'undefined' && window.location.pathname.includes('/products/miroooo_x1'));
+    const starSrc = isHalloween ? '/assets/star-halloween.png' : '/assets/star.png';
     let stars = '';
     for (let i = 1; i <= 5; i++) {
       const isFilled = i <= rating;
-      stars += `<img src="/assets/star.png" alt="★" width="16" height="15" class="miroooo-star-img${isFilled ? '' : ' is-empty'}" style="width: 16px; height: 15px; display: inline-block; object-fit: contain; vertical-align: middle;${isFilled ? '' : ' opacity: 0.22; filter: grayscale(1);'}" />`;
+      stars += `<img src="${starSrc}" alt="★" width="16" height="15" class="miroooo-star-img${isFilled ? '' : ' is-empty'}" style="width: 16px; height: 15px; display: inline-block; object-fit: contain; vertical-align: middle;${isFilled ? '' : ' opacity: 0.22; filter: grayscale(1);'}" />`;
     }
     return `<div class="miroooo-stars-row" style="display: inline-flex; align-items: center; gap: 3px;">${stars}</div>`;
   }

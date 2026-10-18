@@ -34,6 +34,7 @@ export function RouteChrome({
   const isCart = pathname === '/cart';
   const isHome = pathname === '/';
   const isCoach = pathname === '/pages/smile-coach';
+  const isHalloween = pathname === '/products/miroooo_x1' || pathname === '/products/miroooo_x1/';
   const referenceStyle = isHome
     ? '/assets/home-reference.css'
     : pathname === '/about-us' || pathname === '/pages/about-us'
@@ -50,13 +51,17 @@ export function RouteChrome({
       {isCoach ? null : isCart ? (
         cartHeader
       ) : (
-        <div className={isHome ? 'header-layer--overlay' : ''}>
-          <AnnouncementBar />
+        <div className={`${isHome ? 'header-layer--overlay' : ''} ${isHalloween ? 'header--halloween' : ''}`}>
+          <AnnouncementBar isHalloween={isHalloween} />
           <Header isTransparentHome={isHome} />
         </div>
       )}
       {children}
-      {isCoach ? null : isCart ? cartFooter : defaultFooter}
+      {isCoach ? null : isCart ? cartFooter : (
+        <div className={isHalloween ? 'footer--halloween' : ''}>
+          {defaultFooter}
+        </div>
+      )}
     </>
   );
 }

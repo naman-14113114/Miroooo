@@ -5,9 +5,11 @@ import React, { useEffect } from 'react';
 interface ProductReviewsProps {
   isX2?: boolean;
   isFlosser?: boolean;
+  isHalloween?: boolean;
 }
 
-export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReviewsProps) {
+export function ProductReviews({ isX2 = true, isFlosser = false, isHalloween = false }: ProductReviewsProps) {
+  const starSrc = isHalloween ? '/assets/star-halloween.png' : '/assets/star.png';
   useEffect(() => {
     let active = true;
     let dispose: (() => void) | undefined;
@@ -56,11 +58,11 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
           {/* Section Header Eyebrow */}
           <div className="miroooo-section-eyebrow" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }} aria-hidden="true">
-              <img src="/assets/star.png" alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src="/assets/star.png" alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src="/assets/star.png" alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src="/assets/star.png" alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src="/assets/star.png" alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
             </div>
             <span>Verified Customer Feedback</span>
           </div>
@@ -74,11 +76,11 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
               <div className="miroooo-score-col">
                 <div className="miroooo-score-number">4.9</div>
                 <div className="miroooo-score-stars" aria-label="4.9 out of 5 stars" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <img src="/assets/star.png" alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src="/assets/star.png" alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src="/assets/star.png" alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src="/assets/star.png" alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src="/assets/star.png" alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
+                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
+                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
+                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
+                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
+                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
                 </div>
                 <div className="miroooo-archive-count">Based on <strong>4,275</strong> verified reviews</div>
                 <div className="miroooo-badge-guarantee">
@@ -91,7 +93,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
               <div className="miroooo-breakdown-col">
                 {/* 5 Star Row */}
                 <button type="button" className="miroooo-breakdown-row" data-star="5" aria-label="Show 5 star reviews">
-                  <span className="miroooo-row-label">5 <img src="/assets/star.png" alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
+                  <span className="miroooo-row-label">5 <img src={starSrc} alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
                   <div className="miroooo-progress-track">
                     <div className="miroooo-progress-bar" data-target-width="92%" style={{ width: '92%' }}></div>
                   </div>
@@ -99,7 +101,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                 </button>
                 {/* 4 Star Row */}
                 <button type="button" className="miroooo-breakdown-row" data-star="4" aria-label="Show 4 star reviews">
-                  <span className="miroooo-row-label">4 <img src="/assets/star.png" alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
+                  <span className="miroooo-row-label">4 <img src={starSrc} alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
                   <div className="miroooo-progress-track">
                     <div className="miroooo-progress-bar" data-target-width="6%" style={{ width: '6%' }}></div>
                   </div>
@@ -107,7 +109,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                 </button>
                 {/* 3 Star Row */}
                 <button type="button" className="miroooo-breakdown-row" data-star="3" aria-label="Show 3 star reviews">
-                  <span className="miroooo-row-label">3 <img src="/assets/star.png" alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
+                  <span className="miroooo-row-label">3 <img src={starSrc} alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
                   <div className="miroooo-progress-track">
                     <div className="miroooo-progress-bar" data-target-width={isFlosser ? "1%" : "0.3%"} style={{ width: isFlosser ? '1%' : '0.3%' }}></div>
                   </div>
@@ -115,7 +117,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                 </button>
                 {/* 2 Star Row */}
                 <button type="button" className="miroooo-breakdown-row" data-star="2" aria-label="Show 2 star reviews">
-                  <span className="miroooo-row-label">2 <img src="/assets/star.png" alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
+                  <span className="miroooo-row-label">2 <img src={starSrc} alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
                   <div className="miroooo-progress-track">
                     <div className="miroooo-progress-bar" data-target-width={isFlosser ? "0.5%" : "0.7%"} style={{ width: isFlosser ? '0.5%' : '0.7%' }}></div>
                   </div>
@@ -123,7 +125,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                 </button>
                 {/* 1 Star Row */}
                 <button type="button" className="miroooo-breakdown-row" data-star="1" aria-label="Show 1 star reviews">
-                  <span className="miroooo-row-label">1 <img src="/assets/star.png" alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
+                  <span className="miroooo-row-label">1 <img src={starSrc} alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
                   <div className="miroooo-progress-track">
                     <div className="miroooo-progress-bar" data-target-width={isFlosser ? "0.5%" : "0.5%"} style={{ width: '0.5%' }}></div>
                   </div>

@@ -34,9 +34,16 @@ interface ProductPageProps {
   searchParams?: { color?: string };
   isSimpleBuybox?: boolean;
   isMirooooX1Route?: boolean;
+  isHalloween?: boolean;
 }
 
-export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMirooooX1Route = true }: ProductPageProps) {
+export function ProductPage({
+  handle,
+  searchParams,
+  isSimpleBuybox = false,
+  isMirooooX1Route = true,
+  isHalloween = false,
+}: ProductPageProps) {
   const isFlosser = handle === 'miroooo-water-flosser' || handle === 'water-flosser';
   const defaultColor = isFlosser ? 'Black' : 'Silver';
   const validColors = isFlosser ? ['Black', 'White'] : ['Silver', 'Grey', 'Pink'];
@@ -82,7 +89,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
   }
 
   return (
-    <main className={`product-page-root ${isFlosser ? 'flosser-product-page' : (isX2 ? 'x2-product-page' : 'x1-product-page')} bg-[#080909] min-h-screen text-white`}>
+    <main className={`product-page-root ${isFlosser ? 'flosser-product-page' : (isX2 ? 'x2-product-page' : 'x1-product-page')} ${isHalloween ? 'halloween-theme' : ''} bg-[#080909] min-h-screen text-white`}>
       {/* 0. Top Fixed Section Navigation (Oval Pill Header) */}
       <ProductStickyNav isX2={isX2} isFlosser={isFlosser} />
 
@@ -93,6 +100,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
         onColorChange={setSelectedColor}
         isSimpleBuybox={isSimpleBuybox}
         isMirooooX1Route={isMirooooX1Route}
+        isHalloween={isHalloween}
       />
 
       <ShippingMarquee isFlosser={isFlosser} />
@@ -183,7 +191,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
           <LuxuriousProfessionalism />
 
           {/* 9. Verified Customer Reviews */}
-          <ProductReviews isX2={false} />
+          <ProductReviews isX2={false} isHalloween={isHalloween} />
 
           {/* 10. Miroooo Dental App */}
           <DentalAppSection isX2={false} />
