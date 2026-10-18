@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useDrawer } from "./useDrawer";
+import { PRODUCTS } from "@/data/products";
 
 const sections = [
   {
@@ -34,8 +35,8 @@ const sections = [
         title: "Miroooo Water Flosser",
         eyebrow: "New Release",
         image: "/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp",
-        price: 59,
-        comparePrice: 119,
+        price: 69,
+        comparePrice: 139,
       },
     ],
   },
@@ -161,10 +162,10 @@ export function ShopDrawer({ isOpen, onClose }: DrawerProps) {
                           {product.title}
                         </h3>
                         <span className="shop-drawer__price">
-                          £{product.price}{" "}
-                          {product.comparePrice && (
+                          {PRODUCTS[product.handle]?.formattedPrice || (product.price ? `£${product.price}` : '')}{" "}
+                          {(PRODUCTS[product.handle]?.formattedCompareAt || (product.comparePrice ? `£${product.comparePrice}` : '')) && !product.handle.endsWith('-heads') && (
                             <s className="shop-drawer__compare">
-                              £{product.comparePrice}
+                              {PRODUCTS[product.handle]?.formattedCompareAt || (product.comparePrice ? `£${product.comparePrice}` : '')}
                             </s>
                           )}
                         </span>

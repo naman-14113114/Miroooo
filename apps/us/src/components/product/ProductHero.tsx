@@ -1044,10 +1044,10 @@ export function ProductHero({
               <div className="product__price grid gap-2 mt-1" id="main-product-price-section">
                 <div className="flex flex-wrap items-baseline gap-2" style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                    {formatUSD(singlePrice)}
+                    {isWaterFlosser ? '$69' : formatUSD(singlePrice)}
                   </span>
                   <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
-                    {formatUSD(singleCompare)}
+                    {isWaterFlosser ? '$139' : formatUSD(singleCompare)}
                   </span>
                   <span
                     className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
@@ -1261,10 +1261,10 @@ export function ProductHero({
                       <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                         <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                           <span className="font-bold text-base sm:text-lg" id="tier-single-price" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                            {formatUSD(singlePrice)}
+                            {isWaterFlosser ? '$69' : formatUSD(singlePrice)}
                           </span>
                           <span className="text-xs sm:text-sm price-compare-strike" id="tier-single-compare-price" style={{ fontSize: 12, color: '#777777' }}>
-                            {formatUSD(singleCompare)}
+                            {isWaterFlosser ? '$139' : formatUSD(singleCompare)}
                           </span>
                         </div>
                         <span className="tier-badge-pill mt-0.5" style={{ background: 'rgba(0, 0, 0, 0.08)', color: '#111111', fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px', display: 'inline-block' }}>
@@ -1670,7 +1670,7 @@ export function ProductHero({
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                     <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
                       {isSimpleBuybox
-                        ? (!isX2 && quantity === 1 ? '$69' : `$${(singlePrice * quantity).toFixed(2)}`)
+                        ? (isWaterFlosser ? `$${69 * quantity}` : (!isX2 && quantity === 1 ? '$69' : `$${(singlePrice * quantity).toFixed(2)}`))
                         : (!isX2 && selectedTier === 'single' && !buy1HeadsChecked ? '$69' : formatUSD(currentPrice))}
                     </span>
                   </p>

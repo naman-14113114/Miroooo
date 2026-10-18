@@ -77,6 +77,10 @@ const UK_HANDLE_ALIASES: Record<string, string> = {
   'packageprotection': 'miroooo-package-protection',
   'shipping-protection': 'miroooo-package-protection',
   'a2f6dfa1-50ae-46c9-a88e-fdb563e124a2': 'miroooo-package-protection',
+  'miroooo-water-flosser': 'miroooo-water-flosser',
+  'water-flosser': 'miroooo-water-flosser',
+  'flosser': 'miroooo-water-flosser',
+  'a2f69a15-e357-403b-a11c-b3912eb49b1d': 'miroooo-water-flosser',
   '1000000675113473': 'miroooo-x',
   '1000000675072187': 'miroooo-x2',
   '1000000675471182': 'miroooo-x1-heads',
@@ -148,6 +152,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let x1ItemSubtotal = 0;
   let x2ItemCompare = 0;
   let x1ItemCompare = 0;
+  let flosserItemCompare = 0;
 
   items.forEach((item) => {
     const qty = item.quantity || 1;
@@ -164,9 +169,9 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     else if (item.productHandle === 'miroooo-water-flosser') {
       flosserCount += qty;
       otherItemsQty += qty;
-      const effectiveUnitPrice = item.unitPrice || 0;
+      const effectiveUnitPrice = item.unitPrice || 69.0;
       otherItemsSubtotal += effectiveUnitPrice * qty;
-      otherItemsCompareAt += (item.comparePrice || effectiveUnitPrice) * qty;
+      flosserItemCompare += (item.comparePrice || 139.0) * qty;
     }
     else if (item.productHandle === 'miroooo-x2-heads') x2HeadsCount += qty;
     else if (item.productHandle === 'miroooo-x1-heads') x1HeadsCount += qty;
@@ -188,12 +193,13 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = x2Count === 0 && (x1Count === 1 || x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: X2 brush 159, X1 brush 139, heads 20)
+  // Compare At calculations (base compare: flosser 139, X2 brush 159, X1 brush 139, heads 20)
+  const flosserCompare = flosserItemCompare || (flosserCount * 139.0);
   const x2Compare = x2ItemCompare || (x2Count * 159);
   const x1Compare = x1ItemCompare || (x1Count * 139);
   const x2HeadsCompare = x2HeadsCount * 20;
   const x1HeadsCompare = x1HeadsCount * 20;
-  const compareAt = x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare + otherItemsCompareAt;
+  const compareAt = flosserCompare + x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare + otherItemsCompareAt;
 
   // Base savings on brushes (reference canonical: x1Count * 69, x2Count * 69)
   const baseBrushCompareSavings = Math.max(0, (x2Compare - (x2Count === 1 ? x2ItemSubtotal : (x2Count === 2 ? 128 : (x2Count === 3 ? 177 : x2ItemSubtotal)))) + (x1Compare - (x1Count === 1 ? x1ItemSubtotal : (x1Count === 2 ? 128 : (x1Count === 3 ? 177 : x1ItemSubtotal)))));

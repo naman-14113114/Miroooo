@@ -841,6 +841,7 @@ export const PRODUCTS: Record<string, Product> = {
         compareAt: 139.00,
         formattedPrice: '$69.00',
         formattedCompareAt: '$139.00',
+        discountBadge: '50% OFF',
       },
       {
         id: 'a2f69a19-d524-4360-b333-91a4fd350f2d',
@@ -853,6 +854,7 @@ export const PRODUCTS: Record<string, Product> = {
         compareAt: 139.00,
         formattedPrice: '$69.00',
         formattedCompareAt: '$139.00',
+        discountBadge: '50% OFF',
       },
       {
         id: 'a2f69a19-c917-4de3-9d64-3db9502ee9a6',
@@ -865,6 +867,7 @@ export const PRODUCTS: Record<string, Product> = {
         compareAt: 139.00,
         formattedPrice: '$69.00',
         formattedCompareAt: '$139.00',
+        discountBadge: '50% OFF',
       },
       {
         id: 'a2f69a19-b908-40c1-8214-2b6922aa4617',
@@ -877,6 +880,7 @@ export const PRODUCTS: Record<string, Product> = {
         compareAt: 139.00,
         formattedPrice: '$69.00',
         formattedCompareAt: '$139.00',
+        discountBadge: '50% OFF',
       },
     ],
     bundles: [

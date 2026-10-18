@@ -79,6 +79,10 @@ const US_HANDLE_ALIASES: Record<string, string> = {
   'packageprotection': 'miroooo-package-protection',
   'shipping-protection': 'miroooo-package-protection',
   'a2f6dfa1-50ae-46c9-a88e-fdb563e124a2': 'miroooo-package-protection',
+  'miroooo-water-flosser': 'miroooo-water-flosser',
+  'water-flosser': 'miroooo-water-flosser',
+  'flosser': 'miroooo-water-flosser',
+  'a2f69a15-e357-403b-a11c-b3912eb49b1d': 'miroooo-water-flosser',
   '1000000675113473': 'miroooo-x',
   '1000000675072187': 'miroooo-x2',
   '1000000675471182': 'miroooo-x1-heads',
@@ -148,6 +152,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let otherItemsQty = 0;
   let otherItemsCents = 0;
   let otherItemsCompareCents = 0;
+  let flosserCompareCents = 0;
   items.forEach((item) => {
     if (
       item.productHandle !== 'miroooo-x' &&
@@ -158,9 +163,14 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
       const qty = item.quantity || 1;
       otherItemsQty += qty;
       const isPackageProtection = item.productHandle === 'miroooo-package-protection';
-      const effectiveUnitPrice = isPackageProtection ? 3 : item.unitPrice;
+      const isFlosser = item.productHandle === 'miroooo-water-flosser';
+      const effectiveUnitPrice = isPackageProtection ? 3 : (item.unitPrice || (isFlosser ? 69.00 : 0));
       otherItemsCents += cents(effectiveUnitPrice) * qty;
-      otherItemsCompareCents += cents((item.comparePrice || (isPackageProtection ? 3 : item.unitPrice)) || 0) * qty;
+      if (isFlosser) {
+        flosserCompareCents += cents(item.comparePrice || 139.00) * qty;
+      } else {
+        otherItemsCompareCents += cents((item.comparePrice || (isPackageProtection ? 3 : item.unitPrice)) || 0) * qty;
+      }
     }
   });
 
@@ -184,8 +194,10 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const promoNet = !hasPromo ? brushNet : tier ? cents(tier.promoPrice)
     : x1Count + x2Count === 1 ? cents((x1Count ? x1 : x2).bundles[0].promoPrice)
     : brushNet - Math.round(brushNet * 0.1);
+  // Compare At calculations (base compare: flosser 139, X2 brush 159, X1 brush 139, heads 20)
+  const flosserCompare = flosserCompareCents || (flosserCount * cents(139.00));
   const x1CompareCents = x1Count * (x1.compareAt > 0 ? cents(x1.compareAt) : cents(x1.price));
-  const compareAtCents = x1CompareCents + x2Count * cents(x2.compareAt)
+  const compareAtCents = flosserCompare + x1CompareCents + x2Count * cents(x2.compareAt)
     + x1HeadsCount * cents(h1.compareAt) + x2HeadsCount * cents(h2.compareAt) + otherItemsCompareCents;
   let giftsValue = roundMoney(extraX1BrushHeadSets * h1.price + extraBrushHeadSets * h2.price);
   let unlockedGiftsCount = extraX1BrushHeadSets + extraBrushHeadSets;

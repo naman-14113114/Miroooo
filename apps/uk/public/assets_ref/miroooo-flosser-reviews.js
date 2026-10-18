@@ -286,7 +286,7 @@
       displayDate: '08 October 2026',
       variant: 'Black / 7 Specialized Nozzles',
       title: 'Great flosser but wish I bought it during the promotional bundle',
-      body: 'I bought it for $89 last month and now seeing the promotional bundle at $69 with the 7 specialized nozzles. Product itself is genuinely top tier and cleans between my teeth brilliantly, just disappointed I bought a few weeks too early.',
+      body: 'I bought it for £89 last month and now seeing the promotional bundle at £69 with the 7 specialized nozzles. Product itself is genuinely top tier and cleans between my teeth brilliantly, just disappointed I bought a few weeks too early.',
       images: [],
       helpful: 29,
       verified: true,
@@ -644,7 +644,7 @@
     },
     {
       title: "Great flosser but promotional price appeared right after I ordered",
-      body: "I purchased this water flosser at $89 just two weeks ago, and now see the promotional deal at $69 with the 7 nozzles. The flosser itself works brilliantly and cleaned up my gum inflammation, but the pricing timing stung a bit.",
+      body: "I purchased this water flosser at £89 just two weeks ago, and now see the promotional deal at £69 with the 7 nozzles. The flosser itself works brilliantly and cleaned up my gum inflammation, but the pricing timing stung a bit.",
       reply: { author: "Miroooo Customer Experience Desk", text: "Hi there! We are thrilled the Miroooo Water Flosser is giving you great clinical results. We occasionally run limited promotional events for new shoppers, and our team has credited a complimentary nozzle replacement set to your account." }
     },
     {

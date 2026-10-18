@@ -909,4 +909,47 @@ test('Miroooo Water Flosser has £69 canonical price, £139 compareAt, 50% disco
   assert.equal(flosser.bundles[1].savingText, 'SAVE £153.80');
 });
 
+test('flosser cart calculates £69 subtotal, £139 compareAt, and unlocks complimentary gift card', () => {
+  const normalized = normalizeCartItems([{ productHandle: 'flosser', color: 'Black', quantity: 1 }]);
+  assert.equal(normalized.length, 1);
+  assert.equal(normalized[0].productHandle, 'miroooo-water-flosser');
+  assert.equal(normalized[0].unitPrice, 69.0);
+  assert.equal(normalized[0].comparePrice, 139.0);
+
+  // Single flosser totals
+  const singleTotals = calculateTotals(normalized, []);
+  assert.equal(singleTotals.subtotal, 69.0);
+  assert.equal(singleTotals.compareAt, 139.0);
+  assert.equal(singleTotals.finalSubtotal, 69.0);
+  assert.equal(singleTotals.unlockedGiftsCount, 1);
+  assert.equal(singleTotals.giftsValue, 10);
+  assert.equal(singleTotals.hasFreeGiftCard, true);
+
+  // Multiple flossers: compareAt is strictly quantity * 139
+  const multiNormalized = normalizeCartItems([
+    { productHandle: 'water-flosser', color: 'White', quantity: 2 },
+  ]);
+  const multiTotals = calculateTotals(multiNormalized, []);
+  assert.equal(multiTotals.compareAt, 278.0);
+  assert.equal(multiTotals.subtotal, 138.0);
+  assert.equal(multiTotals.hasFreeGiftCard, true);
+
+  // Fallback check: if comparePrice is omitted, base compare is guaranteed to be 139.0
+  const unpricedFlosser = [{
+    id: 'flosser-test',
+    productHandle: 'miroooo-water-flosser',
+    productId: 'a2f69a15-e357-403b-a11c-b3912eb49b1d',
+    variantId: XPAGE_VARIANTS.flosser_black_7,
+    title: 'Miroooo Water Flosser',
+    color: 'Black',
+    quantity: 1,
+    unitPrice: 69.0,
+    comparePrice: 0,
+    image: '',
+    url: '/products/miroooo-water-flosser',
+  }];
+  const fallbackTotals = calculateTotals(unpricedFlosser, []);
+  assert.equal(fallbackTotals.compareAt, 139.0);
+});
+
 

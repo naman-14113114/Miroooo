@@ -570,4 +570,79 @@ test('bundle checkout includes package protection in offered items and maps all 
   }
 });
 
+test('Miroooo Water Flosser has $69.00 canonical price, $139.00 compareAt, and bundle pricing in US', () => {
+  const flosser = PRODUCTS['miroooo-water-flosser'];
+  assert.equal(flosser.price, 69.00);
+  assert.equal(flosser.compareAt, 139.00);
+  assert.equal(flosser.formattedPrice, '$69.00');
+  assert.equal(flosser.formattedCompareAt, '$139.00');
+  for (const variant of flosser.variants) {
+    assert.equal(variant.price, 69.00);
+    assert.equal(variant.compareAt, 139.00);
+    assert.equal(variant.formattedPrice, '$69.00');
+    assert.equal(variant.formattedCompareAt, '$139.00');
+  }
+  assert.equal(flosser.bundles[0].price, 69.00);
+  assert.equal(flosser.bundles[0].compareAt, 139.00);
+  assert.equal(flosser.bundles[0].formattedPrice, '$69.00');
+  assert.equal(flosser.bundles[0].formattedCompareAt, '$139.00');
+  assert.equal(flosser.bundles[0].promoPrice, 62.10);
+  assert.equal(flosser.bundles[0].savingText, '50% OFF');
+
+  assert.equal(flosser.bundles[1].price, 124.20);
+  assert.equal(flosser.bundles[1].compareAt, 278.00);
+  assert.equal(flosser.bundles[1].formattedPrice, '$124.20');
+  assert.equal(flosser.bundles[1].formattedCompareAt, '$278.00');
+  assert.equal(flosser.bundles[1].savingText, 'SAVE $153.80');
+
+  assert.equal(flosser.bundles[2].price, 175.95);
+  assert.equal(flosser.bundles[2].compareAt, 417.00);
+  assert.equal(flosser.bundles[2].formattedPrice, '$175.95');
+  assert.equal(flosser.bundles[2].formattedCompareAt, '$417.00');
+  assert.equal(flosser.bundles[2].savingText, 'SAVE $241.05');
+});
+
+test('flosser cart calculates $69.00 subtotal, $139.00 compareAt, and unlocks complimentary gift card in US', () => {
+  const normalized = normalizeCartItems([{ productHandle: 'flosser', color: 'Black', quantity: 1 }]);
+  assert.equal(normalized.length, 1);
+  assert.equal(normalized[0].productHandle, 'miroooo-water-flosser');
+  assert.equal(normalized[0].unitPrice, 69.00);
+  assert.equal(normalized[0].comparePrice, 139.00);
+
+  // Single flosser totals
+  const singleTotals = calculateTotals(normalized, []);
+  assert.equal(singleTotals.subtotal, 69.00);
+  assert.equal(singleTotals.compareAt, 139.00);
+  assert.equal(singleTotals.finalSubtotal, 69.00);
+  assert.equal(singleTotals.unlockedGiftsCount, 1);
+  assert.equal(singleTotals.giftsValue, 10.00);
+  assert.equal(singleTotals.hasFreeGiftCard, true);
+
+  // Multiple flossers: compareAt is strictly quantity * 139
+  const multiNormalized = normalizeCartItems([
+    { productHandle: 'water-flosser', color: 'White', quantity: 2 },
+  ]);
+  const multiTotals = calculateTotals(multiNormalized, []);
+  assert.equal(multiTotals.compareAt, 278.00);
+  assert.equal(multiTotals.subtotal, 138.00);
+  assert.equal(multiTotals.hasFreeGiftCard, true);
+
+  // Fallback check: if comparePrice is omitted, base compare is guaranteed to be 139.0
+  const unpricedFlosser = [{
+    id: 'flosser-test',
+    productHandle: 'miroooo-water-flosser',
+    productId: 'a2f69a15-e357-403b-a11c-b3912eb49b1d',
+    variantId: XPAGE_VARIANTS.flosser_black_7,
+    title: 'Miroooo Water Flosser',
+    color: 'Black',
+    quantity: 1,
+    unitPrice: 69.00,
+    comparePrice: 0,
+    image: '',
+    url: '/products/miroooo-water-flosser',
+  }];
+  const fallbackTotals = calculateTotals(unpricedFlosser, []);
+  assert.equal(fallbackTotals.compareAt, 139.00);
+});
+
 
