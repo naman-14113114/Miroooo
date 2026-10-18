@@ -1086,7 +1086,12 @@
   let currentWithPhotos = false;
   let currentVerifiedOnly = false;
   let currentSort = 'most-recent';
-  let currentVisibleCount = 24;
+
+  function getPageSize() {
+    return typeof window !== 'undefined' && window.innerWidth < 768 ? 12 : 24;
+  }
+
+  let currentVisibleCount = getPageSize();
   const PAGE_SIZE = 24;
 
   // Active Lightbox State
@@ -1736,7 +1741,7 @@
           const rStar = parseInt(r.getAttribute('data-star'), 10);
           r.classList.toggle('active', currentFilterRating === rStar);
         });
-        currentVisibleCount = PAGE_SIZE;
+        currentVisibleCount = getPageSize();
         renderReviews();
       });
     });
@@ -1767,7 +1772,7 @@
         currentWithPhotos = !currentWithPhotos;
         filterPhotosBtn.classList.toggle('active', currentWithPhotos);
         filterPhotosBtn.setAttribute('aria-pressed', currentWithPhotos);
-        currentVisibleCount = PAGE_SIZE;
+        currentVisibleCount = getPageSize();
         renderReviews();
       });
     }
@@ -1777,7 +1782,7 @@
         currentVerifiedOnly = !currentVerifiedOnly;
         filterVerifiedBtn.classList.toggle('active', currentVerifiedOnly);
         filterVerifiedBtn.setAttribute('aria-pressed', currentVerifiedOnly);
-        currentVisibleCount = PAGE_SIZE;
+        currentVisibleCount = getPageSize();
         renderReviews();
       });
     }
@@ -1796,7 +1801,7 @@
 
     if (loadMoreBtn) {
       listen(loadMoreBtn, 'click', () => {
-        currentVisibleCount += PAGE_SIZE;
+        currentVisibleCount += getPageSize();
         renderReviews(false);
       });
     }
@@ -1812,7 +1817,7 @@
 
   function setStarFilter(star) {
     currentFilterRating = star;
-    currentVisibleCount = PAGE_SIZE;
+    currentVisibleCount = getPageSize();
 
     breakdownRows.forEach(row => {
       const rowStar = parseInt(row.getAttribute('data-star'), 10);
@@ -1841,7 +1846,7 @@
     currentFilterRating = null;
     currentWithPhotos = false;
     currentVerifiedOnly = false;
-    currentVisibleCount = PAGE_SIZE;
+    currentVisibleCount = getPageSize();
 
     breakdownRows.forEach(r => r.classList.remove('active'));
 
@@ -1883,9 +1888,24 @@
     filterVerifiedBtn = document.getElementById('miroooo-filter-verified');
     resetFilterBtn = document.getElementById('miroooo-reset-filter');
 
+    currentVisibleCount = getPageSize();
+
     updateHeaderSummaryDOM();
     setupFilterEvents();
     renderReviews(false);
+
+    let lastCols = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 768 ? 3 : 2);
+    let resizeTimer = null;
+    listen(window, 'resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const currentCols = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 768 ? 3 : 2);
+        if (currentCols !== lastCols) {
+          lastCols = currentCols;
+          if (gridEl?.isConnected) renderReviews(false);
+        }
+      }, 150);
+    });
 
     return dispose;
   }

@@ -5,9 +5,10 @@ import Link from 'next/link';
 
 interface DentalAppSectionProps {
   isX2?: boolean;
+  isFlosser?: boolean;
 }
 
-export function DentalAppSection({ isX2 = false }: DentalAppSectionProps) {
+export function DentalAppSection({ isX2 = false, isFlosser = false }: DentalAppSectionProps) {
   return (
     <section
       id="shopify-section-template--miroooo-dental-app"
@@ -59,7 +60,7 @@ export function DentalAppSection({ isX2 = false }: DentalAppSectionProps) {
           box-sizing: border-box;
         }
         .gb-dental-app__content .gb-kicker {
-          color: #c3f06a;
+          color: rgba(255, 255, 255, 0.6);
           font-size: 13px;
           font-weight: 600;
           letter-spacing: 0.12em;
@@ -100,7 +101,7 @@ export function DentalAppSection({ isX2 = false }: DentalAppSectionProps) {
           color: #f4f2ec;
         }
         .gb-dental-app__proof span {
-          color: #c3f06a;
+          color: rgba(255, 255, 255, 0.45);
           font-size: 11px;
           letter-spacing: 0.08em;
           font-weight: 700;
@@ -136,8 +137,16 @@ export function DentalAppSection({ isX2 = false }: DentalAppSectionProps) {
       `}</style>
       <div className="gb-dental-app__media reveal">
         <img
-          src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-smile-coach-app.webp"
-          alt="Miroooo sonic electric toothbrush held beside the Smile Coach dental app"
+          src={
+            isFlosser
+              ? '/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp'
+              : '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-smile-coach-app.webp'
+          }
+          alt={
+            isFlosser
+              ? 'Miroooo Precision Water Flosser in Obsidian Black and Glacier White with companion dental app'
+              : 'Miroooo sonic electric toothbrush held beside the Smile Coach dental app'
+          }
           width={1254}
           height={1254}
           loading="lazy"
@@ -148,15 +157,16 @@ export function DentalAppSection({ isX2 = false }: DentalAppSectionProps) {
         <p className="gb-kicker">Free Customer App</p>
         <h2 id="dental-app-title">Miroooo Dental App</h2>
         <p>
-          Set your priorities and follow a tailored 28-day routine with guided two-minute sessions,
-          quadrant pacing cues, and private on-device habit tracking.
+          {isFlosser
+            ? 'Set your priorities and follow a tailored 28-day routine with guided hydrodynamic flossing sessions, quadrant pacing cues, and private on-device habit tracking.'
+            : 'Set your priorities and follow a tailored 28-day routine with guided two-minute sessions, quadrant pacing cues, and private on-device habit tracking.'}
         </p>
         <ul className="gb-dental-app__proof" aria-label="Miroooo Dental App features">
           <li>
             <span>01</span> Personal 28-day plan
           </li>
           <li>
-            <span>02</span> Four-zone brush timer
+            <span>02</span> {isFlosser ? 'Four-quadrant hydro timer' : 'Four-zone brush timer'}
           </li>
           <li>
             <span>03</span> Private, on-device progress

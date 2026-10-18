@@ -60,7 +60,7 @@ export function DentalAppSection({ isX2 = false, isFlosser = false }: DentalAppS
           box-sizing: border-box;
         }
         .gb-dental-app__content .gb-kicker {
-          color: #c3f06a;
+          color: rgba(255, 255, 255, 0.6);
           font-size: 13px;
           font-weight: 600;
           letter-spacing: 0.12em;
@@ -101,7 +101,7 @@ export function DentalAppSection({ isX2 = false, isFlosser = false }: DentalAppS
           color: #f4f2ec;
         }
         .gb-dental-app__proof span {
-          color: #c3f06a;
+          color: rgba(255, 255, 255, 0.45);
           font-size: 11px;
           letter-spacing: 0.08em;
           font-weight: 700;

@@ -3013,7 +3013,7 @@ body.is-ready [data-hero-reveal] {
 }
 
 .gb-coach-promo__content .gb-kicker {
-  color: #c3f06a;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .gb-coach-promo__content h2 {
@@ -3052,7 +3052,7 @@ body.is-ready [data-hero-reveal] {
 }
 
 .gb-coach-promo__proof span {
-  color: #c3f06a;
+  color: rgba(255, 255, 255, 0.45);
   font-size: 11px;
   letter-spacing: .08em;
 }

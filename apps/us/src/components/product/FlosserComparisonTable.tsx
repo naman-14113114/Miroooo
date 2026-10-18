@@ -238,17 +238,150 @@ export function FlosserComparisonTable() {
           border-bottom-left-radius: 17px;
           border-bottom-right-radius: 17px;
         }
-        .flosser-comp-mobile {
+        .flosser-comp-mobile,
+        .miroooo-comp-mobile {
           display: none;
           width: 100%;
           box-sizing: border-box;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 767px) {
           .flosser-comp-scroll-wrapper {
             display: none !important;
           }
-          .flosser-comp-mobile {
+          .flosser-comp-mobile,
+          .miroooo-comp-mobile {
             display: block !important;
+          }
+          .miroooo-comp-m-table {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-sizing: border-box;
+          }
+          .miroooo-comp-m-head-row {
+            display: flex;
+            align-items: flex-end;
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding-bottom: 10px;
+            box-sizing: border-box;
+          }
+          .miroooo-comp-m-head-col {
+            flex: 1;
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 6px 2px;
+            box-sizing: border-box;
+          }
+          .miroooo-comp-m-head-col--winner {
+            background: #ffffff;
+            color: #000000;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+            padding-top: 10px;
+            padding-bottom: 0;
+          }
+          .miroooo-comp-m-brand-name {
+            font-family: var(--font-heading-family, 'Inter', -apple-system, sans-serif);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+          }
+          .miroooo-comp-m-head-col--winner .miroooo-comp-m-brand-name {
+            color: #000000;
+            font-weight: 800;
+            font-size: 0.76rem;
+          }
+          .miroooo-comp-m-head-img {
+            height: 56px;
+            width: 100%;
+            object-fit: contain;
+            display: block;
+          }
+          .miroooo-comp-m-row-group {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 9px 0 7px 0;
+            box-sizing: border-box;
+          }
+          .miroooo-comp-m-row-group--last {
+            border-bottom: none;
+            padding-bottom: 0;
+          }
+          .miroooo-comp-m-feature-title {
+            font-family: var(--font-body-family, 'Inter', -apple-system, sans-serif);
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            padding: 0 4px 4px 4px;
+            text-align: center !important;
+            width: 100% !important;
+            display: block !important;
+            box-sizing: border-box;
+            margin: 0 auto;
+            line-height: 1.3;
+          }
+          .miroooo-comp-m-values-row {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+          }
+          .miroooo-comp-m-val-cell {
+            flex: 1;
+            width: 25%;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: var(--font-body-family, 'Inter', -apple-system, sans-serif);
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.65);
+            padding: 2px 2px;
+            box-sizing: border-box;
+          }
+          .miroooo-comp-m-val-cell--winner {
+            background: #ffffff;
+            color: #000000 !important;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+          }
+          .miroooo-comp-m-val-cell--winner-last {
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            padding-bottom: 12px;
+          }
+          .miroooo-comp-m-price-winner {
+            color: #15803d !important;
+            font-size: 1.05rem;
+            font-weight: 900;
+            line-height: 1.1;
+          }
+          .miroooo-comp-m-price-old {
+            font-size: 0.64rem;
+            color: #64748b;
+            font-weight: 700;
+            text-decoration: line-through;
+            display: block;
+            margin-top: 1px;
+          }
+          .miroooo-comp-m-price-competitor {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.86rem;
+            font-weight: 700;
           }
         }
       `}</style>
@@ -358,85 +491,190 @@ export function FlosserComparisonTable() {
           </div>
         </div>
 
-        {/* Mobile View (Card Matrix on < 900px) */}
-        <div className="flosser-comp-mobile">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {/* Winner Card */}
-            <div
-              style={{
-                background: '#ffffff',
-                color: '#000000',
-                borderRadius: '16px',
-                border: '2px solid #22c55e',
-                padding: '20px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                <div>
-                  <span style={{ background: '#22c55e', color: '#ffffff', fontSize: '0.72rem', fontWeight: 800, padding: '3px 8px', borderRadius: '4px', textTransform: 'uppercase' }}>
-                    #1 Winner
-                  </span>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '6px 0 0 0', color: '#000000' }}>
-                    Miroooo Water Flosser
-                  </h3>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '1.35rem', fontWeight: 900, color: '#15803d' }}>{currentPrice}</div>
-                  {oldPrice && <div style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'line-through' }}>{oldPrice}</div>}
-                </div>
+        {/* Mobile View (<= 767px) */}
+        <div className="miroooo-comp-mobile flosser-comp-mobile">
+          <div className="miroooo-comp-m-table">
+            <div className="miroooo-comp-m-head-row">
+              <div className="miroooo-comp-m-head-col miroooo-comp-m-head-col--winner">
+                <span className="miroooo-comp-m-brand-name">Miroooo Flosser</span>
+                <img
+                  src="/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp"
+                  alt="Miroooo Flosser"
+                  className="miroooo-comp-m-head-img"
+                />
               </div>
+              <div className="miroooo-comp-m-head-col">
+                <span className="miroooo-comp-m-brand-name">Waterpik Cordless</span>
+                <img
+                  src="/assets_ref/x/compare-suri.webp"
+                  alt="Waterpik Cordless"
+                  className="miroooo-comp-m-head-img"
+                />
+              </div>
+              <div className="miroooo-comp-m-head-col">
+                <span className="miroooo-comp-m-brand-name">Philips 3000</span>
+                <img
+                  src="/assets_ref/x/compare-philips.webp"
+                  alt="Philips 3000"
+                  className="miroooo-comp-m-head-img"
+                />
+              </div>
+              <div className="miroooo-comp-m-head-col">
+                <span className="miroooo-comp-m-brand-name">Oral-B Aquacare</span>
+                <img
+                  src="/assets_ref/x/compare-oralb.webp"
+                  alt="Oral-B Aquacare"
+                  className="miroooo-comp-m-head-img"
+                />
+              </div>
+            </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', fontSize: '0.82rem' }}>
-                <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px' }}>
-                  <div style={{ color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase' }}>Peak Pressure</div>
-                  <strong style={{ color: '#000000' }}>138 PSI Max</strong>
+            {/* Feature: Peak Hydro Pressure */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Peak Hydro Pressure</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">138 PSI</div>
+                <div className="miroooo-comp-m-val-cell">75 PSI</div>
+                <div className="miroooo-comp-m-val-cell">60 PSI</div>
+                <div className="miroooo-comp-m-val-cell">50 PSI</div>
+              </div>
+            </div>
+
+            {/* Feature: Reservoir Capacity */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Reservoir Capacity</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">320 ml</div>
+                <div className="miroooo-comp-m-val-cell">210 ml</div>
+                <div className="miroooo-comp-m-val-cell">250 ml</div>
+                <div className="miroooo-comp-m-val-cell">150 ml</div>
+              </div>
+            </div>
+
+            {/* Feature: Battery Endurance */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Battery Endurance</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">60 Days</div>
+                <div className="miroooo-comp-m-val-cell">14 Days</div>
+                <div className="miroooo-comp-m-val-cell">14 Days</div>
+                <div className="miroooo-comp-m-val-cell">7–10 Days</div>
+              </div>
+            </div>
+
+            {/* Feature: Specialized Nozzles */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Specialized Nozzles</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">7 Tips</div>
+                <div className="miroooo-comp-m-val-cell">4 Tips</div>
+                <div className="miroooo-comp-m-val-cell">2 Tips</div>
+                <div className="miroooo-comp-m-val-cell">2 Tips</div>
+              </div>
+            </div>
+
+            {/* Feature: Intelligent Modes */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Intelligent Modes</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">4 Modes</div>
+                <div className="miroooo-comp-m-val-cell">3 Modes</div>
+                <div className="miroooo-comp-m-val-cell">2 Modes</div>
+                <div className="miroooo-comp-m-val-cell">2 Modes</div>
+              </div>
+            </div>
+
+            {/* Feature: Medical Piston Pump */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Medical Piston Pump</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px' }}>
-                  <div style={{ color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase' }}>Reservoir</div>
-                  <strong style={{ color: '#000000' }}>320 ml (Full Session)</strong>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px' }}>
-                  <div style={{ color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase' }}>Battery Life</div>
-                  <strong style={{ color: '#000000' }}>60 Days (2000mAh)</strong>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px' }}>
-                  <div style={{ color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase' }}>Nozzles Included</div>
-                  <strong style={{ color: '#000000' }}>7 Precision Tips</strong>
-                </div>
-                <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px' }}>
-                  <div style={{ color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase' }}>Piston Pump</div>
-                  <strong style={{ color: '#15803d' }}>Medical Grade Stainless</strong>
-                </div>
-                <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px' }}>
-                  <div style={{ color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase' }}>Bonus Gift</div>
-                  <strong style={{ color: '#15803d' }}>Free $10 Voucher Included</strong>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
               </div>
             </div>
 
-            {/* Competitor Cards Summary */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
-              {competitors.map((comp) => (
-                <div
-                  key={comp.name}
-                  style={{
-                    background: '#111111',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    padding: '14px',
-                  }}
-                >
-                  <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#ffffff', marginBottom: '2px' }}>{comp.name}</div>
-                  <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginBottom: '8px' }}>{comp.price}</div>
-                  <div style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.45 }}>
-                    <div>PSI: {comp.psi}</div>
-                    <div>Tank: {comp.reservoir}</div>
-                    <div>Battery: {comp.battery}</div>
-                    <div>Tips: {comp.nozzles}</div>
+            {/* Feature: Waterproof Rating */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Waterproof Rating</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">IPX7</div>
+                <div className="miroooo-comp-m-val-cell">IPX7</div>
+                <div className="miroooo-comp-m-val-cell">Splash</div>
+                <div className="miroooo-comp-m-val-cell">IPX7</div>
+              </div>
+            </div>
+
+            {/* Feature: USB-C Fast Charge */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">USB-C Fast Charge</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature: Free Gift Card */}
+            <div className="miroooo-comp-m-row-group">
+              <div className="miroooo-comp-m-feature-title">Free Gift Card</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#22c55e"/><path d="M6 10.2L8.6 12.8L14.2 7.2" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#ef4444"/><path d="M7 7L13 13M13 7L7 13" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Price Row */}
+            <div className="miroooo-comp-m-row-group miroooo-comp-m-row-group--last">
+              <div className="miroooo-comp-m-feature-title">Price</div>
+              <div className="miroooo-comp-m-values-row">
+                <div className="miroooo-comp-m-val-cell miroooo-comp-m-val-cell--winner miroooo-comp-m-val-cell--winner-last">
+                  <div>
+                    <div className="miroooo-comp-m-price-winner">{currentPrice}</div>
+                    {oldPrice && <span className="miroooo-comp-m-price-old">{oldPrice}</span>}
+                    <span style={{ fontSize: '0.58rem', color: '#15803d', fontWeight: 700, display: 'block', lineHeight: 1, marginTop: '1px' }}>
+                      (for today only)
+                    </span>
                   </div>
                 </div>
-              ))}
+                <div className="miroooo-comp-m-val-cell">
+                  <span className="miroooo-comp-m-price-competitor">{isUk ? '£89' : '$99'}</span>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <span className="miroooo-comp-m-price-competitor">{isUk ? '£99' : '$119'}</span>
+                </div>
+                <div className="miroooo-comp-m-val-cell">
+                  <span className="miroooo-comp-m-price-competitor">{isUk ? '£79' : '$89'}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

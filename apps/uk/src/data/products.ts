@@ -946,8 +946,8 @@ export const PRODUCTS: Record<string, Product> = {
     ],
     specs: [
       { label: 'Rated Power', value: '5W' },
-      { label: 'Battery Capacity', value: '2000mAh High-density lithium' },
-      { label: 'Battery Life', value: '60 Days on a single USB-C charge' },
+      { label: 'Battery Capacity', value: '2000mAh' },
+      { label: 'Battery Life', value: '60+ days' },
       { label: 'Pump Type', value: 'Medical-grade high-frequency piston pump' },
       { label: 'Waterproof Rating', value: 'IPX7 Immersion waterproof unibody' },
       { label: 'Charging Time', value: '3 Hours fast USB Type-C charging' },
