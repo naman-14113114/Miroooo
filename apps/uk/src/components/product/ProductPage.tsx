@@ -38,7 +38,7 @@ interface ProductPageProps {
 
 export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMirooooX1Route = true }: ProductPageProps) {
   const isFlosser = handle === 'miroooo-water-flosser' || handle === 'water-flosser';
-  const defaultColor = isFlosser ? 'Black' : (handle === 'miroooo-x2' ? 'Silver' : 'Pink');
+  const defaultColor = isFlosser ? 'Black' : 'Silver';
   const validColors = isFlosser ? ['Black', 'White'] : ['Silver', 'Grey', 'Pink'];
   const initialColor = validColors.find((color) => color.toLowerCase() === searchParams?.color?.toLowerCase()) || defaultColor;
   const [selectedColor, setSelectedColor] = useState(initialColor);

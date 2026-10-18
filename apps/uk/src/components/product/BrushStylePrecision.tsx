@@ -3,7 +3,7 @@
 import React from 'react';
 import { BatteryCharging, Waves, BadgeCheck, Feather } from 'lucide-react';
 
-export function BrushStylePrecision({ color = 'Pink' }: { color?: string }) {
+export function BrushStylePrecision({ color = 'Silver' }: { color?: string }) {
   return (
     <div
       id="shopify-section-template--miroooo-brush-style-precision"

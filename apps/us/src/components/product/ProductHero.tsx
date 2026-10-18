@@ -60,7 +60,7 @@ export function ProductHero({
   // Color choices per tier
   const [singleColor, setSingleColor] = useState<string>(initialColor);
   const [bundle2Colors, setBundle2Colors] = useState<[string, string]>([initialColor, isX2 ? initialColor : 'Grey']);
-  const [bundle3Colors, setBundle3Colors] = useState<[string, string, string]>([initialColor, 'Grey', isX2 ? 'Pink' : 'Silver']);
+  const [bundle3Colors, setBundle3Colors] = useState<[string, string, string]>([initialColor, 'Grey', initialColor === 'Pink' ? 'Silver' : 'Pink']);
 
   // Addon checkbox for Buy 1 tier
   const [buy1HeadsChecked, setBuy1HeadsChecked] = useState(false);
@@ -468,7 +468,7 @@ export function ProductHero({
 
   const getX1Slides = (): GallerySlide[] => {
     const gallerySource = isMirooooX1Route ? x1GalleryMirooooX1 : x1Gallery;
-    const variant = gallerySource[selectedColor as keyof typeof gallerySource] || gallerySource.Pink;
+    const variant = gallerySource[selectedColor as keyof typeof gallerySource] || gallerySource.Silver;
     return variant.images.map((src, index): GallerySlide => {
       const isVideo = src.endsWith('.mp4');
       const thumb = variant.thumbnails[index];

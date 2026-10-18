@@ -7,7 +7,7 @@ interface BrushFunctionsProps {
   color?: string;
 }
 
-export function BrushFunctions({ isX2 = false, color = 'Pink' }: BrushFunctionsProps) {
+export function BrushFunctions({ isX2 = false, color = 'Silver' }: BrushFunctionsProps) {
   const modes = isX2
     ? [
         {
