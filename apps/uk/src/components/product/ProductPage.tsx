@@ -95,7 +95,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
         isMirooooX1Route={isMirooooX1Route}
       />
 
-      <ShippingMarquee />
+      <ShippingMarquee isFlosser={isFlosser} />
 
       {isFlosser ? (
         /* Miroooo Water Flosser Complete Section Sequence */
@@ -117,7 +117,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
           <ProductReviews isFlosser={true} isX2={false} />
 
           {/* 12. Miroooo Dental App (Smile Coach) */}
-          <DentalAppSection isX2={false} />
+          <DentalAppSection isX2={false} isFlosser={true} />
 
           {/* 13. Competitor Comparison Table */}
           <FlosserComparisonTable />

@@ -77,7 +77,7 @@ const FAQS_FLOSSER: FaqItem[] = [
   {
     "id": "miroooo-flosser-faq-2",
     "question": "How often should I use the Miroooo Water Flosser?",
-    "answer": "<p>Dentists recommend using the Miroooo Water Flosser once to twice daily, ideally in the evening alongside your regular brushing routine. Daily hydro-flossing dislodges plaque biofilm, bacteria, and trapped food particles from deep interproximal gaps and periodontal pockets where standard toothbrush bristles cannot reach, actively preventing gingivitis, bleeding, and interdental decay.</p>"
+    "answer": "<p>Dentists recommend using the Miroooo Water Flosser once to twice daily, ideally in the evening alongside your daily oral care routine. Daily hydro-flossing dislodges plaque biofilm, bacteria, and trapped food particles from deep interproximal gaps and periodontal pockets where standard string floss and manual cleaning cannot reach, actively preventing gingivitis, bleeding, and interdental decay.</p>"
   },
   {
     "id": "miroooo-flosser-faq-3",
@@ -97,7 +97,7 @@ const FAQS_FLOSSER: FaqItem[] = [
   {
     "id": "miroooo-flosser-faq-6",
     "question": "What are the 7 nozzles used for?",
-    "answer": "<p>Every complete set includes 7 specialized 360° quick-release nozzles:</p><ul><li><strong>Standard Cleaning Nozzle:</strong> 0.6mm calibrated jet for everyday interdental and gumline flossing.</li><li><strong>Interdental Nozzle:</strong> Slim 0.45mm needle profile to access tight spaces and crowded contacts.</li><li><strong>Periodontal Pocket Nozzle:</strong> Soft silicone elastomeric tip for gentle subgingival sulcus irrigation.</li><li><strong>Orthodontic Nozzle:</strong> Integrated micro-tuft nylon bristle ring for braces, archwires, and retainers.</li><li><strong>Tongue Coating Scraper Nozzle:</strong> Contoured spoon scraper with fan-spray water curtain for fresh breath and lingual biofilm removal.</li><li><strong>Precision Jet Nozzle:</strong> Pinpoint 0.4mm aperture for crowns, bridge margins, and dental implants.</li><li><strong>Toothbrush Hybrid Nozzle:</strong> Dual-action DuPont bristles with central hydro-core for simultaneous brushing and flossing.</li></ul>"
+    "answer": "<p>Every complete set includes 7 specialized 360° quick-release nozzles:</p><ul><li><strong>Standard Cleaning Nozzle:</strong> 0.6mm calibrated jet for everyday interdental and gumline flossing.</li><li><strong>Interdental Nozzle:</strong> Slim 0.45mm needle profile to access tight spaces and crowded contacts.</li><li><strong>Periodontal Pocket Nozzle:</strong> Soft silicone elastomeric tip for gentle subgingival sulcus irrigation.</li><li><strong>Orthodontic Nozzle:</strong> Specialized fine spray pattern for braces, archwires, and retainers.</li><li><strong>Tongue Coating Scraper Nozzle:</strong> Contoured spoon scraper with fan-spray water curtain for fresh breath and lingual biofilm removal.</li><li><strong>Precision Jet Nozzle:</strong> Pinpoint 0.4mm aperture for crowns, bridge margins, and dental implants.</li><li><strong>Plaque Defence Nozzle:</strong> High-density targeted water stream for concentrated plaque biofilm removal along the gum margin.</li></ul>"
   },
   {
     "id": "miroooo-flosser-faq-7",
@@ -296,7 +296,7 @@ export function ProductFaqs({ isX2 = true, isFlosser = false, model }: ProductFa
               lineHeight: 1.6,
             }}
           >
-            Everything you need to know about {isX2 ? 'the new Miroooo X2 electric toothbrush' : 'the Miroooo X1 electric toothbrush'}, shipping, and return policies.
+            Everything you need to know about {isFlosserProduct ? 'the Miroooo Water Flosser' : (isX2 ? 'the new Miroooo X2 electric toothbrush' : 'the Miroooo X1 electric toothbrush')}, shipping, and return policies.
           </p>
         </div>
 

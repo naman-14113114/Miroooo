@@ -72,7 +72,7 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '£', onlyGiftCard
             <div className={styles.headerLeft}>
               <span className={styles.selectedCheck}><Checkmark /></span>
               <span className={styles.headerText}>
-                {onlyGiftCard ? 'Free Miroooo Digital Gift Card ($10 Value) Included' : 'Yes, include my free gift card'}
+                {onlyGiftCard ? `Free Miroooo Digital Gift Card (${currency}10 Value) Included` : 'Yes, include my free gift card'}
               </span>
             </div>
             <span className={styles.selectedBadge}>

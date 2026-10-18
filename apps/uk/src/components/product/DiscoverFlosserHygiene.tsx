@@ -86,7 +86,7 @@ export function DiscoverFlosserHygiene() {
                     2,000 Pulses/Min Micro-Jets
                   </strong>
                   <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.9rem, 1vw, 1rem)', lineHeight: 1.55 }}>
-                    High-pressure sonic water pulses penetrate deep between tight interdental spaces and beneath the gumline where regular string floss and brushes cannot reach.
+                    High-pressure sonic water pulses penetrate deep between tight interdental spaces and beneath the gumline where regular string floss and traditional dental picks cannot reach.
                   </span>
                 </div>
               </li>

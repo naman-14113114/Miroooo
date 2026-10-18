@@ -15,6 +15,13 @@ export const metadata: Metadata = {
     url: 'https://www.trymiroooo.com/products/miroooo-water-flosser',
     images: ['/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Miroooo Water Flosser | 60–138 PSI Deep Plaque Precision UK',
+    description:
+      'Engineered with a medical-grade piston pump, 2,000 pulses/min, 4 modes, 320ml tank, and 60-day battery. Free UK delivery.',
+    images: ['/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp'],
+  },
 };
 
 export default async function Page(props: {
