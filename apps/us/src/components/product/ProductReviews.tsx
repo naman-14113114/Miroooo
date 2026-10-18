@@ -15,13 +15,24 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
     const runtime = window as unknown as {
       initProductReviews?: () => void;
       initMirooooX2Reviews?: () => void;
+      initMirooooFlosserReviews?: () => void;
       disposeMirooooReviews?: () => void;
     };
     const script = document.createElement('script');
-    script.src = isX2 ? '/assets_ref/miroooo-x2-reviews.js' : '/assets_ref/miroooo-reviews.js';
+    script.src = isFlosser
+      ? '/assets_ref/miroooo-flosser-reviews.js'
+      : isX2
+        ? '/assets_ref/miroooo-x2-reviews.js'
+        : '/assets_ref/miroooo-reviews.js';
     script.onload = () => {
       if (!active) return;
-      (isX2 ? runtime.initMirooooX2Reviews : runtime.initProductReviews)?.();
+      if (isFlosser) {
+        runtime.initMirooooFlosserReviews?.();
+      } else if (isX2) {
+        runtime.initMirooooX2Reviews?.();
+      } else {
+        runtime.initProductReviews?.();
+      }
       dispose = runtime.disposeMirooooReviews;
     };
     document.body.appendChild(script);
@@ -35,7 +46,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
         document.documentElement.style.overflow = '';
       }
     };
-  }, [isX2]);
+  }, [isX2, isFlosser]);
 
   return (
     <div id="shopify-section-template--24203751129433__reviews" className="shopify-section">
@@ -98,17 +109,17 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                 <button type="button" className="miroooo-breakdown-row" data-star="3" aria-label="Show 3 star reviews">
                   <span className="miroooo-row-label">3 <img src="/assets/star.png" alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
                   <div className="miroooo-progress-track">
-                    <div className="miroooo-progress-bar" data-target-width="0.3%" style={{ width: '0.3%' }}></div>
+                    <div className="miroooo-progress-bar" data-target-width={isFlosser ? "1%" : "0.3%"} style={{ width: isFlosser ? '1%' : '0.3%' }}></div>
                   </div>
-                  <span className="miroooo-row-count">(1)</span>
+                  <span className="miroooo-row-count">({isFlosser ? '43' : '1'})</span>
                 </button>
                 {/* 2 Star Row */}
                 <button type="button" className="miroooo-breakdown-row" data-star="2" aria-label="Show 2 star reviews">
                   <span className="miroooo-row-label">2 <img src="/assets/star.png" alt="★" width="13" height="12" style={{ width: '13px', height: '12px', display: 'inline-block', verticalAlign: 'middle', objectFit: 'contain' }} loading="eager" decoding="async" /></span>
                   <div className="miroooo-progress-track">
-                    <div className="miroooo-progress-bar" data-target-width="0.7%" style={{ width: '0.7%' }}></div>
+                    <div className="miroooo-progress-bar" data-target-width={isFlosser ? "0.5%" : "0.7%"} style={{ width: isFlosser ? '0.5%' : '0.7%' }}></div>
                   </div>
-                  <span className="miroooo-row-count">(3)</span>
+                  <span className="miroooo-row-count">({isFlosser ? '22' : '3'})</span>
                 </button>
                 {/* 1 Star Row */}
                 <button type="button" className="miroooo-breakdown-row" data-star="1" aria-label="Show 1 star reviews">
@@ -116,13 +127,13 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                   <div className="miroooo-progress-track">
                     <div className="miroooo-progress-bar" data-target-width="0.5%" style={{ width: '0.5%' }}></div>
                   </div>
-                  <span className="miroooo-row-count">(2)</span>
+                  <span className="miroooo-row-count">({isFlosser ? '21' : '2'})</span>
                 </button>
               </div>
 
               {/* Write Review Action */}
               <div className="miroooo-action-col">
-                <div className="miroooo-action-text">Share your brushing experience</div>
+                <div className="miroooo-action-text">{isFlosser ? 'Share your flossing experience' : 'Share your brushing experience'}</div>
                 <button type="button" className="miroooo-btn-write" id="miroooo-write-review-btn">
                   <span className="btn-text" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -152,19 +163,21 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                 <div className="miroooo-dropdown-item active" data-value="all" role="option" aria-selected="true">All stars (4,275)</div>
                 <div className="miroooo-dropdown-item" data-value="5" role="option" aria-selected="false">5 star (3,933)</div>
                 <div className="miroooo-dropdown-item" data-value="4" role="option" aria-selected="false">4 star (256)</div>
-                <div className="miroooo-dropdown-item" data-value="3" role="option" aria-selected="false">3 star (1)</div>
-                <div className="miroooo-dropdown-item" data-value="2" role="option" aria-selected="false">2 star (3)</div>
-                <div className="miroooo-dropdown-item" data-value="1" role="option" aria-selected="false">1 star (2)</div>
+                <div className="miroooo-dropdown-item" data-value="3" role="option" aria-selected="false">3 star ({isFlosser ? '43' : '1'})</div>
+                <div className="miroooo-dropdown-item" data-value="2" role="option" aria-selected="false">2 star ({isFlosser ? '22' : '3'})</div>
+                <div className="miroooo-dropdown-item" data-value="1" role="option" aria-selected="false">1 star ({isFlosser ? '21' : '2'})</div>
               </div>
             </div>
 
             {/* With Photos Filter Pill */}
-            <button type="button" className="miroooo-filter-pill" id="miroooo-filter-photos" aria-pressed="false">
-              <span className="miroooo-pill-checkbox">
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" width="12" height="12"><path strokeLinecap="round" strokeLinejoin="round" d="M3.5 8.5L6.5 11.5L12.5 4.5"/></svg>
-              </span>
-              With photos
-            </button>
+            {!isFlosser && (
+              <button type="button" className="miroooo-filter-pill" id="miroooo-filter-photos" aria-pressed="false">
+                <span className="miroooo-pill-checkbox">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" width="12" height="12"><path strokeLinecap="round" strokeLinejoin="round" d="M3.5 8.5L6.5 11.5L12.5 4.5"/></svg>
+                </span>
+                With photos
+              </button>
+            )}
 
             {/* Verified Buyer Filter Pill */}
             <button type="button" className="miroooo-filter-pill" id="miroooo-filter-verified" aria-pressed="false">
@@ -259,7 +272,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
 
           <div className="miroooo-write-header">
             <h3>Write a Review</h3>
-            <p>Share your honest feedback on the Miroooo Electric Toothbrush</p>
+            <p>{isFlosser ? 'Share your honest feedback on the Miroooo Water Flosser' : 'Share your honest feedback on the Miroooo Electric Toothbrush'}</p>
           </div>
 
           <form id="miroooo-review-form" className="miroooo-write-form">
@@ -288,17 +301,28 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
 
             <div className="miroooo-form-row">
               <div className="miroooo-form-group">
-                <label htmlFor="miroooo-form-variant">Toothbrush Color / Variant</label>
+                <label htmlFor="miroooo-form-variant">{isFlosser ? 'Flosser Color / Variant' : 'Toothbrush Color / Variant'}</label>
                 <select id="miroooo-form-variant" className="miroooo-select">
-                  <option value="Grey / Single">Grey / Single</option>
-                  <option value="Grey / Double Pack">Grey / Double Pack</option>
-                  <option value="Grey / Travel Edition">Grey / Travel Edition</option>
-                  <option value="Silver / Single">Silver / Single</option>
-                  <option value="Silver / Double Pack">Silver / Double Pack</option>
-                  <option value="Silver / Travel Edition">Silver / Travel Edition</option>
-                  <option value="Pink / Single">Pink / Single</option>
-                  <option value="Pink / Double Pack">Pink / Double Pack</option>
-                  <option value="Pink / Travel Edition">Pink / Travel Edition</option>
+                  {isFlosser ? (
+                    <>
+                      <option value="Black / 7 Specialized Nozzles">Black / 7 Specialized Nozzles</option>
+                      <option value="White / 7 Specialized Nozzles">White / 7 Specialized Nozzles</option>
+                      <option value="Black / 4 Standard Nozzles">Black / 4 Standard Nozzles</option>
+                      <option value="White / 4 Standard Nozzles">White / 4 Standard Nozzles</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Grey / Single">Grey / Single</option>
+                      <option value="Grey / Double Pack">Grey / Double Pack</option>
+                      <option value="Grey / Travel Edition">Grey / Travel Edition</option>
+                      <option value="Silver / Single">Silver / Single</option>
+                      <option value="Silver / Double Pack">Silver / Double Pack</option>
+                      <option value="Silver / Travel Edition">Silver / Travel Edition</option>
+                      <option value="Pink / Single">Pink / Single</option>
+                      <option value="Pink / Double Pack">Pink / Double Pack</option>
+                      <option value="Pink / Travel Edition">Pink / Travel Edition</option>
+                    </>
+                  )}
                 </select>
               </div>
               <div className="miroooo-form-group">
@@ -309,7 +333,7 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
 
             <div className="miroooo-form-group">
               <label htmlFor="miroooo-form-body">Review Details *</label>
-              <textarea id="miroooo-form-body" required rows={4} placeholder="How has the Miroooo sonic toothbrush worked for you?" className="miroooo-textarea"></textarea>
+              <textarea id="miroooo-form-body" required rows={4} placeholder={isFlosser ? "How has the Miroooo Water Flosser worked for you?" : "How has the Miroooo sonic toothbrush worked for you?"} className="miroooo-textarea"></textarea>
             </div>
 
             <div className="miroooo-form-group">

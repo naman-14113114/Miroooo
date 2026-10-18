@@ -162,7 +162,10 @@ export async function POST(req: Request) {
       const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020710139724', quantity }], true)[0];
       canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
     }
-    if (totals.hasFreeGiftCard) {
+    const flosserCount = canonicalItems
+      .filter((item) => item.productHandle === 'miroooo-water-flosser' || item.productHandle === 'water-flosser')
+      .reduce((sum, item) => sum + (item.quantity || 1), 0);
+    if (totals.hasFreeGiftCard && flosserCount !== 2) {
       canonicalCart.push({
         id: 'miroooo-gift-card:free',
         productHandle: 'miroooo-gift-card',
@@ -179,10 +182,12 @@ export async function POST(req: Request) {
     const isGiftCardOnly = canonicalCart.length > 0 && canonicalCart.every(
       (item) => item.productHandle === 'miroooo-gift-card' || item.variantId === XPAGE_VARIANTS.gift_card
     );
-    const isProtectionActive = body.packageProtection !== false && body.hasPackageProtection !== false && !isGiftCardOnly;
-    if (isProtectionActive && !hasProtectionAlready) {
+    const requestedProtection = Boolean(
+      flosserCount === 2 || body?.packageProtection || body?.cart?.packageProtection || body?.protection || body?.package_protection
+    );
+    if (requestedProtection && !hasProtectionAlready) {
       canonicalCart.push({
-        id: 'miroooo-package-protection:auto',
+        id: 'miroooo-package-protection',
         productHandle: 'miroooo-package-protection',
         productId: 'a2f6df9e-faf7-438b-a65a-da26ee25ce03',
         variantId: XPAGE_VARIANTS.package_protection,

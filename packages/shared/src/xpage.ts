@@ -861,6 +861,9 @@ export function detectBundlePayload(cartLines: any[] = [], discountCode = "") {
       return null;
     }
     if (flosserCount === 1) {
+      if (hasPackageProtection) {
+        return null;
+      }
       const option = XPAGE_BUNDLES.flosser.buy1;
       return {
         bundle_option_id: option.optionId,

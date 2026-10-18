@@ -98,6 +98,21 @@ const UK_COLLECTION_PRODUCTS: CollectionProduct[] = [
     buttonText: 'View Item',
   },
   {
+    id: 'miroooo-gift-card',
+    handle: 'miroooo-gift-card',
+    name: 'Miroooo Gift Card',
+    category: 'accessories',
+    eyebrow: 'Digital Voucher',
+    description: 'Instant digital gift voucher delivered via email. Expires in 3 months and valid site-wide.',
+    price: '£10',
+    compareAt: '',
+    badge: undefined,
+    isSoldOut: false,
+    image: '/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp',
+    link: '/products/miroooo-gift-card',
+    buttonText: 'View Item',
+  },
+  {
     id: 'travel-case',
     handle: 'travel-case',
     name: 'Luxury Travel Case',
@@ -142,29 +157,17 @@ const UK_COLLECTION_PRODUCTS: CollectionProduct[] = [
     link: '/products/miroooo-x1-charging-dock',
     buttonText: 'Sold Out',
   },
-  {
-    id: 'miroooo-gift-card',
-    handle: 'miroooo-gift-card',
-    name: 'Miroooo Gift Card',
-    category: 'accessories',
-    eyebrow: 'Digital Voucher',
-    description: 'Instant digital gift voucher delivered via email. Expires in 3 months and valid site-wide.',
-    price: '£10',
-    compareAt: '',
-    badge: undefined,
-    isSoldOut: false,
-    image: '/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp',
-    link: '/products/miroooo-gift-card',
-    buttonText: 'View Item',
-  },
 ];
 
 export function ShopPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
 
   const filteredProducts = useMemo(() => {
-    if (activeCategory === 'all') return UK_COLLECTION_PRODUCTS;
-    return UK_COLLECTION_PRODUCTS.filter((p) => p.category === activeCategory);
+    const list =
+      activeCategory === 'all'
+        ? UK_COLLECTION_PRODUCTS
+        : UK_COLLECTION_PRODUCTS.filter((p) => p.category === activeCategory);
+    return [...list].sort((a, b) => (a.isSoldOut ? 1 : 0) - (b.isSoldOut ? 1 : 0));
   }, [activeCategory]);
 
   const counts = useMemo(() => {
@@ -186,47 +189,10 @@ export function ShopPage() {
         }
 
         .shop-hero-section {
-          padding: clamp(80px, 12vw, 130px) 0 clamp(36px, 6vw, 54px);
+          padding: clamp(24px, 4vw, 44px) 0 clamp(32px, 5vw, 48px);
           background: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.08) 0%, rgba(8, 9, 9, 0) 70%), #080909;
           border-bottom: 1px solid rgba(255, 255, 255, 0.08);
           position: relative;
-        }
-
-        .shop-hero-eyebrow-wrap {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 16px;
-        }
-
-        .shop-hero-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 4px 12px;
-          border-radius: 999px;
-          background: rgba(34, 197, 94, 0.12);
-          border: 1px solid rgba(34, 197, 94, 0.28);
-          color: #4ade80;
-          font-size: 11px;
-          font-weight: 750;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-        }
-
-        .shop-hero-pill-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: #22c55e;
-          box-shadow: 0 0 8px #22c55e;
-        }
-
-        .shop-hero-count {
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.5);
-          font-weight: 600;
-          letter-spacing: 0.04em;
         }
 
         .shop-hero-title {
@@ -234,8 +200,10 @@ export function ShopPage() {
           font-weight: 700;
           letter-spacing: -0.02em;
           line-height: 1.05;
-          margin: 0 0 16px 0;
+          margin: 0 auto 16px auto;
           color: #ffffff;
+          text-align: center;
+          width: 100%;
         }
 
         .shop-hero-lead {
@@ -243,13 +211,15 @@ export function ShopPage() {
           line-height: 1.5;
           color: rgba(255, 255, 255, 0.68);
           max-width: 680px;
-          margin: 0 0 32px 0;
+          margin: 0 auto 32px auto;
+          text-align: center;
         }
 
         .shop-filters-row {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
+          justify-content: center;
           gap: 10px;
           margin-top: 28px;
           padding-top: 24px;
@@ -292,7 +262,7 @@ export function ShopPage() {
         }
 
         .shop-grid-section {
-          padding: 48px 0 clamp(64px, 10vw, 100px);
+          padding: 48px 0 clamp(20px, 3vw, 32px);
           background: #080909;
         }
 
@@ -483,58 +453,10 @@ export function ShopPage() {
           pointer-events: none;
         }
 
-        /* Trust Strip */
-        .shop-trust-strip {
-          background: #0d0e0e;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-          padding: 32px 0;
-        }
-
-        .shop-trust-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 24px;
-          align-items: center;
-        }
-
-        .shop-trust-card {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-        }
-
-        .shop-trust-icon {
-          width: 42px;
-          height: 42px;
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          color: #4ade80;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-
-        .shop-trust-info strong {
-          display: block;
-          font-size: 14px;
-          font-weight: 700;
-          color: #ffffff;
-          line-height: 1.3;
-        }
-
-        .shop-trust-info span {
-          display: block;
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.55);
-          margin-top: 2px;
-        }
 
         /* Quiz Banner */
         .shop-quiz-section {
-          padding: 40px 0 60px;
+          padding: 8px 0 clamp(48px, 6vw, 64px);
           background: #080909;
         }
 
@@ -565,18 +487,10 @@ export function ShopPage() {
 
       {/* 1. Collection Hero Section */}
       <header className="shop-hero-section">
-        <div className="site-shell">
-          <div className="shop-hero-eyebrow-wrap">
-            <span className="shop-hero-pill">
-              <span className="shop-hero-pill-dot"></span>
-              Precision Oral Care
-            </span>
-            <span className="shop-hero-count">· {UK_COLLECTION_PRODUCTS.length} Products</span>
-          </div>
-
+        <div className="site-shell" style={{ textAlign: 'center' }}>
           <h1 className="shop-hero-title">The Complete Collection</h1>
           <p className="shop-hero-lead">
-            Engineered with aerospace materials, dynamic acoustic oscillation, and minimalist charging docks.
+            Precision oral care engineered for considered daily routines — from high-frequency sonic toothbrushes and hydrodynamic water flossers to refined replacement heads and travel essentials.
           </p>
 
           {/* Interactive Filter / Category Tabs */}
@@ -739,312 +653,6 @@ export function ShopPage() {
               }}
             >
               Take our 60-second Dental Care Quiz <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Trust Strip */}
-      <section className="shop-trust-strip" aria-label="Brand Guarantees">
-        <div className="site-shell">
-          <div className="shop-trust-grid">
-            <div className="shop-trust-card">
-              <div className="shop-trust-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22">
-                  <rect x="1" y="3" width="15" height="13" rx="2" />
-                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-                  <circle cx="5.5" cy="18.5" r="2.5" />
-                  <circle cx="18.5" cy="18.5" r="2.5" />
-                </svg>
-              </div>
-              <div className="shop-trust-info">
-                <strong>Free UK Tracked Delivery</strong>
-                <span>Royal Mail 24/48 with live tracking</span>
-              </div>
-            </div>
-
-            <div className="shop-trust-card">
-              <div className="shop-trust-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <polyline points="9 12 11 14 15 10" />
-                </svg>
-              </div>
-              <div className="shop-trust-info">
-                <strong>2-Year Warranty</strong>
-                <span>Direct UK replacement coverage</span>
-              </div>
-            </div>
-
-            <div className="shop-trust-card">
-              <div className="shop-trust-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-              </div>
-              <div className="shop-trust-info">
-                <strong>30-Day Risk-Free Trial</strong>
-                <span>100% money-back satisfaction</span>
-              </div>
-            </div>
-
-            <div className="shop-trust-card">
-              <div className="shop-trust-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                </svg>
-              </div>
-              <div className="shop-trust-info">
-                <strong>Aerospace CNC Build</strong>
-                <span>Anodized aluminium unibody</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Model Guide Section (Comparison Table) */}
-      <section className="section" aria-labelledby="model-guide" style={{ background: '#080909', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div className="site-shell">
-          <div className="section-heading reveal">
-            <div>
-              <p className="eyebrow eyebrow--light">Model Guide</p>
-              <h2 id="model-guide" style={{ color: '#ffffff' }}>What changes between X1 and X2.</h2>
-            </div>
-            <p style={{ color: 'rgba(255, 255, 255, 0.65)' }}>The same calm design language, with different levels of guidance and battery life.</p>
-          </div>
-
-          <style dangerouslySetInnerHTML={{ __html: `
-            .shop-comp-table {
-              width: 100%;
-              border-collapse: separate;
-              border-spacing: 0;
-              background: #111213;
-              border: 1px solid rgba(255, 255, 255, 0.08);
-              border-radius: 20px;
-              overflow: hidden;
-            }
-            .shop-comp-table th, .shop-comp-table td {
-              padding: 18px 24px;
-              text-align: left;
-              border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-              font-size: 14.5px;
-            }
-            .shop-comp-table thead th {
-              background: #161718;
-              color: #ffffff;
-              font-weight: 750;
-              font-size: 15px;
-              border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            }
-            .shop-comp-table tbody tr:last-child th,
-            .shop-comp-table tbody tr:last-child td {
-              border-bottom: none;
-            }
-            .shop-comp-table tbody th {
-              color: rgba(255, 255, 255, 0.7);
-              font-weight: 600;
-              width: 30%;
-            }
-            .shop-comp-table tbody td {
-              color: rgba(255, 255, 255, 0.88);
-            }
-            .shop-comp-check {
-              color: #4ade80;
-              font-weight: 800;
-              margin-right: 6px;
-            }
-            @media (max-width: 767px) {
-              .shop-desktop-table {
-                display: none !important;
-              }
-            }
-            @media (min-width: 768px) {
-              .x2-comp-mobile-dark {
-                display: none !important;
-              }
-            }
-          ` }} />
-
-          {/* Desktop Table (>= 768px) */}
-          <div className="shop-desktop-table reveal">
-            <table className="shop-comp-table">
-              <thead>
-                <tr>
-                  <th>Feature</th>
-                  <th>Miroooo X1</th>
-                  <th>Miroooo X2</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>Battery Life</th>
-                  <td>60 Days</td>
-                  <td><span className="shop-comp-check">✓</span> 90+ Days</td>
-                </tr>
-                <tr>
-                  <th>Motor Power (VPM)</th>
-                  <td>32,000 VPM Sonic Motor</td>
-                  <td><span className="shop-comp-check">✓</span> 40,000 VPM High-Torque Motor</td>
-                </tr>
-                <tr>
-                  <th>Cleaning Motion</th>
-                  <td>Standard Micro-Vibration (0°)</td>
-                  <td><span className="shop-comp-check">✓</span> 45° Bass Sweep (Dentist Motion)</td>
-                </tr>
-                <tr>
-                  <th>Cleaning Modes</th>
-                  <td>Everyday Clean</td>
-                  <td><span className="shop-comp-check">✓</span> 3 Modes (Clean, White, Deep)</td>
-                </tr>
-                <tr>
-                  <th>Charging &amp; Travel</th>
-                  <td>Bulky Charging Dock</td>
-                  <td><span className="shop-comp-check">✓</span> Direct USB-C (No Bulky Dock)</td>
-                </tr>
-                <tr>
-                  <th>Body Material</th>
-                  <td>Aerospace Aluminium</td>
-                  <td><span className="shop-comp-check">✓</span> Aerospace Aluminium</td>
-                </tr>
-                <tr>
-                  <th>Price</th>
-                  <td><span style={{ fontWeight: 800, color: '#ffffff' }}>£69</span></td>
-                  <td>
-                    <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '6px' }}>
-                      <span style={{ color: '#4ade80', fontWeight: 800 }}>£79</span>
-                      <s style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: '13px' }}>£159</s>
-                    </div>
-                    <span style={{ display: 'block', fontSize: '11px', color: '#4ade80', fontWeight: 700, marginTop: '2px' }}>(50% OFF)</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile Comparison Layout (<768px) */}
-          <div className="x2-comp-mobile-dark reveal">
-            <div
-              style={{
-                background: '#111213',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: '18px',
-                padding: '16px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '14px',
-              }}
-            >
-              <div style={{ display: 'flex', gap: '12px', paddingBottom: '14px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                <div style={{ flex: 1, textAlign: 'center' }}>
-                  <span style={{ display: 'inline-block', background: '#16a34a', color: '#fff', fontSize: '10px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px', textTransform: 'uppercase', marginBottom: '4px' }}>★ Flagship</span>
-                  <div style={{ fontWeight: 800, fontSize: '15px', color: '#ffffff' }}>Miroooo X2</div>
-                  <div style={{ fontSize: '12px', color: '#4ade80', fontWeight: 700 }}>£79 <s style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>£159</s></div>
-                </div>
-                <div style={{ flex: 1, textAlign: 'center', borderLeft: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                  <span style={{ display: 'inline-block', visibility: 'hidden', fontSize: '10px', padding: '2px 8px' }}>-</span>
-                  <div style={{ fontWeight: 800, fontSize: '15px', color: '#ffffff' }}>Miroooo X1</div>
-                  <div style={{ fontSize: '12px', color: '#ffffff', fontWeight: 700 }}>£69 <s style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>£139</s></div>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>Battery Life</span>
-                  <span><strong style={{ color: '#4ade80' }}>90+ Days</strong> / 60 Days</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>Motor Power</span>
-                  <span><strong style={{ color: '#4ade80' }}>40,000 VPM</strong> / 32,000 VPM</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>Cleaning Motion</span>
-                  <span><strong style={{ color: '#4ade80' }}>45° Bass Sweep</strong> / Standard</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>Charging</span>
-                  <span><strong style={{ color: '#4ade80' }}>Direct USB-C</strong> / Base Dock</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Essentials Section */}
-      <section className="section" aria-labelledby="included-title" style={{ background: '#0d0e0e', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div className="site-shell">
-          <div className="section-heading reveal">
-            <div>
-              <p className="eyebrow eyebrow--light">Ready for the Routine</p>
-              <h2 id="included-title" style={{ color: '#ffffff' }}>The essentials come with you.</h2>
-            </div>
-            <p style={{ color: 'rgba(255, 255, 255, 0.65)' }}>Each model includes its handle, brush head, charging cable and travel protection. Confirm the exact bundle on the product page before ordering.</p>
-          </div>
-          <div className="value-grid">
-            <article className="value-card reveal" style={{ background: '#141516', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '28px' }}>
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: '#4ade80', width: '28px', height: '28px', marginBottom: '14px' }}>
-                <path d="M7 3h10v18H7zM9 7h6M9 17h6" />
-              </svg>
-              <h3 style={{ color: '#ffffff', fontSize: '18px', marginBottom: '8px' }}>Made to travel</h3>
-              <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '14px', margin: 0 }}>A protective case keeps the brush together and ready for the next routine.</p>
-            </article>
-            <article className="value-card reveal" style={{ background: '#141516', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '28px' }}>
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: '#4ade80', width: '28px', height: '28px', marginBottom: '14px' }}>
-                <path d="M7 7h10v10H7zM10 3v4M14 3v4M10 17v4M14 17v4" />
-              </svg>
-              <h3 style={{ color: '#ffffff', fontSize: '18px', marginBottom: '8px' }}>USB-C charging</h3>
-              <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '14px', margin: 0 }}>A universal cable format, with enough battery life to keep charging occasional.</p>
-            </article>
-            <article className="value-card reveal" style={{ background: '#141516', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '28px' }}>
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: '#4ade80', width: '28px', height: '28px', marginBottom: '14px' }}>
-                <path d="M12 3 4.5 6v5.5c0 4.7 3.1 7.9 7.5 9.5 4.4-1.6 7.5-4.8 7.5-9.5V6L12 3Z" />
-                <path d="m9 12 2 2 4-4" />
-              </svg>
-              <h3 style={{ color: '#ffffff', fontSize: '18px', marginBottom: '8px' }}>Dedicated support</h3>
-              <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '14px', margin: 0 }}>Our London customer team is here to assist with any product questions or easy returns.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. CTA Panel */}
-      <section className="section" style={{ background: '#080909', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div className="site-shell">
-          <div
-            className="cta-panel reveal"
-            style={{
-              background: '#111213',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '24px',
-              padding: 'clamp(32px, 5vw, 48px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '24px',
-              flexWrap: 'wrap',
-            }}
-          >
-            <div>
-              <p className="eyebrow eyebrow--light" style={{ margin: '0 0 10px 0' }}>Still deciding?</p>
-              <h2 style={{ color: '#ffffff', fontSize: 'clamp(28px, 4vw, 42px)', margin: '0 0 10px 0' }}>Start with the way you brush.</h2>
-              <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '15px', margin: 0, maxWidth: '580px' }}>
-                Choose Miroooo X1 for simplicity and a lighter body. Choose Miroooo X2 for more feedback and the longest battery life.
-              </p>
-            </div>
-            <Link
-              className="button button--primary"
-              href="/pages/faqs"
-              style={{
-                background: '#ffffff',
-                color: '#080909',
-                padding: '13px 26px',
-                borderRadius: '999px',
-                fontWeight: 750,
-              }}
-            >
-              <span className="btn-text">Read the FAQs →</span>
             </Link>
           </div>
         </div>

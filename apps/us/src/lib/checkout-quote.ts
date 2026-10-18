@@ -20,7 +20,9 @@ export async function loadPublishedCheckoutOffer(cart: unknown[], discountCode: 
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live USD checkout offer is unavailable. No order has been placed. Please try again later.');
   }
   const option = session.bundle?.options?.find((item: { id: string }) => item.id === selected.bundle_option_id);
-  const condition = option?.conditions?.find((item: { quantity: number }) => item.quantity === selected.brushes.length);
+  const condition = product === 'flosser'
+    ? option?.conditions?.[0]
+    : option?.conditions?.find((item: { quantity: number }) => item.quantity === selected.brushes.length);
   if (!option || !condition || condition.product?.status !== 'ACTIVE') {
     throw new CheckoutQuoteError('QUOTE_UNAVAILABLE', 'The live USD checkout offer is unavailable. Please try again later.');
   }

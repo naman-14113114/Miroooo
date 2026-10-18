@@ -223,13 +223,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     invalidateCheckout();
     const product = PRODUCTS[itemData.productHandle] || PRODUCTS['miroooo-x2'];
     const color = itemData.color || 'Silver';
-    const variant = product.variants.find((v) => v.color.toLowerCase() === color.toLowerCase()) || product.variants[0];
+    const variant = (itemData.variantId && product.variants.find((v) => v.id === itemData.variantId)) ||
+      product.variants.find((v) => v.color.toLowerCase() === color.toLowerCase()) || product.variants[0];
     const isBrush = itemData.productHandle === 'miroooo-x2' || itemData.productHandle === 'miroooo-x';
+    const isFlosser = itemData.productHandle === 'miroooo-water-flosser' || itemData.productHandle === 'water-flosser';
 
     setItems((currentItems) => {
-      // If item with same product & color exists, increment quantity
+      // If item with same product & variant exists, increment quantity
       const existingIndex = currentItems.findIndex(
-        (i) => i.productHandle === itemData.productHandle && i.color === color
+        (i) => i.productHandle === itemData.productHandle && (itemData.variantId ? i.variantId === itemData.variantId : i.color === color)
       );
 
       if (existingIndex > -1) {
@@ -242,16 +244,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
 
       const newItem: CartItem = {
-        id: `${itemData.productHandle}-${color}-${Date.now()}`,
+        id: `${itemData.productHandle}-${variant.id || color}-${Date.now()}`,
         productHandle: itemData.productHandle,
         productId: product.plusBaseProductId,
         variantId: variant.id,
-        title: isBrush ? `${product.name} (${color})` : product.name,
+        title: isBrush ? `${product.name} (${color})` : isFlosser ? `${product.name} (${variant.name})` : product.name,
         subtitle: product.subtitle,
         color,
         quantity: itemData.quantity || 1,
-        unitPrice: product.price,
-        comparePrice: product.compareAt,
+        unitPrice: variant.price ?? product.price,
+        comparePrice: variant.compareAt ?? product.compareAt,
         image: variant.image || product.galleryImages[0]?.src || '',
         url: `/products/${product.handle}${isBrush ? `?color=${color}` : ''}`,
       };

@@ -119,12 +119,12 @@ export async function prepareUSCheckout({ cart, discountCode, expectedUSD, useBu
   );
   // Ensure package protection is included in the backend quote verification and session creation when active,
   // without needing to be visibly selected in the cart.
-  const isProtectionActive = attribution.packageProtection !== false && !isGiftCardOnlyCart;
+  const isProtectionActive = Boolean(attribution.packageProtection) && !isGiftCardOnlyCart;
   const effectiveCart = isProtectionActive && !hasProtection
     ? [
         ...cart,
         {
-          id: 'miroooo-package-protection:auto',
+          id: 'miroooo-package-protection',
           productHandle: 'miroooo-package-protection',
           variantId: XPAGE_VARIANTS.package_protection,
           quantity: 1,
@@ -210,7 +210,7 @@ export async function prepareUSCheckout({ cart, discountCode, expectedUSD, useBu
         } else if (isGiftCard) {
           offeredMap[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.gift_card);
         } else if (selected.product === 'flosser' || slug.includes('flosser') || prodId === 'a2f69a15-e357-403b-a11c-b3912eb49b1d') {
-          const flosserVar = (selected as any).flossers?.[0] || selected.brushes?.[0] || item.product?.variants?.[0]?.id;
+          const flosserVar = (selected as any).flossers?.[1] || (selected as any).flossers?.[0] || selected.brushes?.[0] || item.product?.variants?.[0]?.id;
           offeredMap[item.id] = Array(item.quantity).fill(flosserVar);
         } else {
           offeredMap[item.id] = Array(item.quantity).fill(selected.headsVariant);
@@ -223,7 +223,7 @@ export async function prepareUSCheckout({ cart, discountCode, expectedUSD, useBu
         'X-CSRF-Token': session.csrfToken, Origin: session.origin, Referer: session.url,
         Cookie: cookies(session.setCookieHeaders) },
       body: JSON.stringify({ bundle_option_id: option.id, landing_page_id: session.landingPageId,
-        bundle_selected_variants: { conditions: { [condition.id]: selected.brushes },
+        bundle_selected_variants: { conditions: { [condition.id]: selected.product === 'flosser' ? [selected.brushes[0]] : selected.brushes },
           offered: offeredMap } }),
     });
     if (!response.ok) throw unavailable();

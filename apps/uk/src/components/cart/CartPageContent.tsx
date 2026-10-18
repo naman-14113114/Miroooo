@@ -122,6 +122,7 @@ export function CartPageContent() {
     [totals.bundlePromoName, totals.bundlePromoDiscount],
     ["Free Miroooo X2 Heads", totals.extraBrushHeadSets * 10],
     ["Free Miroooo X1 Heads", totals.extraX1BrushHeadSets * 10],
+    ...(totals.hasFreeGiftCard ? [["Free Miroooo Digital Gift Card", 10] as [string, number]] : []),
     ...(totals.promoDiscount > 0 && appliedPromoCodes.length > 0
       ? [[`Promo (${appliedPromoCodes.join(', ')})`, totals.promoDiscount] as [string, number]]
       : []),

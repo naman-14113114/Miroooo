@@ -162,10 +162,11 @@ export async function POST(req: Request) {
       const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020710139724', quantity }], true)[0];
       canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
     }
-    const hasFlosser = canonicalItems.some(
-      (item) => item.productHandle === 'miroooo-water-flosser' || item.productHandle === 'water-flosser' || item.productHandle === 'flosser'
-    );
-    if (totals.hasFreeGiftCard || hasFlosser) {
+    const flosserCount = canonicalItems
+      .filter((item) => item.productHandle === 'miroooo-water-flosser' || item.productHandle === 'water-flosser' || item.productHandle === 'flosser')
+      .reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const hasFlosser = flosserCount > 0;
+    if ((totals.hasFreeGiftCard || hasFlosser) && flosserCount !== 2) {
       if (!canonicalCart.some((line) => line.id === 'miroooo-gift-card:free' || line.productHandle === 'miroooo-gift-card')) {
         canonicalCart.push({
           id: 'miroooo-gift-card:free',
@@ -179,7 +180,7 @@ export async function POST(req: Request) {
       }
     }
     const requestedProtection = Boolean(
-      body?.packageProtection || body?.cart?.packageProtection || body?.protection || body?.package_protection
+      flosserCount === 2 || body?.packageProtection || body?.cart?.packageProtection || body?.protection || body?.package_protection
     );
     if (requestedProtection && !canonicalCart.some((line) => line.productHandle === 'miroooo-package-protection')) {
       const protectionProduct = PRODUCTS['miroooo-package-protection'];
@@ -201,7 +202,7 @@ export async function POST(req: Request) {
       expectedGBP += 3;
     }
     const bundlePayload = detectBundlePayload(canonicalCart, discountCode);
-    const useBundle = Boolean(bundlePayload && bundlePayload.product !== 'flosser');
+    const useBundle = Boolean(bundlePayload);
     const result = await prepareUKCheckout({
       cart: canonicalCart,
       attribution,

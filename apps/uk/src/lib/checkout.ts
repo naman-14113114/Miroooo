@@ -158,7 +158,7 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
         } else if (isGiftCard) {
           offeredMap[item.id] = Array(item.quantity).fill(XPAGE_VARIANTS.gift_card);
         } else if (isFlosserItem) {
-          const flosserVarId = item.product?.variants?.[0]?.id || XPAGE_VARIANTS.flosser_black_7;
+          const flosserVarId = (selected as any).flossers?.[1] || (selected as any).flossers?.[0] || item.product?.variants?.[0]?.id || XPAGE_VARIANTS.flosser_black_7;
           offeredMap[item.id] = Array(item.quantity).fill(flosserVarId);
         } else {
           offeredMap[item.id] = Array(item.quantity).fill(selected.headsVariant);
@@ -171,7 +171,7 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
         'X-CSRF-Token': session.csrfToken, Origin: session.origin, Referer: session.url,
         Cookie: cookies(session.setCookieHeaders) },
       body: JSON.stringify({ bundle_option_id: option.id, landing_page_id: session.landingPageId,
-        bundle_selected_variants: { conditions: { [condition.id]: selected.brushes },
+        bundle_selected_variants: { conditions: { [condition.id]: product === 'flosser' ? [selected.brushes[0]] : selected.brushes },
           offered: offeredMap } }),
     });
     if (!response.ok) throw unavailable();
@@ -208,14 +208,14 @@ export async function prepareUKCheckout({ cart, discountCode, expectedGBP, useBu
     }
   }
 
+  const targetLanding = product === 'flosser' ? flosserLandingUrl : (XPAGE_LANDING_URLS[product] || XPAGE_STORE_URL);
   if (!sessionPath.test(checkout.pathname)) throw unavailable();
   if (/^\/checkout\//.test(checkout.pathname)) {
     // Resolve the native store URL before branding it; this redirect carries the signed prefix.
-    const resolveOrigin = (product === 'package_protection' || product === 'giftcard') ? XPAGE_LANDING_URLS[product] : XPAGE_STORE_URL;
+    const resolveOrigin = (product === 'package_protection' || product === 'giftcard' || product === 'flosser') ? targetLanding : XPAGE_STORE_URL;
     checkout = (await readCheckout(destination(checkout.pathname, resolveOrigin))).url;
   }
   // Preserve the native handoff prefix while keeping the existing model-specific destination.
-  const targetLanding = product === 'flosser' ? flosserLandingUrl : (XPAGE_LANDING_URLS[product] || XPAGE_STORE_URL);
   checkout = destination(checkout.pathname, targetLanding);
   // Verify exactly what a new customer's browser receives, without our server cookies.
   const page = await readCheckout(checkout);
