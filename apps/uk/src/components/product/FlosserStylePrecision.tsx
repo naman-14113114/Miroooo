@@ -10,8 +10,8 @@ export interface FlosserStylePrecisionProps {
 export function FlosserStylePrecision({ color = 'Black' }: FlosserStylePrecisionProps) {
   const isWhite = color?.toLowerCase() === 'white';
   const flosserImg = isWhite
-    ? '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp'
-    : '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp';
+    ? '/assets_ref/flosser/gallery/miroooo-water-flosser-white-style.webp'
+    : '/assets_ref/flosser/gallery/miroooo-water-flosser-black-style.webp';
 
   return (
     <div
@@ -39,7 +39,7 @@ export function FlosserStylePrecision({ color = 'Black' }: FlosserStylePrecision
           order: -1;
         }
         .flosser-style-col-center img {
-          max-height: 420px;
+          max-height: 380px;
         }
         @media (min-width: 900px) {
           .flosser-style-precision-grid {
@@ -127,11 +127,14 @@ export function FlosserStylePrecision({ color = 'Black' }: FlosserStylePrecision
 
           {/* Center Hero Flosser Image */}
           <div className="flosser-style-col-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', width: '100%' }}>
-            <div style={{ maxWidth: '380px', width: '100%', position: 'relative', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '340px', width: '100%', position: 'relative', display: 'flex', justifyContent: 'center' }}>
               <img
                 id="flosser-with-style-img"
+                key={flosserImg}
                 src={flosserImg}
-                alt="Miroooo Precision Water Flosser"
+                alt={`Miroooo Precision Water Flosser in ${isWhite ? 'Glacier White' : 'Obsidian Black'}`}
+                width={768}
+                height={1376}
                 style={{ maxHeight: '600px', width: '100%', objectFit: 'contain', background: '#e6e6e6', display: 'block' }}
                 loading="lazy"
                 decoding="async"
