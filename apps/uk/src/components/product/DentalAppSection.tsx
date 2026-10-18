@@ -139,7 +139,7 @@ export function DentalAppSection({ isX2 = false, isFlosser = false }: DentalAppS
         <img
           src={
             isFlosser
-              ? '/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp'
+              ? '/assets_ref/flosser/gallery/miroooo-water-flosser-premium-black-white-duo-uk.webp'
               : '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-smile-coach-app.webp'
           }
           alt={

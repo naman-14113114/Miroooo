@@ -80,7 +80,7 @@ export function LuxuriousProfessionalism({ isFlosser = false }: LuxuriousProfess
           <div className="luxurious-media">
             {isFlosser ? (
               <img
-                src="/assets_ref/flosser/gallery/miroooo-water-flosser-dual-upright-silhouette.webp"
+                src="/assets_ref/flosser/gallery/miroooo-water-flosser-premium-black-white-duo-uk.webp"
                 alt="Miroooo Water Flosser Clinical Results"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', background: '#000000' }}
                 loading="lazy"

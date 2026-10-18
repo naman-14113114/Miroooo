@@ -429,7 +429,7 @@ export function FlosserComparisonTable() {
                   #1 CLEAR WINNER
                 </div>
                 <div className="flosser-comp-head-img-wrap">
-                  <img src="/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp" alt="Miroooo Water Flosser" />
+                  <img src="/assets_ref/flosser/gallery/miroooo-water-flosser-black-7-attachments-precision-kit-uk.webp" alt="Miroooo Cordless Water Flosser with 7 Precision Nozzles" />
                 </div>
               </div>
               <div className="flosser-comp-cell" style={{ color: '#16a34a' }}>138 PSI Peak</div>
@@ -498,8 +498,8 @@ export function FlosserComparisonTable() {
               <div className="miroooo-comp-m-head-col miroooo-comp-m-head-col--winner">
                 <span className="miroooo-comp-m-brand-name">Miroooo Flosser</span>
                 <img
-                  src="/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp"
-                  alt="Miroooo Flosser"
+                  src="/assets_ref/flosser/gallery/miroooo-water-flosser-black-7-attachments-precision-kit-uk.webp"
+                  alt="Miroooo Cordless Water Flosser with 7 Precision Nozzles"
                   className="miroooo-comp-m-head-img"
                 />
               </div>

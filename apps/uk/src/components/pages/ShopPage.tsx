@@ -63,7 +63,7 @@ const UK_COLLECTION_PRODUCTS: CollectionProduct[] = [
     compareAt: '£139',
     badge: '50% OFF',
     isSoldOut: false,
-    image: '/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp',
+    image: '/assets_ref/flosser/gallery/miroooo-water-flosser-premium-black-white-duo-uk.webp',
     link: '/products/miroooo-water-flosser',
     buttonText: 'Choose Miroooo Flosser',
   },

@@ -755,9 +755,9 @@ export function ProductHero({
     const col = color.toLowerCase();
     if (isWaterFlosser) {
       if (col.includes('white')) {
-        return '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp';
+        return '/assets_ref/flosser/gallery/miroooo-cordless-water-flosser-white-porcelain-pedestal-uk.webp';
       }
-      return '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp';
+      return '/assets_ref/flosser/gallery/miroooo-cordless-water-flosser-black-ivory-stone-uk.webp';
     }
     if (isX2) {
       if (col === 'pink') return '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp';

@@ -118,7 +118,7 @@ export function DiscoverFlosserHygiene() {
           {/* Right Column: Studio Photography */}
           <div className="flosser-hygiene-media">
             <img
-              src="/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp"
+              src="/assets_ref/flosser/gallery/miroooo-water-flosser-pearl-white-black-duo-uk.webp"
               alt="Miroooo Water Flosser Built for Deep Hygiene and Travel"
               style={{
                 width: '100%',

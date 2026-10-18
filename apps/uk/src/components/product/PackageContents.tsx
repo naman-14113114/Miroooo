@@ -35,8 +35,8 @@ export function PackageContents({
   if (isWaterFlosser) {
     const isWhite = color?.toLowerCase() === 'white';
     const flosserImgSrc = isWhite
-      ? '/assets_ref/flosser/gallery/miroooo-water-flosser-white-complete-set.webp'
-      : '/assets_ref/flosser/gallery/miroooo-water-flosser-black-complete-set.webp';
+      ? '/assets_ref/flosser/gallery/miroooo-water-flosser-white-7-attachments-precision-kit-uk.webp'
+      : '/assets_ref/flosser/gallery/miroooo-water-flosser-black-7-attachments-precision-kit-uk.webp';
 
     const effectiveNozzles = nozzleCount === 4 ? 4 : 7;
     const giftCardDisplay = giftCardValue || '£10';

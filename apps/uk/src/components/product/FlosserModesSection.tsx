@@ -211,8 +211,8 @@ export function FlosserModesSection({
           {/* Left Column: Visual */}
           <div className="flosser-mode-col-visual">
             <img
-              src="/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp"
-              alt="Miroooo Hydro Cleaning Modes"
+              src="/assets_ref/flosser/gallery/miroooo-water-flosser-premium-black-white-duo-uk.webp"
+              alt="Miroooo Hydro Cleaning Modes 4 Settings"
               width="480"
               height="480"
               loading="lazy"

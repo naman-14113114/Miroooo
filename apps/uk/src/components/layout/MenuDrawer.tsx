@@ -34,7 +34,7 @@ const sections = [
         handle: "miroooo-water-flosser",
         title: "Miroooo Water Flosser",
         eyebrow: "New Release",
-        image: "/assets_ref/flosser/gallery/miroooo-water-flosser-black-white-duo.webp",
+        image: "/assets_ref/flosser/gallery/miroooo-water-flosser-premium-black-white-duo-uk.webp",
         price: 69,
         comparePrice: 139,
       },
