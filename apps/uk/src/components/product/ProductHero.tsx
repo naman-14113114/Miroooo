@@ -797,64 +797,18 @@ export function ProductHero({
                 color: '#ffffff',
               }}
             >
-              <div className="x2-urgency-banner__left" style={{ position: 'relative' }}>
+              <div className="x2-urgency-banner__left">
                 <span
                   className="x2-urgency-banner__icon"
                   aria-hidden="true"
                   style={{
-                    position: 'absolute',
-                    left: '6px',
-                    top: '50%',
-                    marginTop: '-18px',
-                    width: '36px',
-                    height: '36px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    pointerEvents: 'none',
-                    zIndex: 2,
-                    transformOrigin: 'center center',
+                    filter: 'drop-shadow(0 0 8px rgba(255, 122, 0, 0.8))',
+                    animation: 'halloweenPumpkinGlow 2.5s ease-in-out infinite',
                   }}
                 >
-                  <svg
-                    width="34"
-                    height="34"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style={{
-                      display: 'block',
-                      filter: 'drop-shadow(0 0 8px rgba(255, 122, 0, 0.85))',
-                    }}
-                  >
-                    <defs>
-                      <radialGradient id="halloweenSkullGradient" cx="50%" cy="40%" r="55%">
-                        <stop offset="0%" stopColor="#fff7ed" />
-                        <stop offset="60%" stopColor="#ffb066" />
-                        <stop offset="100%" stopColor="#ff7a00" />
-                      </radialGradient>
-                      <radialGradient id="halloweenEyeFire" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#ffff66" />
-                        <stop offset="50%" stopColor="#ff7a00" />
-                        <stop offset="100%" stopColor="#cc2900" />
-                      </radialGradient>
-                    </defs>
-                    <path
-                      d="M20 4 C11.5 4 6.5 11 6.5 19 C6.5 24 9.5 27.5 12 29.5 C12.8 30.2 13.5 31.5 13.5 32.5 C13.5 34.5 14.5 36.5 16.5 36.5 L23.5 36.5 C25.5 36.5 26.5 34.5 26.5 32.5 C26.5 31.5 27.2 30.2 28 29.5 C30.5 27.5 33.5 24 33.5 19 C33.5 11 28.5 4 20 4 Z"
-                      fill="url(#halloweenSkullGradient)"
-                      stroke="#ff7a00"
-                      strokeWidth="1.2"
-                    />
-                    <ellipse cx="14" cy="18" rx="3.5" ry="4.5" transform="rotate(-6 14 18)" fill="#100518" />
-                    <circle cx="14.2" cy="18" r="2.2" fill="url(#halloweenEyeFire)" />
-                    <ellipse cx="26" cy="18" rx="3.5" ry="4.5" transform="rotate(6 26 18)" fill="#100518" />
-                    <circle cx="25.8" cy="18" r="2.2" fill="url(#halloweenEyeFire)" />
-                    <path d="M20 22 L18.2 26 L21.8 26 Z" fill="#100518" />
-                    <path d="M16.5 31.5 L16.5 35 M18.8 31 L18.8 35.5 M21.2 31 L21.2 35.5 M23.5 31.5 L23.5 35" stroke="#100518" strokeWidth="1.2" strokeLinecap="round" />
-                    <path d="M15 33 Q20 34.5 25 33" stroke="#100518" strokeWidth="1" strokeLinecap="round" />
-                  </svg>
+                  🎃
                 </span>
-                <div className="x2-urgency-banner__text-wrap" style={{ paddingLeft: 'clamp(52px, 5.5vw, 68px)' }}>
+                <div className="x2-urgency-banner__text-wrap">
                   <span className="x2-urgency-banner__eyebrow" style={{ color: '#ff8c00', fontWeight: 800, textTransform: 'uppercase' }}>
                     HALLOWEEN LIMITED-TIME SAVINGS
                   </span>
