@@ -486,6 +486,7 @@ body .header--halloween .announcement .miroooo-ticker-dot,
 .x2-urgency-banner--halloween .x2-urgency-banner__icon {
   animation: halloweenPumpkinGlow 2.5s ease-in-out infinite !important;
   filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.8)) !important;
+  font-size: 28px !important;
 }
 
 .x2-urgency-banner--halloween .x2-urgency-banner__eyebrow {
@@ -540,6 +541,9 @@ body .header--halloween .announcement .miroooo-ticker-dot,
     align-items: stretch !important;
     padding: 11px 14px !important;
     gap: 10px !important;
+  }
+  .x2-urgency-banner--halloween .x2-urgency-banner__icon {
+    font-size: 25px !important;
   }
   .x2-urgency-banner--halloween .x2-urgency-banner__headline {
     white-space: normal !important;

@@ -802,6 +802,7 @@ export function ProductHero({
                   className="x2-urgency-banner__icon"
                   aria-hidden="true"
                   style={{
+                    fontSize: '28px',
                     filter: 'drop-shadow(0 0 8px rgba(255, 122, 0, 0.8))',
                     animation: 'halloweenPumpkinGlow 2.5s ease-in-out infinite',
                   }}
