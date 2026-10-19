@@ -249,6 +249,7 @@ if (fs.existsSync(sharedReviewsPath)) {
 const jsFileNames = [
   { handle: 'miroooo-x', file: 'miroooo-reviews.js' },
   { handle: 'miroooo-x2', file: 'miroooo-x2-reviews.js' },
+  { handle: 'miroooo-water-flosser', file: 'miroooo-flosser-reviews.js' },
   { handle: 'miroooo-x', file: 'org_miroooo-reviews.js' },
   { handle: 'miroooo-x2', file: 'org_miroooo-x2-reviews.js' },
 ];
@@ -258,7 +259,12 @@ appDirs.forEach(appRelPath => {
   const assetsRefDir = path.join(rootDir, appRelPath, 'public', 'assets_ref');
   if (fs.existsSync(assetsRefDir)) {
     jsFileNames.forEach(entry => {
-      if (targetProductHandle && targetProductHandle !== entry.handle && !entry.file.includes(targetProductHandle)) {
+      if (
+        targetProductHandle &&
+        targetProductHandle !== entry.handle &&
+        !entry.file.includes(targetProductHandle) &&
+        !(entry.file.includes('flosser') && (targetProductHandle.includes('flosser') || targetProductHandle.includes('water')))
+      ) {
         return;
       }
       const fullPath = path.join(assetsRefDir, entry.file);
