@@ -5,11 +5,11 @@ import React, { useEffect } from 'react';
 interface ProductReviewsProps {
   isX2?: boolean;
   isFlosser?: boolean;
-  isHalloween?: boolean;
+
 }
 
-export function ProductReviews({ isX2 = true, isFlosser = false, isHalloween = false }: ProductReviewsProps) {
-  const starSrc = isHalloween ? '/assets/star-halloween.png' : '/assets/star.png';
+export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReviewsProps) {
+  const starSrc = '/assets/star.png';
   useEffect(() => {
     let active = true;
     let dispose: (() => void) | undefined;

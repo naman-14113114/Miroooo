@@ -57,11 +57,7 @@ export function RouteChrome({
         </div>
       )}
       {children}
-      {isCoach ? null : isCart ? cartFooter : (
-        <div className={isHalloween ? 'footer--halloween' : ''}>
-          {defaultFooter}
-        </div>
-      )}
+      {isCoach ? null : isCart ? cartFooter : defaultFooter}
     </>
   );
 }

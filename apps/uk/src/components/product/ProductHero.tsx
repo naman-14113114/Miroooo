@@ -1107,7 +1107,7 @@ export function ProductHero({
                     {[1, 2, 3, 4, 5].map((i) => (
                       <img
                         key={i}
-                        src={isHalloween ? '/assets/star-halloween.png' : '/assets/star.png'}
+                        src="/assets/star.png"
                         alt="★"
                         width="16"
                         height="15"

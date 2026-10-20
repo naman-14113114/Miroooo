@@ -81,7 +81,10 @@ export function AnnouncementBar({ isHalloween = false }: AnnouncementBarProps) {
             }
       }
     >
-      <div className="miroooo-announcement-ticker">
+      <div
+        className="miroooo-announcement-ticker"
+        style={isHalloween ? { animationDuration: '267s' } : undefined}
+      >
         {Array.from({ length: 12 }).map((_, i) => (
           <React.Fragment key={i}>{tickerItemSet}</React.Fragment>
         ))}

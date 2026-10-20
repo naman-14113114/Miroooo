@@ -89,7 +89,7 @@ export function ProductPage({
   }
 
   return (
-    <main className={`product-page-root ${isFlosser ? 'flosser-product-page' : (isX2 ? 'x2-product-page' : 'x1-product-page')} ${isHalloween ? 'halloween-theme' : ''} bg-[#080909] min-h-screen text-white`}>
+    <main className={`product-page-root ${isFlosser ? 'flosser-product-page' : (isX2 ? 'x2-product-page' : 'x1-product-page')} bg-[#080909] min-h-screen text-white`}>
       {/* 0. Top Fixed Section Navigation (Oval Pill Header) */}
       <ProductStickyNav isX2={isX2} isFlosser={isFlosser} />
 
@@ -191,7 +191,7 @@ export function ProductPage({
           <LuxuriousProfessionalism />
 
           {/* 9. Verified Customer Reviews */}
-          <ProductReviews isX2={false} isHalloween={isHalloween} />
+          <ProductReviews isX2={false} />
 
           {/* 10. Miroooo Dental App */}
           <DentalAppSection isX2={false} />
