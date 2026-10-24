@@ -65,10 +65,16 @@ export function Header({
         </Link>
       </li>
     ));
+  const isHalloween =
+    pathname.startsWith('/products/') ||
+    pathname === '/miroooo_x1' ||
+    pathname === '/miroooo_x2' ||
+    pathname === '/products/miroooo_x1' ||
+    pathname === '/products/miroooo_x1/';
   return (
     <>
       <header
-        className={`site-header ${pathname === "/" && isTransparentHome ? "site-header--overlay" : ""} ${isScrolled ? "is-scrolled" : ""}`}
+        className={`site-header ${pathname === "/" && isTransparentHome ? "site-header--overlay" : ""} ${isScrolled ? "is-scrolled" : ""} ${isHalloween ? "header--halloween" : ""}`}
       >
         <div className="site-header__inner">
           <div className="site-header__left flex items-center justify-start">

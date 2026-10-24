@@ -428,7 +428,9 @@ body:has(.product-page-root) .site-header__right .header__buttons { margin: 0 !i
   }
 }
 
-/* Announcement Bar Halloween Variant */
+/* Announcement Bar Universal & Halloween Variant */
+#miroooo-announcement-bar,
+.announcement,
 #miroooo-announcement-bar.announcement--halloween,
 .header--halloween #miroooo-announcement-bar,
 body:not([data-page="home"]) .header--halloween .announcement,
@@ -443,6 +445,8 @@ body .announcement--halloween,
   color: #111111 !important;
 }
 
+#miroooo-announcement-bar .miroooo-ticker-item,
+.announcement .miroooo-ticker-item,
 #miroooo-announcement-bar.announcement--halloween .miroooo-ticker-item,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-item,
 body .header--halloween .announcement .miroooo-ticker-item,
@@ -450,6 +454,8 @@ body .header--halloween .announcement .miroooo-ticker-item,
   color: #111111 !important;
 }
 
+#miroooo-announcement-bar .miroooo-ticker-dot,
+.announcement .miroooo-ticker-dot,
 #miroooo-announcement-bar.announcement--halloween .miroooo-ticker-dot,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-dot,
 body .header--halloween .announcement .miroooo-ticker-dot,
@@ -466,6 +472,8 @@ body .header--halloween .announcement .miroooo-ticker-dot,
   box-sizing: border-box !important;
 }
 
+#miroooo-announcement-bar .miroooo-announcement-ticker,
+.announcement .miroooo-announcement-ticker,
 #miroooo-announcement-bar.announcement--halloween .miroooo-announcement-ticker,
 .header--halloween #miroooo-announcement-bar .miroooo-announcement-ticker,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-announcement-ticker,

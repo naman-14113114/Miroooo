@@ -6,7 +6,7 @@ interface AnnouncementBarProps {
   isHalloween?: boolean;
 }
 
-export function AnnouncementBar({ isHalloween = false }: AnnouncementBarProps) {
+export function AnnouncementBar({ isHalloween = true }: AnnouncementBarProps) {
   const originalTickerItemSet = (
     <>
       <div className="miroooo-ticker-item">

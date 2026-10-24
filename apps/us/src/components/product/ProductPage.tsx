@@ -34,9 +34,16 @@ interface ProductPageProps {
   searchParams?: { color?: string };
   isSimpleBuybox?: boolean;
   isMirooooX1Route?: boolean;
+  isHalloween?: boolean;
 }
 
-export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMirooooX1Route = true }: ProductPageProps) {
+export function ProductPage({
+  handle,
+  searchParams,
+  isSimpleBuybox = false,
+  isMirooooX1Route = true,
+  isHalloween = false,
+}: ProductPageProps) {
   const isFlosser = handle === 'miroooo-water-flosser' || handle === 'water-flosser';
   const defaultColor = isFlosser ? 'Black' : 'Silver';
   const validColors = isFlosser ? ['Black', 'White'] : ['Silver', 'Grey', 'Pink'];
@@ -93,6 +100,7 @@ export function ProductPage({ handle, searchParams, isSimpleBuybox = false, isMi
         onColorChange={setSelectedColor}
         isSimpleBuybox={isSimpleBuybox}
         isMirooooX1Route={isMirooooX1Route}
+        isHalloween={isHalloween}
       />
 
       <ShippingMarquee />

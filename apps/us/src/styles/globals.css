@@ -277,7 +277,41 @@ body:has(.product-page-root) .site-header__right .header__buttons { margin: 0 !i
   margin-bottom: 0 !important;
 }
 
-/* Announcement Bar Halloween Variant */
+/* ==========================================================================
+   HALLOWEEN THEME (Strictly scoped to Miroooo X1 Halloween route)
+   ========================================================================== */
+
+@keyframes halloweenBatHover {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-3deg);
+  }
+}
+
+@keyframes halloweenPumpkinGlow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.8));
+  }
+  25% {
+    transform: scale(1.08) rotate(-4deg);
+    filter: drop-shadow(0 0 14px rgba(255, 140, 0, 1));
+  }
+  50% {
+    transform: scale(0.96) rotate(2deg);
+    filter: drop-shadow(0 0 6px rgba(255, 122, 0, 0.7));
+  }
+  75% {
+    transform: scale(1.05) rotate(-2deg);
+    filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.95));
+  }
+}
+
+/* Announcement Bar Universal & Halloween Variant */
+#miroooo-announcement-bar,
+.announcement,
 #miroooo-announcement-bar.announcement--halloween,
 .header--halloween #miroooo-announcement-bar,
 body:not([data-page="home"]) .header--halloween .announcement,
@@ -292,6 +326,8 @@ body .announcement--halloween,
   color: #111111 !important;
 }
 
+#miroooo-announcement-bar .miroooo-ticker-item,
+.announcement .miroooo-ticker-item,
 #miroooo-announcement-bar.announcement--halloween .miroooo-ticker-item,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-item,
 body .header--halloween .announcement .miroooo-ticker-item,
@@ -299,6 +335,8 @@ body .header--halloween .announcement .miroooo-ticker-item,
   color: #111111 !important;
 }
 
+#miroooo-announcement-bar .miroooo-ticker-dot,
+.announcement .miroooo-ticker-dot,
 #miroooo-announcement-bar.announcement--halloween .miroooo-ticker-dot,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-dot,
 body .header--halloween .announcement .miroooo-ticker-dot,
@@ -315,12 +353,143 @@ body .header--halloween .announcement .miroooo-ticker-dot,
   box-sizing: border-box !important;
 }
 
+#miroooo-announcement-bar .miroooo-announcement-ticker,
+.announcement .miroooo-announcement-ticker,
 #miroooo-announcement-bar.announcement--halloween .miroooo-announcement-ticker,
 .header--halloween #miroooo-announcement-bar .miroooo-announcement-ticker,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-announcement-ticker,
 body .header--halloween .announcement .miroooo-announcement-ticker,
 .announcement--halloween .miroooo-announcement-ticker {
   animation-duration: 267s !important;
+}
+
+/* Urgency Banner Halloween Variant */
+#shopify-section-template--24203751129433__main-product #miroooo-urgency-banner.x2-urgency-banner--halloween,
+#shopify-section-template--24203751129433__main-product #miroooo-x2-urgency-banner.x2-urgency-banner--halloween,
+.halloween-theme #miroooo-urgency-banner,
+.halloween-theme .x2-urgency-banner,
+.halloween-theme #miroooo-x2-urgency-banner,
+.x2-urgency-banner.x2-urgency-banner--halloween {
+  background: #09040e url('/assets/halloween-banner-bg.jpg') no-repeat center center / cover !important;
+  background-image: linear-gradient(rgba(10, 5, 18, 0.25), rgba(10, 5, 18, 0.45)), url('/assets/halloween-banner-bg.jpg') !important;
+  background-color: #09040e !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  border: 1.5px solid #ff7a00 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0 24px rgba(255, 122, 0, 0.4), inset 0 0 15px rgba(255, 122, 0, 0.15) !important;
+  color: #ffffff !important;
+}
+
+#shopify-section-template--24203751129433__main-product #miroooo-urgency-banner.x2-urgency-banner--halloween:hover,
+.halloween-theme #miroooo-urgency-banner:hover,
+.halloween-theme .x2-urgency-banner:hover,
+.x2-urgency-banner.x2-urgency-banner--halloween:hover {
+  box-shadow: 0 0 30px rgba(255, 122, 0, 0.55), inset 0 0 18px rgba(255, 122, 0, 0.22) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__icon {
+  animation: halloweenPumpkinGlow 2.5s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.8)) !important;
+  font-size: 28px !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__eyebrow {
+  color: #ff8c00 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__headline {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__applied {
+  background: #000000 !important;
+  border: 1.5px solid #ff7a00 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(255, 122, 0, 0.25) !important;
+}
+
+.x2-urgency-banner--halloween .x2-urgency-banner__applied:hover {
+  box-shadow: 0 0 14px rgba(255, 122, 0, 0.4) !important;
+}
+
+.x2-urgency-banner--halloween .x2-applied-icon {
+  color: #ff7a00 !important;
+  stroke: #ff7a00 !important;
+}
+
+.x2-urgency-banner--halloween .x2-applied-text {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+.x2-urgency-banner--halloween .x2-timer-label {
+  color: #ff8c00 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.x2-urgency-banner--halloween .x2-timer-digits {
+  color: #ff7a00 !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 8px rgba(255, 122, 0, 0.5) !important;
+}
+
+@media (max-width: 767px) {
+  .x2-urgency-banner--halloween {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 11px 14px !important;
+    gap: 10px !important;
+  }
+  .x2-urgency-banner--halloween .x2-urgency-banner__icon {
+    font-size: 25px !important;
+  }
+  .x2-urgency-banner--halloween .x2-urgency-banner__headline {
+    white-space: normal !important;
+    line-height: 1.3 !important;
+  }
+  .x2-urgency-banner--halloween .x2-urgency-banner__right {
+    border-top: 1px solid rgba(255, 122, 0, 0.25) !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding-top: 6px !important;
+  }
+}
+
+/* Header Halloween Variant */
+.site-header.header--halloween,
+header.header--halloween {
+  background: rgba(8, 4, 13, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 122, 0, 0.25) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.header--halloween .cart-count {
+  background: #ff7a00 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 10px rgba(255, 122, 0, 0.6) !important;
+}
+
+.header--halloween .nav-link:hover,
+.header--halloween .menu__item:hover,
+.header--halloween .header__shop-drawer-btn:hover,
+.header--halloween .btn-text:hover,
+.header--halloween .nav-link:hover .btn-text {
+  color: #ff7a00 !important;
+}
+
+.header--halloween .site-actions__bag:hover svg,
+.header--halloween .nav-toggle:hover svg {
+  color: #ff7a00 !important;
 }
 
 

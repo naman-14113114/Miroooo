@@ -65,7 +65,12 @@ export function Header({
         </Link>
       </li>
     ));
-  const isHalloween = pathname === "/products/miroooo_x1" || pathname === "/products/miroooo_x1/";
+  const isHalloween =
+    pathname.startsWith('/products/') ||
+    pathname === '/miroooo_x1' ||
+    pathname === '/miroooo_x2' ||
+    pathname === '/products/miroooo_x1' ||
+    pathname === '/products/miroooo_x1/';
   return (
     <>
       <header
