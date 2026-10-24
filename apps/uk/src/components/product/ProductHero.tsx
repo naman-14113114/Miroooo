@@ -336,18 +336,36 @@ export function ProductHero({
         src: uprightGrip,
         alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Upright Grip in Hand`,
         thumbImg: uprightGrip,
-        badges: [
-          {
-            pos: 'miroooo-infographic-badge--top-left',
-            title: '51g Ultra<br>Lightweight',
-            sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
-          },
-          {
-            pos: 'miroooo-infographic-badge--top-right',
-            title: '90-Day Battery<br>Life',
-            sub: '3 Full Months Power<br>On A Single Charge',
-          },
-        ],
+        ...(colorLower === 'silver'
+          ? {
+              badge: {
+                pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+                title: '51g Ultra<br>Lightweight',
+                sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
+              },
+            }
+          : colorLower === 'pink'
+          ? {
+              badge: {
+                pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+                title: '51g Ultra<br>Lightweight',
+                sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
+              },
+            }
+          : {
+              badges: [
+                {
+                  pos: 'miroooo-infographic-badge--top-left',
+                  title: '51g Ultra<br>Lightweight',
+                  sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
+                },
+                {
+                  pos: 'miroooo-infographic-badge--top-right',
+                  title: '90-Day Battery<br>Life',
+                  sub: '3 Full Months Power<br>On A Single Charge',
+                },
+              ],
+            }),
       },
       {
         type: 'image',
@@ -360,6 +378,21 @@ export function ProductHero({
           sub: 'Travel-Friendly Slim Case<br>Included For On-The-Go Care',
         },
       },
+      ...(colorLower === 'silver'
+        ? [
+            {
+              type: 'image' as const,
+              src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-90-day-battery-life.webp',
+              alt: 'Miroooo X2 Sonic Electric Toothbrush Silver 90-Day Battery Life',
+              thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-90-day-battery-life.webp',
+              badge: {
+                pos: 'miroooo-infographic-badge--bottom-left',
+                title: '90-Day Battery<br>Life',
+                sub: '3 Full Months Power<br>On A Single Charge',
+              },
+            },
+          ]
+        : []),
       {
         type: 'image',
         src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp',
@@ -367,7 +400,7 @@ export function ProductHero({
         thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp',
         badge: {
           pos:
-            colorLower === 'grey'
+            colorLower === 'grey' || colorLower === 'silver'
               ? 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white'
               : 'miroooo-infographic-badge--bottom-right',
           title: 'IPX7 100% Waterproof',
@@ -403,9 +436,9 @@ export function ProductHero({
         thumbImg: inHandGrip,
         badge: {
           pos:
-            colorLower === 'grey'
-              ? 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white'
-              : 'miroooo-infographic-badge--top-right',
+            colorLower === 'silver'
+              ? 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white'
+              : 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
           title: 'Whisper-Quiet<br>Operation',
           sub: 'Sub-45dB Acoustic<br>Sonic Motor',
         },
