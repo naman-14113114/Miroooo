@@ -155,8 +155,8 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     headline: "Precision. Without the noise.",
     description:
       "Engineered with dynamic 45° Bass sweep vibration, smart 360° red halo pressure feedback defense, aerospace aluminium unibody, 90-day battery life, and luxury magnetic travel dock.",
-    basePrice: 79.0,
-    baseCompareAt: 159.0,
+    basePrice: 69.0,
+    baseCompareAt: 139.0,
     rating: 4.9,
     reviewCount: 4275,
     plusBaseProductId: "1000000675072187",
@@ -168,8 +168,8 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         swatch: "#e5e5e5",
         image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp",
         checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-checkout.webp",
-        price: 79.0,
-        compareAt: 159.0,
+        price: 69.0,
+        compareAt: 139.0,
         discountBadge: "50% OFF",
       },
       {
@@ -179,9 +179,9 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         swatch: "#737373",
         image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp",
         checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-checkout.webp",
-        price: 99.0,
-        compareAt: 159.0,
-        discountBadge: "29% OFF",
+        price: 69.0,
+        compareAt: 139.0,
+        discountBadge: "50% OFF",
       },
       {
         id: "1000020700182882",
@@ -190,17 +190,17 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         swatch: "#f2a7b3",
         image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp",
         checkoutImage: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-checkout.webp",
-        price: 99.0,
-        compareAt: 159.0,
-        discountBadge: "29% OFF",
+        price: 69.0,
+        compareAt: 139.0,
+        discountBadge: "50% OFF",
       },
     ],
     bundles: [
       {
         quantity: 1,
         name: "BUY 1",
-        basePrice: 79.0,
-        baseCompareAt: 159.0,
+        basePrice: 69.0,
+        baseCompareAt: 139.0,
         freeHeadsCount: 1,
         savingText: () => "50% OFF",
         description: () => "Includes 1 Miroooo X2 set & 1 FREE 2-Pack Brush Heads Set",
@@ -737,8 +737,8 @@ export function getMirooooX(market: MarketConfig): ProductPageContent {
 }
 
 export function getMirooooX2(market: MarketConfig): ProductPageContent {
-  const p1 = convertPrice(79.0, market);
-  const c1 = convertPrice(159.0, market);
+  const p1 = convertPrice(69.0, market);
+  const c1 = convertPrice(139.0, market);
   const p2 = convertPrice(128.0, market);
   const c2 = convertPrice(278.0, market);
   const s2 = convertPrice(150.0, market);

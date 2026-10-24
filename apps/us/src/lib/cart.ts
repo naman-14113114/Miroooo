@@ -194,7 +194,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const promoNet = !hasPromo ? brushNet : tier ? cents(tier.promoPrice)
     : x1Count + x2Count === 1 ? cents((x1Count ? x1 : x2).bundles[0].promoPrice)
     : brushNet - Math.round(brushNet * 0.1);
-  // Compare At calculations (base compare: flosser 139, X2 brush 159, X1 brush 139, heads 20)
+  // Compare At calculations (base compare: flosser 139, X2 brush 139, X1 brush 139, heads 20)
   const flosserCompare = flosserCompareCents || (flosserCount * cents(139.00));
   const x1CompareCents = x1Count * (x1.compareAt > 0 ? cents(x1.compareAt) : cents(x1.price));
   const compareAtCents = flosserCompare + x1CompareCents + x2Count * cents(x2.compareAt)

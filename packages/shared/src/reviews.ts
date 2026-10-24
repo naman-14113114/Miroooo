@@ -51561,7 +51561,7 @@ export const mirooooX2Reviews = [
     "productId": "miroooo-x2",
     "author": "Arthur Pendelton",
     "title": "Outer shipping box was crushed upon delivery",
-    "body": "The delivery driver squeezed the package through the letterbox which creased the outer retail carton. Fortunately the internal foam and hard travel case kept the X2 undamaged, but for a premium £79 device the external shipping packaging should be more rigid.",
+    "body": "The delivery driver squeezed the package through the letterbox which creased the outer retail carton. Fortunately the internal foam and hard travel case kept the X2 undamaged, but for a premium £69 device the external shipping packaging should be more rigid.",
     "rating": 2,
     "date": "14 Jun 2026",
     "verified": true,

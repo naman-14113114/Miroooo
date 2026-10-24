@@ -158,8 +158,8 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     const qty = item.quantity || 1;
     if (item.productHandle === 'miroooo-x2') {
       x2Count += qty;
-      x2ItemSubtotal += (item.unitPrice || 79) * qty;
-      x2ItemCompare += (item.comparePrice || 159) * qty;
+      x2ItemSubtotal += (item.unitPrice || 69) * qty;
+      x2ItemCompare += (item.comparePrice || 139) * qty;
     }
     else if (item.productHandle === 'miroooo-x') {
       x1Count += qty;
@@ -193,9 +193,9 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = x2Count === 0 && (x1Count === 1 || x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: flosser 139, X2 brush 159, X1 brush 139, heads 20)
+  // Compare At calculations (base compare: flosser 139, X2 brush 139, X1 brush 139, heads 20)
   const flosserCompare = flosserItemCompare || (flosserCount * 139.0);
-  const x2Compare = x2ItemCompare || (x2Count * 159);
+  const x2Compare = x2ItemCompare || (x2Count * 139);
   const x1Compare = x1ItemCompare || (x1Count * 139);
   const x2HeadsCompare = x2HeadsCount * 20;
   const x1HeadsCompare = x1HeadsCount * 20;

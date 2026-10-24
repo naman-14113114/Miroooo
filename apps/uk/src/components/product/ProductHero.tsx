@@ -814,7 +814,7 @@ export function ProductHero({
                     HALLOWEEN LIMITED-TIME SAVINGS
                   </span>
                   <strong className="x2-urgency-banner__headline" style={{ color: '#ffffff', fontWeight: 700 }}>
-                    Free pair of brush heads for today only
+                    {isX2 ? 'Get X2 at price of X1 for today only' : 'Free pair of brush heads for today only'}
                   </strong>
                 </div>
               </div>
@@ -864,7 +864,7 @@ export function ProductHero({
                 <div className="x2-urgency-banner__text-wrap">
                   <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                   <strong className="x2-urgency-banner__headline">
-                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : 'Free pair of brush heads for today only'}
+                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : isX2 ? 'Get X2 at price of X1 for today only' : 'Free pair of brush heads for today only'}
                   </strong>
                 </div>
               </div>
