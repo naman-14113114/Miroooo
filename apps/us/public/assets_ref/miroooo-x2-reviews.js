@@ -99,7 +99,8 @@
       variant: 'Grey / Single',
       title: '90+ day battery life & USB-C make trips effortless',
       body: 'With the massive 90+ days battery life and standard Type-C charging, I don\'t have to worry about anything. I just put the brush into the slim travel case and went on a month-long trip without packing a single charger or worrying about battery life. Totally recommend to all!',
-      images: [],
+      images: ['/assets_ref/reviews/miroooo-x2-customer-review-90-day-battery-travel-case-manchester-uk.webp'],
+      imageAlts: ['Miroooo X2 Sonic Electric Toothbrush 90-Day Battery Life Customer Review - Elena Rostova in Manchester UK'],
       helpful: 76,
       verified: true
     },
@@ -122,12 +123,13 @@
       name: 'Sophie Chen',
       country: 'Oxford, UK',
       rating: 5,
-      date: '2026-10-21',
-      displayDate: '21 October 2026',
+      date: '2026-10-20',
+      displayDate: '20 October 2026',
       variant: 'Silver / Triple Pack',
       title: 'Definitely recommend getting the Buy 3 bundle',
       body: 'Recommend to buy 3! We got one in Silver, Grey, and Pink for the whole family with the free replacement heads included. The aerospace aluminium unibody feels ultra luxury and getting the bonus DuPont brush heads makes the 3-pack bundle the best value deal around.',
       images: ['/assets_ref/reviews/miroooo-x2-customer-review-3-brush-bundle-boxes-silver-pink-grey.webp'],
+      imageAlts: ['Miroooo X2 Sonic Electric Toothbrush 3-Brush Family Bundle Review in Oxford UK - Sophie Chen'],
       helpful: 63,
       verified: true
     },
@@ -239,7 +241,8 @@
       variant: 'Grey / Single',
       title: 'True IPX7 waterproof unibody for morning shower brushing',
       body: 'I love brushing my teeth in the hot shower every morning. The seamless unibody metal casing has zero cutouts or rubber seals to harbor mold, making it 100% waterproof and easy to rinse under running water.',
-      images: [],
+      images: ['/assets_ref/reviews/miroooo-x2-customer-review-ipx7-waterproof-shower-brushing-newcastle-uk.webp'],
+      imageAlts: ['Miroooo X2 Sonic Electric Toothbrush IPX7 Waterproof Shower Brushing Review - Emma Lindqvist in Newcastle UK'],
       helpful: 33,
       verified: true
     },
@@ -603,7 +606,8 @@
       variant: 'Pink / Single',
       title: 'Happy I bought X2 instead of X1',
       body: 'Upgraded from the earlier model and the 45 degree sweeping action feels much more thorough on the gumline. Clean packaging too.',
-      images: [],
+      images: ['/assets_ref/reviews/miroooo-x2-customer-review-upgrade-x2-vs-x1-leeds-uk.webp'],
+      imageAlts: ['Miroooo X2 Sonic Electric Toothbrush Upgrade from X1 Review - Matthew Crawford in Leeds UK'],
       helpful: 9,
       verified: true
     },
@@ -1079,27 +1083,31 @@
     // Gallery HTML
     let galleryHTML = '';
     if (review.images && review.images.length > 0) {
+      const getAlt = (idx, fallbackNum) => {
+        if (review.imageAlts && review.imageAlts[idx]) return review.imageAlts[idx];
+        return fallbackNum ? `Photo ${fallbackNum} from ${review.name}` : `Photo from ${review.name}`;
+      };
       if (review.images.length === 1) {
         galleryHTML = `
           <div class="miroooo-card-gallery miroooo-gallery-1" data-review-id="${review.id}" data-img-index="0">
-            <img src="${review.images[0]}" alt="Photo from ${review.name}" />
+            <img src="${review.images[0]}" alt="${getAlt(0)}" />
           </div>
         `;
       } else if (review.images.length === 2) {
         galleryHTML = `
           <div class="miroooo-card-gallery miroooo-gallery-2" data-review-id="${review.id}">
-            <div class="miroooo-gallery-item" data-img-index="0"><img src="${review.images[0]}" alt="Photo 1 from ${review.name}" /></div>
-            <div class="miroooo-gallery-item" data-img-index="1"><img src="${review.images[1]}" alt="Photo 2 from ${review.name}" /></div>
+            <div class="miroooo-gallery-item" data-img-index="0"><img src="${review.images[0]}" alt="${getAlt(0, 1)}" /></div>
+            <div class="miroooo-gallery-item" data-img-index="1"><img src="${review.images[1]}" alt="${getAlt(1, 2)}" /></div>
           </div>
         `;
       } else {
         const remainingCount = review.images.length - 3;
         galleryHTML = `
           <div class="miroooo-card-gallery miroooo-gallery-3" data-review-id="${review.id}">
-            <div class="miroooo-gallery-item" data-img-index="0"><img src="${review.images[0]}" alt="Photo 1 from ${review.name}" /></div>
-            <div class="miroooo-gallery-item" data-img-index="1"><img src="${review.images[1]}" alt="Photo 2 from ${review.name}" /></div>
+            <div class="miroooo-gallery-item" data-img-index="0"><img src="${review.images[0]}" alt="${getAlt(0, 1)}" /></div>
+            <div class="miroooo-gallery-item" data-img-index="1"><img src="${review.images[1]}" alt="${getAlt(1, 2)}" /></div>
             <div class="miroooo-gallery-item" data-img-index="2">
-              <img src="${review.images[2]}" alt="Photo 3 from ${review.name}" />
+              <img src="${review.images[2]}" alt="${getAlt(2, 3)}" />
               ${remainingCount > 0 ? `<div class="miroooo-gallery-more-badge">+${remainingCount}</div>` : ''}
             </div>
           </div>
@@ -1709,7 +1717,8 @@
       } else if (hasImages) {
         mediaContainer.style.setProperty('display', 'flex', 'important');
         const idx = activeLightboxImageIndex < activeLightboxReview.images.length ? activeLightboxImageIndex : 0;
-        mediaContainer.innerHTML = `<img id="miroooo-lightbox-img" class="miroooo-lightbox-img" src="${activeLightboxReview.images[idx]}" alt="Photo from ${activeLightboxReview.name}" />`;
+        const altText = (activeLightboxReview.imageAlts && activeLightboxReview.imageAlts[idx]) || `Photo from ${activeLightboxReview.name}`;
+        mediaContainer.innerHTML = `<img id="miroooo-lightbox-img" class="miroooo-lightbox-img" src="${activeLightboxReview.images[idx]}" alt="${altText}" />`;
       } else {
         mediaContainer.style.setProperty('display', 'none', 'important');
         mediaContainer.innerHTML = `<img id="miroooo-lightbox-img" class="miroooo-lightbox-img" alt="" />`;
