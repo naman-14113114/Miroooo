@@ -241,32 +241,6 @@ export function SmileCoach() {
                   <legend>Which Miroooo do you use?</legend>
                   <p className="onboarding-step__lead">We will use your model throughout the experience.</p>
                   <div className="model-picker">
-                    <label className={`model-option ${model === 'x' ? 'is-selected' : ''}`}>
-                      <input
-                        type="radio"
-                        name="model"
-                        value="x"
-                        checked={model === 'x'}
-                        onChange={() => setModel('x')}
-                        required
-                      />
-                      <span className="model-option__media">
-                        <img
-                          src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp"
-                          alt="Silver Miroooo X toothbrush"
-                          width={900}
-                          height={1200}
-                        />
-                      </span>
-                      <span className="model-option__copy">
-                        <strong>Miroooo X1</strong>
-                        <small>Light, simple and travel ready</small>
-                      </span>
-                      <span className="model-option__check" aria-hidden="true">
-                        ✓
-                      </span>
-                    </label>
-
                     <label className={`model-option ${model === 'x2' ? 'is-selected' : ''}`}>
                       <input
                         type="radio"
@@ -287,6 +261,32 @@ export function SmileCoach() {
                       <span className="model-option__copy">
                         <strong>Miroooo X2</strong>
                         <small>45° Bass sweep, 3 modes &amp; halo defense</small>
+                      </span>
+                      <span className="model-option__check" aria-hidden="true">
+                        ✓
+                      </span>
+                    </label>
+
+                    <label className={`model-option ${model === 'x' ? 'is-selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="model"
+                        value="x"
+                        checked={model === 'x'}
+                        onChange={() => setModel('x')}
+                        required
+                      />
+                      <span className="model-option__media">
+                        <img
+                          src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-retail-packaging.webp"
+                          alt="Silver Miroooo X toothbrush"
+                          width={900}
+                          height={1200}
+                        />
+                      </span>
+                      <span className="model-option__copy">
+                        <strong>Miroooo X1</strong>
+                        <small>Light, simple and travel ready</small>
                       </span>
                       <span className="model-option__check" aria-hidden="true">
                         ✓
@@ -814,8 +814,8 @@ export function SmileCoach() {
                             value={model}
                             onChange={(e) => setModel(e.target.value as 'x' | 'x2')}
                           >
-                            <option value="x">Miroooo X1</option>
                             <option value="x2">Miroooo X2</option>
+                            <option value="x">Miroooo X1</option>
                           </select>
                         </label>
                       </div>

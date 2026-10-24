@@ -47,7 +47,7 @@ export function DentalQuiz() {
   };
 
   // Determine recommendation
-  const recommendedProduct = PRODUCTS['miroooo-x'];
+  const recommendedProduct = PRODUCTS['miroooo-x2'];
   const isBundle = answers.finish === 'bundle-two';
   const recommendedColor =
     answers.finish === 'pink' ? 'Pink' : answers.finish === 'grey' ? 'Grey' : 'Silver';
