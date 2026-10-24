@@ -422,6 +422,16 @@ export function ProductHero({
         thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-precision-bristle-head-halo-ring.webp',
         isModesBadge: true,
       },
+      ...(colorLower === 'grey'
+        ? [
+            {
+              type: 'image' as const,
+              src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-stone-vanity.webp',
+              alt: 'Miroooo X2 Sonic Electric Toothbrush Grey on Stone Vanity',
+              thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-stone-vanity.webp',
+            },
+          ]
+        : []),
       {
         type: 'image',
         src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-aerospace-aluminum-body.webp',
