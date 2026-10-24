@@ -366,7 +366,10 @@ export function ProductHero({
         alt: 'Miroooo X2 Sonic Electric Toothbrush IPX7 Full Immersion Waterproof Design',
         thumbImg: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-ipx7-waterproof-submersion.webp',
         badge: {
-          pos: 'miroooo-infographic-badge--bottom-right',
+          pos:
+            colorLower === 'grey'
+              ? 'miroooo-infographic-badge--bottom-right miroooo-infographic-badge--white'
+              : 'miroooo-infographic-badge--bottom-right',
           title: 'IPX7 100% Waterproof',
           sub: 'Shower-Safe & Fully Submersible',
         },
@@ -399,7 +402,10 @@ export function ProductHero({
         alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Dynamic Grip in Hand`,
         thumbImg: inHandGrip,
         badge: {
-          pos: 'miroooo-infographic-badge--top-right',
+          pos:
+            colorLower === 'grey'
+              ? 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white'
+              : 'miroooo-infographic-badge--top-right',
           title: 'Whisper-Quiet<br>Operation',
           sub: 'Sub-45dB Acoustic<br>Sonic Motor',
         },
