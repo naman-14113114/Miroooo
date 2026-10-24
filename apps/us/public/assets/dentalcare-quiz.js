@@ -23,7 +23,7 @@
   const PRODUCT_ASSETS = {
     x2: {
       silver: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
-      pink: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v2",
+      pink: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3",
       grey: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp"
     },
     x1: {

@@ -63,7 +63,7 @@ export const x2Gallery = {
   "Pink": {
     "images": [
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp?v=violet",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v2",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-45-degree-bass-sweep-action.webp",
@@ -79,7 +79,7 @@ export const x2Gallery = {
     ],
     "thumbnails": [
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp?v=violet",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v2",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-45-degree-bass-sweep-action.webp",

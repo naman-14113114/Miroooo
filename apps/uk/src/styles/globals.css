@@ -437,24 +437,33 @@ body .header--halloween .announcement,
 body .announcement--halloween,
 .header--halloween .announcement,
 .announcement.announcement--halloween {
-  background: #0a0510 !important;
-  background-color: #0a0510 !important;
-  border-bottom: 1px solid rgba(255, 122, 0, 0.35) !important;
-  color: #ffffff !important;
+  background: #e6e6e6 !important;
+  background-color: #e6e6e6 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #111111 !important;
 }
 
 #miroooo-announcement-bar.announcement--halloween .miroooo-ticker-item,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-item,
 body .header--halloween .announcement .miroooo-ticker-item,
 .announcement--halloween .miroooo-ticker-item {
-  color: #ffffff !important;
+  color: #111111 !important;
 }
 
 #miroooo-announcement-bar.announcement--halloween .miroooo-ticker-dot,
 body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-dot,
 body .header--halloween .announcement .miroooo-ticker-dot,
 .announcement--halloween .miroooo-ticker-dot {
-  border-color: rgba(255, 122, 0, 0.6) !important;
+  width: 7px !important;
+  height: 7px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 1.5px solid #111111 !important;
+  border-color: #111111 !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
 }
 
 #miroooo-announcement-bar.announcement--halloween .miroooo-announcement-ticker,

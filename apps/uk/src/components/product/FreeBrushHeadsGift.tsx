@@ -8,6 +8,19 @@ function Checkmark() {
   );
 }
 
+function BatIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 64 36"
+      fill="#a855f7"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M32 14c1.2-3 2.8-5 4-5s1.8 1.5 2 3c3.5-3.5 9-6 16-3-2.5 3.5-3.5 7.5-3 12 3-1 6.5-1 9 1-4 4.5-9 6-14 4.5-2 3-5 5-8 7.5-1.5-3.5-4-6-6-7.5-2 1.5-4.5 4-6 7.5-3-2.5-6-4.5-8-7.5-5 1.5-10 0-14-4.5 2.5-2 6-2 9-1 .5-4.5-.5-8.5-3-12 7-3 12.5-.5 16 3 .2-1.5.8-3 2-3s2.8 2 4 5z" />
+    </svg>
+  );
+}
+
 interface FreeBrushHeadsGiftProps {
   model?: 'X1' | 'X2' | 'WaterFlosser';
   currency?: '£' | '$';
@@ -19,7 +32,15 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '£', onlyGiftCard
 
   return (
     <section className={styles.section} id="special-flash-sale-gifts" aria-labelledby="free-heads-title">
-      <h3 className={styles.heading} id="free-heads-title">Halloween Smile sale</h3>
+      <h3 className={styles.heading} id="free-heads-title">
+        <span className={styles.batWrapStart} aria-hidden="true">
+          <BatIcon className={styles.batSvgStart} />
+        </span>
+        <span className={styles.headingText}>Halloween Smile Sale</span>
+        <span className={styles.batWrapEnd} aria-hidden="true">
+          <BatIcon className={styles.batSvgEnd} />
+        </span>
+      </h3>
 
       <div className={styles.cardList}>
         {/* Card 1: Free Brush Heads */}

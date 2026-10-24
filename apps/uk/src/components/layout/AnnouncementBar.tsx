@@ -59,27 +59,15 @@ export function AnnouncementBar({ isHalloween = false }: AnnouncementBarProps) {
     <div
       id="miroooo-announcement-bar"
       className={`announcement ${isHalloween ? 'announcement--halloween' : ''}`}
-      style={
-        isHalloween
-          ? {
-              background: '#0a0510',
-              color: '#ffffff',
-              padding: '4px 0',
-              overflow: 'hidden',
-              width: '100%',
-              minHeight: '24px',
-              borderBottom: '1px solid rgba(255, 122, 0, 0.35)',
-            }
-          : {
-              background: '#e6e6e6',
-              color: '#111111',
-              padding: '4px 0',
-              overflow: 'hidden',
-              width: '100%',
-              minHeight: '24px',
-              borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
-            }
-      }
+      style={{
+        background: '#e6e6e6',
+        color: '#111111',
+        padding: '4px 0',
+        overflow: 'hidden',
+        width: '100%',
+        minHeight: '24px',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
+      }}
     >
       <div
         className="miroooo-announcement-ticker"

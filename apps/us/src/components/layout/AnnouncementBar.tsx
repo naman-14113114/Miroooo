@@ -2,8 +2,12 @@
 
 import React from 'react';
 
-export function AnnouncementBar() {
-  const tickerItemSet = (
+interface AnnouncementBarProps {
+  isHalloween?: boolean;
+}
+
+export function AnnouncementBar({ isHalloween = false }: AnnouncementBarProps) {
+  const originalTickerItemSet = (
     <>
       <div className="miroooo-ticker-item">
         <span>FREE SHIPPING ON ALL ORDERS</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
@@ -20,9 +24,41 @@ export function AnnouncementBar() {
     </>
   );
 
+  const halloweenTickerItemSet = (
+    <>
+      <div className="miroooo-ticker-item">
+        <span>🎃 <span style={{ color: '#ff7a00', fontWeight: 800 }}>HALLOWEEN EXCLUSIVE</span></span>
+        <span className="miroooo-ticker-dot" aria-hidden="true" />
+      </div>
+      <div className="miroooo-ticker-item">
+        <span>4.9 STARS FROM 40,000+ CUSTOMERS</span>
+        <span className="miroooo-ticker-dot" aria-hidden="true" />
+      </div>
+      <div className="miroooo-ticker-item">
+        <span>FREE SHIPPING ON ALL ORDERS</span>
+        <span className="miroooo-ticker-dot" aria-hidden="true" />
+      </div>
+      <div className="miroooo-ticker-item">
+        <span>🎃 <span style={{ color: '#ff7a00', fontWeight: 800 }}>50% OFF TODAY</span></span>
+        <span className="miroooo-ticker-dot" aria-hidden="true" />
+      </div>
+      <div className="miroooo-ticker-item">
+        <span><span style={{ color: '#a855f7' }}>🦇</span> <span style={{ color: '#ff7a00', fontWeight: 800 }}>HALLOWEEN EXCLUSIVE</span></span>
+        <span className="miroooo-ticker-dot" aria-hidden="true" />
+      </div>
+      <div className="miroooo-ticker-item">
+        <span><span>4.9 STARS FROM 40,000+</span> <span style={{ color: '#a855f7' }}>🦇</span></span>
+        <span className="miroooo-ticker-dot" aria-hidden="true" />
+      </div>
+    </>
+  );
+
+  const tickerItemSet = isHalloween ? halloweenTickerItemSet : originalTickerItemSet;
+
   return (
     <div
-      className="announcement"
+      id="miroooo-announcement-bar"
+      className={`announcement ${isHalloween ? 'announcement--halloween' : ''}`}
       style={{
         background: '#e6e6e6',
         color: '#111111',
@@ -33,7 +69,10 @@ export function AnnouncementBar() {
         borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
       }}
     >
-      <div className="miroooo-announcement-ticker">
+      <div
+        className="miroooo-announcement-ticker"
+        style={isHalloween ? { animationDuration: '267s' } : undefined}
+      >
         {Array.from({ length: 12 }).map((_, i) => (
           <React.Fragment key={i}>{tickerItemSet}</React.Fragment>
         ))}

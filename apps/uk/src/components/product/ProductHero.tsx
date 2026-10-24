@@ -305,7 +305,7 @@ export function ProductHero({
 
     const uprightGrip =
       colorLower === 'pink'
-        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v2'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3'
         : colorLower === 'grey'
         ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp'
         : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp';
@@ -347,7 +347,7 @@ export function ProductHero({
           : colorLower === 'pink'
           ? {
               badge: {
-                pos: 'miroooo-infographic-badge--top-right miroooo-infographic-badge--white',
+                pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
                 title: '51g Ultra<br>Lightweight',
                 sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
               },

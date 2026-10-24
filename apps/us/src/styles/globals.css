@@ -277,5 +277,52 @@ body:has(.product-page-root) .site-header__right .header__buttons { margin: 0 !i
   margin-bottom: 0 !important;
 }
 
+/* Announcement Bar Halloween Variant */
+#miroooo-announcement-bar.announcement--halloween,
+.header--halloween #miroooo-announcement-bar,
+body:not([data-page="home"]) .header--halloween .announcement,
+body:not([data-page="home"]) .announcement--halloween,
+body .header--halloween .announcement,
+body .announcement--halloween,
+.header--halloween .announcement,
+.announcement.announcement--halloween {
+  background: #e6e6e6 !important;
+  background-color: #e6e6e6 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #111111 !important;
+}
+
+#miroooo-announcement-bar.announcement--halloween .miroooo-ticker-item,
+body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-item,
+body .header--halloween .announcement .miroooo-ticker-item,
+.announcement--halloween .miroooo-ticker-item {
+  color: #111111 !important;
+}
+
+#miroooo-announcement-bar.announcement--halloween .miroooo-ticker-dot,
+body:not([data-page="home"]) .header--halloween .announcement .miroooo-ticker-dot,
+body .header--halloween .announcement .miroooo-ticker-dot,
+.announcement--halloween .miroooo-ticker-dot {
+  width: 7px !important;
+  height: 7px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 1.5px solid #111111 !important;
+  border-color: #111111 !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#miroooo-announcement-bar.announcement--halloween .miroooo-announcement-ticker,
+.header--halloween #miroooo-announcement-bar .miroooo-announcement-ticker,
+body:not([data-page="home"]) .header--halloween .announcement .miroooo-announcement-ticker,
+body .header--halloween .announcement .miroooo-announcement-ticker,
+.announcement--halloween .miroooo-announcement-ticker {
+  animation-duration: 267s !important;
+}
+
+
 
 
