@@ -63,8 +63,8 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
     rating: 4.9,
     images: [
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-in-hand.webp',
+      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v2',
+      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-in-hand.webp?v=pink-v2',
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp',
     ],
   },
