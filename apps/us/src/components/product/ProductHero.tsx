@@ -843,7 +843,7 @@ export function ProductHero({
                     HALLOWEEN LIMITED-TIME SAVINGS
                   </span>
                   <strong className="x2-urgency-banner__headline" style={{ color: '#ffffff', fontWeight: 700 }}>
-                    {isX2 ? 'Get X2 at price of X1 + Free pair of brush heads for today only' : 'Free pair of brush heads for today only'}
+                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card ($10 Value) Included' : isX2 ? 'Get X2 at price of X1 + Free pair of brush heads for today only' : 'Free pair of brush heads for today only'}
                   </strong>
                 </div>
               </div>
@@ -860,13 +860,27 @@ export function ProductHero({
                     color: '#ffffff',
                   }}
                 >
-                  <span className="x2-applied-icon" aria-hidden="true" style={{ color: '#ff7a00' }}>✓</span>
-                  <span className="x2-applied-text" style={{ color: '#ffffff', fontWeight: 800 }}>OFFER APPLIED</span>
+                  <svg className="x2-applied-icon" viewBox="0 0 20 20" fill="none" stroke="#ff7a00" aria-hidden="true" style={{ color: '#ff7a00', stroke: '#ff7a00' }}>
+                    <path d="M16.667 5 7.5 14.167 3.333 10" stroke="#ff7a00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="x2-applied-text" style={{ color: '#ffffff' }}>APPLIED</span>
                 </div>
 
-                <div className="x2-urgency-banner__timer" aria-live="polite">
-                  <span className="x2-timer-label" style={{ color: '#ff8c00', fontWeight: 800 }}>ENDS IN:</span>
-                  <span className="x2-timer-digits" id="x2CountdownTimer" style={{ color: '#ff7a00', fontWeight: 800 }}>
+                <div className="x2-urgency-banner__timer-block">
+                  <span className="x2-timer-label" style={{ color: '#ff8c00', fontWeight: 800, textTransform: 'uppercase' }}>
+                    OFFER ENDS IN
+                  </span>
+                  <span
+                    className="x2-timer-digits"
+                    id="x2CountdownTimer"
+                    aria-live="off"
+                    aria-label="Offer ends at US midnight"
+                    style={{
+                      color: '#ff7a00',
+                      fontWeight: 800,
+                      textShadow: '0 0 8px rgba(255, 122, 0, 0.5)',
+                    }}
+                  >
                     {urgencyTime}
                   </span>
                 </div>

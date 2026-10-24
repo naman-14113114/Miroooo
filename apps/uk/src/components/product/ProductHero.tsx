@@ -863,7 +863,7 @@ export function ProductHero({
                     HALLOWEEN LIMITED-TIME SAVINGS
                   </span>
                   <strong className="x2-urgency-banner__headline" style={{ color: '#ffffff', fontWeight: 700 }}>
-                    {isX2 ? 'Get X2 at price of X1 + Free pair of brush heads for today only' : 'Free pair of brush heads for today only'}
+                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : isX2 ? 'Get X2 at price of X1 + Free pair of brush heads for today only' : 'Free pair of brush heads for today only'}
                   </strong>
                 </div>
               </div>

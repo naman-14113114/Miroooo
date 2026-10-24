@@ -20,6 +20,7 @@ export default async function Page(props: {
       handle="miroooo-water-flosser"
       searchParams={searchParams}
       isSimpleBuybox={true}
+      isHalloween={true}
     />
   );
 }
