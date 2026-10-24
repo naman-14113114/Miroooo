@@ -11,7 +11,7 @@ export function ComparisonTable({ isX2 = true }: ComparisonTableProps) {
   const oldPrice = '£139';
   const modelName = isX2 ? 'Miroooo X2' : 'Miroooo X1';
   const winnerImg = isX2
-    ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp'
+    ? '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-comparison.webp'
     : '/assets_ref/x/miroooo-x1-sonic-electric-toothbrush-comparison.webp';
 
   return (

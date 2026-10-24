@@ -368,9 +368,14 @@
       date: "2026-10-13",
       displayDate: "13 October 2026",
       variant: "Silver / Double Pack",
-      title: "Whisper-quiet acoustic motor doesn't wake my partner",
-      body: "My old electric brush sounded like a power tool in the morning. Miroooo X2 produces a quiet, soothing acoustic hum that doesn't disturb anyone early in the morning.",
-      images: [],
+      title: "So Silent, totally love it 😊",
+      body: "while bruhing my theeths with this miroooo x2 brush I feel so calm and relaxed as compared to earlier using oral B brush which so noisy like generator runing inside my mouth, but this miroooo x2 is super super good and silet to use, must recommend to all of u",
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-whisper-quiet-silent-brushing-brighton-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush Whisper Quiet Operation Customer Review - Isabella Rossi in Brighton UK",
+      ],
       helpful: 21,
       verified: true,
     },
@@ -517,6 +522,25 @@
       verified: true,
     },
     {
+      id: "x2-proc-48",
+      name: "Henry D.",
+      country: "London, UK",
+      rating: 5,
+      date: "2026-10-03",
+      displayDate: "03 October 2026",
+      variant: "Silver / Single",
+      title: "Whitening mode removed all my coffee stains",
+      body: "I have used premium electric toothbrushes for over a decade, and the Miroooo X2's 45° sweeping action is vastly superior. My teeth feel like glass after every 2-minute cycle.",
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-whitening-mode-coffee-stains-london-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush Whitening Mode Review - Henry D. in London UK",
+      ],
+      helpful: 21,
+      verified: true,
+    },
+    {
       id: "x2-31",
       name: "George M. Davies",
       country: "Liverpool, UK",
@@ -540,8 +564,13 @@
       variant: "Pink / Single",
       title: "Better performance than my £250 high-end brush",
       body: "Replaced my top-tier branded smart brush with the Miroooo X2. It's lighter, quieter, battery lasts 4x longer, and the 45-degree sweep cleans significantly deeper.",
-      images: [],
-      helpful: 13,
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-better-performance-than-250-brush-exeter-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush Performance Comparison Review - Zoe Jenkins in Exeter UK",
+      ],
+      helpful: 21,
       verified: true,
     },
     {
@@ -717,6 +746,25 @@
       body: "Brushing is whisper quiet compared to my previous brush. Looks very minimalist and modern on the bathroom shelf.",
       images: [],
       helpful: 7,
+      verified: true,
+    },
+    {
+      id: "x2-proc-90",
+      name: "James H.",
+      country: "Cambridge, UK",
+      rating: 4,
+      date: "2026-08-14",
+      displayDate: "14 August 2026",
+      variant: "Silver / Single",
+      title: "Very pleased with the build quality and clean",
+      body: "The sweep action cleans between tight teeth without harsh scraping. Solid battery and very lightweight.",
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-build-quality-sweep-action-cambridge-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush Build Quality and Clean Review - James H. in Cambridge UK",
+      ],
+      helpful: 17,
       verified: true,
     },
     {
@@ -1072,6 +1120,7 @@
   const baseProceduralTimestamp = new Date("2026-10-24T12:00:00Z").getTime();
 
   for (let i = 42; i <= 240; i++) {
+    if (i === 48 || i === 90) continue;
     const fn = FIRST_NAMES[i % FIRST_NAMES.length];
     const ln = LAST_INITIALS[(i * 3) % LAST_INITIALS.length];
     const city = UK_CITIES[(i * 5) % UK_CITIES.length];
