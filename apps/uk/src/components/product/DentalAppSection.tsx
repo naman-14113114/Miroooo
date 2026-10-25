@@ -140,12 +140,16 @@ export function DentalAppSection({ isX2 = false, isFlosser = false }: DentalAppS
           src={
             isFlosser
               ? '/assets_ref/flosser/gallery/miroooo-water-flosser-premium-black-white-duo-uk.webp'
-              : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp'
+              : isX2
+                ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp'
+                : '/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-smile-coach-app.webp'
           }
           alt={
             isFlosser
               ? 'Miroooo Precision Water Flosser in Obsidian Black and Glacier White with companion dental app'
-              : 'Miroooo X2 toothbrush held beside the Smile Coach app'
+              : isX2
+                ? 'Miroooo X2 toothbrush held beside the Smile Coach app'
+                : 'Miroooo X1 toothbrush held beside the Smile Coach app'
           }
           width={1254}
           height={1254}

@@ -207,7 +207,12 @@
       variant: "Silver / Single",
       title: "Luxury Apple-grade unboxing and packaging",
       body: "The presentation packaging is pure luxury. Opening the magnetic box and seeing the aluminum unibody nestled with the travel case felt like unboxing a £300 designer gadget. Made an unforgettable gift.",
-      images: [],
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-apple-grade-luxury-packaging-bath-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush Luxury Apple-Grade Unboxing and Packaging Review - Claire Beauchamp in Bath UK",
+      ],
       helpful: 45,
       verified: true,
     },
@@ -251,7 +256,12 @@
       variant: "Silver / Single",
       title: "DuPont micro-diamond rounded bristles protect enamel",
       body: "The DuPont rounded bristles are firm on plaque but incredibly smooth across sensitive enamel. They slide right into interdental gaps without causing any scratching or sensitivity.",
-      images: [],
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-dupont-micro-diamond-bristles-cardiff-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush DuPont Micro-Diamond Bristles Customer Review - Benjamin Cox in Cardiff UK",
+      ],
       helpful: 36,
       verified: true,
     },
@@ -356,7 +366,12 @@
       variant: "Grey / Single",
       title: "Slim ventilated travel case protects bristles in luggage",
       body: "The magnetic travel case is rigid, compact, and features built-in ventilation channels so the brush head dries naturally without getting musty inside a washbag.",
-      images: [],
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-slim-ventilated-travel-case-leicester-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush Slim Ventilated Travel Case Customer Review - Kieran Patel in Leicester UK",
+      ],
       helpful: 22,
       verified: true,
     },
@@ -475,7 +490,12 @@
       variant: "Grey / Single",
       title: "Gentle standard mode is perfect for sensitive gums",
       body: "If you have receding gums or sensitive teeth, Mode 1 Standard Clean delivers thorough plaque removal without that aggressive jarring feeling.",
-      images: [],
+      images: [
+        "/assets_ref/reviews/miroooo-x2-customer-review-gentle-standard-mode-sensitive-gums-edinburgh-uk.webp",
+      ],
+      imageAlts: [
+        "Miroooo X2 Sonic Electric Toothbrush Gentle Standard Mode for Sensitive Gums Review - Lucas Weber in Edinburgh UK",
+      ],
       helpful: 15,
       verified: true,
     },
