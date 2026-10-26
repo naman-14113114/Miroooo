@@ -12,12 +12,12 @@ export function DeliveryTimer() {
   const [estimatedDate, setEstimatedDate] = useState<string>('');
 
   useEffect(() => {
-    // Calculate US estimated delivery range (today + 7 to 20 business days)
+    // Calculate US estimated delivery range (processing 1–3 days + transit 3–10 business days)
     const now = new Date();
     const start = new Date(now);
-    start.setDate(start.getDate() + 7);
+    start.setDate(start.getDate() + 4);
     const end = new Date(now);
-    end.setDate(end.getDate() + 20);
+    end.setDate(end.getDate() + 10);
 
     const formatDayMonth = (d: Date) =>
       d.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
@@ -68,7 +68,7 @@ export function DeliveryTimer() {
             <div className="absolute right-0 bottom-full mb-2 w-64 p-3 rounded-xl bg-[#1c1d1e] text-white text-[12px] border border-white/20 shadow-2xl z-20 animate-fade-in">
               <strong className="block text-white mb-1">US Delivery Estimate</strong>
               <p className="text-white/70 leading-relaxed">
-                Orders are processed within 1–3 business days. Tracked delivery across the US usually takes 7–20 business days.
+                Orders are processed within 1–3 business days. Tracked delivery across the US usually takes 3–10 business days.
               </p>
             </div>
           )}

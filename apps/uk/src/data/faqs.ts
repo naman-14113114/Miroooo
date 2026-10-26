@@ -18,7 +18,7 @@ export const FAQS_GENERAL: FaqItem[] = [
     category: 'Shipping & Delivery',
     question: 'What is the UK shipping policy and delivery timeframe?',
     answer:
-      'We provide free tracked UK delivery on qualifying orders. Orders are processed within 1 to 3 business days, and standard tracked delivery transit takes 7 to 20 business days. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel.',
+      'We provide free tracked UK delivery on qualifying orders. Orders are processed within 1 to 3 business days, and standard tracked delivery transit takes 3 to 10 business days. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel.',
   },
   {
     id: 'choosing-brush',

@@ -23,7 +23,7 @@ const FAQS: FaqItem[] = [
     question: 'What is the US shipping policy and delivery timeframe?',
     answerHtml: `
       <p>We provide <strong>free tracked US delivery</strong> on qualifying orders. Orders are processed within <strong>1 to 3 business days</strong> and dispatched with a premier tracked courier service.</p>
-      <p>Once dispatched, standard delivery transit takes <strong>7 to 20 business days</strong>. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel. Read our full <a href="/policies/shipping-policy">Shipping Policy</a> for complete details.</p>
+      <p>Once dispatched, standard delivery transit takes <strong>3 to 10 business days</strong>. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel. Read our full <a href="/policies/shipping-policy">Shipping Policy</a> for complete details.</p>
     `,
   },
   {

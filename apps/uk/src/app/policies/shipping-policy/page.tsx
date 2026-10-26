@@ -4,7 +4,7 @@ import { PolicyPage } from "@/components/policies/PolicyPage";
 export const metadata: Metadata = {
   title: "UK Shipping & Delivery Policy | Miroooo",
   description:
-    "Read our UK shipping policy: Free tracked delivery, 1-3 business days processing, 7-20 business days transit timeframe.",
+    "Read our UK shipping policy: Free tracked delivery, 1-3 business days processing, 3-10 business days transit timeframe.",
   alternates: { canonical: "https://www.trymiroooo.com/policies/shipping-policy" },
 };
 

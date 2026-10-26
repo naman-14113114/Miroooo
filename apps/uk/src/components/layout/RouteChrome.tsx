@@ -18,7 +18,7 @@ const policyStyles: Record<string, string> = {
   '/policies/return-policy': '/assets/policy-return-policy-reference.css',
   '/policies/refund-policy': '/assets/policy-refund-policy-reference.css',
   '/policies/shipping-policy': '/assets/policy-shipping-policy-reference.css',
-  '/policies/delivery-returns': '/assets/policy-shipping-policy-reference.css',
+  '/policies/delivery-returns': '/assets/policy-delivery-returns-reference.css',
   '/pages/order-tracking': '/assets/policy-shipping-policy-reference.css',
   '/policies/terms-of-service': '/assets/policy-terms-of-service-reference.css',
   '/policies/cookies-policy': '/assets/policy-cookies-policy-reference.css',

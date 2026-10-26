@@ -1,5 +1,4 @@
-
-    body[data-page="shipping-policy"] {
+body[data-page="shipping-policy"], body[data-page="shipping"] {
       background-color: #080909;
       color: #f4f4f1;
     }
@@ -50,6 +49,35 @@
     .policy-header {
       text-align: center;
       margin-bottom: clamp(36px, 5vw, 56px);
+    }
+
+    .policy-icon-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .policy-icon-badge svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .policy-eyebrow {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
 
     .policy-title {
@@ -137,23 +165,6 @@
       font-weight: 400;
     }
 
-    .policy-meta {
-      margin-bottom: 2rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      font-size: 0.925rem;
-      color: #555555;
-    }
-
-    .policy-meta p {
-      margin: 0 0 0.35rem;
-      color: #555555;
-    }
-
-    .policy-meta p:last-child {
-      margin-bottom: 0;
-    }
-
     .policy-body h2 {
       color: #111111;
       font-size: clamp(20px, 2.4vw, 24px);
@@ -162,21 +173,10 @@
       margin-top: 2.2rem;
       margin-bottom: 0.85rem;
       letter-spacing: -0.01em;
-      border-bottom: 2px solid rgba(0, 0, 0, 0.08);
-      padding-bottom: 0.5rem;
     }
 
     .policy-body h2:first-of-type {
       margin-top: 0;
-    }
-
-    .policy-body h3 {
-      color: #111111;
-      font-size: clamp(16px, 2vw, 18px);
-      font-weight: 600;
-      line-height: 1.4;
-      margin-top: 1.25rem;
-      margin-bottom: 0.5rem;
     }
 
     .policy-body p {
@@ -188,14 +188,6 @@
     .policy-body ul {
       color: #111111;
       list-style-type: disc;
-      padding-left: 1.5rem;
-      margin-top: 0;
-      margin-bottom: 1.25rem;
-    }
-
-    .policy-body ol {
-      color: #111111;
-      list-style-type: decimal;
       padding-left: 1.5rem;
       margin-top: 0;
       margin-bottom: 1.25rem;
