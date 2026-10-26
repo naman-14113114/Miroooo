@@ -224,12 +224,12 @@ export function ProductHero({
         ? 'Add to Cart + Free 4 Brush Heads'
         : quantity === 3
         ? 'Add to Cart + Free 6 Brush Heads'
-        : 'Add to Cart + 2 Free Gifts')
+        : 'Add to Cart + 3 Free Gifts')
     : (selectedTier === 'bundle-2'
         ? 'Add to Cart + Free 4 Brush Heads'
         : selectedTier === 'bundle-3'
         ? 'Add to Cart + Free 6 Brush Heads'
-        : (buy1HeadsChecked ? 'Add to Cart + 4 Heads' : 'Add to Cart + 2 Free Gifts'));
+        : (buy1HeadsChecked ? 'Add to Cart + 4 Heads' : 'Add to Cart + 3 Free Gifts'));
 
   // Add to Cart handler
   const handleAddToCart = () => {
@@ -863,7 +863,7 @@ export function ProductHero({
                     HALLOWEEN LIMITED-TIME SAVINGS
                   </span>
                   <strong className="x2-urgency-banner__headline" style={{ color: '#ffffff', fontWeight: 700 }}>
-                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : isX2 ? 'Get X2 at price of X1 + Free pair of brush heads for today only' : 'Free pair of brush heads for today only'}
+                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : isX2 ? 'Get X2 at price of X1 + 3 Free Gifts for today only' : '3 Free Gifts for today only'}
                   </strong>
                 </div>
               </div>
@@ -913,7 +913,7 @@ export function ProductHero({
                 <div className="x2-urgency-banner__text-wrap">
                   <span className="x2-urgency-banner__eyebrow">LIMITED-TIME EXTRA SAVINGS</span>
                   <strong className="x2-urgency-banner__headline">
-                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : isX2 ? 'Get X2 at price of X1 + Free pair of brush heads for today only' : 'Free pair of brush heads for today only'}
+                    {isWaterFlosser ? 'Free Miroooo Digital Gift Card (£10 Value) Included' : isX2 ? 'Get X2 at price of X1 + 3 Free Gifts for today only' : '3 Free Gifts for today only'}
                   </strong>
                 </div>
               </div>

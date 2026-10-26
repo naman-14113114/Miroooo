@@ -121,8 +121,6 @@ export function CartPageContent() {
   const discountRows: [string, number][] = ([
     ["Bundle Special Offer", totals.bundleSavings],
     [totals.bundlePromoName, totals.bundlePromoDiscount],
-    ["Free Miroooo X2 Heads", totals.extraBrushHeadSets * PRODUCTS['miroooo-x2-heads'].price],
-    ["Free Miroooo X1 Heads", totals.extraX1BrushHeadSets * PRODUCTS['miroooo-x1-heads'].price],
     ...(totals.hasFreeGiftCard ? [["Free Miroooo Digital Gift Card", 10] as [string, number]] : []),
     ...(totals.promoDiscount > 0 && appliedPromoCodes.length > 0
       ? [[`Promo (${appliedPromoCodes.join(', ')})`, totals.promoDiscount] as [string, number]]
@@ -319,48 +317,89 @@ export function CartPageContent() {
                     </p>
                   )}
                   {appliedPromoCodes.length > 0 && (
-                    <div className="cart-promo-applied-badges" style={{ marginTop: '10px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                      {appliedPromoCodes.map((code) => (
-                        <span
-                          key={code}
-                          className="cart-promo-pill"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            padding: '4px 10px',
-                            background: 'rgba(255, 255, 255, 0.08)',
-                            border: '1px solid rgba(255, 255, 255, 0.15)',
-                            borderRadius: '20px',
-                            fontSize: '0.8rem',
-                            fontWeight: 600,
-                            color: '#ffffff',
-                            letterSpacing: '0.04em',
-                          }}
-                        >
-                          <span>{code}</span>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              removePromoCode(code);
-                              setPromoStatus(null);
-                            }}
-                            aria-label={`Remove promo code ${code}`}
+                    <div
+                      className="cart-promo-applied-badges"
+                      style={{
+                        marginTop: "10px",
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "8px",
+                      }}
+                    >
+                      {appliedPromoCodes.map((code) => {
+                        const displayCode =
+                          code.length > 4 ? `${code.slice(0, 4)}...` : code;
+                        return (
+                          <span
+                            key={code}
+                            className="cart-promo-pill inline-flex items-center gap-2 rounded-full border border-black/20 bg-white py-1 pl-3.5 pr-1.5 text-xs text-[#111111] shadow-sm"
                             style={{
-                              background: 'transparent',
-                              border: 'none',
-                              color: 'rgba(255, 255, 255, 0.6)',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              padding: 0,
-                              lineHeight: 1,
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "6px",
+                              padding: "4px 8px 4px 12px",
+                              background: "#ffffff",
+                              border: "1px solid rgba(0, 0, 0, 0.18)",
+                              borderRadius: "9999px",
+                              fontSize: "0.8rem",
+                              fontWeight: 600,
+                              color: "#111111",
+                              boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
                             }}
                           >
-                            <X size={13} strokeWidth={2.5} />
-                          </button>
-                        </span>
-                      ))}
+                            <span
+                              style={{
+                                fontFamily:
+                                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                                fontWeight: 600,
+                                textTransform: "uppercase",
+                                letterSpacing: "0.05em",
+                                fontSize: "0.8rem",
+                                color: "#111111",
+                                lineHeight: 1,
+                              }}
+                            >
+                              {displayCode}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                removePromoCode(code);
+                                setPromoStatus(null);
+                              }}
+                              aria-label={`Remove promo code ${code}`}
+                              className="inline-flex h-5 w-5 items-center justify-center rounded-full text-[#555555] hover:bg-black/10 hover:text-[#000000] transition-colors"
+                              style={{
+                                background: "transparent",
+                                border: "none",
+                                color: "#555555",
+                                cursor: "pointer",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: "20px",
+                                height: "20px",
+                                borderRadius: "50%",
+                                padding: 0,
+                                lineHeight: 1,
+                                transition: "all 0.15s ease",
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.color = "#000000";
+                                e.currentTarget.style.backgroundColor =
+                                  "rgba(0, 0, 0, 0.08)";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.color = "#555555";
+                                e.currentTarget.style.backgroundColor =
+                                  "transparent";
+                              }}
+                            >
+                              <X size={13} strokeWidth={2.5} />
+                            </button>
+                          </span>
+                        );
+                      })}
                     </div>
                   )}
                 </div>

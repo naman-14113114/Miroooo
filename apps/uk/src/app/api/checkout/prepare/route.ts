@@ -150,12 +150,6 @@ export async function POST(req: Request) {
     const canonicalCart = canonicalItems.map(({ id, productHandle, productId, variantId, title, color, quantity }) =>
       ({ id, productHandle, productId, variantId, title, color, quantity })
     );
-    if (totals.extraBrushHeadSets > 0) {
-      const handle = 'miroooo-x2-heads';
-      const quantity = totals.extraBrushHeadSets;
-      const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020718937117', quantity }], true)[0];
-      canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
-    }
     if (totals.extraX1BrushHeadSets > 0) {
       const handle = 'miroooo-x1-heads';
       const quantity = totals.extraX1BrushHeadSets;
@@ -166,7 +160,7 @@ export async function POST(req: Request) {
       .filter((item) => item.productHandle === 'miroooo-water-flosser' || item.productHandle === 'water-flosser' || item.productHandle === 'flosser')
       .reduce((sum, item) => sum + (item.quantity || 1), 0);
     const hasFlosser = flosserCount > 0;
-    if ((totals.hasFreeGiftCard || hasFlosser) && flosserCount !== 2) {
+    if (hasFlosser && flosserCount !== 2) {
       if (!canonicalCart.some((line) => line.id === 'miroooo-gift-card:free' || line.productHandle === 'miroooo-gift-card')) {
         canonicalCart.push({
           id: 'miroooo-gift-card:free',
@@ -201,7 +195,7 @@ export async function POST(req: Request) {
     if (requestedProtection && !canonicalItems.some((i) => i.productHandle === 'miroooo-package-protection')) {
       expectedGBP += 3;
     }
-    const bundlePayload = detectBundlePayload(canonicalCart, discountCode);
+    const bundlePayload = totals.bundleEligible ? detectBundlePayload(canonicalCart, discountCode) : null;
     const useBundle = Boolean(bundlePayload);
     const result = await prepareUKCheckout({
       cart: canonicalCart,

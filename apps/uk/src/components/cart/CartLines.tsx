@@ -135,22 +135,8 @@ export function CartLines({
   onNavigate?: () => void;
 }) {
   const { items, totals, updateQuantity, removeItem } = useCart();
-  const gifts = [
-    {
-      model: "X2",
-      sets: totals.extraBrushHeadSets,
-      handle: "miroooo-x2-heads",
-      image: "/assets_ref/x2/heads/B1.webp",
-    },
-    {
-      model: "X1",
-      sets: totals.extraX1BrushHeadSets,
-      handle: "miroooo-x1-heads",
-      image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
-    },
-  ].filter((gift) => gift.sets > 0);
-  const toothbrushCount = totals.x2Count + totals.x1Count;
-  const hasFreeGiftCard = Boolean(totals.hasFreeGiftCard || toothbrushCount > 0 || items.some((i) => i.productHandle === 'miroooo-water-flosser'));
+  const hasFlosser = items.some((i) => i.productHandle === 'miroooo-water-flosser');
+  const hasFreeGiftCard = Boolean(totals.hasFreeGiftCard && hasFlosser);
   const cls = (page: string, panel: string) => (drawer ? panel : page);
   return (
     <>
@@ -171,20 +157,6 @@ export function CartLines({
           gift: false,
           badgeText: undefined as string | undefined,
           alt: item.title,
-        })),
-        ...gifts.map((gift) => ({
-          id: `gift-${gift.handle}`,
-          title: `Free Miroooo ${gift.model} Heads (2-Pack)`,
-          subtitle: `${gift.sets} complimentary ${gift.sets > 1 ? "sets contain" : "set contains"} ${gift.sets * 2} DuPont precision heads for Miroooo ${gift.model}.`,
-          image: gift.image,
-          url: `/products/${gift.handle}`,
-          productHandle: gift.handle,
-          unitPrice: 0,
-          comparePrice: gift.sets * 10,
-          quantity: gift.sets,
-          gift: true,
-          badgeText: `UNLOCKED ${gift.sets} ${gift.sets > 1 ? "SETS" : "SET"} (${gift.sets * 2} BRUSH HEADS)`,
-          alt: `Free Miroooo ${gift.model} Heads (2-Pack)`,
         })),
         ...(hasFreeGiftCard
           ? [

@@ -150,12 +150,6 @@ export async function POST(req: Request) {
     const canonicalCart = canonicalItems.map(({ id, productHandle, productId, variantId, title, color, quantity }) =>
       ({ id, productHandle, productId, variantId, title, color, quantity })
     );
-    if (totals.extraBrushHeadSets > 0) {
-      const handle = 'miroooo-x2-heads';
-      const quantity = totals.extraBrushHeadSets;
-      const gift = normalizeCartItems([{ productHandle: handle, variantId: '1000020718937117', quantity }], true)[0];
-      canonicalCart.push({ id: `${handle}:free`, productHandle: gift.productHandle, productId: gift.productId, variantId: gift.variantId, title: gift.title, color: gift.color, quantity });
-    }
     if (totals.extraX1BrushHeadSets > 0) {
       const handle = 'miroooo-x1-heads';
       const quantity = totals.extraX1BrushHeadSets;
@@ -165,16 +159,19 @@ export async function POST(req: Request) {
     const flosserCount = canonicalItems
       .filter((item) => item.productHandle === 'miroooo-water-flosser' || item.productHandle === 'water-flosser')
       .reduce((sum, item) => sum + (item.quantity || 1), 0);
-    if (totals.hasFreeGiftCard && flosserCount !== 2) {
-      canonicalCart.push({
-        id: 'miroooo-gift-card:free',
-        productHandle: 'miroooo-gift-card',
-        productId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
-        variantId: 'a2f687d5-32cc-427c-81f1-5d153911e592',
-        title: 'Miroooo Gift Card',
-        color: 'Default',
-        quantity: 1,
-      });
+    const hasFlosser = flosserCount > 0;
+    if (hasFlosser && flosserCount !== 2) {
+      if (!canonicalCart.some((line) => line.id === 'miroooo-gift-card:free' || line.productHandle === 'miroooo-gift-card')) {
+        canonicalCart.push({
+          id: 'miroooo-gift-card:free',
+          productHandle: 'miroooo-gift-card',
+          productId: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
+          variantId: 'a2f687d5-32cc-427c-81f1-5d153911e592',
+          title: 'Miroooo Gift Card',
+          color: 'Default',
+          quantity: 1,
+        });
+      }
     }
     const hasProtectionAlready = canonicalCart.some(
       (item) => item.productHandle === 'miroooo-package-protection' || item.variantId === XPAGE_VARIANTS.package_protection
@@ -196,7 +193,7 @@ export async function POST(req: Request) {
         quantity: 1,
       });
     }
-    const bundlePayload = detectBundlePayload(canonicalCart, discountCode);
+    const bundlePayload = totals.bundleEligible ? detectBundlePayload(canonicalCart, discountCode) : null;
     const result = await prepareUSCheckout({
       cart: canonicalCart,
       attribution,

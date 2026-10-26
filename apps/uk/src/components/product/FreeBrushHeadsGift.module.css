@@ -86,6 +86,164 @@
   }
 }
 
+.valuePillWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+.valuePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-size: clamp(11px, 0.9vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.valueAmount {
+  font-size: clamp(13px, 1.05vw, 15px);
+  font-weight: 900;
+  color: #2ee875;
+}
+
+.valueText {
+  letter-spacing: 0.05em;
+}
+
+.giftsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 1.2vw, 12px);
+  width: 100%;
+  margin-top: 8px;
+}
+
+.giftCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #141416;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 18px 6px 12px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  min-height: 155px;
+  box-sizing: border-box;
+}
+
+.giftCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.cardBadge {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2.5px 8px;
+  background: #1a1b1e;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.badgeFree {
+  font-size: 10px;
+  font-weight: 900;
+  color: #2ee875;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badgeRegular {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: line-through;
+}
+
+.cardImageWrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 82px;
+  border-radius: 10px;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  margin-bottom: 6px;
+  box-sizing: border-box;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: clamp(11px, 0.88vw, 12.5px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardIncluded {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #2ee875;
+  line-height: 1;
+}
+
+.cardCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #2ee875;
+  color: #101113;
+  flex-shrink: 0;
+}
+
+.cardCheck svg {
+  width: 8px;
+  height: 8px;
+}
+
 .cardList {
   display: flex;
   flex-direction: column;
@@ -345,5 +503,41 @@
   .footer {
     padding-top: 8px;
     font-size: 11.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .giftsGrid {
+    gap: 6px;
+  }
+
+  .giftCard {
+    padding: 16px 4px 10px;
+    border-radius: 14px;
+    min-height: 140px;
+  }
+
+  .cardBadge {
+    padding: 2px 6px;
+    top: -9px;
+  }
+
+  .badgeFree,
+  .badgeRegular {
+    font-size: 9px;
+  }
+
+  .cardImageWrap {
+    max-width: 64px;
+    border-radius: 8px;
+  }
+
+  .cardTitle {
+    font-size: 10.5px;
+  }
+
+  .cardIncluded {
+    font-size: 9px;
+    margin-top: 4px;
   }
 }

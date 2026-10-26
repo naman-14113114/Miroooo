@@ -16,12 +16,12 @@ function mockPublishedOffer(quantity: 1 | 2 | 3, price = 91.15, product: 'x1' | 
   const option = isHeads
     ? (quantity === 1 ? bundle.buy1 : quantity === 2 ? bundle.buy2 : bundle.buy3)
     : optionKey ? (bundle as any)[optionKey] : (quantity === 1 ? ((bundle as any).buy1_freehead || bundle.buy1) : (quantity === 2 ? bundle.buy2 : bundle.buy3));
-  const isFixedOffered = optionKey === 'buy1_1head' || optionKey === 'buy2_1head' || optionKey === 'buy3_1head' || optionKey === 'buy1_1head_protection';
-  const offeredQty = (option as any).offeredQty !== undefined ? (option as any).offeredQty : (isHeads ? 0 : quantity);
+  const isFixedOffered = optionKey === 'buy1_1head' || optionKey === 'buy2_1head' || optionKey === 'buy3_1head' || optionKey === 'buy1_1head_protection' || optionKey === 'buy1_2head' || optionKey === 'promoBuy1_1head' || optionKey === 'promoBuy1_2head';
+  const offeredQty = (option as any).offeredQty !== undefined ? (option as any).offeredQty : (isHeads ? 0 : (product === 'x2' ? 0 : quantity));
   const offeredList: any[] = [];
   if (!isHeads && offeredQty > 0) {
     offeredList.push({
-      id: (option as any).offeredId || (bundle.buy2 as any).offeredId,
+      id: (option as any).offeredId || (bundle.buy2 as any).offeredId || 'test-offered-id',
       quantity: offeredQty,
       discount_type: isFixedOffered ? 'FIXED' : 'PERCENTAGE',
       discount_amount: isFixedOffered ? '10.00' : '100.00',
@@ -30,17 +30,19 @@ function mockPublishedOffer(quantity: 1 | 2 | 3, price = 91.15, product: 'x1' | 
         variants: [{ id: XPAGE_VARIANTS[`${product}_heads`], is_visible: true, price: 10.0 }],
       },
     });
-    offeredList.push({
-      id: 'offered-gift-card',
-      quantity: 1,
-      discount_type: 'PERCENTAGE',
-      discount_amount: '100.00',
-      product: {
-        id: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
-        status: 'ACTIVE',
-        variants: [{ id: XPAGE_VARIANTS.gift_card, is_visible: true, price: 10 }],
-      },
-    });
+    if (product === 'x1') {
+      offeredList.push({
+        id: 'offered-gift-card',
+        quantity: 1,
+        discount_type: 'PERCENTAGE',
+        discount_amount: '100.00',
+        product: {
+          id: 'a2f687d2-56cd-4709-95a5-e6d280070c18',
+          status: 'ACTIVE',
+          variants: [{ id: XPAGE_VARIANTS.gift_card, is_visible: true, price: 10 }],
+        },
+      });
+    }
   }
   if (optionKey && optionKey.includes('protection')) {
     offeredList.push({
@@ -56,14 +58,15 @@ function mockPublishedOffer(quantity: 1 | 2 | 3, price = 91.15, product: 'x1' | 
       },
     });
   }
+  const isPromoOption = Boolean(optionKey && optionKey.startsWith('promo'));
   const published = {
     id: bundle.id,
     status: 'ACTIVE',
     options: [{
       id: option.optionId,
       discount_target: isHeads ? 'PER_ITEM' : (quantity === 1 ? null : 'PER_ITEM'),
-      discount_type: isHeads ? 'FIXED_AMOUNT' : (quantity === 1 ? null : 'PERCENTAGE'),
-      discount_amount: isHeads ? (quantity === 1 ? '0' : quantity === 2 ? '1' : '2') : (quantity === 1 ? 0 : 7.24),
+      discount_type: isHeads ? 'FIXED_AMOUNT' : (isPromoOption ? 'FIXED_AMOUNT' : (quantity === 1 ? null : 'PERCENTAGE')),
+      discount_amount: isHeads ? (quantity === 1 ? '0' : quantity === 2 ? '1' : '2') : (isPromoOption ? 9.12 : (quantity === 1 ? 0 : 7.24)),
       conditions: [{ id: option.conditionId, quantity, product: {
         status: 'ACTIVE', variants: [{ id: isHeads ? XPAGE_VARIANTS[product] : XPAGE_VARIANTS[`${product}_grey`], is_visible: true, price: isHeads ? 10.0 : price }],
       } }],
@@ -102,11 +105,11 @@ test('X1 and X2 displayed USD offers, gifts, and post-bundle promo rounding', ()
     assert.equal(totals([{ ...brush, quantity: 2 }], ['MIROOOO']).finalSubtotal, 152.18);
     assert.equal(totals([{ ...brush, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 210.67);
   }
-  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 4);
-  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 3);
-  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).unlockedGiftsCount, 3);
-  assert.equal(totals([{ ...x1Grey, quantity: 2 }]).unlockedGiftsCount, 2);
-  assert.equal(totals([x2Grey]).unlockedGiftsCount, 2);
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 3);
+  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([{ ...x1Grey, quantity: 3 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([{ ...x1Grey, quantity: 2 }]).unlockedGiftsCount, 1);
+  assert.equal(totals([x2Grey]).unlockedGiftsCount, 1);
   assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 82.03);
   assert.equal(totals([x1Grey], ['MIROOOO']).finalSubtotal, 82.03);
   assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 101.15);
@@ -159,14 +162,14 @@ test('paid heads keep their model-specific USD prices and do not receive brush p
   assert.equal(totals([head('x1')], ['MIROOOO']).finalSubtotal, 10);
   assert.equal(totals([head('x2')], ['MIROOOO10']).finalSubtotal, 10);
   assert.equal(totals([{...x1Grey, quantity: 4}, head('x1')]).finalSubtotal, 374.6);
-  assert.equal(totals([{...x1Grey, quantity: 4}, head('x1')]).unlockedGiftsCount, 1);
+  assert.equal(totals([{...x1Grey, quantity: 4}, head('x1')]).unlockedGiftsCount, 0);
 });
 
 test('split brush colors qualify together, promo aliases never stack, and client gifts are rebuilt', () => {
   const pink = {...x2Grey, variantId: PRODUCTS['miroooo-x2'].variants.find(v => v.color === 'Pink')!.id};
   const pair = [x2Grey, pink];
   assert.equal(totals(pair).finalSubtotal, 169.10);
-  assert.equal(totals(pair).giftsValue, 30);
+  assert.equal(totals(pair).giftsValue, 20);
   assert.equal(totals(pair, ['MIROOOO', 'MIROOOO10']).finalSubtotal, 152.18);
   assert.equal(normalizeCartItems([...pair, {...head('x2', 99), id: 'miroooo-x2-heads:free', unitPrice: 0}], true).length, 2);
 });
@@ -221,7 +224,7 @@ test('heads checkout accepts X1 heads via native bundle', async () => {
   } finally { globalThis.fetch = oldFetch; }
 });
 
-test('ordinary checkout accepts X2 single with 1 free head via native bundle', async () => {
+test('ordinary checkout accepts X2 Option 1 (Buy 1, 0 heads) via native bundle', async () => {
   const oldFetch = globalThis.fetch;
   let orders = 0;
   globalThis.fetch = async (input, init) => {
@@ -230,10 +233,10 @@ test('ordinary checkout accepts X2 single with 1 free head via native bundle', a
       return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
     }
     if (String(input).includes('/checkout/')) {
-      const rows = [{quantity: 1, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 1, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}, {quantity: 1, price: 0, variant: {id: XPAGE_VARIANTS.gift_card}}];
-      return new Response(`<span class="total font-semibold">$91.15</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(104.35, 13.20)}`);
+      const rows = [{quantity: 1, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}];
+      return new Response(`<span class="total font-semibold">$91.15</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(91.15, 0)}`);
     }
-    return new Response(mockPublishedOffer(1));
+    return new Response(mockPublishedOffer(1, 91.15, 'x2', 'buy1_freehead'));
   };
   try {
     const response = await POST(request([x2Grey]));
@@ -245,7 +248,7 @@ test('ordinary checkout accepts X2 single with 1 free head via native bundle', a
   } finally { globalThis.fetch = oldFetch; }
 });
 
-test('ordinary checkout accepts Option 4 (Buy 1 + 1 Free Head + 1 Paid Head) via native bundle', async () => {
+test('ordinary checkout accepts X2 Option 2 (Buy 1 + 1 Head) via native bundle', async () => {
   const oldFetch = globalThis.fetch;
   let orders = 0;
   globalThis.fetch = async (input, init) => {
@@ -254,8 +257,8 @@ test('ordinary checkout accepts Option 4 (Buy 1 + 1 Free Head + 1 Paid Head) via
       return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
     }
     if (String(input).includes('/checkout/')) {
-      const rows = [{quantity: 1, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 2, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}, {quantity: 1, price: 0, variant: {id: XPAGE_VARIANTS.gift_card}}];
-      return new Response(`<span class="total font-semibold">$104.35</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(117.55, 13.20)}`);
+      const rows = [{quantity: 1, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 1, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">$104.35</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(104.35, 0)}`);
     }
     return new Response(mockPublishedOffer(1, 91.15, 'x2', 'buy1_1head'));
   };
@@ -269,7 +272,7 @@ test('ordinary checkout accepts Option 4 (Buy 1 + 1 Free Head + 1 Paid Head) via
   } finally { globalThis.fetch = oldFetch; }
 });
 
-test('ordinary checkout accepts Option 5 (Buy 2 + 2 Free Heads + 1 Paid Head) via native bundle', async () => {
+test('ordinary checkout accepts X2 Option 3 (Buy 1 + 2 Heads) via native bundle', async () => {
   const oldFetch = globalThis.fetch;
   let orders = 0;
   globalThis.fetch = async (input, init) => {
@@ -278,13 +281,13 @@ test('ordinary checkout accepts Option 5 (Buy 2 + 2 Free Heads + 1 Paid Head) vi
       return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
     }
     if (String(input).includes('/checkout/')) {
-      const rows = [{quantity: 2, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 3, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}, {quantity: 1, price: 0, variant: {id: XPAGE_VARIANTS.gift_card}}];
-      return new Response(`<span class="total font-semibold">$182.30</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(221.90, 39.60)}`);
+      const rows = [{quantity: 1, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 2, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">$117.55</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(117.55, 0)}`);
     }
-    return new Response(mockPublishedOffer(2, 91.15, 'x2', 'buy2_1head'));
+    return new Response(mockPublishedOffer(1, 91.15, 'x2', 'buy1_2head'));
   };
   try {
-    const response = await POST(request([{ ...x2Grey, quantity: 2 }, head('x2')]));
+    const response = await POST(request([x2Grey, { ...head('x2'), quantity: 2 }]));
     const body = await response.json();
     assert.equal(response.status, 200, body.error);
     assert.equal(orders, 1);
@@ -293,7 +296,7 @@ test('ordinary checkout accepts Option 5 (Buy 2 + 2 Free Heads + 1 Paid Head) vi
   } finally { globalThis.fetch = oldFetch; }
 });
 
-test('ordinary checkout accepts Option 6 (Buy 3 + 3 Free Heads + 1 Paid Head) via native bundle', async () => {
+test('ordinary checkout accepts X2 Option 4 (Buy 1 + 2 Heads + MIROOOO10) via native bundle', async () => {
   const oldFetch = globalThis.fetch;
   let orders = 0;
   globalThis.fetch = async (input, init) => {
@@ -302,13 +305,61 @@ test('ordinary checkout accepts Option 6 (Buy 3 + 3 Free Heads + 1 Paid Head) vi
       return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
     }
     if (String(input).includes('/checkout/')) {
-      const rows = [{quantity: 3, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 4, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}, {quantity: 1, price: 0, variant: {id: XPAGE_VARIANTS.gift_card}}];
-      return new Response(`<span class="total font-semibold">$247.27</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(326.47, 79.20)}`);
+      const rows = [{quantity: 1, price: 82.03, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 2, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">$108.43</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(108.43, 0)}`);
     }
-    return new Response(mockPublishedOffer(3, 91.15, 'x2', 'buy3_1head'));
+    return new Response(mockPublishedOffer(1, 91.15, 'x2', 'promoBuy1_2head'));
   };
   try {
-    const response = await POST(request([{ ...x2Grey, quantity: 3 }, head('x2')]));
+    const response = await POST(request([x2Grey, { ...head('x2'), quantity: 2 }], 'MIROOOO10'));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts X2 Option 5 (Buy 1 + MIROOOO10) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 1, price: 82.03, variant: {id: XPAGE_VARIANTS.x2_grey}}];
+      return new Response(`<span class="total font-semibold">$82.03</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(82.03, 0)}`);
+    }
+    return new Response(mockPublishedOffer(1, 91.15, 'x2', 'promoBuy1'));
+  };
+  try {
+    const response = await POST(request([x2Grey], 'MIROOOO10'));
+    const body = await response.json();
+    assert.equal(response.status, 200, body.error);
+    assert.equal(orders, 1);
+    assert.equal(body.offerType, 'native_bundle');
+    assert.ok(body.checkoutUrl);
+  } finally { globalThis.fetch = oldFetch; }
+});
+
+test('ordinary checkout accepts X2 Option 6 (Buy 1 + 1 Head + MIROOOO10) via native bundle', async () => {
+  const oldFetch = globalThis.fetch;
+  let orders = 0;
+  globalThis.fetch = async (input, init) => {
+    if (init?.method === 'POST') {
+      orders++;
+      return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
+    }
+    if (String(input).includes('/checkout/')) {
+      const rows = [{quantity: 1, price: 82.03, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 1, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}];
+      return new Response(`<span class="total font-semibold">$95.23</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(95.23, 0)}`);
+    }
+    return new Response(mockPublishedOffer(1, 91.15, 'x2', 'promoBuy1_1head'));
+  };
+  try {
+    const response = await POST(request([x2Grey, head('x2')], 'MIROOOO10'));
     const body = await response.json();
     assert.equal(response.status, 200, body.error);
     assert.equal(orders, 1);
@@ -393,7 +444,7 @@ for (const actualTotal of [169.10, 169.11]) {
         return Response.json({status: 'success', checkout_url: `${XPAGE_STORE_URL}/checkout/${'b'.repeat(64)}`});
       }
       if (String(input).includes('/checkout/')) {
-        const rows = [{quantity: 2, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}, {quantity: 2, price: 13.20, variant: {id: XPAGE_VARIANTS.x2_heads}}, {quantity: 1, price: 0, variant: {id: XPAGE_VARIANTS.gift_card}}];
+        const rows = [{quantity: 2, price: 91.15, variant: {id: XPAGE_VARIANTS.x2_grey}}];
         return new Response(`<span class="total font-semibold">$${actualTotal.toFixed(2)}</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(195.50, 26.40)}`);
       }
       return new Response(mockPublishedOffer(2));
@@ -548,10 +599,8 @@ test('bundle checkout includes package protection in offered items and maps all 
       const rows = [
         { quantity: 1, price: 91.15, variant: { id: XPAGE_VARIANTS.x2_grey } },
         { quantity: 1, price: 5.0, variant: { id: XPAGE_VARIANTS.package_protection } },
-        { quantity: 1, price: 13.20, variant: { id: XPAGE_VARIANTS.x2_heads } },
-        { quantity: 1, price: 0, variant: { id: XPAGE_VARIANTS.gift_card } },
       ];
-      return new Response(`<span class="total font-semibold">$96.15</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(109.35, 13.20)}`);
+      return new Response(`<span class="total font-semibold">$96.15</span><script>const order = {variants: ${JSON.stringify(rows)}};</script>${browserQuote(96.15, 0)}`);
     }
     return new Response(mockPublishedOffer(1, 91.15, 'x2', 'buy1_protection'));
   };
@@ -561,8 +610,6 @@ test('bundle checkout includes package protection in offered items and maps all 
     assert.equal(response.status, 200, body.error);
     assert.equal(bundleOrders, 1);
     assert.equal(body.offerType, 'native_bundle');
-    assert.ok(bundleBody.bundle_selected_variants.offered['offered-gift-card']);
-    assert.deepEqual(bundleBody.bundle_selected_variants.offered['offered-gift-card'], [XPAGE_VARIANTS.gift_card]);
     assert.ok(bundleBody.bundle_selected_variants.offered['offered-package-protection']);
     assert.deepEqual(bundleBody.bundle_selected_variants.offered['offered-package-protection'], [XPAGE_VARIANTS.package_protection]);
   } finally {

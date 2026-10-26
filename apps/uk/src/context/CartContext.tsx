@@ -404,18 +404,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         quantity: item.quantity,
       }));
 
-      // Add free gifts if pure bundle is active
-      if (totals.extraBrushHeadSets > 0) {
-        checkoutItems.push({
-          id: 'miroooo-x2-heads:free',
-          productHandle: 'miroooo-x2-heads',
-          title: 'Miroooo X2 Heads',
-          productId: '1000000675616058',
-          variantId: '1000020718937117',
-          color: 'Heads',
-          quantity: totals.extraBrushHeadSets,
-        });
-      } else if (totals.extraX1BrushHeadSets > 0) {
+      // Add free gifts if pure bundle is active (X1 only; X2 includes free gifts in the retail box)
+      if (totals.extraX1BrushHeadSets > 0) {
         checkoutItems.push({
           id: 'miroooo-x1-heads:free',
           productHandle: 'miroooo-x1-heads',
@@ -427,7 +417,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         });
       }
 
-      if (totals.hasFreeGiftCard || totals.extraBrushHeadSets > 0 || totals.extraX1BrushHeadSets > 0) {
+      if (totals.hasFreeGiftCard) {
         checkoutItems.push({
           id: 'miroooo-gift-card:free',
           productHandle: 'miroooo-gift-card',

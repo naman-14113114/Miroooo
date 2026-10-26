@@ -249,7 +249,8 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let unlockedGiftsCount = 0;
   let hasFreeGiftCard = false;
 
-  if (x2Count > 0 || x1Count > 0 || flosserCount > 0) {
+  // Toothbrushes do NOT unlock hasFreeGiftCard (only water flosser unlocks it if flosserCount > 0)
+  if (flosserCount > 0) {
     giftsValue += 10;
     unlockedGiftsCount += 1;
     hasFreeGiftCard = true;

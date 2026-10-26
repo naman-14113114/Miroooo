@@ -18,7 +18,6 @@ const origins = new Set<string>([
   XPAGE_STORE_URL,
   ...Object.values(XPAGE_LANDING_URLS),
   FLOSSER_LANDING_URL,
-  'https://flosser.miroooo.us',
 ]);
 const unavailable = (message = 'The live USD checkout could not be verified. Please try again. No order has been placed.') =>
   new CheckoutQuoteError('QUOTE_UNAVAILABLE', message);
@@ -29,8 +28,8 @@ const sessionPath = /\/checkout\/[a-f\d]{64}\/?$/i;
 function destination(href: unknown, base = XPAGE_STORE_URL) {
   if (typeof href !== 'string') throw unavailable();
   const url = new URL(href, base);
-  if (!origins.has(url.origin) && !url.hostname.endsWith('.myxpage.shop')) throw unavailable();
-  if (url.username || url.password || !checkoutPath.test(url.pathname)) throw unavailable();
+  if ((!origins.has(url.origin) && !url.hostname.endsWith('.myxpage.shop')) || url.username || url.password ||
+      !checkoutPath.test(url.pathname)) throw unavailable();
   url.search = '?currency=USD';
   url.hash = '';
   return url;
@@ -91,11 +90,15 @@ function orderLines(html: string): Array<{ quantity: number; price: number | str
 
 export function assertCheckoutOrderQuote(html: string, cart: ProviderLine[], _expectedUSD?: number) {
   const quoted = new Map<string, number>();
+  const cartHasGiftCard = cart.some((line) => line.variant_id === XPAGE_VARIANTS.gift_card);
   for (const line of orderLines(html)) {
     const id = line.variant?.id;
     const price = Number(line.price);
     if (!id || !Number.isSafeInteger(line.quantity) || line.quantity < 1 ||
         !Number.isFinite(price) || price < 0) throw unavailable();
+    if (id === XPAGE_VARIANTS.gift_card && !cartHasGiftCard && price === 0) {
+      continue;
+    }
     quoted.set(id, (quoted.get(id) || 0) + line.quantity);
   }
   if (quoted.size !== cart.length || cart.some((line) => quoted.get(line.variant_id) !== line.quantity)) {

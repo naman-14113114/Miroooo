@@ -84,11 +84,15 @@ function orderLines(html: string): Array<{ quantity: number; price: number | str
 
 export function assertCheckoutOrderQuote(html: string, cart: ProviderLine[], _expectedGBP?: number) {
   const quoted = new Map<string, number>();
+  const cartHasGiftCard = cart.some((line) => line.variant_id === XPAGE_VARIANTS.gift_card);
   for (const line of orderLines(html)) {
     const id = line.variant?.id;
     const price = Number(line.price);
     if (!id || !Number.isSafeInteger(line.quantity) || line.quantity < 1 ||
         !Number.isFinite(price) || price < 0) throw unavailable();
+    if (id === XPAGE_VARIANTS.gift_card && !cartHasGiftCard && price === 0) {
+      continue;
+    }
     quoted.set(id, (quoted.get(id) || 0) + line.quantity);
   }
   if (quoted.size !== cart.length || cart.some((line) => quoted.get(line.variant_id) !== line.quantity)) {

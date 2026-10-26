@@ -1,9 +1,131 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { ChevronDown, Minus, Plus, Trash2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { PRODUCTS } from "@/data/products";
 import { formatUSD } from "@/lib/cart";
+
+const INCLUDED_IN_BOX: Record<string, { name: string; image: string }[]> = {
+  "miroooo-x2": [
+    {
+      name: "Luxury Travel Case",
+      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
+    },
+    {
+      name: "Wall Mounted",
+      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp",
+    },
+    {
+      name: "2 Free Heads",
+      image: "/assets_ref/x2/heads/B1.webp",
+    },
+  ],
+  "miroooo-x": [
+    {
+      name: "Luxury Travel Case",
+      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
+    },
+    {
+      name: "Charging Dock",
+      image: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
+    },
+    {
+      name: "2 Free Heads",
+      image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
+    },
+  ],
+  "miroooo-x1": [
+    {
+      name: "Luxury Travel Case",
+      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
+    },
+    {
+      name: "Charging Dock",
+      image: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
+    },
+    {
+      name: "2 Free Heads",
+      image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
+    },
+  ],
+};
+
+function IncludedInTheBox({
+  items,
+  drawer = false,
+}: {
+  items: { name: string; image: string }[];
+  drawer?: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(true);
+  const cls = (page: string, panel: string) => (drawer ? panel : page);
+
+  return (
+    <div className={cls("cart-line-included", "miroooo-cart-included")}>
+      <button
+        type="button"
+        className={cls("cart-line-included__btn", "miroooo-cart-included__btn")}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        <span>Included in the box</span>
+        <ChevronDown
+          size={14}
+          strokeWidth={2}
+          className={`${cls("cart-line-included__chevron", "miroooo-cart-included__chevron")}${isOpen ? " is-open" : ""}`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className={cls("cart-line-included__grid", "miroooo-cart-included__grid")}>
+          {items.map((includedItem) => (
+            <div
+              key={includedItem.name}
+              className={cls("cart-line-included__card", "miroooo-cart-included__card")}
+            >
+              <div
+                className={cls("cart-line-included__thumb", "miroooo-cart-included__thumb")}
+                style={{
+                  width: "100%",
+                  aspectRatio: "1 / 1",
+                  background: "#ffffff",
+                  border: "1px solid rgba(0, 0, 0, 0.08)",
+                  borderRadius: "10px",
+                  padding: 0,
+                  overflow: "hidden",
+                  boxSizing: "border-box",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={includedItem.image}
+                  alt={includedItem.name}
+                  loading="lazy"
+                  width={76}
+                  height={76}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                    borderRadius: "9px",
+                  }}
+                />
+              </div>
+              <span
+                className={cls("cart-line-included__label", "miroooo-cart-included__label")}
+              >
+                {includedItem.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function CartLines({
   drawer = false,
@@ -13,22 +135,8 @@ export function CartLines({
   onNavigate?: () => void;
 }) {
   const { items, totals, updateQuantity, removeItem } = useCart();
-  const gifts = [
-    {
-      model: "X2",
-      sets: totals.extraBrushHeadSets,
-      handle: "miroooo-x2-heads",
-      image: "/assets_ref/x2/heads/B1.webp",
-    },
-    {
-      model: "X1",
-      sets: totals.extraX1BrushHeadSets,
-      handle: "miroooo-x1-heads",
-      image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
-    },
-  ].filter((gift) => gift.sets > 0);
-  const toothbrushCount = totals.x2Count + totals.x1Count;
-  const hasFreeGiftCard = Boolean(totals.hasFreeGiftCard || toothbrushCount > 0 || items.some((i) => i.productHandle === 'miroooo-water-flosser'));
+  const hasFlosser = items.some((i) => i.productHandle === 'miroooo-water-flosser');
+  const hasFreeGiftCard = Boolean(totals.hasFreeGiftCard && hasFlosser);
   const cls = (page: string, panel: string) => (drawer ? panel : page);
   return (
     <>
@@ -49,19 +157,6 @@ export function CartLines({
           gift: false,
           badgeText: undefined as string | undefined,
           alt: item.title,
-        })),
-        ...gifts.map((gift) => ({
-          id: `gift-${gift.handle}`,
-          title: `Free Miroooo ${gift.model} Heads (2-Pack)`,
-          subtitle: `${gift.sets} complimentary ${gift.sets > 1 ? "sets contain" : "set contains"} ${gift.sets * 2} DuPont precision heads for Miroooo ${gift.model}.`,
-          image: gift.image,
-          url: `/products/${gift.handle}`,
-          unitPrice: 0,
-          comparePrice: gift.sets * PRODUCTS[gift.handle].price,
-          quantity: gift.sets,
-          gift: true,
-          badgeText: `UNLOCKED ${gift.sets} ${gift.sets > 1 ? "SETS" : "SET"} (${gift.sets * 2} BRUSH HEADS)`,
-          alt: `Free Miroooo ${gift.model} Heads (2-Pack)`,
         })),
         ...(hasFreeGiftCard
           ? [
@@ -220,6 +315,12 @@ export function CartLines({
                 </>
               )}
             </div>
+            {!item.gift && INCLUDED_IN_BOX[item.productHandle] && (
+              <IncludedInTheBox
+                items={INCLUDED_IN_BOX[item.productHandle]}
+                drawer={drawer}
+              />
+            )}
           </div>
         </div>
       ))}

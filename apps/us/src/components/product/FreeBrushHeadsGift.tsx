@@ -29,6 +29,35 @@ interface FreeBrushHeadsGiftProps {
 
 export function FreeBrushHeadsGift({ model = 'X2', currency = '$', onlyGiftCard = false }: FreeBrushHeadsGiftProps) {
   const isX1 = model === 'X1';
+  const isFlosser = onlyGiftCard || model === 'WaterFlosser';
+
+  const toothbrushGifts = [
+    {
+      id: 'travel-case',
+      title: 'Luxury Travel Case',
+      regularPrice: currency === '£' ? '£20' : '$25',
+      image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp',
+      alt: 'Miroooo Luxury Travel Case',
+    },
+    {
+      id: 'wall-dock',
+      title: 'Wall-Mounted Dock',
+      regularPrice: currency === '£' ? '£9' : '$14',
+      image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp',
+      alt: 'Miroooo Wall-Mounted Dock',
+    },
+    {
+      id: 'brush-heads',
+      title: '2x Brush Heads',
+      regularPrice: currency === '£' ? '£10' : '$10',
+      image: isX1
+        ? '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'
+        : '/assets_ref/x2/heads/B1.webp',
+      alt: isX1
+        ? 'One pair of Miroooo X1 replacement brush heads'
+        : 'One pair of Miroooo X2 replacement brush heads',
+    },
+  ];
 
   return (
     <section className={styles.section} id="special-flash-sale-gifts" aria-labelledby="free-heads-title">
@@ -42,33 +71,37 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '$', onlyGiftCard 
         </span>
       </h3>
 
-      <div className={styles.cardList}>
-        {/* Card 1: Free Brush Heads */}
-        {!onlyGiftCard && (
+      {isFlosser ? (
+        <div className={styles.cardList}>
+          {/* Card: Free Digital Gift Card for Water Flosser */}
           <div className={styles.card}>
             <div className={styles.header}>
               <div className={styles.headerLeft}>
                 <span className={styles.selectedCheck}><Checkmark /></span>
-                <span className={styles.headerText}>Yes, include my free pair</span>
+                <span className={styles.headerText}>
+                  {`Free Miroooo Digital Gift Card (${currency}10 Value) Included`}
+                </span>
               </div>
-              <span className={styles.selectedBadge}>SELECTED</span>
+              <span className={styles.selectedBadge}>
+                SELECTED / FREE
+              </span>
             </div>
 
             <div className={styles.product}>
-              <div className={styles.imageWrap}>
+              <div className={styles.imageWrapDark}>
                 <img
-                  src={isX1 ? '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp' : '/assets_ref/x2/heads/B1.webp'}
-                  alt={isX1 ? 'One pair of Miroooo X1 replacement brush heads' : 'One pair of Miroooo X2 replacement brush heads'}
-                  width={1254}
-                  height={1254}
+                  src="/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp"
+                  alt={`Miroooo ${model} official digital gift card ${currency}10 complimentary voucher`}
+                  width={1024}
+                  height={1024}
                   loading="eager"
                   decoding="async"
                   className={styles.image}
                 />
               </div>
               <div className={styles.description}>
-                <p className={styles.name}>2x Brush Heads</p>
-                <p className={styles.subtitle}>Replacement pair</p>
+                <p className={styles.name}>Miroooo Digital Gift Card</p>
+                <p className={styles.subtitle}>Official Miroooo voucher</p>
               </div>
               <div className={styles.price}>
                 <s className={styles.originalPrice}>{currency}10</s>
@@ -82,57 +115,47 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '$', onlyGiftCard 
                 <span className={styles.statusCheck}><Checkmark /></span>
                 Included with your order
               </span>
-              <span className={styles.quantity}>1 pair · 2 heads</span>
+              <span className={styles.quantity}>1 voucher · {currency}10 value</span>
             </div>
-          </div>
-        )}
-
-        {/* Card 2: Free Digital Gift Card */}
-        <div className={styles.card}>
-          <div className={styles.header}>
-            <div className={styles.headerLeft}>
-              <span className={styles.selectedCheck}><Checkmark /></span>
-              <span className={styles.headerText}>
-                {onlyGiftCard ? 'Free Miroooo Digital Gift Card ($10 Value) Included' : 'Yes, include my free gift card'}
-              </span>
-            </div>
-            <span className={styles.selectedBadge}>
-              {onlyGiftCard ? 'SELECTED / FREE' : 'SELECTED'}
-            </span>
-          </div>
-
-          <div className={styles.product}>
-            <div className={styles.imageWrapDark}>
-              <img
-                src="/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp"
-                alt={`Miroooo ${model} official digital gift card ${currency}10 complimentary voucher`}
-                width={1024}
-                height={1024}
-                loading="eager"
-                decoding="async"
-                className={styles.image}
-              />
-            </div>
-            <div className={styles.description}>
-              <p className={styles.name}>Miroooo Digital Gift Card</p>
-              <p className={styles.subtitle}>Official Miroooo voucher</p>
-            </div>
-            <div className={styles.price}>
-              <s className={styles.originalPrice}>{currency}10</s>
-              <span className={styles.freePrice}>{currency}0.00</span>
-              <span className={styles.freeLabel}>FREE</span>
-            </div>
-          </div>
-
-          <div className={styles.footer}>
-            <span className={styles.status}>
-              <span className={styles.statusCheck}><Checkmark /></span>
-              Included with your order
-            </span>
-            <span className={styles.quantity}>1 voucher · {currency}10 value</span>
           </div>
         </div>
-      </div>
+      ) : (
+        <>
+          <div className={styles.valuePillWrap}>
+            <p className={styles.valuePill}>
+              <span className={styles.valueAmount}>{currency === '£' ? '£39' : '$49'}</span>
+              <span className={styles.valueText}>VALUE OF FREE GIFTS FOR TODAY ONLY</span>
+            </p>
+          </div>
+
+          <div className={styles.giftsGrid}>
+            {toothbrushGifts.map((gift) => (
+              <div key={gift.id} className={styles.giftCard}>
+                <div className={styles.cardBadge}>
+                  <span className={styles.badgeFree}>FREE</span>
+                  <span className={styles.badgeRegular}>{gift.regularPrice}</span>
+                </div>
+                <div className={styles.cardImageWrap}>
+                  <img
+                    src={gift.image}
+                    alt={gift.alt}
+                    width={200}
+                    height={200}
+                    loading="eager"
+                    decoding="async"
+                    className={styles.cardImage}
+                  />
+                </div>
+                <p className={styles.cardTitle}>{gift.title}</p>
+                <span className={styles.cardIncluded}>
+                  <span className={styles.cardCheck}><Checkmark /></span>
+                  Included Free
+                </span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 }
