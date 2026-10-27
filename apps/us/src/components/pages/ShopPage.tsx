@@ -33,7 +33,7 @@ const US_COLLECTION_PRODUCTS: CollectionProduct[] = [
     compareAt: '$139',
     badge: '50% OFF',
     isSoldOut: false,
-    image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp',
+    image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp',
     link: '/products/miroooo-x2',
     buttonText: 'Choose Miroooo X2',
   },

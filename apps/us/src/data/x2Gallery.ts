@@ -2,7 +2,7 @@
 export const x2Gallery = {
   "Silver": {
     "images": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-90-day-battery-life.webp",
@@ -19,7 +19,7 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp"
     ],
     "thumbnails": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-precision-bristle-heads.webp",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-90-day-battery-life.webp",
@@ -36,7 +36,7 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp"
     ],
     "alts": [
-      "Miroooo X2 Sonic Electric Toothbrush Silver with Precision DuPont Bristle Heads",
+      "Miroooo X2 Sonic Electric Toothbrush Silver with Global Dental Innovation 2026 Award and Luxury Travel Case",
       "Miroooo X2 Sonic Electric Toothbrush Silver Upright Grip in Hand",
       "Miroooo X2 Sonic Electric Toothbrush Luxury Travel Case Lifestyle Presentation",
       "Miroooo X2 Sonic Electric Toothbrush Silver 90-Day Battery Life",
