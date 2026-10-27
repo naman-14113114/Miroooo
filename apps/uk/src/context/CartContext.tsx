@@ -100,12 +100,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       // 3. Cart Items
       const storedCart = localStorage.getItem(LOCAL_STORAGE_CART_KEY);
-      if (storedCart) {
+      if (!storedCart || localStorage.getItem('miroooo_cart_empty') === 'true') {
+        setItems([]);
+      } else {
         const parsed = JSON.parse(storedCart);
         if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
           const normalized = normalizeCartItems(parsed.items);
           if (normalized.length > 0) {
             setItems(normalized);
+          } else {
+            setItems([]);
           }
         } else if (parsed && parsed.quantity > 0) {
           // Legacy format migration
@@ -132,7 +136,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           const normalized = normalizeCartItems(newItems);
           if (normalized.length > 0) {
             setItems(normalized);
+          } else {
+            setItems([]);
           }
+        } else {
+          setItems([]);
         }
       }
     } catch (e) {
@@ -147,8 +155,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     loadCartFromStorage();
 
-    const handlePageShow = () => {
+    const handlePageShow = (event: PageTransitionEvent) => {
       invalidateCheckout();
+      if (event.persisted) {
+        window.location.reload();
+        return;
+      }
       loadCartFromStorage();
     };
 

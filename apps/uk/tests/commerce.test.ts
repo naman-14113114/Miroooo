@@ -112,9 +112,9 @@ test('X1 and X2 displayed GBP offers, gifts, and post-bundle promo rounding', ()
   assert.equal(totals([{ ...x2Grey, quantity: 3 }]).finalSubtotal, 177);
   assert.equal(totals([{ ...x2Grey, quantity: 2 }], ['MIROOOO']).finalSubtotal, 115);
   assert.equal(totals([{ ...x2Grey, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 159);
-  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 3);
-  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 2);
-  assert.equal(totals([x2Grey]).unlockedGiftsCount, 1);
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 0);
+  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 0);
+  assert.equal(totals([x2Grey]).unlockedGiftsCount, 0);
   assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 62);
   assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 79);
 

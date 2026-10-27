@@ -96,9 +96,16 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
   return raw.flatMap((value, index): CartItem[] => {
     if (!value || typeof value !== 'object') return [];
     const line = value as Partial<CartItem>;
-    if (line.isFree || /(?:^|:)free(?:$|:)/i.test(String(line.id || ''))) return [];
     const rawHandle = String(line.productHandle || line.productId || '');
     const resolvedHandle = UK_HANDLE_ALIASES[rawHandle.toLowerCase()] || rawHandle;
+    if (
+      line.isFree ||
+      /(?:^|:)free(?:$|:)/i.test(String(line.id || '')) ||
+      String(line.id || '').startsWith('gift-') ||
+      ((rawHandle === 'miroooo-gift-card' || rawHandle === 'gift-card') && !strict)
+    ) {
+      return [];
+    }
     const product = PRODUCTS[resolvedHandle];
     const quantity = Number(line.quantity ?? 1);
     if (!product || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 99) {
@@ -213,15 +220,15 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     if (x2Count === 1) {
       x2BundlePromoDiscount = 0;
       x2BundlePromoName = '';
-      extraBrushHeadSets = 1;
+      extraBrushHeadSets = 0;
     } else if (x2Count === 2) {
       x2BundlePromoDiscount = 10;
       x2BundlePromoName = 'Buy 2 bundle (£10 extra saving)';
-      extraBrushHeadSets = 2;
+      extraBrushHeadSets = 0;
     } else if (x2Count === 3) {
       x2BundlePromoDiscount = 30;
       x2BundlePromoName = 'Buy 3 bundle (£30 extra saving)';
-      extraBrushHeadSets = 3;
+      extraBrushHeadSets = 0;
     }
   }
 

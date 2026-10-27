@@ -185,14 +185,14 @@
 .cardImageWrap {
   width: 100%;
   aspect-ratio: 1 / 1;
-  max-width: 82px;
+  max-width: 98px;
   border-radius: 10px;
   background: #ffffff;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding: 2px;
   margin-bottom: 6px;
   box-sizing: border-box;
 }
@@ -214,34 +214,6 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.cardIncluded {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 6px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #2ee875;
-  line-height: 1;
-}
-
-.cardCheck {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #2ee875;
-  color: #101113;
-  flex-shrink: 0;
-}
-
-.cardCheck svg {
-  width: 8px;
-  height: 8px;
 }
 
 .cardList {
@@ -528,16 +500,11 @@
   }
 
   .cardImageWrap {
-    max-width: 64px;
+    max-width: 78px;
     border-radius: 8px;
   }
 
   .cardTitle {
     font-size: 10.5px;
-  }
-
-  .cardIncluded {
-    font-size: 9px;
-    margin-top: 4px;
   }
 }

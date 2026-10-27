@@ -363,100 +363,112 @@ body .header--halloween .announcement .miroooo-announcement-ticker,
   animation-duration: 267s !important;
 }
 
-/* Urgency Banner Halloween Variant */
-#shopify-section-template--24203751129433__main-product #miroooo-urgency-banner.x2-urgency-banner--halloween,
-#shopify-section-template--24203751129433__main-product #miroooo-x2-urgency-banner.x2-urgency-banner--halloween,
+/* Urgency Banner - Clean Normal Whitish/Blackish (Preserves Luxury Neutral Theme) */
+#miroooo-urgency-banner,
+.x2-urgency-banner,
 .halloween-theme #miroooo-urgency-banner,
 .halloween-theme .x2-urgency-banner,
 .halloween-theme #miroooo-x2-urgency-banner,
 .x2-urgency-banner.x2-urgency-banner--halloween {
-  background: #09040e url('/assets/halloween-banner-bg.jpg') no-repeat center center / cover !important;
-  background-image: linear-gradient(rgba(10, 5, 18, 0.25), rgba(10, 5, 18, 0.45)), url('/assets/halloween-banner-bg.jpg') !important;
-  background-color: #09040e !important;
-  background-size: cover !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
-  border: 1.5px solid #ff7a00 !important;
+  background: #e6e6e6 !important;
+  background-image: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
   border-radius: 14px !important;
-  box-shadow: 0 0 24px rgba(255, 122, 0, 0.4), inset 0 0 15px rgba(255, 122, 0, 0.15) !important;
-  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  color: #000000 !important;
 }
 
-#shopify-section-template--24203751129433__main-product #miroooo-urgency-banner.x2-urgency-banner--halloween:hover,
+#miroooo-urgency-banner:hover,
+.x2-urgency-banner:hover,
 .halloween-theme #miroooo-urgency-banner:hover,
 .halloween-theme .x2-urgency-banner:hover,
 .x2-urgency-banner.x2-urgency-banner--halloween:hover {
-  box-shadow: 0 0 30px rgba(255, 122, 0, 0.55), inset 0 0 18px rgba(255, 122, 0, 0.22) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
 }
 
+.x2-urgency-banner .x2-urgency-banner__icon,
 .x2-urgency-banner--halloween .x2-urgency-banner__icon {
-  animation: halloweenPumpkinGlow 2.5s ease-in-out infinite !important;
-  filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.8)) !important;
-  font-size: 28px !important;
+  font-size: 22px !important;
+  filter: none !important;
+  animation: x2FirePulse 2.2s ease-in-out infinite !important;
 }
 
+.x2-urgency-banner .x2-urgency-banner__eyebrow,
 .x2-urgency-banner--halloween .x2-urgency-banner__eyebrow {
-  color: #ff8c00 !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.08em !important;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
-}
-
-.x2-urgency-banner--halloween .x2-urgency-banner__headline {
-  color: #ffffff !important;
+  color: #666666 !important;
   font-weight: 700 !important;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  text-shadow: none !important;
 }
 
+.x2-urgency-banner .x2-urgency-banner__headline,
+.x2-urgency-banner--halloween .x2-urgency-banner__headline {
+  color: #000000 !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+.x2-urgency-banner .x2-urgency-banner__applied,
 .x2-urgency-banner--halloween .x2-urgency-banner__applied {
   background: #000000 !important;
-  border: 1.5px solid #ff7a00 !important;
+  border: 1px solid #000000 !important;
   color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(255, 122, 0, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
 }
 
+.x2-urgency-banner .x2-urgency-banner__applied:hover,
 .x2-urgency-banner--halloween .x2-urgency-banner__applied:hover {
-  box-shadow: 0 0 14px rgba(255, 122, 0, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
 }
 
+.x2-urgency-banner .x2-applied-icon,
 .x2-urgency-banner--halloween .x2-applied-icon {
-  color: #ff7a00 !important;
-  stroke: #ff7a00 !important;
+  color: #22c55e !important;
+  stroke: #22c55e !important;
 }
 
+.x2-urgency-banner .x2-applied-text,
 .x2-urgency-banner--halloween .x2-applied-text {
   color: #ffffff !important;
   font-weight: 800 !important;
 }
 
+.x2-urgency-banner .x2-timer-label,
 .x2-urgency-banner--halloween .x2-timer-label {
-  color: #ff8c00 !important;
-  font-weight: 800 !important;
+  color: #666666 !important;
+  font-weight: 700 !important;
   letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
 }
 
+.x2-urgency-banner .x2-timer-digits,
 .x2-urgency-banner--halloween .x2-timer-digits {
-  color: #ff7a00 !important;
+  color: #000000 !important;
   font-weight: 800 !important;
-  text-shadow: 0 0 8px rgba(255, 122, 0, 0.5) !important;
+  text-shadow: none !important;
 }
 
 @media (max-width: 767px) {
+  .x2-urgency-banner,
   .x2-urgency-banner--halloween {
     flex-direction: column !important;
     align-items: stretch !important;
     padding: 11px 14px !important;
     gap: 10px !important;
   }
+  .x2-urgency-banner .x2-urgency-banner__icon,
   .x2-urgency-banner--halloween .x2-urgency-banner__icon {
-    font-size: 25px !important;
+    font-size: 20px !important;
   }
+  .x2-urgency-banner .x2-urgency-banner__headline,
   .x2-urgency-banner--halloween .x2-urgency-banner__headline {
     white-space: normal !important;
     line-height: 1.3 !important;
   }
+  .x2-urgency-banner .x2-urgency-banner__right,
   .x2-urgency-banner--halloween .x2-urgency-banner__right {
-    border-top: 1px solid rgba(255, 122, 0, 0.25) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
     justify-content: space-between !important;
     width: 100% !important;
     padding-top: 6px !important;

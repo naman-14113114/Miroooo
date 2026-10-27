@@ -105,11 +105,11 @@ test('X1 and X2 displayed USD offers, gifts, and post-bundle promo rounding', ()
     assert.equal(totals([{ ...brush, quantity: 2 }], ['MIROOOO']).finalSubtotal, 152.18);
     assert.equal(totals([{ ...brush, quantity: 3 }], ['MIROOOO10']).finalSubtotal, 210.67);
   }
-  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 3);
-  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 2);
+  assert.equal(totals([{ ...x2Grey, quantity: 3 }]).unlockedGiftsCount, 0);
+  assert.equal(totals([{ ...x2Grey, quantity: 2 }]).unlockedGiftsCount, 0);
   assert.equal(totals([{ ...x1Grey, quantity: 3 }]).unlockedGiftsCount, 2);
   assert.equal(totals([{ ...x1Grey, quantity: 2 }]).unlockedGiftsCount, 1);
-  assert.equal(totals([x2Grey]).unlockedGiftsCount, 1);
+  assert.equal(totals([x2Grey]).unlockedGiftsCount, 0);
   assert.equal(totals([x2Grey], ['MIROOOO10']).finalSubtotal, 82.03);
   assert.equal(totals([x1Grey], ['MIROOOO']).finalSubtotal, 82.03);
   assert.equal(totals([x2Grey, { productHandle: 'miroooo-x2-heads', variantId: PRODUCTS['miroooo-x2-heads'].variants[0].id, quantity: 1 }]).finalSubtotal, 101.15);
@@ -169,7 +169,7 @@ test('split brush colors qualify together, promo aliases never stack, and client
   const pink = {...x2Grey, variantId: PRODUCTS['miroooo-x2'].variants.find(v => v.color === 'Pink')!.id};
   const pair = [x2Grey, pink];
   assert.equal(totals(pair).finalSubtotal, 169.10);
-  assert.equal(totals(pair).giftsValue, 20);
+  assert.equal(totals(pair).giftsValue, 0);
   assert.equal(totals(pair, ['MIROOOO', 'MIROOOO10']).finalSubtotal, 152.18);
   assert.equal(normalizeCartItems([...pair, {...head('x2', 99), id: 'miroooo-x2-heads:free', unitPrice: 0}], true).length, 2);
 });

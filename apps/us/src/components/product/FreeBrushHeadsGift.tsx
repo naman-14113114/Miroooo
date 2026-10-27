@@ -147,10 +147,6 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '$', onlyGiftCard 
                   />
                 </div>
                 <p className={styles.cardTitle}>{gift.title}</p>
-                <span className={styles.cardIncluded}>
-                  <span className={styles.cardCheck}><Checkmark /></span>
-                  Included Free
-                </span>
               </div>
             ))}
           </div>
