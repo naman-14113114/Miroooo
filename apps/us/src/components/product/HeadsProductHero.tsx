@@ -400,7 +400,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   <div className="bundle-tiers-container flex flex-col gap-4 mb-4" id="x2-plan-selector" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     {/* Plan 1: Subscription (Selected by default) */}
                     <div
-                      className={`bundle-tier-card ${x2Plan === 'subscription' ? 'is-selected' : ''}`}
+                      className={`bundle-tier-card has-top-badge ${x2Plan === 'subscription' ? 'is-selected' : ''}`}
                       id="x2-plan-subscription"
                       onClick={() => setX2Plan('subscription')}
                       style={{
@@ -414,8 +414,14 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                         transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
                       }}
                     >
-                      {/* Top Header Row: Pill & Best Value Badge */}
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <div className="tier-best-value-wrap badge-value">
+                        <div className="tier-best-value-ribbon">
+                          BEST VALUE
+                        </div>
+                      </div>
+
+                      {/* Top Header Row: Pill */}
+                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
                         <span style={{
                           fontSize: '11px',
                           fontWeight: 800,
@@ -429,20 +435,6 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                           alignItems: 'center',
                         }}>
                           SUBSCRIBE &amp; SAVE
-                        </span>
-                        <span style={{
-                          background: '#16a34a',
-                          color: '#ffffff',
-                          fontSize: '10.5px',
-                          fontWeight: 800,
-                          padding: '3px 10px',
-                          borderRadius: '9999px',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.04em',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                        }}>
-                          BEST VALUE
                         </span>
                       </div>
 

@@ -388,7 +388,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     <div className="flex flex-col gap-4 mb-4" id="x2-plan-selector" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                       {/* Plan 1: Subscription */}
                       <div
-                        className={`bundle-tier-card ${selectedPlan === 'subscription' ? 'is-selected' : ''}`}
+                        className={`bundle-tier-card has-top-badge ${selectedPlan === 'subscription' ? 'is-selected' : ''}`}
                         onClick={() => setSelectedPlan('subscription')}
                         style={{
                           cursor: 'pointer',
@@ -396,10 +396,17 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                           display: 'flex',
                           flexDirection: 'column',
                           gap: '12px',
+                          position: 'relative',
                         }}
                       >
-                        {/* Top Pill / Badge row */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="tier-best-value-wrap badge-value">
+                          <div className="tier-best-value-ribbon">
+                            BEST VALUE
+                          </div>
+                        </div>
+
+                        {/* Top Pill row */}
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                           <span
                             style={{
                               background: 'rgba(0, 0, 0, 0.08)',
@@ -413,20 +420,6 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                             }}
                           >
                             SUBSCRIBE &amp; SAVE
-                          </span>
-                          <span
-                            style={{
-                              background: '#16a34a',
-                              color: '#ffffff',
-                              fontSize: '11px',
-                              fontWeight: 800,
-                              letterSpacing: '0.04em',
-                              textTransform: 'uppercase',
-                              padding: '3px 10px',
-                              borderRadius: '9999px',
-                            }}
-                          >
-                            BEST VALUE
                           </span>
                         </div>
 
