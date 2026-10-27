@@ -778,12 +778,7 @@
       variant: "Silver / Single",
       title: "Very pleased with the build quality and clean",
       body: "The sweep action cleans between tight teeth without harsh scraping. Solid battery and very lightweight.",
-      images: [
-        "/assets_ref/reviews/miroooo-x2-customer-review-build-quality-sweep-action-cambridge-uk.webp",
-      ],
-      imageAlts: [
-        "Miroooo X2 Sonic Electric Toothbrush Build Quality and Clean Review - James H. in Cambridge UK",
-      ],
+      images: [],
       helpful: 17,
       verified: true,
     },
