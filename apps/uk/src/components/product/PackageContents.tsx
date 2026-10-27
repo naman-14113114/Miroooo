@@ -1,6 +1,6 @@
 'use client';
 
-import { x2Gallery } from '@/data/x2Gallery';
+
 import React from 'react';
 
 export interface PackageContentsProps {
@@ -102,7 +102,7 @@ export function PackageContents({
     );
   }
 
-  const imgSrc = (x2Gallery[color as keyof typeof x2Gallery] || x2Gallery.Silver).packagingImage;
+  const imgSrc = '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-package-contents-kit-flat-lay.webp';
 
   const desc = 'Miroooo X2 electric toothbrush in selected finish, 2x DuPont replacement brush heads, Luxury travel case, wall-mounted storage dock, and USB-C charging cable (adapter not included).';
 
@@ -152,7 +152,9 @@ export function PackageContents({
               <img
                 id="package-contents-section-img"
                 src={imgSrc}
-                alt="Miroooo Complete Set Presentation Packaging"
+                alt="Miroooo X2 Sonic Electric Toothbrush Package Contents & Flat Lay Kit"
+                width="2048"
+                height="2048"
                 style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }}
                 loading="eager"
                 decoding="async"

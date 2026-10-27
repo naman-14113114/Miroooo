@@ -58,7 +58,7 @@ export const x2Gallery = {
       "deepClean": "/assets_ref/x2/modes/miroooo-x2-sonic-deep-cleansing-mode-blue-led.webp"
     },
     "wallMountedImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp",
-    "packagingImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp"
+    "packagingImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-package-contents-kit-flat-lay.webp"
   },
   "Pink": {
     "images": [
@@ -115,7 +115,7 @@ export const x2Gallery = {
       "deepClean": "/assets_ref/x2/modes/miroooo-x2-sonic-pink-deep-cleansing-mode-blue-led.webp"
     },
     "wallMountedImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-wall-mounted-storage.webp",
-    "packagingImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp"
+    "packagingImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-package-contents-kit-flat-lay.webp"
   },
   "Grey": {
     "images": [
@@ -172,6 +172,6 @@ export const x2Gallery = {
       "deepClean": "/assets_ref/x2/modes/miroooo-x2-sonic-grey-deep-cleansing-mode-blue-led.webp"
     },
     "wallMountedImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wall-mounted-storage.webp",
-    "packagingImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp"
+    "packagingImage": "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-package-contents-kit-flat-lay.webp"
   }
 } as const;
