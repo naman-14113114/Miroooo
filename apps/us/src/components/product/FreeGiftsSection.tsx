@@ -7,6 +7,7 @@ interface FreeGiftsSectionProps {
 export function FreeGiftsSection({ isX2 = false }: FreeGiftsSectionProps) {
   const gifts = [
     {
+      id: 'travel-case',
       title: 'Ventilated Travel Case',
       normalPrice: 'Normally $35',
       image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-handbag-travel-case.webp',
@@ -14,6 +15,7 @@ export function FreeGiftsSection({ isX2 = false }: FreeGiftsSectionProps) {
       benefit: 'Hygienic magnetic closure with micro-ventilation ports keeps your brush fresh anywhere.',
     },
     {
+      id: 'battery-cable',
       title: isX2 ? '90-Day Battery & USB-C Cable' : '60-Day Battery & USB-C Cable',
       normalPrice: 'Normally $25',
       image: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-usbc-fast-charging-port.webp',
@@ -23,10 +25,11 @@ export function FreeGiftsSection({ isX2 = false }: FreeGiftsSectionProps) {
         : 'Ultra-efficient 60-day battery life with rapid braided USB-C fast charging.',
     },
     {
-      title: '2x DuPont™ Precision Brush Heads',
+      id: 'brush-heads',
+      title: 'Free Brush Heads',
       normalPrice: 'Normally $26',
-      image: isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp',
-      alt: isX2 ? 'Miroooo X2 DuPont 45-degree Bass Brush Heads' : 'Miroooo X1 DuPont Precision Brush Heads',
+      image: isX2 ? '/assets_ref/gifts/miroooo-x2-sonic-electric-toothbrush-free-replacement-brush-heads.webp' : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp',
+      alt: isX2 ? 'Miroooo X2 Sonic Electric Toothbrush Free DuPont Replacement Brush Heads' : 'Miroooo X1 DuPont Precision Brush Heads',
       benefit: isX2
         ? 'Genuine DuPont™ 45° Bass angled bristles for clinical gum-line plaque defense.'
         : 'Genuine DuPont™ high-density precision diamond bristles for gentle deep cleaning.',

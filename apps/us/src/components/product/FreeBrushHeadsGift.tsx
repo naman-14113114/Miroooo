@@ -48,14 +48,14 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '$', onlyGiftCard 
     },
     {
       id: 'brush-heads',
-      title: '2x Brush Heads',
+      title: 'Free Brush Heads',
       regularPrice: currency === '£' ? '£10' : '$10',
       image: isX1
         ? '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'
-        : '/assets_ref/x2/heads/B1.webp',
+        : '/assets_ref/gifts/miroooo-x2-sonic-electric-toothbrush-free-replacement-brush-heads.webp',
       alt: isX1
         ? 'One pair of Miroooo X1 replacement brush heads'
-        : 'One pair of Miroooo X2 replacement brush heads',
+        : 'Miroooo X2 Sonic Electric Toothbrush Free DuPont Replacement Brush Heads',
     },
   ];
 
