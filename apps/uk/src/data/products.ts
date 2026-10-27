@@ -348,8 +348,8 @@ export const PRODUCTS: Record<string, Product> = {
     ],
     galleryImages: [
       { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp', alt: 'Miroooo X2 Sonic Electric Toothbrush Silver with Global Dental Innovation 2026 Award and Luxury Travel Case', width: 1200, height: 1200, variantColor: 'Silver' },
-      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp?v=violet', alt: 'Miroooo X2 Pink with Glowing Smart Ring', width: 1200, height: 1200, variantColor: 'Pink' },
-      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp', alt: 'Miroooo X2 Grey Kit on Wet Stone', width: 1200, height: 1200, variantColor: 'Grey' },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp', alt: 'Miroooo X2 Sonic Electric Toothbrush Pink with Global Dental Innovation 2026 Award and Luxury Travel Case', width: 1200, height: 1200, variantColor: 'Pink' },
+      { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp', alt: 'Miroooo X2 Sonic Electric Toothbrush Grey with Global Dental Innovation 2026 Award and Luxury Travel Case', width: 1200, height: 1200, variantColor: 'Grey' },
       { src: '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp', alt: 'Miroooo X2 Silver Upright Grip', width: 700, height: 700, variantColor: 'Silver' },
     ],
     boxContents: [

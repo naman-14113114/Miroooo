@@ -287,16 +287,16 @@ export function ProductHero({
     const colorLower = selectedColor.toLowerCase();
     const heroImage =
       colorLower === 'pink'
-        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-glowing-ring.webp?v=violet'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp'
         : colorLower === 'grey'
-        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-wet-stone-kit.webp'
+        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp'
         : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp';
 
     const heroAlt =
       colorLower === 'pink'
-        ? 'Miroooo X2 Sonic Electric Toothbrush Pink with Violet Glowing Smart Ring'
+        ? 'Miroooo X2 Sonic Electric Toothbrush Pink with Global Dental Innovation 2026 Award and Luxury Travel Case'
         : colorLower === 'grey'
-        ? 'Miroooo X2 Sonic Electric Toothbrush Grey Kit on Wet Stone'
+        ? 'Miroooo X2 Sonic Electric Toothbrush Grey with Global Dental Innovation 2026 Award and Luxury Travel Case'
         : 'Miroooo X2 Sonic Electric Toothbrush Silver with Global Dental Innovation 2026 Award and Luxury Travel Case';
 
     const uprightGrip =
