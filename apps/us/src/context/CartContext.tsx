@@ -248,6 +248,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       if (existingIndex > -1) {
         const updated = [...currentItems];
+        if (itemData.productHandle === 'miroooo-x2-heads' && itemData.unitPrice !== undefined) {
+          updated[existingIndex] = {
+            ...updated[existingIndex],
+            quantity: itemData.quantity || 1,
+            unitPrice: itemData.unitPrice,
+            comparePrice: itemData.comparePrice ?? 13.0,
+            title: itemData.title || updated[existingIndex].title,
+            subtitle: itemData.subtitle || updated[existingIndex].subtitle,
+          };
+          return updated;
+        }
         updated[existingIndex] = {
           ...updated[existingIndex],
           quantity: updated[existingIndex].quantity + (itemData.quantity || 1),
@@ -260,12 +271,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         productHandle: itemData.productHandle,
         productId: product.plusBaseProductId,
         variantId: variant.id,
-        title: isBrush ? `${product.name} (${color})` : isFlosser ? `${product.name} (${variant.name})` : product.name,
-        subtitle: product.subtitle,
+        title: itemData.title || (isBrush ? `${product.name} (${color})` : isFlosser ? `${product.name} (${variant.name})` : product.name),
+        subtitle: itemData.subtitle || product.subtitle,
         color,
         quantity: itemData.quantity || 1,
-        unitPrice: variant.price ?? product.price,
-        comparePrice: variant.compareAt ?? product.compareAt,
+        unitPrice: itemData.unitPrice ?? (variant.price ?? product.price),
+        comparePrice: itemData.comparePrice ?? (variant.compareAt ?? product.compareAt),
         image: variant.image || product.galleryImages[0]?.src || '',
         url: `/products/${product.handle}${isBrush ? `?color=${color}` : ''}`,
       };

@@ -692,4 +692,93 @@ test('flosser cart calculates $69.00 subtotal, $139.00 compareAt, and unlocks co
   assert.equal(fallbackTotals.compareAt, 139.00);
 });
 
+test('Miroooo X2 Heads supports subscription ($10) and one-time bundles (1 @ $13, 3 @ $33, 6 @ $54) with $13 compareAt', () => {
+  const x2HeadsProduct = PRODUCTS['miroooo-x2-heads'];
+  assert.equal(x2HeadsProduct.compareAt, 13.0);
+  assert.equal(x2HeadsProduct.formattedCompareAt, '$13');
+
+  // 1. Subscription Plan (1 pack @ $10.00, compare at $13.00)
+  const subItem = {
+    id: 'x2-heads-sub',
+    productHandle: 'miroooo-x2-heads',
+    productId: x2HeadsProduct.plusBaseProductId,
+    variantId: x2HeadsProduct.variants[0].id,
+    title: 'Miroooo X2 Heads Plan (Subscription)',
+    subtitle: '2 Extra Brush Heads (Every 2 Months)',
+    color: 'Default',
+    quantity: 1,
+    unitPrice: 10.0,
+    comparePrice: 13.0,
+    image: x2HeadsProduct.variants[0].image,
+    url: '/products/miroooo-x2-heads',
+  };
+  const subTotals = calculateTotals([subItem], []);
+  assert.equal(subTotals.subtotal, 10.00);
+  assert.equal(subTotals.compareAt, 13.00);
+  assert.equal(subTotals.totalSavings, 3.00);
+
+  // 2. One-Time Buy 1 (1 pack @ $13.00, compare at $13.00, no cut)
+  const buy1Item = {
+    ...subItem,
+    id: 'x2-heads-1',
+    title: 'Miroooo X2 Heads (1 Packs)',
+    subtitle: '2 Brush Heads (One-Time Purchase)',
+    quantity: 1,
+    unitPrice: 13.0,
+    comparePrice: 13.0,
+  };
+  const buy1Totals = calculateTotals([buy1Item], []);
+  assert.equal(buy1Totals.subtotal, 13.00);
+  assert.equal(buy1Totals.compareAt, 13.00);
+  assert.equal(buy1Totals.totalSavings, 0.00);
+
+  // 3. One-Time Buy 3 (3 packs @ $11.00 each = $33.00, compare at $39.00)
+  const buy3Item = {
+    ...subItem,
+    id: 'x2-heads-3',
+    title: 'Miroooo X2 Heads (3 Packs)',
+    subtitle: '6 Brush Heads (One-Time Purchase)',
+    quantity: 3,
+    unitPrice: 11.0,
+    comparePrice: 13.0,
+  };
+  const buy3Totals = calculateTotals([buy3Item], []);
+  assert.equal(buy3Totals.subtotal, 33.00);
+  assert.equal(buy3Totals.compareAt, 39.00);
+  assert.equal(buy3Totals.totalSavings, 6.00);
+
+  // 4. One-Time Buy 6 (6 packs @ $9.00 each = $54.00, compare at $78.00)
+  const buy6Item = {
+    ...subItem,
+    id: 'x2-heads-6',
+    title: 'Miroooo X2 Heads (6 Packs)',
+    subtitle: '12 Brush Heads (One-Time Purchase)',
+    quantity: 6,
+    unitPrice: 9.0,
+    comparePrice: 13.0,
+  };
+  const buy6Totals = calculateTotals([buy6Item], []);
+  assert.equal(buy6Totals.subtotal, 54.00);
+  assert.equal(buy6Totals.compareAt, 78.00);
+  assert.equal(buy6Totals.totalSavings, 24.00);
+
+  // 5. Cart Normalization preserves custom X2 heads pricing and identities
+  const normalized = normalizeCartItems([
+    {
+      productHandle: 'miroooo-x2-heads',
+      quantity: 3,
+      unitPrice: 11.0,
+      comparePrice: 13.0,
+      title: 'Miroooo X2 Heads (3 Packs)',
+      subtitle: '6 Brush Heads (One-Time Purchase)',
+    },
+  ]);
+  assert.equal(normalized.length, 1);
+  assert.equal(normalized[0].unitPrice, 11.0);
+  assert.equal(normalized[0].comparePrice, 13.0);
+  assert.equal(normalized[0].quantity, 3);
+  assert.equal(normalized[0].title, 'Miroooo X2 Heads (3 Packs)');
+  assert.equal(normalized[0].subtitle, '6 Brush Heads (One-Time Purchase)');
+});
+
 

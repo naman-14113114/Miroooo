@@ -120,17 +120,20 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
       return [];
     }
     const isBrush = product.handle === 'miroooo-x' || product.handle === 'miroooo-x2';
+    const isX2Heads = product.handle === 'miroooo-x2-heads';
+    const hasCustomX2Pricing = isX2Heads && typeof line.unitPrice === 'number' && [10, 13, 11, 9].includes(line.unitPrice);
+
     return [{
       id: String(line.id || `${product.handle}-${variant.color}-${index}`),
       productHandle: product.handle,
       productId: product.plusBaseProductId,
       variantId: variant.id,
-      title: isBrush ? `${product.name} (${variant.color})` : product.name,
-      subtitle: product.subtitle,
+      title: isX2Heads && line.title ? line.title : (isBrush ? `${product.name} (${variant.color})` : product.name),
+      subtitle: isX2Heads && line.subtitle ? line.subtitle : product.subtitle,
       color: variant.color,
       quantity,
-      unitPrice: variant.price ?? product.price,
-      comparePrice: variant.compareAt ?? product.compareAt,
+      unitPrice: hasCustomX2Pricing ? line.unitPrice! : (variant.price ?? product.price),
+      comparePrice: isX2Heads ? (typeof line.comparePrice === 'number' ? line.comparePrice : (variant.compareAt ?? product.compareAt ?? 13.0)) : (variant.compareAt ?? product.compareAt),
       image: variant.image,
       url: `/products/${product.handle}${isBrush ? `?color=${variant.color}` : ''}`,
     }];
@@ -160,6 +163,9 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let x2ItemCompare = 0;
   let x1ItemCompare = 0;
   let flosserItemCompare = 0;
+  let x2HeadsCustomSubtotal = 0;
+  let hasCustomX2Pricing = false;
+  let x2HeadsStandardCount = 0;
 
   items.forEach((item) => {
     const qty = item.quantity || 1;
@@ -180,7 +186,17 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
       otherItemsSubtotal += effectiveUnitPrice * qty;
       flosserItemCompare += (item.comparePrice || 139.0) * qty;
     }
-    else if (item.productHandle === 'miroooo-x2-heads') x2HeadsCount += qty;
+    else if (item.productHandle === 'miroooo-x2-heads') {
+      x2HeadsCount += qty;
+      const isCustomPrice = item.unitPrice === 13 || item.unitPrice === 11 || item.unitPrice === 9 ||
+        (item.unitPrice === 10 && (item.title?.toLowerCase().includes('subscription') || item.title?.toLowerCase().includes('plan')));
+      if (isCustomPrice) {
+        hasCustomX2Pricing = true;
+        x2HeadsCustomSubtotal += item.unitPrice * qty;
+      } else {
+        x2HeadsStandardCount += qty;
+      }
+    }
     else if (item.productHandle === 'miroooo-x1-heads') x1HeadsCount += qty;
     else {
       otherItemsQty += qty;
@@ -200,17 +216,16 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = x2Count === 0 && (x1Count === 1 || x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: flosser 139, X2 brush 139, X1 brush 139, heads 20)
+  // Compare At calculations (base compare: flosser 139, X2 brush 139, X1 brush 139, X2 heads 13, X1 heads 20)
   const flosserCompare = flosserItemCompare || (flosserCount * 139.0);
   const x2Compare = x2ItemCompare || (x2Count * 139);
   const x1Compare = x1ItemCompare || (x1Count * 139);
-  const x2HeadsCompare = x2HeadsCount * 20;
+  const x2HeadsCompare = x2HeadsCount * 13;
   const x1HeadsCompare = x1HeadsCount * 20;
   const compareAt = flosserCompare + x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare + otherItemsCompareAt;
 
   // Base savings on brushes (reference canonical: x1Count * 69, x2Count * 69)
   const baseBrushCompareSavings = Math.max(0, (x2Compare - (x2Count === 1 ? x2ItemSubtotal : (x2Count === 2 ? 128 : (x2Count === 3 ? 177 : x2ItemSubtotal)))) + (x1Compare - (x1Count === 1 ? x1ItemSubtotal : (x1Count === 2 ? 128 : (x1Count === 3 ? 177 : x1ItemSubtotal)))));
-  const baseHeadsCompareSavings = x2HeadsCount * (20 - 10) + x1HeadsCount * (20 - 10);
 
   let x2BundlePromoDiscount = 0;
   let x2BundlePromoName = '';
@@ -272,12 +287,18 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     unlockedGiftsCount += extraX1BrushHeadSets;
   }
 
-  const headsBase = x2HeadsCount * 10 + x1HeadsCount * 10;
-  const headsNet = getHeadsNetGBP(x2HeadsCount) + getHeadsNetGBP(x1HeadsCount);
-  const headsBundleDiscount = headsBase - headsNet;
-  const headsBundleCount = x1HeadsCount || x2HeadsCount;
-
   // Net calculation per brush model (reference rule: x2Count * 69, x1Count * 69)
+  const x2HeadsNet = (hasCustomX2Pricing ? x2HeadsCustomSubtotal : 0) + (x2HeadsStandardCount > 0 ? getHeadsNetGBP(x2HeadsStandardCount) : 0);
+  const x1HeadsNet = getHeadsNetGBP(x1HeadsCount);
+  const headsNet = x2HeadsNet + x1HeadsNet;
+  const x1HeadsBundleDiscount = Math.max(0, x1HeadsCount * 10 - x1HeadsNet);
+  const x2HeadsSavings = Math.max(0, x2HeadsCompare - x2HeadsNet);
+  const headsBundleDiscount = hasCustomX2Pricing
+    ? (x1HeadsBundleDiscount + (x2HeadsStandardCount > 0 ? (x2HeadsStandardCount * 10 - getHeadsNetGBP(x2HeadsStandardCount)) : 0))
+    : (x2HeadsCount * 10 + x1HeadsCount * 10 - headsNet);
+  const headsBundleCount = x1HeadsCount || x2HeadsCount;
+  const baseHeadsCompareSavings = (hasCustomX2Pricing ? x2HeadsSavings : (x2HeadsCount * (20 - 10))) + x1HeadsCount * (20 - 10);
+
   const x2Net = x1Count === 0
     ? (x2Count === 1 ? x2ItemSubtotal : (x2Count === 2 ? 128 : (x2Count === 3 ? 177 : Math.max(0, x2ItemSubtotal - x2BundlePromoDiscount))))
     : x2ItemSubtotal;

@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CartMinimalHeader } from "@/components/layout/CartMinimalHeader";
 import { CartMinimalFooter } from "@/components/layout/CartMinimalFooter";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { KlaviyoAnalytics } from "@/components/integrations/KlaviyoAnalytics";
 import "@/styles/globals.css";
 
 const inter = localFont({
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="prefetch" href="/assets_ref/gifts/miroooo-x2-silver-digital-gift-card.webp" as="image" />
       </head>
       <body style={{ backgroundColor: "#080909" }}>
+        <KlaviyoAnalytics />
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){

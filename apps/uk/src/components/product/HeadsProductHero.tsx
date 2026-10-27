@@ -22,6 +22,8 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   const isOutOfStock = product.handle === 'wall-mounted-dock' || product.handle === 'travel-case' || product.handle === 'x1-charger' || product.handle === 'miroooo-x1-charging-dock' || product.handle === 'x1-charging-dock';
 
   const [quantity, setQuantity] = useState(1);
+  const [selectedPlan, setSelectedPlan] = useState<'subscription' | 'onetime'>('subscription');
+  const [onetimeTier, setOnetimeTier] = useState<1 | 3 | 6>(1);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isLightboxZoomed, setIsLightboxZoomed] = useState(false);
@@ -58,6 +60,25 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
     : (product.price || 9) * quantity;
   const comparePrice = isHeads ? quantity * 20.0 : (product.compareAt || 18) * quantity;
   const selectedTier = quantity === 1 ? 'single' : quantity === 2 ? 'bundle-2' : quantity === 3 ? 'bundle-3' : 'custom';
+
+  const x2CurrentPrice = selectedPlan === 'subscription'
+    ? 10.0
+    : onetimeTier === 1
+    ? 13.0
+    : onetimeTier === 3
+    ? 33.0
+    : 54.0;
+
+  const x2CurrentComparePrice = selectedPlan === 'subscription'
+    ? 13.0
+    : onetimeTier === 1
+    ? 13.0
+    : onetimeTier === 3
+    ? 39.0
+    : 78.0;
+
+  const x2PacksCount = selectedPlan === 'subscription' ? 1 : onetimeTier;
+  const x2BrushHeadsCount = x2PacksCount * 2;
 
   // Match the reference delivery estimate and countdown.
   useEffect(() => {
@@ -156,11 +177,34 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
 
   const handleAddToCart = () => {
     if (isOutOfStock) return;
-    addItem({
-      productHandle: product.handle,
-      color: 'Default',
-      quantity,
-    });
+    if (isX2) {
+      if (selectedPlan === 'subscription') {
+        addItem({
+          productHandle: 'miroooo-x2-heads',
+          quantity: 1,
+          unitPrice: 10.0,
+          comparePrice: 13.0,
+          title: 'Miroooo X2 Heads Plan (Subscription)',
+          subtitle: '2 Extra Brush Heads (Every 2 Months)',
+        });
+      } else {
+        const unitPrice = onetimeTier === 1 ? 13.0 : onetimeTier === 3 ? 11.0 : 9.0;
+        addItem({
+          productHandle: 'miroooo-x2-heads',
+          quantity: onetimeTier,
+          unitPrice,
+          comparePrice: 13.0,
+          title: onetimeTier === 1 ? 'Miroooo X2 Heads (1 Pack)' : `Miroooo X2 Heads (${onetimeTier} Packs)`,
+          subtitle: `${onetimeTier * 2} Brush Heads (One-Time Purchase)`,
+        });
+      }
+    } else {
+      addItem({
+        productHandle: product.handle,
+        color: 'Default',
+        quantity,
+      });
+    }
     router.push('/cart');
   };
 
@@ -291,20 +335,22 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
               <div className="product__price grid gap-2 mt-1" id="main-product-price-section">
                 <div className="flex flex-wrap items-baseline gap-2" style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                    {isOutOfStock ? `£${product.price}` : formatGBP(totalPrice)}
+                    {isX2 ? formatGBP(x2CurrentPrice) : (isOutOfStock ? `£${product.price}` : formatGBP(totalPrice))}
                   </span>
-                  {comparePrice > totalPrice && (
+                  {(isX2 ? (x2CurrentComparePrice > x2CurrentPrice) : (comparePrice > totalPrice)) && (
                     <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
-                      {formatGBP(comparePrice)}
+                      {formatGBP(isX2 ? x2CurrentComparePrice : comparePrice)}
                     </span>
                   )}
-                  <span
-                    className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
-                    id="main-discount-badge"
-                    style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
-                  >
-                    50% OFF
-                  </span>
+                  {!isX2 && (
+                    <span
+                      className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
+                      id="main-discount-badge"
+                      style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
+                    >
+                      50% OFF
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -333,12 +379,287 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   <div className="bundle-header-divider flex items-center gap-3 my-4">
                     <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
                     <span className="font-bold uppercase" style={{ fontSize: 15, lineHeight: 'normal', letterSpacing: '0.12em', color: 'rgba(255, 255, 255, 0.7)' }}>
-                      BUNDLE &amp; SAVE + FREE SHIPPING
+                      {isX2 ? 'CHOOSE YOUR PLAN' : 'BUNDLE & SAVE + FREE SHIPPING'}
                     </span>
                     <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
                   </div>
 
-                  <div className="bundle-tiers-container flex flex-col gap-4 mb-4" id="bundle-tiers" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {isX2 ? (
+                    <div className="flex flex-col gap-4 mb-4" id="x2-plan-selector" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {/* Plan 1: Subscription */}
+                      <div
+                        className={`bundle-tier-card ${selectedPlan === 'subscription' ? 'is-selected' : ''}`}
+                        onClick={() => setSelectedPlan('subscription')}
+                        style={{
+                          cursor: 'pointer',
+                          padding: '16px 18px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '12px',
+                        }}
+                      >
+                        {/* Top Pill / Badge row */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span
+                            style={{
+                              background: 'rgba(0, 0, 0, 0.08)',
+                              color: '#111111',
+                              fontSize: '11px',
+                              fontWeight: 800,
+                              letterSpacing: '0.08em',
+                              textTransform: 'uppercase',
+                              padding: '3px 10px',
+                              borderRadius: '9999px',
+                            }}
+                          >
+                            SUBSCRIBE &amp; SAVE
+                          </span>
+                          <span
+                            style={{
+                              background: '#16a34a',
+                              color: '#ffffff',
+                              fontSize: '11px',
+                              fontWeight: 800,
+                              letterSpacing: '0.04em',
+                              textTransform: 'uppercase',
+                              padding: '3px 10px',
+                              borderRadius: '9999px',
+                            }}
+                          >
+                            BEST VALUE
+                          </span>
+                        </div>
+
+                        {/* Middle row: Radio + Thumbnail + Info + Price */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <div className="tier-radio" style={{ marginTop: 0 }}>
+                            <div className="tier-radio-dot"></div>
+                          </div>
+
+                          <img
+                            src={images[0]?.src || '/assets_ref/x2/heads/B1.webp'}
+                            alt="Miroooo X2 Toothbrush Heads"
+                            width="56"
+                            height="56"
+                            style={{
+                              width: '56px',
+                              height: '56px',
+                              borderRadius: '8px',
+                              objectFit: 'cover',
+                              flexShrink: 0,
+                              background: '#ffffff',
+                              border: '1px solid rgba(0, 0, 0, 0.08)',
+                            }}
+                          />
+
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontWeight: 700, fontSize: '15px', color: '#111111', lineHeight: 1.25 }}>
+                              Miroooo X2 Toothbrush Heads Plan
+                            </div>
+                            <div style={{ fontSize: '12.5px', color: '#555555', marginTop: '3px', lineHeight: 1.3 }}>
+                              2 extra brush heads (1 set) · Every 2 months
+                            </div>
+                          </div>
+
+                          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', justifyContent: 'flex-end' }}>
+                              <span style={{ fontWeight: 800, fontSize: '1.2rem', color: '#111111' }}>
+                                £10.00
+                              </span>
+                              <span className="price-compare-strike" style={{ fontSize: '12px', color: '#777777', textDecoration: 'line-through' }}>
+                                £13.00
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bullet points */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', paddingLeft: '32px', fontSize: '12.5px', color: '#333333' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span style={{ color: '#16a34a', fontWeight: 700 }}>✓</span>
+                            <span>Pause or cancel anytime.</span>
+                          </div>
+                        </div>
+
+                        {/* Dental recommendation callout box */}
+                        <div
+                          style={{
+                            background: '#edf7ed',
+                            border: '1px solid #c8e6c9',
+                            borderRadius: '10px',
+                            padding: '10px 12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
+                            marginTop: '4px',
+                            fontSize: '12px',
+                            color: '#1e4620',
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" style={{ flexShrink: 0, color: '#16a34a' }}>
+                            <path d="M12.3486 5.94629C13.7151 5.38968 14.8939 5.31493 15.8154 5.65332L15.9961 5.72656L15.998 5.72754C16.7236 6.04497 17.2738 6.63622 17.5898 7.45898L17.6504 7.62695C18.0168 8.73165 17.9667 9.59776 17.7559 10.3057C17.5945 10.8472 17.3364 11.3091 17.0635 11.7344L16.7881 12.1484L16.7842 12.1562C16.6838 12.3114 16.5157 12.5408 16.4023 12.7549H16.4033C16.2309 13.0425 16.0931 13.4204 15.9775 13.8047C15.917 14.006 15.8597 14.2195 15.8037 14.4355L15.6406 15.082V15.083C15.4391 15.8947 15.2632 16.5832 15.0244 17.0723C14.823 17.4846 14.6303 17.6496 14.4248 17.6904H14.3145C14.1286 17.6904 13.9973 17.6399 13.8926 17.5615C13.7809 17.4779 13.6759 17.3453 13.5791 17.1523C13.4288 16.8527 13.3282 16.4727 13.2383 16.0537L13.1514 15.624L13.1504 15.6201L13.0645 15.2119C13.0275 15.0441 12.9826 14.8556 12.9336 14.6787C12.8852 14.5042 12.827 14.3197 12.7588 14.1719C12.7257 14.1002 12.6797 14.0128 12.6162 13.9365C12.5711 13.8824 12.4564 13.761 12.2725 13.7314L12.1895 13.7246C11.955 13.7247 11.8124 13.8771 11.7617 13.9385C11.6985 14.015 11.6531 14.1029 11.6201 14.1748C11.5522 14.3232 11.4936 14.5086 11.4453 14.6836C11.3964 14.8607 11.3514 15.0497 11.3145 15.2168L11.2295 15.6182L11.2285 15.624C11.1123 16.211 11.0001 16.7529 10.7998 17.1523C10.703 17.3453 10.5981 17.4779 10.4863 17.5615C10.3817 17.6398 10.2511 17.6904 10.0654 17.6904C9.81849 17.6904 9.59354 17.5455 9.35547 17.0566C9.11642 16.5657 8.94084 15.8776 8.73926 15.0713C8.63239 14.6438 8.519 14.1946 8.39648 13.792C8.30613 13.4951 8.20484 13.204 8.08789 12.9561L7.96582 12.7236L7.96094 12.7158L7.58887 12.1455H7.58789C7.22346 11.6046 6.83448 11.0254 6.61719 10.3047C6.41715 9.64104 6.35906 8.83843 6.6543 7.83105L6.71777 7.62695C7.02049 6.71891 7.59524 6.07549 8.36523 5.72461L8.36426 5.72363C9.30992 5.30619 10.5531 5.35325 12.0088 5.94629L12.1787 6.01562L12.3486 5.94629Z" />
+                          </svg>
+                          <span style={{ fontWeight: 500 }}>
+                            Dentists recommend changing toothbrush heads every 2 months.
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Plan 2: Without subscription plan */}
+                      <div
+                        className={`bundle-tier-card ${selectedPlan === 'onetime' ? 'is-selected' : ''}`}
+                        onClick={() => setSelectedPlan('onetime')}
+                        style={{
+                          cursor: 'pointer',
+                          padding: '16px 18px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '12px',
+                        }}
+                      >
+                        {/* Header Row */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <div className="tier-radio" style={{ marginTop: 0 }}>
+                            <div className="tier-radio-dot"></div>
+                          </div>
+
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontWeight: 700, fontSize: '15px', color: '#111111', lineHeight: 1.25 }}>
+                              Without subscription plan
+                            </div>
+                            <div style={{ fontSize: '12.5px', color: '#555555', marginTop: '3px', lineHeight: 1.3 }}>
+                              One-time purchase · Select from 1, 3, or 6 packs
+                            </div>
+                          </div>
+
+                          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                            <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#111111' }}>
+                              From £13.00
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Sub-options when Without subscription plan is active */}
+                        {selectedPlan === 'onetime' && (
+                          <div className="bundle-tiers-container flex flex-col gap-4 mt-3" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            {/* Option 1: Buy 1 */}
+                            <div
+                              className={`bundle-tier-card ${onetimeTier === 1 ? 'is-selected' : ''}`}
+                              data-tier="single"
+                              onClick={(e) => { e.stopPropagation(); setOnetimeTier(1); }}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <button type="button" className="tier-header-btn" aria-label="Select Buy 1 Pack">
+                                <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                                <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 1</span>
+                                    </div>
+                                    <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555' }}>1 Pack (2 Brush Heads)</p>
+                                  </div>
+                                  <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
+                                    <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                                      <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                        £13.00
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
+
+                            {/* Option 2: Buy 3 (Most Popular) */}
+                            <div
+                              className={`bundle-tier-card has-top-badge ${onetimeTier === 3 ? 'is-selected' : ''}`}
+                              data-tier="bundle-2"
+                              onClick={(e) => { e.stopPropagation(); setOnetimeTier(3); }}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <div className="tier-popular-badge-wrap badge-popular">
+                                <div className="tier-popular-seal">
+                                  <svg width="84" height="53" viewBox="0 0 90 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 85.0 28.0 Q 80.2 31.2 83.0 35.1 Q 76.8 37.3 77.4 41.5 Q 70.2 42.5 68.5 46.6 Q 61.2 46.3 57.4 49.9 Q 50.6 48.2 45.0 51.0 Q 39.4 48.2 32.6 49.9 Q 28.8 46.3 21.5 46.6 Q 19.8 42.5 12.6 41.5 Q 13.2 37.3 7.0 35.1 Q 9.8 31.2 5.0 28.0 Q 9.8 24.8 7.0 20.9 Q 13.2 18.7 12.6 14.5 Q 19.8 13.5 21.5 9.4 Q 28.8 9.7 32.6 6.1 Q 39.4 7.8 45.0 5.0 Q 50.6 7.8 57.4 6.1 Q 61.2 9.7 68.5 9.4 Q 70.2 13.5 77.4 14.5 Q 76.8 18.7 83.0 20.9 Q 80.2 24.8 85.0 28.0 Z" fill="#22c55e" />
+                                    <ellipse cx="45" cy="28" rx="34" ry="18.5" stroke="rgba(255, 255, 255, 0.45)" strokeWidth="0.9" strokeDasharray="2 1.5" fill="none" />
+                                    <text x="45" y="23" textAnchor="middle" fill="#ffffff" fontFamily="'Playfair Display', Georgia, serif" fontSize="12.5" fontStyle="italic" fontWeight="600" letterSpacing="0.3">Most</text>
+                                    <text x="45" y="37.5" textAnchor="middle" fill="#ffffff" fontFamily="'Inter', -apple-system, sans-serif" fontSize="11" fontWeight="800" letterSpacing="0.5">Popular</text>
+                                  </svg>
+                                </div>
+                              </div>
+                              <button type="button" className="tier-header-btn" aria-label="Select Buy 3 Tier">
+                                <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                                <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 3</span>
+                                    </div>
+                                    <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>3 Packs (6 Brush Heads)</p>
+                                  </div>
+                                  <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
+                                    <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                                      <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                        £33.00
+                                      </span>
+                                      <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
+                                        £39.00
+                                      </span>
+                                    </div>
+                                    <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
+                                      <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
+                                        (£11 each)
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
+
+                            {/* Option 3: Buy 6 (Best Value) */}
+                            <div
+                              className={`bundle-tier-card has-top-badge ${onetimeTier === 6 ? 'is-selected' : ''}`}
+                              data-tier="bundle-3"
+                              onClick={(e) => { e.stopPropagation(); setOnetimeTier(6); }}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <div className="tier-best-value-wrap badge-value">
+                                <div className="tier-best-value-ribbon">
+                                  BEST VALUE
+                                </div>
+                              </div>
+                              <button type="button" className="tier-header-btn" aria-label="Select Buy 6 Tier">
+                                <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                                <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 6</span>
+                                    </div>
+                                    <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>6 Packs (12 Brush Heads)</p>
+                                  </div>
+                                  <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
+                                    <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                                      <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                        £54.00
+                                      </span>
+                                      <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
+                                        £78.00
+                                      </span>
+                                    </div>
+                                    <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
+                                      <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
+                                        (£9 each)
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bundle-tiers-container flex flex-col gap-4 mb-4" id="bundle-tiers" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {/* Tier 1: Buy 1 */}
                     <div
                       className={`bundle-tier-card ${selectedTier === 'single' ? 'is-selected' : ''}`}
@@ -459,11 +780,12 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                       </button>
                     </div>
                   </div>
+                  )}
                 </>
               )}
 
               {/* Quantity Selector (In Stock only) */}
-              {!isOutOfStock && (
+              {!isOutOfStock && !isX2 && (
                 <div className="heads-quantity-selector my-4" style={{ margin: '20px 0 16px 0' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{isHeads ? 'OR CHOOSE QUANTITY:' : 'QUANTITY:'}</span>
@@ -652,11 +974,19 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     <img id="sticky-bar-img" src={images[0].src} alt={product.name} width="54" height="54" loading="eager" decoding="async" />
                   </div>
                   <div className="miroooo-sticky-info">
-                    <p className="miroooo-sticky-title" id="sticky-bar-title">{product.name} ({quantity} Pack{quantity > 1 ? 's' : ''})</p>
+                    <p className="miroooo-sticky-title" id="sticky-bar-title">
+                      {isX2
+                        ? (selectedPlan === 'subscription' ? 'Miroooo X2 Heads Plan (Subscription)' : (onetimeTier === 1 ? 'Miroooo X2 Heads (1 Pack)' : `Miroooo X2 Heads (${onetimeTier} Packs)`))
+                        : `${product.name} (${quantity} Pack${quantity > 1 ? 's' : ''})`}
+                    </p>
                     <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
-                      <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>{formatGBP(totalPrice)}</span>
+                      <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
+                        {isX2 ? formatGBP(x2CurrentPrice) : formatGBP(totalPrice)}
+                      </span>
                       <span className="miroooo-sticky-bullet">·</span>
-                      <span id="sticky-bar-gifts" className="miroooo-sticky-gifts-tag" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>{quantity * 2} Brush Heads</span>
+                      <span id="sticky-bar-gifts" className="miroooo-sticky-gifts-tag" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>
+                        {isX2 ? `${x2BrushHeadsCount} Brush Heads` : `${quantity * 2} Brush Heads`}
+                      </span>
                     </p>
                   </div>
                 </div>

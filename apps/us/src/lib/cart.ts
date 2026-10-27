@@ -122,17 +122,20 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
       return [];
     }
     const isBrush = product.handle === 'miroooo-x' || product.handle === 'miroooo-x2';
+    const isX2Heads = product.handle === 'miroooo-x2-heads';
+    const hasCustomX2Price = isX2Heads && typeof line.unitPrice === 'number' && [10, 13, 11, 9].includes(line.unitPrice);
+
     return [{
       id: String(line.id || `${product.handle}-${variant.color}-${index}`),
       productHandle: product.handle,
       productId: product.plusBaseProductId,
       variantId: variant.id,
-      title: isBrush ? `${product.name} (${variant.color})` : product.name,
-      subtitle: product.subtitle,
+      title: isX2Heads && line.title ? line.title : isBrush ? `${product.name} (${variant.color})` : product.name,
+      subtitle: isX2Heads && line.subtitle ? line.subtitle : product.subtitle,
       color: variant.color,
       quantity,
-      unitPrice: variant.price ?? product.price,
-      comparePrice: variant.compareAt ?? product.compareAt,
+      unitPrice: hasCustomX2Price ? line.unitPrice! : (variant.price ?? product.price),
+      comparePrice: hasCustomX2Price ? (line.comparePrice ?? 13.0) : (variant.compareAt ?? product.compareAt),
       image: variant.image,
       url: `/products/${product.handle}${isBrush ? `?color=${variant.color}` : ''}`,
     }];
@@ -191,9 +194,40 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const extraX1BrushHeadSets = x2Count === 0 ? (x1Count === 2 ? 1 : x1Count === 3 ? 2 : 0) : 0;
   const extraBrushHeadSets = 0;
   const brushBase = x1Count * cents(x1.price) + x2Count * cents(x2.price);
-  const headsBase = x1HeadsCount * cents(h1.price) + x2HeadsCount * cents(h2.price);
-  const headsNet = getHeadsNetCents(x1HeadsCount) + getHeadsNetCents(x2HeadsCount);
-  const headsBundleDiscount = (headsBase - headsNet) / 100;
+
+  // Support custom unitPrice (10, 13, 11, 9) and compareAt base of 13 for X2 heads
+  let x2HeadsNetCents = 0;
+  let x2HeadsBaseCents = 0;
+  let x2HeadsCompareCents = 0;
+  let hasCustomX2Heads = false;
+
+  items.forEach((item) => {
+    if (item.productHandle === 'miroooo-x2-heads') {
+      const qty = item.quantity || 1;
+      const unitPrice = typeof item.unitPrice === 'number' && [10, 13, 11, 9].includes(item.unitPrice)
+        ? item.unitPrice
+        : undefined;
+      if (unitPrice !== undefined) {
+        hasCustomX2Heads = true;
+        x2HeadsNetCents += cents(unitPrice) * qty;
+        const itemCompare = item.comparePrice || 13.0;
+        x2HeadsCompareCents += cents(itemCompare) * qty;
+        x2HeadsBaseCents += cents(itemCompare) * qty;
+      }
+    }
+  });
+
+  if (!hasCustomX2Heads) {
+    x2HeadsNetCents = getHeadsNetCents(x2HeadsCount);
+    x2HeadsBaseCents = x2HeadsCount * cents(h2.price);
+    x2HeadsCompareCents = x2HeadsCount * cents(h2.compareAt);
+  }
+
+  const x1HeadsBaseCents = x1HeadsCount * cents(h1.price);
+  const x1HeadsNetCents = getHeadsNetCents(x1HeadsCount);
+  const headsBase = x1HeadsBaseCents + x2HeadsBaseCents;
+  const headsNet = x1HeadsNetCents + x2HeadsNetCents;
+  const headsBundleDiscount = Math.max(0, (headsBase - headsNet) / 100);
   const brushNet = tier ? cents(tier.price) : brushBase;
   const hasPromo = appliedPromoCodes.some((code) => VALID_PROMO_CODES.includes(code.trim().toUpperCase()));
   // Native XPage promo tiers include the provider's cent rounding. Other carts use
@@ -205,7 +239,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const flosserCompare = flosserCompareCents || (flosserCount * cents(139.00));
   const x1CompareCents = x1Count * (x1.compareAt > 0 ? cents(x1.compareAt) : cents(x1.price));
   const compareAtCents = flosserCompare + x1CompareCents + x2Count * cents(x2.compareAt)
-    + x1HeadsCount * cents(h1.compareAt) + x2HeadsCount * cents(h2.compareAt) + otherItemsCompareCents;
+    + x1HeadsCount * cents(h1.compareAt) + x2HeadsCompareCents + otherItemsCompareCents;
   let giftsValue = roundMoney(extraX1BrushHeadSets * h1.price + extraBrushHeadSets * h2.price);
   let unlockedGiftsCount = extraX1BrushHeadSets + extraBrushHeadSets;
   let hasFreeGiftCard = false;
@@ -249,7 +283,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     isHeadsOnly,
     isX1Heads: x1HeadsCount > 0, isX2Heads: x2HeadsCount > 0,
     extraBrushHeadSets, extraX1BrushHeadSets, x1Count, x2Count, x1HeadsCount, x2HeadsCount,
-    bundleEligible: isX1Bundle || isX2Bundle || (isHeadsOnly && ((x1HeadsCount >= 1 && x1HeadsCount <= 3 && x2HeadsCount === 0) || (x2HeadsCount >= 1 && x2HeadsCount <= 3 && x1HeadsCount === 0))),
+    bundleEligible: isX1Bundle || isX2Bundle || (isHeadsOnly && ((x1HeadsCount >= 1 && x1HeadsCount <= 3 && x2HeadsCount === 0) || (x2HeadsCount >= 1 && x2HeadsCount <= 6 && x1HeadsCount === 0))),
     hasFreeGiftCard,
   };
 }

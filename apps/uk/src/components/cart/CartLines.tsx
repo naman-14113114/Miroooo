@@ -145,7 +145,7 @@ export function CartLines({
           .filter((item) => item.productHandle !== "miroooo-package-protection")
           .map((item) => ({
           ...item,
-          comparePrice: item.productHandle.endsWith('-heads') ? 10 : item.comparePrice,
+          comparePrice: item.productHandle === 'miroooo-x2-heads' ? (item.comparePrice || 13) : (item.productHandle.endsWith('-heads') ? 10 : item.comparePrice),
           subtitle:
             item.productHandle === "miroooo-x2"
               ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life."

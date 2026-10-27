@@ -8,6 +8,8 @@ import { Footer } from "@/components/layout/Footer";
 import { CartMinimalHeader } from "@/components/layout/CartMinimalHeader";
 import { CartMinimalFooter } from "@/components/layout/CartMinimalFooter";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { KlaviyoAnalytics } from "@/components/integrations/KlaviyoAnalytics";
+
 import "@/styles/globals.css";
 
 const inter = localFont({
@@ -116,7 +118,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           `}
         </Script>
 
+        <KlaviyoAnalytics />
         <CartProvider>
+
           <RouteChrome
             cartHeader={<CartMinimalHeader />}
             cartFooter={<CartMinimalFooter />}

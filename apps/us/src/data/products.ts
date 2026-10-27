@@ -441,9 +441,9 @@ export const PRODUCTS: Record<string, Product> = {
     description:
       '2-pack replacement DuPont precision brush heads. Designed specifically for the Miroooo X2 dynamic 45° oscillating drive shaft.',
     price: 10.0,
-    compareAt: 20.0,
+    compareAt: 13.0,
     formattedPrice: formatUSD(10.0),
-    formattedCompareAt: formatUSD(20.0),
+    formattedCompareAt: '$13',
     rating: 4.9,
     reviewCount: 4275,
     customerCount: '4,275',

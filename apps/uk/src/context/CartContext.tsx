@@ -241,9 +241,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const isFlosser = itemData.productHandle === 'miroooo-water-flosser' || itemData.productHandle === 'water-flosser';
 
     setItems((currentItems) => {
-      // If item with same product & variant exists, increment quantity
+      // If item with same product & variant (or title for heads) exists, increment quantity
       const existingIndex = currentItems.findIndex(
-        (i) => i.productHandle === itemData.productHandle && (itemData.variantId ? i.variantId === itemData.variantId : i.color === color)
+        (i) => i.productHandle === itemData.productHandle &&
+          (i.productHandle === 'miroooo-x2-heads'
+            ? (itemData.title ? i.title === itemData.title : true)
+            : (itemData.variantId ? i.variantId === itemData.variantId : i.color === color))
       );
 
       if (existingIndex > -1) {
@@ -251,24 +254,36 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         updated[existingIndex] = {
           ...updated[existingIndex],
           quantity: updated[existingIndex].quantity + (itemData.quantity || 1),
+          unitPrice: itemData.unitPrice !== undefined ? itemData.unitPrice : updated[existingIndex].unitPrice,
+          comparePrice: itemData.comparePrice !== undefined ? itemData.comparePrice : updated[existingIndex].comparePrice,
+          title: itemData.title || updated[existingIndex].title,
+          subtitle: itemData.subtitle || updated[existingIndex].subtitle,
         };
         return updated;
       }
 
       const newItem: CartItem = {
-        id: `${itemData.productHandle}-${variant.id || color}-${Date.now()}`,
+        id: itemData.id || `${itemData.productHandle}-${variant.id || color}-${Date.now()}`,
         productHandle: itemData.productHandle,
         productId: product.plusBaseProductId,
         variantId: variant.id,
-        title: isBrush ? `${product.name} (${color})` : isFlosser ? `${product.name} (${variant.name})` : product.name,
-        subtitle: product.subtitle,
+        title: itemData.title || (isBrush ? `${product.name} (${color})` : isFlosser ? `${product.name} (${variant.name})` : product.name),
+        subtitle: itemData.subtitle || product.subtitle,
         color,
         quantity: itemData.quantity || 1,
-        unitPrice: variant.price ?? product.price,
-        comparePrice: variant.compareAt ?? product.compareAt,
-        image: variant.image || product.galleryImages[0]?.src || '',
-        url: `/products/${product.handle}${isBrush ? `?color=${color}` : ''}`,
+        unitPrice: itemData.unitPrice !== undefined ? itemData.unitPrice : (variant.price ?? product.price),
+        comparePrice: itemData.comparePrice !== undefined ? itemData.comparePrice : (variant.compareAt ?? product.compareAt),
+        image: itemData.image || variant.image || product.galleryImages[0]?.src || '',
+        url: itemData.url || `/products/${product.handle}${isBrush ? `?color=${color}` : ''}`,
       };
+
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('miroooo:added-to-cart', {
+            detail: { product, item: newItem },
+          }),
+        );
+      }
 
       return [...currentItems, newItem];
     });
@@ -308,6 +323,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           url: `/products/${product.handle}${isBrush ? `?color=${col}` : ''}`,
         });
       });
+
+      if (typeof window !== 'undefined' && newItems.length > 0) {
+        window.dispatchEvent(
+          new CustomEvent('miroooo:added-to-cart', {
+            detail: { product, item: newItems[0] },
+          }),
+        );
+      }
 
       return [...withoutProduct, ...newItems];
     });
@@ -415,6 +438,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         color: item.color,
         quantity: item.quantity,
       }));
+
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('miroooo:started-checkout', {
+            detail: { lines: items, totals },
+          }),
+        );
+      }
 
       // Add free gifts if pure bundle is active (X1 only; X2 includes free gifts in the retail box)
       if (totals.extraX1BrushHeadSets > 0) {
