@@ -358,7 +358,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [invalidateCheckout]);
 
   const applyPromoCode = useCallback((code: string) => {
-    const formatted = code.trim().toUpperCase();
+    const formatted = code.trim().toUpperCase().replace(/\s+/g, '');
     if (!formatted) return { success: false, message: 'Please enter a promo code.' };
 
     if (VALID_PROMO_CODES.includes(formatted)) {
@@ -472,7 +472,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         });
       }
 
-      const validDiscountCodes = appliedPromoCodes.filter((c) => VALID_PROMO_CODES.includes(c));
+      let currentDiscountCodes = [...appliedPromoCodes];
+      if (typeof document !== 'undefined') {
+        const promoInputEl = document.querySelector('input.cart-promo-input') as HTMLInputElement | null;
+        if (promoInputEl?.value) {
+          const val = promoInputEl.value.trim().toUpperCase().replace(/\s+/g, '');
+          if (VALID_PROMO_CODES.includes(val) && !currentDiscountCodes.includes(val)) {
+            currentDiscountCodes.push(val);
+            setAppliedPromoCodes(currentDiscountCodes);
+          }
+        }
+      }
+
+      const validDiscountCodes = currentDiscountCodes
+        .map((c) => c.toUpperCase().trim().replace(/\s+/g, ''))
+        .filter((c) => VALID_PROMO_CODES.includes(c));
 
       const prepRes = await fetch('/api/checkout/prepare', {
         signal: controller.signal,

@@ -3865,7 +3865,7 @@ body[data-page="home"] .site-header.is-scrolled,
 }
 
 /* Sticky Dark Header on All Other Pages */
-body:not([data-page="home"]) .site-header:not(.site-header--overlay) {
+body:not([data-page="home"]):not([data-page="cart"]) .site-header:not(.site-header--overlay) {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;

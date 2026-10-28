@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Check,
@@ -12,74 +12,22 @@ import {
   X,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { formatGBP } from "@/lib/cart";
+import { formatGBP, VALID_PROMO_CODES } from "@/lib/cart";
 import { AnimatedIcon } from "@/components/ui/AnimatedIcon";
-import { ShippingInfoTooltip } from "@/components/ui/ShippingInfoTooltip";
 import { CartLines } from "./CartLines";
 
-function DeliveryBanner() {
-  const [seconds, setSeconds] = useState(593);
-  const [date, setDate] = useState("");
+function useCheckoutTimer(initialSeconds: number = 593) {
+  const [seconds, setSeconds] = useState(initialSeconds);
   useEffect(() => {
-    const target = new Date();
-    target.setDate(target.getDate() + 5);
-    setDate(
-      target
-        .toLocaleDateString("en-GB", {
-          weekday: "long",
-          day: "numeric",
-          month: "long",
-        })
-        .replace(",", ""),
-    );
-    const timer = setInterval(
+    const interval = setInterval(
       () => setSeconds((value) => (value <= 0 ? 599 : value - 1)),
       1000,
     );
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, []);
-  const clock = `${String(Math.floor(seconds / 60)).padStart(2, "0")}m : ${String(seconds % 60).padStart(2, "0")}s`;
-  const truck = (
-    <span className="cart-delivery-icon-circle">
-      <AnimatedIcon kind="truck" className="miroooo-lottie-truck" />
-    </span>
-  );
-  const text = (
-    <p className="cart-delivery-text">
-      Order in next <strong>{clock}</strong> to get as early as{" "}
-      <strong>{date}</strong>
-    </p>
-  );
-
-  return (
-    <section
-      className="cart-delivery-banner"
-      aria-label="Delivery timeline and shipping guarantee"
-    >
-      <div className="cart-delivery-banner__mobile">
-        <div className="cart-delivery-banner__mobile-row">
-          {truck}
-          <span className="cart-delivery-badge-pill">
-            FREE TRACKED SHIPPING
-          </span>
-          <ShippingInfoTooltip isDark={false} />
-        </div>
-        {text}
-      </div>
-      <div className="cart-delivery-banner__desktop">
-        <div className="cart-delivery-banner__left">
-          {truck}
-          {text}
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="cart-delivery-badge-pill">
-            FREE TRACKED SHIPPING
-          </span>
-          <ShippingInfoTooltip isDark={false} />
-        </div>
-      </div>
-    </section>
-  );
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${String(minutes).padStart(2, "0")}m : ${String(secs).padStart(2, "0")}s`;
 }
 
 export function CartPageContent() {
@@ -98,6 +46,7 @@ export function CartPageContent() {
     removeItem,
     isHydrated,
   } = useCart();
+  const timer = useCheckoutTimer(593);
   const [promoInput, setPromoInput] = useState("");
   const [promoStatus, setPromoStatus] = useState<{
     success: boolean;
@@ -107,6 +56,71 @@ export function CartPageContent() {
   const [giftSaved, setGiftSaved] = useState(false);
   const [discountOpen, setDiscountOpen] = useState(false);
   const [giftOpen, setGiftOpen] = useState(false);
+  const [isPriceUpdated, setIsPriceUpdated] = useState(false);
+  const prevTotalRef = useRef(totals.finalSubtotal);
+
+  useEffect(() => {
+    if (prevTotalRef.current !== totals.finalSubtotal) {
+      prevTotalRef.current = totals.finalSubtotal;
+      setIsPriceUpdated(true);
+      const t = setTimeout(() => setIsPriceUpdated(false), 350);
+      return () => clearTimeout(t);
+    }
+  }, [totals.finalSubtotal]);
+
+  const handlePromoChange = (val: string) => {
+    setPromoInput(val);
+    const normalized = val.trim().toUpperCase().replace(/\s+/g, "");
+    if (normalized === "MIROOOO10") {
+      if (!appliedPromoCodes.includes("MIROOOO10")) {
+        applyPromoCode("MIROOOO10");
+      }
+      setPromoInput("");
+      setPromoStatus({
+        success: true,
+        message: "Promo code applied successfully!",
+      });
+    } else if (promoStatus) {
+      setPromoStatus(null);
+    }
+  };
+
+  const handlePromoBlur = () => {
+    const normalized = promoInput.trim().toUpperCase().replace(/\s+/g, "");
+    if (normalized === "MIROOOO10" || normalized === "MIROOOO") {
+      if (!appliedPromoCodes.includes(normalized)) {
+        applyPromoCode(normalized);
+      }
+      setPromoInput("");
+      setPromoStatus({
+        success: true,
+        message: "Promo code applied successfully!",
+      });
+    }
+  };
+
+  const handlePromoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const normalized = promoInput.trim().toUpperCase().replace(/\s+/g, "");
+    if (!normalized) return;
+    const result = applyPromoCode(normalized);
+    setPromoStatus(result);
+    if (result.success) setPromoInput("");
+  };
+
+  const handleCheckout = async () => {
+    if (promoInput.trim()) {
+      const normalized = promoInput.trim().toUpperCase().replace(/\s+/g, "");
+      if (VALID_PROMO_CODES.includes(normalized)) {
+        if (!appliedPromoCodes.includes(normalized)) {
+          applyPromoCode(normalized);
+        }
+        setPromoInput("");
+      }
+    }
+    await proceedToCheckout();
+  };
+
   const draft = giftInput ?? giftMessage;
   const showUpsell =
     (totals.x2Count > 0 && totals.x2HeadsCount === 0) ||
@@ -128,7 +142,6 @@ export function CartPageContent() {
   return (
     <main id="main" className="cart-page">
       <div className="cart-page-wrapper">
-        <DeliveryBanner />
         {!isHydrated ? (
           <div className="cart-empty-state" style={{ minHeight: '360px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: 28, height: 28, border: '2px solid rgba(255,255,255,0.15)', borderTopColor: '#ffffff', borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: 14 }} />
@@ -287,17 +300,13 @@ export function CartPageContent() {
                 <div id="promo-code-container">
                   <form
                     className="cart-promo-form"
-                    onSubmit={(event) => {
-                      event.preventDefault();
-                      const result = applyPromoCode(promoInput);
-                      setPromoStatus(result);
-                      if (result.success) setPromoInput("");
-                    }}
+                    onSubmit={handlePromoSubmit}
                   >
                     <input
                       className="cart-promo-input"
                       value={promoInput}
-                      onChange={(event) => setPromoInput(event.target.value)}
+                      onChange={(event) => handlePromoChange(event.target.value)}
+                      onBlur={handlePromoBlur}
                       placeholder="ENTER PROMO CODE"
                       aria-label="Enter promo code"
                       autoComplete="off"
@@ -326,8 +335,6 @@ export function CartPageContent() {
                       }}
                     >
                       {appliedPromoCodes.map((code) => {
-                        const displayCode =
-                          code.length > 4 ? `${code.slice(0, 4)}...` : code;
                         return (
                           <span
                             key={code}
@@ -358,13 +365,14 @@ export function CartPageContent() {
                                 lineHeight: 1,
                               }}
                             >
-                              {displayCode}
+                              {code}
                             </span>
                             <button
                               type="button"
                               onClick={() => {
                                 removePromoCode(code);
                                 setPromoStatus(null);
+                                setPromoInput("");
                               }}
                               aria-label={`Remove promo code ${code}`}
                               className="inline-flex h-5 w-5 items-center justify-center rounded-full text-[#555555] hover:bg-black/10 hover:text-[#000000] transition-colors"
@@ -407,6 +415,12 @@ export function CartPageContent() {
                   <span
                     className="cart-subtotal-amount"
                     id="summary-subtotal-price"
+                    style={{
+                      transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+                      opacity: isPriceUpdated ? 0.45 : 1,
+                      transform: isPriceUpdated ? "scale(0.97)" : "scale(1)",
+                      color: isPriceUpdated ? "#666666" : "#000000",
+                    }}
                   >
                     {formatGBP(totals.finalSubtotal)}
                   </span>
@@ -416,7 +430,7 @@ export function CartPageContent() {
                   id="main-checkout-btn"
                   className="cart-checkout-cta-btn"
                   aria-label="Proceed to secure checkout"
-                  onClick={proceedToCheckout}
+                  onClick={handleCheckout}
                   disabled={isCheckoutLoading}
                 >
                   <span className="btn-fill" />
@@ -434,6 +448,48 @@ export function CartPageContent() {
                     {checkoutError}
                   </p>
                 )}
+                <div
+                  className="cart-early-dispatch-note"
+                  style={{
+                    marginTop: "14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    fontSize: "0.82rem",
+                    color: "#555555",
+                    textAlign: "center",
+                  }}
+                >
+                  <span
+                    className="cart-early-dispatch-truck"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "22px",
+                      height: "18px",
+                      flexShrink: 0,
+                      filter: "brightness(0)",
+                    }}
+                  >
+                    <AnimatedIcon
+                      kind="truck"
+                      style={{
+                        width: 22,
+                        height: 18,
+                        filter: "brightness(0)",
+                      }}
+                    />
+                  </span>
+                  <span>
+                    Order within{" "}
+                    <strong style={{ color: "#000000", fontWeight: 700 }}>
+                      {timer}
+                    </strong>{" "}
+                    to get early dispatch
+                  </span>
+                </div>
               </div>
               <div className="cart-luxury-card">
                 <button

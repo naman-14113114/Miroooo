@@ -10,9 +10,9 @@
     body[data-page="cart"] .site-header,
     body[data-page="cart"] .site-header--cart,
     .site-header--cart {
-      position: sticky !important;
+      position: static !important;
       top: 0 !important;
-      z-index: 1000 !important;
+      z-index: auto !important;
       background: #080909 !important;
       backdrop-filter: blur(20px) !important;
       -webkit-backdrop-filter: blur(20px) !important;

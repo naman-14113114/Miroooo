@@ -21,7 +21,15 @@ function loadRuntime() {
 }
 
 /** Source icon artwork, owned and cleaned up by its React component. */
-export function AnimatedIcon({ kind, className = "" }: { kind: "cart" | "truck"; className?: string }) {
+export function AnimatedIcon({
+  kind,
+  className = "",
+  style,
+}: {
+  kind: "cart" | "truck";
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const container = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const element = container.current;
@@ -43,5 +51,18 @@ export function AnimatedIcon({ kind, className = "" }: { kind: "cart" | "truck";
     document.addEventListener("visibilitychange", update);
     return () => { active = false; animation?.destroy(); reduced.removeEventListener("change", update); document.removeEventListener("visibilitychange", update); };
   }, [kind]);
-  return <span ref={container} className={className} aria-hidden="true" style={{ display: "inline-flex", width: kind === "truck" ? 30 : 18, height: kind === "truck" ? 24 : 18, flexShrink: 0 }} />;
+  return (
+    <span
+      ref={container}
+      className={className}
+      aria-hidden="true"
+      style={{
+        display: "inline-flex",
+        width: kind === "truck" ? 30 : 18,
+        height: kind === "truck" ? 24 : 18,
+        flexShrink: 0,
+        ...style,
+      }}
+    />
+  );
 }

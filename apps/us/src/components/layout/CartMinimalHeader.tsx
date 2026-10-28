@@ -8,7 +8,7 @@ export function CartMinimalHeader() {
   return (
     <>
       <AnnouncementBar isHalloween={true} />
-      <header className="site-header site-header--cart">
+      <header className="site-header site-header--cart" style={{ position: 'relative' }}>
       <div className="header__logo flex items-center justify-center w-full" style={{ padding: '16px 0' }}>
         <Link
           href="/"
