@@ -815,11 +815,11 @@ export function ProductHero({
           >
             <div className="x2-urgency-banner__left">
               <span className="x2-urgency-banner__icon" aria-hidden="true">
-                {isHalloween ? '🎃' : '🔥'}
+                🔥
               </span>
               <div className="x2-urgency-banner__text-wrap">
                 <span className="x2-urgency-banner__eyebrow">
-                  {isHalloween ? 'HALLOWEEN LIMITED-TIME SAVINGS' : 'LIMITED-TIME EXTRA SAVINGS'}
+                  BLACK FRIDAY SALE
                 </span>
                 <strong className="x2-urgency-banner__headline">
                   {isWaterFlosser ? 'Free Miroooo Digital Gift Card ($10 Value) Included' : isX2 ? 'Get X2 at price of X1 + 3 Free Gifts for today only' : '3 Free Gifts for today only'}
@@ -1107,13 +1107,14 @@ export function ProductHero({
                   <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
                     {isWaterFlosser ? '$139' : formatUSD(singleCompare)}
                   </span>
-                  <span
-                    className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"
-                    id="main-discount-badge"
-                    style={{ background: '#e6e6e6', color: '#111111', fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '9999px', letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center' }}
-                  >
-                    {savingPercent(singlePrice, singleCompare)}% OFF
-                  </span>
+                  <div className="inline-flex items-center gap-2 py-0.5" id="main-discount-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif", fontSize: '24px', fontWeight: 400, lineHeight: 1, color: '#c5a880', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>50% OFF</span>
+                    <span aria-hidden="true" style={{ display: 'inline-block', width: '1px', height: '22px', background: 'rgba(255, 255, 255, 0.3)', flexShrink: 0 }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', lineHeight: 1.15, flexShrink: 0 }}>
+                      <span style={{ fontFamily: "var(--font-inter), Inter, sans-serif", fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ffffff', lineHeight: 1.15 }}>BLACK FRIDAY</span>
+                      <span style={{ fontFamily: "var(--font-inter), Inter, sans-serif", fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.75)', lineHeight: 1.15 }}>EARLY ACCESS</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 

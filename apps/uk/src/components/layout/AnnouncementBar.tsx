@@ -6,59 +6,36 @@ interface AnnouncementBarProps {
   isHalloween?: boolean;
 }
 
-export function AnnouncementBar({ isHalloween = true }: AnnouncementBarProps) {
-  const originalTickerItemSet = (
+export function AnnouncementBar({ isHalloween }: AnnouncementBarProps = {}) {
+  const tickerItemSet = (
     <>
       <div className="miroooo-ticker-item">
-        <span>FREE SHIPPING ON ALL ORDERS</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
-      </div>
-      <div className="miroooo-ticker-item">
-        <span>50% OFF TODAY</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
-      </div>
-      <div className="miroooo-ticker-item">
-        <span>ULTRA LIGHTWEIGHT</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
-      </div>
-      <div className="miroooo-ticker-item">
-        <span>4.9 STARS FROM 40,000+ CUSTOMERS</span> <span className="miroooo-ticker-dot" aria-hidden="true" />
-      </div>
-    </>
-  );
-
-  const halloweenTickerItemSet = (
-    <>
-      <div className="miroooo-ticker-item">
-        <span>🎃 <span style={{ color: '#ff7a00', fontWeight: 800 }}>HALLOWEEN EXCLUSIVE</span></span>
+        <span style={{ color: '#111111', fontWeight: 800 }}>BLACK FRIDAY SALE</span>
         <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
       <div className="miroooo-ticker-item">
-        <span>4.9 STARS FROM 40,000+ CUSTOMERS</span>
+        <span style={{ color: '#111111', fontWeight: 800 }}>50% OFF TODAY</span>
         <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
       <div className="miroooo-ticker-item">
-        <span>FREE SHIPPING ON ALL ORDERS</span>
+        <span style={{ color: '#111111', fontWeight: 800 }}>FREE SHIPPING ON ALL ORDERS</span>
         <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
       <div className="miroooo-ticker-item">
-        <span>🎃 <span style={{ color: '#ff7a00', fontWeight: 800 }}>50% OFF TODAY</span></span>
+        <span style={{ color: '#111111', fontWeight: 800 }}>4.9 STARS FROM 40,000+ CUSTOMERS</span>
         <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
       <div className="miroooo-ticker-item">
-        <span><span style={{ color: '#a855f7' }}>🦇</span> <span style={{ color: '#ff7a00', fontWeight: 800 }}>HALLOWEEN EXCLUSIVE</span></span>
-        <span className="miroooo-ticker-dot" aria-hidden="true" />
-      </div>
-      <div className="miroooo-ticker-item">
-        <span><span>4.9 STARS FROM 40,000+</span> <span style={{ color: '#a855f7' }}>🦇</span></span>
+        <span style={{ color: '#111111', fontWeight: 800 }}>BLACK FRIDAY EARLY ACCESS</span>
         <span className="miroooo-ticker-dot" aria-hidden="true" />
       </div>
     </>
   );
-
-  const tickerItemSet = isHalloween ? halloweenTickerItemSet : originalTickerItemSet;
 
   return (
     <div
       id="miroooo-announcement-bar"
-      className={`announcement ${isHalloween ? 'announcement--halloween' : ''}`}
+      className="announcement"
       style={{
         background: '#e6e6e6',
         color: '#111111',
@@ -71,7 +48,7 @@ export function AnnouncementBar({ isHalloween = true }: AnnouncementBarProps) {
     >
       <div
         className="miroooo-announcement-ticker"
-        style={isHalloween ? { animationDuration: '267s' } : undefined}
+        style={{ animationDuration: '267s' }}
       >
         {Array.from({ length: 12 }).map((_, i) => (
           <React.Fragment key={i}>{tickerItemSet}</React.Fragment>

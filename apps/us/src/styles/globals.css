@@ -281,34 +281,6 @@ body:has(.product-page-root) .site-header__right .header__buttons { margin: 0 !i
    HALLOWEEN THEME (Strictly scoped to Miroooo X1 Halloween route)
    ========================================================================== */
 
-@keyframes halloweenBatHover {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-5px) rotate(-3deg);
-  }
-}
-
-@keyframes halloweenPumpkinGlow {
-  0%, 100% {
-    transform: scale(1) rotate(0deg);
-    filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.8));
-  }
-  25% {
-    transform: scale(1.08) rotate(-4deg);
-    filter: drop-shadow(0 0 14px rgba(255, 140, 0, 1));
-  }
-  50% {
-    transform: scale(0.96) rotate(2deg);
-    filter: drop-shadow(0 0 6px rgba(255, 122, 0, 0.7));
-  }
-  75% {
-    transform: scale(1.05) rotate(-2deg);
-    filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.95));
-  }
-}
-
 /* Announcement Bar Universal & Halloween Variant */
 #miroooo-announcement-bar,
 .announcement,
@@ -479,30 +451,12 @@ body .header--halloween .announcement .miroooo-announcement-ticker,
 .site-header.header--halloween,
 header.header--halloween {
   background: rgba(8, 4, 13, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 122, 0, 0.25) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
 }
 
-.header--halloween .cart-count {
-  background: #ff7a00 !important;
-  color: #000000 !important;
-  font-weight: 800 !important;
-  box-shadow: 0 0 10px rgba(255, 122, 0, 0.6) !important;
-}
 
-.header--halloween .nav-link:hover,
-.header--halloween .menu__item:hover,
-.header--halloween .header__shop-drawer-btn:hover,
-.header--halloween .btn-text:hover,
-.header--halloween .nav-link:hover .btn-text {
-  color: #ff7a00 !important;
-}
-
-.header--halloween .site-actions__bag:hover svg,
-.header--halloween .nav-toggle:hover svg {
-  color: #ff7a00 !important;
-}
 
 
 
