@@ -662,3 +662,27 @@ scripts/verify-us.mjs
 - Read-only recheck of https://miroooo.us still404. No custom-domain/DNS/XPage configuration change attempted. X1 pair promo one-cent discrepancy and ordinary-cart promo persistence mismatch remain guarded as detailed above. Ordinary no-promo and supported native promo journeys verified; do not describe every conceivable promo/provider state as working. Physical devices/Safari, actual payments and customer form delivery remain outside tested actions.
 - Final staging correction: nine newly added copied reference CSS files contained inherited trailing EOF whitespace, only detected after staging untracked files. Trimmed US whitespace only; no rendered/style behavior change. Staged diff check and US586 verifier passed afterward. US28 tests/lint/typecheck, earlier production build, UK395 verifier,78 route views,48 journey assertions, final11 UI assertions, six corrected image checks, cold-cache reel checks and12 UK-vs-US responsive reference views complete.
 - Publishing scope: no new branch, PR, manual deploy/promote, production/provider settings, GoBrush edits, shared-package edits, merge/rebase/reset/stash or discarded external work. This append will be committed/pushed as a documentation-only follow-up under the same explicit publish authorization, leaving the repository clean; no runtime code changes since d3c28d6. The workspace ledger will additionally record that follow-up's actual hash. No further implementation pending locally; remaining external promo/domain limitations are explicit.
+
+
+## 2026-11-07 17:47 IST - Shift review dates by 9 days across all products (UK, US, shared)
+
+- User request: use update review file and update the dates of reviews of all product here on vercel project only by 9 days, after completing push clean code on github.
+- Execution tool: `node update-review-dates.js 9`.
+- Products and datasets shifted:
+  1. `packages/shared/src/reviews.ts`: 8,550 review dates shifted (+9 days) across `mirooooXReviews` (4,275) and `mirooooX2Reviews` (4,275).
+  2. `apps/uk/public/assets_ref/`:
+     - `miroooo-reviews.js` (Miroooo X1): 63 ISO dates, 63 display dates, 8 merchant reply dates, 1 base timestamp shifted.
+     - `miroooo-x2-reviews.js` (Miroooo X2): 58 ISO dates, 58 display dates, 6 merchant reply dates, 1 base timestamp shifted.
+     - `miroooo-flosser-reviews.js` (Miroooo Water Flosser): 16 ISO dates, 16 display dates, 2 merchant reply dates, 1 base timestamp shifted.
+     - `org_miroooo-reviews.js`: 2 ISO dates, 2 IST timestamps shifted.
+     - `org_miroooo-x2-reviews.js`: 2 ISO dates, 2 IST timestamps shifted.
+  3. `apps/us/public/assets_ref/`:
+     - Exact parity with UK across all 5 review asset files (miroooo-reviews, miroooo-x2-reviews, miroooo-flosser-reviews, org_miroooo-reviews, org_miroooo-x2-reviews).
+- Verification & build checks:
+  - `pnpm verify`: 560 UK checks passed.
+  - `pnpm verify:us`: 847 US checks passed.
+  - `pnpm typecheck`: 4/4 packages successful (0 errors).
+  - `pnpm --filter @miroooo/uk test`: 47/47 passed.
+  - `pnpm --filter @miroooo/us test`: 40/40 passed.
+  - `pnpm build`: Both UK and US Turbopack production builds succeeded (all 47/47 routes compiled).
+- Zero edits outside this repository (`E:\1st YEAR DTU\New folder\miroooo`).
