@@ -66,7 +66,7 @@ export function AnnouncementBar({ isHalloween: _isHalloween }: AnnouncementBarPr
       </span>
       <span style={{ color: 'rgba(0, 0, 0, 0.25)' }}>|</span>
       <span style={{ color: '#111111', fontWeight: 500 }}>
-        Save 50% + Extra £10 Off with code{' '}
+        Save 50% + Extra 10% Off on Brush with code{' '}
         <span style={{ fontFamily: 'monospace', fontWeight: 700, color: '#111111', background: 'rgba(0, 0, 0, 0.06)', padding: '2px 6px', borderRadius: '4px', border: '1px solid rgba(0, 0, 0, 0.2)' }}>
           BLACKFRIDAY10
         </span>
@@ -155,7 +155,7 @@ export function AnnouncementBar({ isHalloween: _isHalloween }: AnnouncementBarPr
           </span>
           <span style={{ color: 'rgba(0, 0, 0, 0.25)' }}>|</span>
           <span style={{ color: '#111111', fontWeight: 500 }}>
-            Save 50% + Extra £10 Off with code{' '}
+            Save 50% + Extra 10% Off on Brush with code{' '}
             <span style={{ fontFamily: 'monospace', fontWeight: 700, color: '#111111', background: 'rgba(0, 0, 0, 0.06)', padding: '2px 6px', borderRadius: '4px', border: '1px solid rgba(0, 0, 0, 0.2)' }}>
               BLACKFRIDAY10
             </span>
