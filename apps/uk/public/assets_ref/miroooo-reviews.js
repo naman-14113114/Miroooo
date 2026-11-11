@@ -1408,7 +1408,7 @@
   const FIVE_STAR_TITLES = [
     "60-day battery is completely real — haven't charged it in weeks",
     "32,000 VPM acoustic cleaning leaves teeth squeaky clean",
-    "Dental hygienist was amazed at my plaque reduction",
+    "Excellent electric toothbrush!",
     "Sensitive mode completely calmed my inflamed gums",
     "Universal USB-C fast charging is an absolute triumph",
     "Quiet acoustic motor — no more jarring handle vibrations",
@@ -2403,14 +2403,6 @@
 
   // Review Star Rating Generator (Uses identical /assets/star.png with transparent background)
   function getTrustpilotStarsHTML(rating) {
-
-
-
-
-
-
-
-
     let stars = "";
     for (let i = 1; i <= 5; i++) {
       const isFilled = i <= rating;
