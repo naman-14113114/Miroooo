@@ -64,18 +64,18 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   const x2CurrentPrice = selectedPlan === 'subscription'
     ? 10.0
     : onetimeTier === 1
-    ? 13.0
+    ? 10.0
     : onetimeTier === 3
-    ? 33.0
-    : 54.0;
+    ? 30.0
+    : 60.0;
 
   const x2CurrentComparePrice = selectedPlan === 'subscription'
-    ? 13.0
+    ? 20.0
     : onetimeTier === 1
-    ? 13.0
+    ? 20.0
     : onetimeTier === 3
-    ? 39.0
-    : 78.0;
+    ? 60.0
+    : 120.0;
 
   const x2PacksCount = selectedPlan === 'subscription' ? 1 : onetimeTier;
   const x2BrushHeadsCount = x2PacksCount * 2;
@@ -183,17 +183,17 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
           productHandle: 'miroooo-x2-heads',
           quantity: 1,
           unitPrice: 10.0,
-          comparePrice: 13.0,
+          comparePrice: 20.0,
           title: 'Miroooo X2 Heads Plan (Subscription)',
           subtitle: '2 Extra Brush Heads (Every 2 Months)',
         });
       } else {
-        const unitPrice = onetimeTier === 1 ? 13.0 : onetimeTier === 3 ? 11.0 : 9.0;
+        const unitPrice = 10.0;
         addItem({
           productHandle: 'miroooo-x2-heads',
           quantity: onetimeTier,
           unitPrice,
-          comparePrice: 13.0,
+          comparePrice: 20.0,
           title: onetimeTier === 1 ? 'Miroooo X2 Heads (1 Pack)' : `Miroooo X2 Heads (${onetimeTier} Packs)`,
           subtitle: `${onetimeTier * 2} Brush Heads (One-Time Purchase)`,
         });
@@ -461,7 +461,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                                 £10.00
                               </span>
                               <span className="price-compare-strike" style={{ fontSize: '12px', color: '#777777', textDecoration: 'line-through' }}>
-                                £13.00
+                                £20.00
                               </span>
                             </div>
                           </div>
@@ -529,7 +529,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
 
                           <div style={{ textAlign: 'right', flexShrink: 0 }}>
                             <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#111111' }}>
-                              From £13.00
+                              From £10.00
                             </span>
                           </div>
                         </div>
@@ -556,7 +556,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                                   <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                                     <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                                       <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                        £13.00
+                                        £10.00
                                       </span>
                                     </div>
                                   </div>
@@ -593,15 +593,15 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                                   <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
                                     <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                                       <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                        £33.00
+                                        £30.00
                                       </span>
                                       <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
-                                        £39.00
+                                        £60.00
                                       </span>
                                     </div>
                                     <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                                       <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                                        (£11 each)
+                                        (£10 each)
                                       </span>
                                     </div>
                                   </div>
@@ -633,15 +633,15 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                                   <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
                                     <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                                       <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                        £54.00
+                                        £60.00
                                       </span>
                                       <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
-                                        £78.00
+                                        £120.00
                                       </span>
                                     </div>
                                     <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                                       <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                                        (£9 each)
+                                        (£10 each)
                                       </span>
                                     </div>
                                   </div>

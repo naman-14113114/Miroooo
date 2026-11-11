@@ -69,20 +69,20 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
     ? (isX2Subscription
         ? 10.0
         : x2OneTimeTier === 1
-        ? 13.0
+        ? 10.0
         : x2OneTimeTier === 3
-        ? 33.0
-        : 54.0)
+        ? 30.0
+        : 60.0)
     : totalPrice;
 
   const displayComparePrice = isX2
     ? (isX2Subscription
-        ? 13.0
+        ? 20.0
         : x2OneTimeTier === 1
-        ? 13.0
+        ? 20.0
         : x2OneTimeTier === 3
-        ? 39.0
-        : 78.0)
+        ? 60.0
+        : 120.0)
     : comparePrice;
 
   // Match the reference delivery estimate and countdown.
@@ -189,18 +189,18 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
           color: 'Default',
           quantity: 1,
           unitPrice: 10.0,
-          comparePrice: 13.0,
+          comparePrice: 20.0,
           title: 'Miroooo X2 Heads Plan (Subscription)',
           subtitle: '2 Extra Brush Heads (Every 2 Months)',
         });
       } else {
-        const unitPrice = x2OneTimeTier === 1 ? 13.0 : x2OneTimeTier === 3 ? 11.0 : 9.0;
+        const unitPrice = 10.0;
         addItem({
           productHandle: 'miroooo-x2-heads',
           color: 'Default',
           quantity: x2OneTimeTier,
           unitPrice,
-          comparePrice: 13.0,
+          comparePrice: 20.0,
           title: `Miroooo X2 Heads (${x2OneTimeTier} Packs)`,
           subtitle: `${x2OneTimeTier * 2} Brush Heads (One-Time Purchase)`,
         });
@@ -521,7 +521,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                               $10.00
                             </span>
                             <s style={{ fontSize: '12px', color: '#777777', textDecoration: 'line-through' }}>
-                              $13.00
+                              $20.00
                             </s>
                           </div>
                         </div>
@@ -632,7 +632,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                         {/* Price hint: From $13.00 */}
                         <div style={{ textAlign: 'right', flexShrink: 0 }}>
                           <span style={{ fontWeight: 800, fontSize: '1rem', color: '#111111' }}>
-                            From $13.00
+                            From $10.00
                           </span>
                         </div>
                       </div>
@@ -659,7 +659,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                                 <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
                                   <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                                     <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                      $13.00
+                                      $10.00
                                     </span>
                                   </div>
                                 </div>
@@ -696,15 +696,15 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                                 <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
                                   <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                                     <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                      $33.00
+                                      $30.00
                                     </span>
                                     <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
-                                      $39.00
+                                      $60.00
                                     </span>
                                   </div>
                                   <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                                     <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                                      ($11 each)
+                                      ($10 each)
                                     </span>
                                   </div>
                                 </div>
@@ -736,15 +736,15 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                                 <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
                                   <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
                                     <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                      $54.00
+                                      $60.00
                                     </span>
                                     <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
-                                      $78.00
+                                      $120.00
                                     </span>
                                   </div>
                                   <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
                                     <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                                      ($9 each)
+                                      ($10 each)
                                     </span>
                                   </div>
                                 </div>

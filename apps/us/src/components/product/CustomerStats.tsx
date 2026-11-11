@@ -47,7 +47,7 @@ export function CustomerStats() {
       <style>{`
         #x2-section-texture-split .split-section-grid {
           display: flex;
-          flex-direction: column;
+          flex-direction: column-reverse;
           align-items: center;
           gap: clamp(2rem, 4vw, 4.5rem);
         }
@@ -59,31 +59,7 @@ export function CustomerStats() {
       `}</style>
       <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)', boxSizing: 'border-box' }}>
         <div className="split-section-grid">
-          {/* Image (Left on Desktop, Top on Phone) */}
-          <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
-            <div
-              className="desc-media-loading"
-              style={{
-                position: 'relative',
-                width: '100%',
-                borderRadius: '20px',
-                overflow: 'hidden',
-                background: '#0d0d0d',
-                border: '1px solid rgba(255,255,255,0.1)',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.8)',
-              }}
-            >
-              <img
-                src="/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-instant-energy-boost.webp"
-                alt="Miroooo X2 Sonic Electric Toothbrush Instant Energy Boost 90-Day Long Battery Life"
-                style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-          </div>
-
-          {/* Text / Data Content (Right on Desktop, Below on Phone) */}
+          {/* Text / Data Content (Left on Desktop, Below on Phone) */}
           <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
             <h2
               style={{
@@ -182,6 +158,30 @@ export function CustomerStats() {
                   Noticed visibly brighter, cleaner teeth and healthier gums within just 3 weeks of daily use.
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* Image (Right on Desktop, Top on Phone) */}
+          <div style={{ flex: 1, width: '100%', boxSizing: 'border-box' }}>
+            <div
+              className="desc-media-loading"
+              style={{
+                position: 'relative',
+                width: '100%',
+                borderRadius: '20px',
+                overflow: 'hidden',
+                background: '#0d0d0d',
+                border: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.8)',
+              }}
+            >
+              <img
+                src="/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-instant-energy-boost.webp"
+                alt="Miroooo X2 Sonic Electric Toothbrush Instant Energy Boost 90-Day Long Battery Life"
+                style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+                loading="eager"
+                decoding="async"
+              />
             </div>
           </div>
         </div>

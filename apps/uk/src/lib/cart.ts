@@ -43,7 +43,7 @@ export interface CartTotals {
   hasFreeGiftCard: boolean;
 }
 
-export const VALID_PROMO_CODES = ['MIROOOO', 'MIROOOO10'];
+export const VALID_PROMO_CODES = ['MIROOOO', 'MIROOOO10', 'BLACKFRIDAY10'];
 
 const UK_HANDLE_ALIASES: Record<string, string> = {
   'miroooo-x1': 'miroooo-x',

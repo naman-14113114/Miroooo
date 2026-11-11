@@ -142,17 +142,17 @@ export function ProductPage({
           {/* 3. Real Customer Stories & Experiences Carousel */}
           <CustomerStories />
 
-          {/* 4. Built for Travel Split Section */}
-          <EnergyBoostSplit />
-
-          {/* 5. Customer Satisfaction Circular Metric Counters */}
+          {/* 4. Customer Satisfaction Circular Metric Counters (Image section: text left, image right) */}
           <CustomerStats />
 
-          {/* 6. Stacking 3-Mode Cards */}
-          <X2ModesSwipe />
-
-          {/* 7. Verified Customer Reviews */}
+          {/* 5. Verified Customer Reviews */}
           <ProductReviews isX2={true} />
+
+          {/* 6. Built for Travel Split Section (Moved below reviews) */}
+          <EnergyBoostSplit />
+
+          {/* 7. Stacking 3-Mode Cards (Moved below reviews) */}
+          <X2ModesSwipe />
 
           {/* 8. Miroooo Dental App */}
           <DentalAppSection isX2={true} />
