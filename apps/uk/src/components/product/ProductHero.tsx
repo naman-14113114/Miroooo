@@ -65,6 +65,7 @@ export function ProductHero({
 
   // Addon checkbox for Buy 1 tier
   const [buy1HeadsChecked, setBuy1HeadsChecked] = useState(false);
+  const [simpleHeadsChecked, setSimpleHeadsChecked] = useState(false);
 
   // Gallery active index & Lightbox state
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
@@ -210,7 +211,7 @@ export function ProductHero({
 
   const currentPrice =
     isSimpleBuybox
-      ? singlePrice * quantity
+      ? singlePrice * quantity + (simpleHeadsChecked ? 10 : 0)
       : selectedTier === 'single'
       ? singlePrice + (buy1HeadsChecked ? 10 : 0)
       : selectedTier === 'bundle-2'
@@ -261,6 +262,13 @@ export function ProductHero({
         color: selectedColor,
         quantity,
       });
+      if (simpleHeadsChecked) {
+        addItem({
+          productHandle: isX2 ? 'miroooo-x2-heads' : 'miroooo-x1-heads',
+          color: 'Default',
+          quantity: 1,
+        });
+      }
       router.push('/cart');
       return;
     }
@@ -1224,85 +1232,229 @@ export function ProductHero({
 
               {/* Quantity Selector Bar for Simple Buybox */}
               {isSimpleBuybox && (
-                <div className="quantity-selector-container my-4" style={{ margin: '18px 0 16px 0' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
-                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Quantity:</span>
+                <>
+                  <div className="quantity-selector-container my-4" style={{ margin: '18px 0 16px 0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
+                      <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Quantity:</span>
+                    </div>
+                    <div
+                      className="inline-flex items-center"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        background: 'rgba(255, 255, 255, 0.06)',
+                        border: '1px solid rgba(255, 255, 255, 0.18)',
+                        borderRadius: '9999px',
+                        padding: '4px 6px',
+                        gap: '8px',
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                        disabled={quantity <= 1}
+                        aria-label="Decrease quantity"
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: '50%',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          background: 'rgba(255, 255, 255, 0.1)',
+                          color: '#ffffff',
+                          border: 'none',
+                          cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
+                          opacity: quantity <= 1 ? 0.4 : 1,
+                          transition: 'all 0.15s ease',
+                        }}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </button>
+                      <span
+                        style={{
+                          minWidth: '32px',
+                          textAlign: 'center',
+                          fontWeight: 700,
+                          fontSize: '15px',
+                          color: '#ffffff',
+                          userSelect: 'none',
+                        }}
+                        aria-live="polite"
+                        aria-atomic="true"
+                      >
+                        {quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setQuantity((prev) => prev + 1)}
+                        aria-label="Increase quantity"
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: '50%',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          background: 'rgba(255, 255, 255, 0.1)',
+                          color: '#ffffff',
+                          border: 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease',
+                        }}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                          <line x1="12" y1="5" x2="12" y2="19"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                  <div
-                    className="inline-flex items-center"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      background: 'rgba(255, 255, 255, 0.06)',
-                      border: '1px solid rgba(255, 255, 255, 0.18)',
-                      borderRadius: '9999px',
-                      padding: '4px 6px',
-                      gap: '8px',
-                    }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                      disabled={quantity <= 1}
-                      aria-label="Decrease quantity"
-                      style={{
-                        width: '32px',
-                        height: '32px',
-                        borderRadius: '50%',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        color: '#ffffff',
-                        border: 'none',
-                        cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
-                        opacity: quantity <= 1 ? 0.4 : 1,
-                        transition: 'all 0.15s ease',
+
+                  {/* Horizontal Heads Bundle Addon Container */}
+                  {!isWaterFlosser && (
+                    <div
+                      className={`simple-heads-bundle-card ${simpleHeadsChecked ? 'is-checked' : ''}`}
+                      id="simple-heads-bundle-addon"
+                      onClick={() => setSimpleHeadsChecked((prev) => !prev)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === ' ' || e.key === 'Enter') {
+                          e.preventDefault();
+                          setSimpleHeadsChecked((prev) => !prev);
+                        }
                       }}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                    </button>
-                    <span
                       style={{
-                        minWidth: '32px',
-                        textAlign: 'center',
-                        fontWeight: 700,
-                        fontSize: '15px',
-                        color: '#ffffff',
-                        userSelect: 'none',
-                      }}
-                      aria-live="polite"
-                      aria-atomic="true"
-                    >
-                      {quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setQuantity((prev) => prev + 1)}
-                      aria-label="Increase quantity"
-                      style={{
-                        width: '32px',
-                        height: '32px',
-                        borderRadius: '50%',
-                        display: 'inline-flex',
+                        display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        color: '#ffffff',
-                        border: 'none',
+                        justifyContent: 'space-between',
+                        gap: '14px',
+                        padding: '12px 16px',
+                        margin: '16px 0',
+                        borderRadius: '16px',
+                        background: '#e6e6e6',
+                        border: simpleHeadsChecked
+                          ? '2px solid #000000'
+                          : '1.5px solid rgba(0, 0, 0, 0.12)',
+                        boxShadow: simpleHeadsChecked
+                          ? '0 6px 24px rgba(0, 0, 0, 0.18)'
+                          : '0 2px 8px rgba(0, 0, 0, 0.08)',
                         cursor: 'pointer',
-                        transition: 'all 0.15s ease',
+                        transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                        userSelect: 'none',
+                        color: '#111111',
                       }}
                     >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+                      {/* Left: Checkbox + Thumbnail + Info */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', minWidth: 0, flex: 1 }}>
+                        {/* Custom Checkbox with Black Tick */}
+                        <div
+                          style={{
+                            width: '22px',
+                            height: '22px',
+                            borderRadius: '5px',
+                            border: simpleHeadsChecked
+                              ? '2px solid #111111'
+                              : '1.5px solid #a0a0a0',
+                            background: '#ffffff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            transition: 'all 0.18s ease',
+                          }}
+                        >
+                          {simpleHeadsChecked && (
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#111111"
+                              strokeWidth="3.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              style={{ width: '15px', height: '15px' }}
+                            >
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          )}
+                        </div>
+
+                        {/* Image Thumbnail (Increased size so image looks clear) */}
+                        <div
+                          style={{
+                            width: '68px',
+                            height: '68px',
+                            borderRadius: '10px',
+                            overflow: 'hidden',
+                            background: '#ffffff',
+                            border: '1px solid rgba(0, 0, 0, 0.08)',
+                            flexShrink: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '3px',
+                          }}
+                        >
+                          <img
+                            src={
+                              isX2
+                                ? '/assets_ref/x2/heads/B1.webp'
+                                : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'
+                            }
+                            alt={`Miroooo ${isX2 ? 'X2' : 'X1'} Replacement Brush Heads (1 Set)`}
+                            width={68}
+                            height={68}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '7px' }}
+                          />
+                        </div>
+
+                        {/* Info / Title */}
+                        <div style={{ minWidth: 0, lineHeight: 1.3 }}>
+                          <span
+                            style={{
+                              display: 'block',
+                              color: '#111111',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              letterSpacing: '-0.01em',
+                            }}
+                          >
+                            Miroooo {isX2 ? 'X2' : 'X1'} Heads (1 Set)
+                          </span>
+                          <p
+                            style={{
+                              margin: '3px 0 0 0',
+                              fontSize: '12px',
+                              color: '#555555',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            2x DuPont precision replacement heads
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Price */}
+                      <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                        <span
+                          style={{
+                            color: '#111111',
+                            fontWeight: 800,
+                            fontSize: '17px',
+                            letterSpacing: '-0.02em',
+                          }}
+                        >
+                          +£10
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
 
               {!isSimpleBuybox && (
@@ -1716,9 +1868,16 @@ export function ProductHero({
               <div className="miroooo-sticky-left hidden md:flex">
                 <div className="miroooo-sticky-img-stack" id="sticky-bar-img-stack" aria-hidden="true">
                   {isSimpleBuybox ? (
-                    <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
-                      <img src={getColorThumbnail(selectedColor)} alt={`${product.name} - ${selectedColor}`} width="50" height="50" decoding="async" />
-                    </div>
+                    <>
+                      <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
+                        <img src={getColorThumbnail(selectedColor)} alt={`${product.name} - ${selectedColor}`} width="50" height="50" decoding="async" />
+                      </div>
+                      {simpleHeadsChecked && (
+                        <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
+                          <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <>
                       {(selectedTier === 'single' ? [singleColor] : selectedTier === 'bundle-2' ? bundle2Colors : bundle3Colors).map((color, index) => (
@@ -1737,7 +1896,7 @@ export function ProductHero({
                 <div className="miroooo-sticky-info">
                   <p className="miroooo-sticky-title" id="sticky-bar-title">
                     {isSimpleBuybox
-                      ? `${product.name} - ${selectedColor}`
+                      ? `${product.name} - ${selectedColor}${simpleHeadsChecked ? ' + Heads' : ''}`
                       : selectedTier === 'single'
                       ? `${product.name} - ${singleColor}${buy1HeadsChecked ? ' + Heads' : ''}`
                       : selectedTier === 'bundle-2'
@@ -1749,7 +1908,7 @@ export function ProductHero({
                       <>
                         <span style={{ marginRight: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>Qty: {quantity}</span>
                         <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                          £{singlePrice * quantity}
+                          £{currentPrice}
                         </span>
                       </>
                     ) : (
