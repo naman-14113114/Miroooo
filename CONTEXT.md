@@ -686,3 +686,24 @@ scripts/verify-us.mjs
   - `pnpm --filter @miroooo/us test`: 40/40 passed.
   - `pnpm build`: Both UK and US Turbopack production builds succeeded (all 47/47 routes compiled).
 - Zero edits outside this repository (`E:\1st YEAR DTU\New folder\miroooo`).
+
+## 2026-11-13 08:20:55 IST - Verified Water Flosser visibility on miroooo.us
+
+- User asked for Water Flosser visible on miroooo.us while hidden on Whop trymiroooo.com. Read governing workspace/context and reconciled E:/1st YEAR DTU/New folder/miroooo clean main and origin/main at 6c74d7b0e0cdf58e89ef381dc474d9398dce54e3, 0/0 after fetch, remote https://github.com/naman-14113114/Miroooo.git. The deployed domain serves the UK app. Existing apps/uk source contains product route, shop, menu/footer and sitemap entries. Public www.miroooo.us product/shop/sitemap verified 200 with expected listing. Both X1/X2 existing add-on cards and matching Antigravity/GitHub implementation were used as reference for the separate Whop task. Whop product and alternate flosser URL remain 404.
+- No source, Git, push, branch, PR, Vercel or DNS changes in this repo. Only appended context. No real purchase tested. Read-only curl and Git inspection completed the requested visibility verification.
+
+## 2026-11-13 18:55:00 IST - UK About Us Page Conversion & Trust Funnel Overhaul
+
+- **Directives Executed**:
+  1. Converted `apps/uk/src/components/pages/AboutPage.tsx` from an anonymous, dead-end essay into an active 5-block conversion funnel.
+  2. Directed all product links, CTA buttons, and sticky bars exclusively to **Miroooo X2** (`/products/miroooo-x2`) to capitalize on active X2 ad traffic.
+  3. Integrated verified UK trust signals: London business address (`71-75 Shelton Street, Covent Garden, London WC2H 9JQ`), UKCA / CE certification, IPX7 waterproof rating, DuPont™ bristles, and a prominent 30-Day Risk-Free Trial Guarantee.
+  4. Added a full Miroooo X2 Flagship Spotlight Card with real package flat-lay assets, 50% OFF offer, 3 Free Gifts callout, and direct purchasing CTA.
+  5. Implemented a mobile sticky bottom bar (`Miroooo X2 · £69 · Get X2 (50% Off) →`) to eliminate drop-offs on mobile scroll.
+  6. Removed legacy dropshipping placeholder (`xPage Drop`) across `apps/uk/src/data/policies.ts`.
+- **Verification**:
+  - `pnpm --filter @miroooo/uk typecheck` passed with 0 errors.
+  - `node scripts/verify.mjs` passed 567 checks.
+  - `node scripts/verify-us.mjs` passed 849 checks.
+  - Turbopack production build `pnpm --filter @miroooo/uk build` compiled cleanly (47/47 static & dynamic routes).
+  - Stored strictly locally in repository `E:\1st YEAR DTU\New folder\miroooo`.
