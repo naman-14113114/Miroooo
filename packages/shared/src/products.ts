@@ -15,7 +15,7 @@ export interface CatalogProductVariant {
 }
 
 export interface BundleTierDefinition {
-  quantity: 1 | 2 | 3;
+  quantity: 1 | 2 | 3 | 6;
   name: string;
   badge?: string;
   basePrice: number;
@@ -116,21 +116,21 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         quantity: 2,
         name: "BUY 2",
         badge: "Most Popular",
-        basePrice: 108.0,
-        baseCompareAt: 258.0,
-        freeHeadsCount: 1,
+        basePrice: 128.0,
+        baseCompareAt: 278.0,
+        freeHeadsCount: 2,
         savingText: (m) => `SAVE ${formatMoney(convertPrice(150, m), m.currencySymbol)}`,
-        description: () => "Includes 2 Miroooo X1 sets + 1 FREE 2-Pack Brush Heads Set",
+        description: () => "Includes 2 Miroooo X1 sets + 2 FREE 2-Pack Brush Heads Sets (4 Heads)",
       },
       {
         quantity: 3,
         name: "BUY 3",
         badge: "BEST VALUE",
-        basePrice: 147.0,
-        baseCompareAt: 387.0,
-        freeHeadsCount: 2,
+        basePrice: 177.0,
+        baseCompareAt: 417.0,
+        freeHeadsCount: 3,
         savingText: (m) => `SAVE ${formatMoney(convertPrice(240, m), m.currencySymbol)}`,
-        description: () => "Includes 3 Miroooo X1 sets + 2 FREE 2-Pack Brush Heads Sets",
+        description: () => "Includes 3 Miroooo X1 sets + 3 FREE 2-Pack Brush Heads Sets (6 Heads)",
       },
     ],
     specs: [
@@ -250,7 +250,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     description:
       "2-pack replacement DuPont acoustic precision brush heads. Micro-diamond polished tips protect enamel and remove 10x more plaque.",
     basePrice: 10.0,
-    baseCompareAt: 20.0,
+    baseCompareAt: 12.0,
     rating: 4.9,
     reviewCount: 4275,
     plusBaseProductId: "1000000675471182",
@@ -269,30 +269,30 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         quantity: 1,
         name: "BUY 1",
         basePrice: 10.0,
-        baseCompareAt: 20.0,
+        baseCompareAt: 12.0,
         freeHeadsCount: 0,
-        savingText: () => "50% OFF",
+        savingText: () => "17% OFF",
         description: () => "1 Pack (2 Brush Heads)",
-      },
-      {
-        quantity: 2,
-        name: "BUY 2",
-        badge: "Most Popular",
-        basePrice: 18.0,
-        baseCompareAt: 40.0,
-        freeHeadsCount: 0,
-        savingText: (m) => `SAVE ${formatMoney(convertPrice(22, m), m.currencySymbol)}`,
-        description: () => "2 Packs (4 Brush Heads) — $9 / pack",
       },
       {
         quantity: 3,
         name: "BUY 3",
-        badge: "BEST VALUE",
-        basePrice: 24.0,
-        baseCompareAt: 60.0,
+        badge: "Most Popular",
+        basePrice: 30.0,
+        baseCompareAt: 36.0,
         freeHeadsCount: 0,
-        savingText: (m) => `SAVE ${formatMoney(convertPrice(36, m), m.currencySymbol)}`,
-        description: () => "3 Packs (6 Brush Heads) — $8 / pack",
+        savingText: () => "17% OFF",
+        description: () => "3 Packs (6 Brush Heads), $10 / pack",
+      },
+      {
+        quantity: 6,
+        name: "BUY 6",
+        badge: "BEST VALUE",
+        basePrice: 60.0,
+        baseCompareAt: 72.0,
+        freeHeadsCount: 0,
+        savingText: () => "17% OFF",
+        description: () => "6 Packs (12 Brush Heads), $10 / pack",
       },
     ],
     specs: [
@@ -313,7 +313,7 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
     description:
       "2-pack replacement DuPont precision brush heads. Designed specifically for the Miroooo X2 dynamic 45° oscillating drive shaft.",
     basePrice: 10.0,
-    baseCompareAt: 20.0,
+    baseCompareAt: 12.0,
     rating: 4.9,
     reviewCount: 4275,
     plusBaseProductId: "1000000675616058",
@@ -332,30 +332,30 @@ export const PRODUCTS: Record<string, ProductCatalogItem> = {
         quantity: 1,
         name: "BUY 1",
         basePrice: 10.0,
-        baseCompareAt: 20.0,
+        baseCompareAt: 12.0,
         freeHeadsCount: 0,
-        savingText: () => "50% OFF",
+        savingText: () => "17% OFF",
         description: () => "1 Pack (2 Brush Heads)",
-      },
-      {
-        quantity: 2,
-        name: "BUY 2",
-        badge: "Most Popular",
-        basePrice: 18.0,
-        baseCompareAt: 40.0,
-        freeHeadsCount: 0,
-        savingText: (m) => `SAVE ${formatMoney(convertPrice(22, m), m.currencySymbol)}`,
-        description: () => "2 Packs (4 Brush Heads) — $9 / pack",
       },
       {
         quantity: 3,
         name: "BUY 3",
-        badge: "BEST VALUE",
-        basePrice: 24.0,
-        baseCompareAt: 60.0,
+        badge: "Most Popular",
+        basePrice: 30.0,
+        baseCompareAt: 36.0,
         freeHeadsCount: 0,
-        savingText: (m) => `SAVE ${formatMoney(convertPrice(36, m), m.currencySymbol)}`,
-        description: () => "3 Packs (6 Brush Heads) — $8 / pack",
+        savingText: () => "17% OFF",
+        description: () => "3 Packs (6 Brush Heads), $10 / pack",
+      },
+      {
+        quantity: 6,
+        name: "BUY 6",
+        badge: "BEST VALUE",
+        basePrice: 60.0,
+        baseCompareAt: 72.0,
+        freeHeadsCount: 0,
+        savingText: () => "17% OFF",
+        description: () => "6 Packs (12 Brush Heads), $10 / pack",
       },
     ],
     specs: [
@@ -688,11 +688,11 @@ import { MARKETS } from "./market";
 export function getMirooooX(market: MarketConfig): ProductPageContent {
   const p1 = convertPrice(69.0, market);
   const c1 = convertPrice(139.0, market);
-  const p2 = convertPrice(108.0, market);
-  const c2 = convertPrice(258.0, market);
+  const p2 = convertPrice(128.0, market);
+  const c2 = convertPrice(278.0, market);
   const s2 = convertPrice(150.0, market);
-  const p3 = convertPrice(147.0, market);
-  const c3 = convertPrice(387.0, market);
+  const p3 = convertPrice(177.0, market);
+  const c3 = convertPrice(417.0, market);
   const s3 = convertPrice(240.0, market);
   const giftVal = convertPrice(10.0, market);
 
@@ -720,9 +720,9 @@ export function getMirooooX(market: MarketConfig): ProductPageContent {
       { id: "x-m5", type: "image", src: "/media/products/miroooo-x/gallery/Grey-color-7.jpg", alt: "Miroooo X1 Detail", width: 700, height: 700 },
     ],
     bundles: [
-      { quantity: 1, name: "BUY 1", price: formatMoney(p1, market.currencySymbol), compareAt: formatMoney(c1, market.currencySymbol), saving: "50% OFF", description: "Includes 1 Miroooo X1 set & 1 Travel Case" },
-      { quantity: 2, name: "BUY 2", badge: "Most Popular", price: formatMoney(p2, market.currencySymbol), compareAt: formatMoney(c2, market.currencySymbol), saving: `SAVE ${formatMoney(s2, market.currencySymbol)}`, description: "Includes 2 Miroooo X1 sets + 1 FREE 2-Pack Brush Heads Set" },
-      { quantity: 3, name: "BUY 3", badge: "BEST VALUE", price: formatMoney(p3, market.currencySymbol), compareAt: formatMoney(c3, market.currencySymbol), saving: `SAVE ${formatMoney(s3, market.currencySymbol)}`, description: "Includes 3 Miroooo X1 sets + 2 FREE 2-Pack Brush Heads Sets" },
+      { quantity: 1, name: "BUY 1", price: formatMoney(p1, market.currencySymbol), compareAt: formatMoney(c1, market.currencySymbol), saving: "50% OFF", description: "Includes 1 Miroooo X1 set & 1 FREE 2-Pack Brush Heads Set" },
+      { quantity: 2, name: "BUY 2", badge: "Most Popular", price: formatMoney(p2, market.currencySymbol), compareAt: formatMoney(c2, market.currencySymbol), saving: `SAVE ${formatMoney(s2, market.currencySymbol)}`, description: "Includes 2 Miroooo X1 sets + 2 FREE 2-Pack Brush Heads Sets (4 Heads)" },
+      { quantity: 3, name: "BUY 3", badge: "BEST VALUE", price: formatMoney(p3, market.currencySymbol), compareAt: formatMoney(c3, market.currencySymbol), saving: `SAVE ${formatMoney(s3, market.currencySymbol)}`, description: "Includes 3 Miroooo X1 sets + 3 FREE 2-Pack Brush Heads Sets (6 Heads)" },
     ],
     gifts: [
       { id: "gift-x-heads", name: "Free 2-Pack Replacement Heads", value: formatMoney(giftVal, market.currencySymbol), minimumQuantity: 2, image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp" },
@@ -771,9 +771,9 @@ export function getMirooooX2(market: MarketConfig): ProductPageContent {
       { id: "x2-m5", type: "image", src: "/media/products/miroooo-x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp", alt: "Miroooo X2 Complete Set Packaging", width: 1000, height: 1000 },
     ],
     bundles: [
-      { quantity: 1, name: "BUY 1", price: formatMoney(p1, market.currencySymbol), compareAt: formatMoney(c1, market.currencySymbol), saving: "50% OFF", description: "Includes 1 Miroooo X2 set & 1 Travel Case" },
-      { quantity: 2, name: "BUY 2", badge: "Most Popular", price: formatMoney(p2, market.currencySymbol), compareAt: formatMoney(c2, market.currencySymbol), saving: `SAVE ${formatMoney(s2, market.currencySymbol)}`, description: "Includes 2 Miroooo X2 sets + 1 FREE 2-Pack Brush Heads Set" },
-      { quantity: 3, name: "BUY 3", badge: "BEST VALUE", price: formatMoney(p3, market.currencySymbol), compareAt: formatMoney(c3, market.currencySymbol), saving: `SAVE ${formatMoney(s3, market.currencySymbol)}`, description: "Includes 3 Miroooo X2 sets + 2 FREE 2-Pack Brush Heads Sets" },
+      { quantity: 1, name: "BUY 1", price: formatMoney(p1, market.currencySymbol), compareAt: formatMoney(c1, market.currencySymbol), saving: "50% OFF", description: "Includes 1 Miroooo X2 set & 1 FREE 2-Pack Brush Heads Set" },
+      { quantity: 2, name: "BUY 2", badge: "Most Popular", price: formatMoney(p2, market.currencySymbol), compareAt: formatMoney(c2, market.currencySymbol), saving: `SAVE ${formatMoney(s2, market.currencySymbol)}`, description: "Includes 2 Miroooo X2 sets + 2 FREE 2-Pack Brush Heads Sets (4 Heads)" },
+      { quantity: 3, name: "BUY 3", badge: "BEST VALUE", price: formatMoney(p3, market.currencySymbol), compareAt: formatMoney(c3, market.currencySymbol), saving: `SAVE ${formatMoney(s3, market.currencySymbol)}`, description: "Includes 3 Miroooo X2 sets + 3 FREE 2-Pack Brush Heads Sets (6 Heads)" },
     ],
     gifts: [
       { id: "gift-x2-heads", name: "Free 2-Pack Replacement Heads", value: formatMoney(giftVal, market.currencySymbol), minimumQuantity: 2, image: "/assets_ref/x2/heads/B1.webp" },

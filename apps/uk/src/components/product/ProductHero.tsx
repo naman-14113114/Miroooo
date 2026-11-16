@@ -66,6 +66,7 @@ export function ProductHero({
   // Addon checkbox for Buy 1 tier
   const [buy1HeadsChecked, setBuy1HeadsChecked] = useState(false);
   const [simpleHeadsChecked, setSimpleHeadsChecked] = useState(false);
+  const [simpleHeadsSets, setSimpleHeadsSets] = useState(1);
 
   // Gallery active index & Lightbox state
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
@@ -211,7 +212,7 @@ export function ProductHero({
 
   const currentPrice =
     isSimpleBuybox
-      ? singlePrice * quantity + (simpleHeadsChecked ? 10 : 0)
+      ? (isX2 ? singlePrice : singlePrice * quantity + (simpleHeadsChecked ? 10 * simpleHeadsSets : 0))
       : selectedTier === 'single'
       ? singlePrice + (buy1HeadsChecked ? 10 : 0)
       : selectedTier === 'bundle-2'
@@ -221,11 +222,13 @@ export function ProductHero({
   const addToCartLabel = isWaterFlosser
     ? 'Add to Cart + Free Gift Card'
     : isSimpleBuybox
-    ? (quantity === 2
-        ? 'Add to Cart + Free 4 Brush Heads'
-        : quantity === 3
-        ? 'Add to Cart + Free 6 Brush Heads'
-        : 'Add to Cart + 3 Free Gifts')
+    ? (isX2
+        ? 'Add to Cart + 3 Free Gifts'
+        : (quantity === 2
+            ? 'Add to Cart + Free 4 Brush Heads'
+            : quantity === 3
+            ? 'Add to Cart + Free 6 Brush Heads'
+            : 'Add to Cart + 3 Free Gifts'))
     : (selectedTier === 'bundle-2'
         ? 'Add to Cart + Free 4 Brush Heads'
         : selectedTier === 'bundle-3'
@@ -260,13 +263,13 @@ export function ProductHero({
       addItem({
         productHandle: product.handle,
         color: selectedColor,
-        quantity,
+        quantity: isX2 ? 1 : quantity,
       });
-      if (simpleHeadsChecked) {
+      if (!isX2 && simpleHeadsChecked) {
         addItem({
-          productHandle: isX2 ? 'miroooo-x2-heads' : 'miroooo-x1-heads',
+          productHandle: 'miroooo-x1-heads',
           color: 'Default',
-          quantity: 1,
+          quantity: simpleHeadsSets,
         });
       }
       router.push('/cart');
@@ -1230,8 +1233,8 @@ export function ProductHero({
                 </div>
               </div>
 
-              {/* Quantity Selector Bar for Simple Buybox */}
-              {isSimpleBuybox && (
+              {/* Quantity Selector Bar and Heads Addon for Simple Buybox (X1 only; X2 has standalone color + direct CTA on Whop) */}
+              {isSimpleBuybox && !isX2 && (
                 <>
                   <div className="quantity-selector-container my-4" style={{ margin: '18px 0 16px 0' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
@@ -1313,144 +1316,65 @@ export function ProductHero({
                     </div>
                   </div>
 
-                  {/* Horizontal Heads Bundle Addon Container */}
+                  {/* Horizontal Heads Bundle Addon Container matching Whop */}
                   {!isWaterFlosser && (
-                    <div
-                      className={`simple-heads-bundle-card ${simpleHeadsChecked ? 'is-checked' : ''}`}
-                      id="simple-heads-bundle-addon"
-                      onClick={() => setSimpleHeadsChecked((prev) => !prev)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === ' ' || e.key === 'Enter') {
-                          e.preventDefault();
-                          setSimpleHeadsChecked((prev) => !prev);
-                        }
-                      }}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: '14px',
-                        padding: '12px 16px',
-                        margin: '16px 0',
-                        borderRadius: '16px',
-                        background: '#e6e6e6',
-                        border: simpleHeadsChecked
-                          ? '2px solid #000000'
-                          : '1.5px solid rgba(0, 0, 0, 0.12)',
-                        boxShadow: simpleHeadsChecked
-                          ? '0 6px 24px rgba(0, 0, 0, 0.18)'
-                          : '0 2px 8px rgba(0, 0, 0, 0.08)',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                        userSelect: 'none',
-                        color: '#111111',
-                      }}
-                    >
-                      {/* Left: Checkbox + Thumbnail + Info */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', minWidth: 0, flex: 1 }}>
-                        {/* Custom Checkbox with Black Tick */}
-                        <div
-                          style={{
-                            width: '22px',
-                            height: '22px',
-                            borderRadius: '5px',
-                            border: simpleHeadsChecked
-                              ? '2px solid #111111'
-                              : '1.5px solid #a0a0a0',
-                            background: '#ffffff',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexShrink: 0,
-                            transition: 'all 0.18s ease',
-                          }}
-                        >
-                          {simpleHeadsChecked && (
-                            <svg
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="#111111"
-                              strokeWidth="3.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              style={{ width: '15px', height: '15px' }}
-                            >
-                              <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                          )}
-                        </div>
-
-                        {/* Image Thumbnail (Increased size so image looks clear) */}
-                        <div
-                          style={{
-                            width: '68px',
-                            height: '68px',
-                            borderRadius: '10px',
-                            overflow: 'hidden',
-                            background: '#ffffff',
-                            border: '1px solid rgba(0, 0, 0, 0.08)',
-                            flexShrink: 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: '3px',
-                          }}
-                        >
-                          <img
-                            src={
-                              isX2
-                                ? '/assets_ref/x2/heads/B1.webp'
-                                : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'
-                            }
-                            alt={`Miroooo ${isX2 ? 'X2' : 'X1'} Replacement Brush Heads (1 Set)`}
-                            width={68}
-                            height={68}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '7px' }}
-                          />
-                        </div>
-
-                        {/* Info / Title */}
-                        <div style={{ minWidth: 0, lineHeight: 1.3 }}>
-                          <span
-                            style={{
-                              display: 'block',
-                              color: '#111111',
-                              fontWeight: 700,
-                              fontSize: '14px',
-                              letterSpacing: '-0.01em',
-                            }}
-                          >
-                            Miroooo {isX2 ? 'X2' : 'X1'} Heads (1 Set)
-                          </span>
-                          <p
-                            style={{
-                              margin: '3px 0 0 0',
-                              fontSize: '12px',
-                              color: '#555555',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              whiteSpace: 'nowrap',
-                            }}
-                          >
-                            2x DuPont precision replacement heads
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Right: Price */}
-                      <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                        <span
-                          style={{
-                            color: '#111111',
-                            fontWeight: 800,
-                            fontSize: '17px',
-                            letterSpacing: '-0.02em',
-                          }}
-                        >
-                          +£10
+                    <div className="simple-heads-bundle-card" id="simple-heads-bundle-addon">
+                      <label className="simple-heads-bundle-selection">
+                        <input
+                          className="simple-heads-bundle-checkbox"
+                          type="checkbox"
+                          aria-label="Add Miroooo X1 Heads"
+                          checked={simpleHeadsChecked}
+                          onChange={(e) => setSimpleHeadsChecked(e.target.checked)}
+                        />
+                        <span className="simple-heads-bundle-check" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
                         </span>
+                        <img
+                          className="simple-heads-bundle-image"
+                          src="/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp"
+                          alt=""
+                          width={68}
+                          height={68}
+                        />
+                        <span className="simple-heads-bundle-copy">
+                          <strong>Miroooo X1 Heads ({simpleHeadsSets} Set{simpleHeadsSets > 1 ? 's' : ''})</strong>
+                          <span>{simpleHeadsSets * 2}x DuPont precision replacement heads</span>
+                        </span>
+                      </label>
+                      <div className="simple-heads-bundle-price">
+                        <strong>+£{10 * simpleHeadsSets}</strong>
+                        <span className="simple-heads-bundle-saving">
+                          <del>£{12 * simpleHeadsSets}</del> 17% off
+                        </span>
+                        <div className="simple-heads-bundle-stepper" role="group" aria-label="Number of extra head sets">
+                          <button
+                            type="button"
+                            aria-label="Decrease extra head sets"
+                            disabled={simpleHeadsSets <= 1}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setSimpleHeadsSets((prev) => Math.max(1, prev - 1));
+                            }}
+                          >
+                            −
+                          </button>
+                          <output aria-live="polite">{simpleHeadsSets}</output>
+                          <button
+                            type="button"
+                            aria-label="Increase extra head sets"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setSimpleHeadsSets((prev) => prev + 1);
+                            }}
+                          >
+                            +
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -1872,9 +1796,9 @@ export function ProductHero({
                       <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
                         <img src={getColorThumbnail(selectedColor)} alt={`${product.name} - ${selectedColor}`} width="50" height="50" decoding="async" />
                       </div>
-                      {simpleHeadsChecked && (
+                      {!isX2 && simpleHeadsChecked && (
                         <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                          <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
+                          <img src="/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp" alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
                         </div>
                       )}
                     </>
@@ -1896,7 +1820,7 @@ export function ProductHero({
                 <div className="miroooo-sticky-info">
                   <p className="miroooo-sticky-title" id="sticky-bar-title">
                     {isSimpleBuybox
-                      ? `${product.name} - ${selectedColor}${simpleHeadsChecked ? ' + Heads' : ''}`
+                      ? (isX2 ? `${product.name} - ${selectedColor}` : `${product.name} - ${selectedColor}${simpleHeadsChecked ? ' + Heads' : ''}`)
                       : selectedTier === 'single'
                       ? `${product.name} - ${singleColor}${buy1HeadsChecked ? ' + Heads' : ''}`
                       : selectedTier === 'bundle-2'
@@ -1905,12 +1829,18 @@ export function ProductHero({
                   </p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                     {isSimpleBuybox ? (
-                      <>
-                        <span style={{ marginRight: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>Qty: {quantity}</span>
+                      isX2 ? (
                         <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                          £{currentPrice}
+                          £{singlePrice}
                         </span>
-                      </>
+                      ) : (
+                        <>
+                          <span style={{ marginRight: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>Qty: {quantity}</span>
+                          <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
+                            £{currentPrice}
+                          </span>
+                        </>
+                      )
                     ) : (
                       <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
                         £{currentPrice}

@@ -28,19 +28,6 @@ const sections = [
     ],
   },
   {
-    title: "Water Flosser",
-    products: [
-      {
-        handle: "miroooo-water-flosser",
-        title: "Miroooo Water Flosser",
-        eyebrow: "New Release",
-        image: "/assets_ref/flosser/gallery/miroooo-water-flosser-premium-black-white-duo-uk.webp",
-        price: 69,
-        comparePrice: 139,
-      },
-    ],
-  },
-  {
     title: "Accessories",
     products: [
       {

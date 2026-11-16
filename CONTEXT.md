@@ -707,3 +707,60 @@ scripts/verify-us.mjs
   - `node scripts/verify-us.mjs` passed 849 checks.
   - Turbopack production build `pnpm --filter @miroooo/uk build` compiled cleanly (47/47 static & dynamic routes).
   - Stored strictly locally in repository `E:\1st YEAR DTU\New folder\miroooo`.
+
+
+## 2026-11-16 09:55:00 IST - Synchronized UK storefront with live Whop (trymiroooo.com)
+
+- **User Directive**:
+  - Update memory, pull from GitHub, and synchronize the local repository to match `trymiroooo.com` on Whop: "I want all same changes which I done there here too, Don't change anything on whop strictly, just see what is different and fix it. Price, deal image everything must be same here too".
+  - Strictly maintain repository isolation to `E:\1st YEAR DTU\New folder\miroooo`. Zero modifications to outside repositories.
+- **Analysis of Live Whop (`https://www.trymiroooo.com/`)**:
+  - Extracted exact HTML, bundles, and product schema from Whop live storefront.
+  - Key diffs found and addressed:
+    1. **Heads Pricing & Tiers**:
+       - Both `Miroooo X1 Heads (2-Pack)` and `Miroooo X2 Heads (2-Pack)` have price £10, compare-at £12 (17% OFF).
+       - Both use `CHOOSE YOUR PACK` with 3 tiers:
+         - Buy 1: 1 Pack (2 Heads) — £10.00 (compare at £12)
+         - Buy 3 (Most Popular seal): 3 Packs (6 Heads) — £30.00 (compare at £36, £10 each)
+         - Buy 6 (BEST VALUE ribbon): 6 Packs (12 Heads) — £60.00 (compare at £72, £10 each)
+       - No subscription plan exists on Whop.
+    2. **Miroooo X2 Buy Box Structure**:
+       - On X2 (`/products/miroooo-x2`), there is NO quantity stepper and NO heads addon checkbox in the buy box. It renders standalone color selector, delivery timer box, `Add to Cart + 3 Free Gifts` CTA, 3 trust pills, and `Black Friday Free Gifts` section (£39 value of free gifts for today only: Travel Case £20, Wall-Mounted Dock £9, Free Brush Heads £10).
+    3. **Miroooo X1 Buy Box Structure**:
+       - Renders standalone color selector, quantity stepper (`Quantity: 1`), and the `simple-heads-bundle-card` addon (+£10, <del>£12</del> 17% off, stepper `− 1 +`).
+    4. **Shop Catalog**:
+       - 8 products on Whop catalog (Water Flosser excluded). Heads compare-at set to £12 and 17% OFF.
+    5. **Navigation & Drawer Menu**:
+       - Water Flosser excluded from header shop dropdown and drawer menu sections.
+- **Modifications Applied**:
+  1. `apps/uk/src/data/products.ts`:
+     - `miroooo-x1-heads` & `miroooo-x2-heads`: compareAt 12.0, formattedCompareAt '£12', bundles updated to Buy 1 (£10/£12), Buy 3 (£30/£36, 17% OFF, Most Popular), Buy 6 (£60/£72, 17% OFF, BEST VALUE).
+  2. `packages/shared/src/products.ts`:
+     - `miroooo-x`: bundles updated to Buy 2 (£128, compareAt £278, save £150) and Buy 3 (£177, compareAt £417, save £240).
+     - `miroooo-x1-heads` & `miroooo-x2-heads`: baseCompareAt 12.0, bundle tiers updated to 10/12, 30/36, 60/72.
+     - `BundleTierDefinition` and `BundleTier` interfaces updated to support quantity 6.
+  3. `apps/uk/src/components/pages/ShopPage.tsx`:
+     - Excluded `miroooo-water-flosser` from `UK_COLLECTION_PRODUCTS` (catalog now has exactly 8 items matching Whop).
+     - Set compareAt to '£12' and badge to '17% OFF' for both X1 and X2 heads.
+  4. `apps/uk/src/data/navigation.ts`:
+     - Removed Water Flosser group from `HEADER_NAV` and `DRAWER_MENU`.
+  5. `apps/uk/src/components/layout/MenuDrawer.tsx`:
+     - Removed Water Flosser section from drawer sections.
+  6. `apps/uk/src/components/product/FreeBrushHeadsGift.tsx`:
+     - Set X2 heading to 'Black Friday Free Gifts'.
+     - Set X2 brush heads gift alt text to: 'MIROOOO X2 sonic toothbrush replacement head with blue, white and yellow bristles'.
+  7. `apps/uk/src/components/product/HeadsProductHero.tsx`:
+     - Replaced subscription logic with unified 3-pack tier selection matching Whop (1, 3, 6 packs).
+     - Set divider text to 'CHOOSE YOUR PACK' and savings badge to '17% OFF'.
+     - Updated add-to-cart and sticky bar to accurately track selected pack tier and quantity.
+  8. `apps/uk/src/components/product/ProductHero.tsx`:
+     - Guarded quantity selector and heads addon so they only render for X1 (`isSimpleBuybox && !isX2`).
+     - Implemented `simple-heads-bundle-card` on X1 with +£10 (<del>£12</del> 17% off) and stepper controls.
+     - Synchronized cart additions and sticky pill bar.
+  9. `apps/uk/public/assets/product-shell.css`:
+     - Injected exact Whop CSS styles for `.simple-heads-bundle-card` and `.heads-product-saving`.
+- **Verification Completed**:
+  - `pnpm --filter @miroooo/shared typecheck`: Passed (0 errors).
+  - `pnpm --filter @miroooo/uk typecheck`: Passed (0 errors).
+  - `node scripts/verify.mjs`: Passed (561 checks).
+  - `pnpm --filter @miroooo/uk build`: Turbopack production build succeeded (all 47/47 routes compiled).

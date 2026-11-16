@@ -33,17 +33,6 @@ export const HEADER_NAV = [
         ],
       },
       {
-        title: 'Water Flosser',
-        items: [
-          {
-            label: 'Miroooo Water Flosser',
-            href: '/products/miroooo-water-flosser',
-            description: '60–138 PSI deep plaque water flosser',
-            badge: 'New',
-          },
-        ],
-      },
-      {
         title: 'Accessories',
         items: [
           {
@@ -87,10 +76,8 @@ export const DRAWER_MENU = {
     brushes: [
       { label: 'Miroooo X2', href: '/products/miroooo-x2', badge: 'Flagship' },
       { label: 'Miroooo X1', href: '/products/miroooo-x' },
-      { label: 'Miroooo Water Flosser', href: '/products/miroooo-water-flosser', badge: 'New' },
     ],
     accessories: [
-      { label: 'Miroooo Water Flosser', href: '/products/miroooo-water-flosser', badge: 'New' },
       { label: 'Miroooo X2 Heads', href: '/products/miroooo-x2-heads' },
       { label: 'Miroooo X1 Heads', href: '/products/miroooo-x1-heads' },
       { label: 'Luxury Travel Case', href: '/products/travel-case' },

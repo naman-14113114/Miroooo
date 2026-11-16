@@ -7,8 +7,8 @@ interface VariantSelectorProps {
   product: Product;
   selectedColor: string;
   onSelectColor: (color: string) => void;
-  selectedQuantity: 1 | 2 | 3;
-  onSelectQuantity: (quantity: 1 | 2 | 3) => void;
+  selectedQuantity: 1 | 2 | 3 | 6;
+  onSelectQuantity: (quantity: 1 | 2 | 3 | 6) => void;
   bundleColors: string[];
   onUpdateBundleColors: (colors: string[]) => void;
 }
