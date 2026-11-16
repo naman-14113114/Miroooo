@@ -764,3 +764,49 @@ scripts/verify-us.mjs
   - `pnpm --filter @miroooo/uk typecheck`: Passed (0 errors).
   - `node scripts/verify.mjs`: Passed (561 checks).
   - `pnpm --filter @miroooo/uk build`: Turbopack production build succeeded (all 47/47 routes compiled).
+
+## 2026-11-16 13:45:00 +05:30 - Miroooo US (`miroooo.us`) Full Whop Parity, Sticky Header Removal & Sticky Cart Bar Synchronization
+
+- **Repository/Workspace**: `E:\1st YEAR DTU\New folder\miroooo`. Strictly isolated to this repository; zero changes outside.
+- **User Directives**:
+  1. Remove sticky header: On `trymiroooo.com`, the site header is NOT sticky on scroll (it scrolls away with the page) and the oval pill sticky section nav is removed. Fix this across both `apps/us` and `apps/uk`.
+  2. Fix sticky add to cart: Floating bottom sticky bar (`.miroooo-sticky-pill`) must match Whop layout, styling (`product-sticky.css`), and CTA text (`Add to Cart + 3 Free Gifts` on X2).
+  3. Synchronize `apps/us` (`miroooo.us`) 1:1 with `trymiroooo.com` on Whop: Buybox structure, brush heads pricing & 3-pack tiers, shop catalog (8 products), navigation, drawer menu, and free gifts.
+- **Root Cause & Diffs Resolved**:
+  1. **Sticky Header Removal (`apps/us` & `apps/uk`)**:
+     - In `storefront.css`, changed `.site-header` position from `position: sticky; top: 0;` and `position: sticky !important; top: 0 !important;` to `position: relative !important;`, allowing the header to scroll offscreen naturally with page scroll as observed on live Whop.
+     - In `ProductPage.tsx`, removed `<ProductStickyNav />` (the floating oval pill nav that was removed on live Whop).
+  2. **Sticky Add to Cart Bar Layout & CSS**:
+     - Deployed exact Whop production stylesheets:
+       * `apps/us/public/assets/product-sticky.css` and `apps/uk/public/assets/product-sticky.css` updated to live Whop CSS (72px desktop pill, 14px bottom offset, direct `#sticky-bar-cta-btn` child of `.miroooo-sticky-pill`).
+       * `apps/us/public/assets/product-shell.css` and `apps/uk/public/assets/product-shell.css` updated to live Whop CSS.
+     - In `ProductHero.tsx` (`apps/us` & `apps/uk`), synchronized sticky pill structure:
+       * On X2: Title is `${product.name} - ${selectedColor}`, Price is `formatUSD(singlePrice)`, CTA button is strictly `"Add to Cart + 3 Free Gifts"`.
+       * On X1: Title shows `${product.name} - ${selectedColor}${simpleHeadsChecked ? ' + Heads' : ''}`, Subtitle shows `Qty: ${quantity}` and price.
+  3. **Miroooo US (`apps/us`) Component & Data Synchronization**:
+     - `apps/us/src/components/product/ProductHero.tsx`:
+       * Implemented simple buybox for X2: standalone color swatches, countdown timer, single CTA "Add to Cart + 3 Free Gifts"; quantity stepper and heads addon are omitted to match Whop.
+       * Implemented simple buybox for X1: quantity stepper and horizontal `.simple-heads-bundle-card` addon with `$10` (<del>$12</del> 17% off) and stepper controls (`simpleHeadsSets`).
+     - `apps/us/src/components/product/HeadsProductHero.tsx`:
+       * Removed legacy subscription selector.
+       * Implemented Whop 3-pack tier selector: Buy 1 ($10, compare $12), Buy 3 ($30, compare $36, Most Popular), Buy 6 ($60, compare $72, BEST VALUE).
+     - `apps/us/src/data/products.ts`:
+       * Updated `miroooo-x1-heads` & `miroooo-x2-heads`: price $10, compareAt $12, 17% OFF.
+       * Added 3-pack tier definitions matching Whop.
+       * Updated `BundleTier` interface to support `quantity: 1 | 2 | 3 | 6`.
+     - `apps/us/src/components/product/VariantSelector.tsx`:
+       * Updated `selectedQuantity` prop type to `1 | 2 | 3 | 6`.
+     - `apps/us/src/components/pages/ShopPage.tsx`:
+       * Excluded Water Flosser from catalog (8 items total).
+       * Set heads compareAt to `$12` and badge to `17% OFF`.
+     - `apps/us/src/data/navigation.ts` & `apps/us/src/components/layout/MenuDrawer.tsx`:
+       * Excluded Water Flosser group from navigation and drawer menu.
+     - `apps/us/src/components/product/FreeBrushHeadsGift.tsx`:
+       * Heading on X2 set to `Black Friday Free Gifts`.
+       * X2 DuPont head alt text set to `"MIROOOO X2 sonic toothbrush replacement head with blue, white and yellow bristles"`.
+- **Verification Completed**:
+  - `pnpm turbo typecheck`: 4/4 packages passed with 0 errors across monorepo.
+  - `node scripts/verify-us.mjs`: 846/846 checks passed.
+  - `node scripts/verify.mjs`: 561/561 checks passed.
+  - `pnpm --filter @miroooo/us build`: Turbopack build succeeded (47/47 static and dynamic pages generated).
+  - `pnpm --filter @miroooo/uk build`: Turbopack build succeeded (47/47 static and dynamic pages generated).

@@ -33,17 +33,6 @@ export const HEADER_NAV = [
         ],
       },
       {
-        title: 'Water Flosser',
-        items: [
-          {
-            label: 'Miroooo Water Flosser',
-            href: '/products/miroooo-water-flosser',
-            description: '60–138 PSI deep plaque water flosser',
-            badge: 'New',
-          },
-        ],
-      },
-      {
         title: 'Accessories',
         items: [
           {

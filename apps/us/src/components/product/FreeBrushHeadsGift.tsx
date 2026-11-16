@@ -42,13 +42,13 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '$', onlyGiftCard 
         : '/assets_ref/gifts/miroooo-x2-sonic-electric-toothbrush-free-replacement-brush-heads.webp',
       alt: isX1
         ? 'One pair of Miroooo X1 replacement brush heads'
-        : 'Miroooo X2 Sonic Electric Toothbrush Free DuPont Replacement Brush Heads',
+        : 'MIROOOO X2 sonic toothbrush replacement head with blue, white and yellow bristles',
     },
   ];
 
   return (
     <section className={styles.section} id="special-flash-sale-gifts" aria-labelledby="free-heads-title">
-      <h3 className={styles.heading} id="free-heads-title">Black Friday Sale</h3>
+      <h3 className={styles.heading} id="free-heads-title">{isX1 ? 'Black Friday Sale' : 'Black Friday Free Gifts'}</h3>
 
       {isFlosser ? (
         <div className={styles.cardList}>

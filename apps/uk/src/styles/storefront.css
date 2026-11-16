@@ -86,9 +86,8 @@ a {
 }
 
 .site-header {
-  position: sticky;
+  position: relative !important;
   z-index: 1000;
-  top: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(8, 9, 9, 0.92);
   color: #fff;
@@ -2846,8 +2845,7 @@ body:not([data-page="home"]) .announcement:not(.header-layer--overlay .announcem
 }
 
 body:not([data-page="home"]):not([data-page="cart"]) .site-header:not(.site-header--overlay) {
-  position: sticky !important;
-  top: 0 !important;
+  position: relative !important;
   z-index: 1000 !important;
   background: rgba(8, 9, 9, 0.94) !important;
   backdrop-filter: blur(20px) !important;

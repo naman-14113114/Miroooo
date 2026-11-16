@@ -22,7 +22,6 @@ import { X1TriCleaningModes } from './X1TriCleaningModes';
 import { BrushStylePrecision } from './BrushStylePrecision';
 import { DiscoverOralHygiene } from './DiscoverOralHygiene';
 import { LuxuriousProfessionalism } from './LuxuriousProfessionalism';
-import { ProductStickyNav } from './ProductStickyNav';
 import { MinimalProductHero } from './MinimalProductHero';
 import { FlosserModesSection } from './FlosserModesSection';
 import { FlosserStylePrecision } from './FlosserStylePrecision';
@@ -90,9 +89,6 @@ export function ProductPage({
 
   return (
     <main className={`product-page-root ${isFlosser ? 'flosser-product-page' : (isX2 ? 'x2-product-page' : 'x1-product-page')} bg-[#080909] min-h-screen text-white`}>
-      {/* 0. Top Fixed Section Navigation (Oval Pill Header) */}
-      <ProductStickyNav isX2={isX2} isFlosser={isFlosser} />
-
       {/* 1. Main Product Hero & Buy Box */}
       <ProductHero
         product={product}
