@@ -117,9 +117,10 @@ export function CartDrawer() {
                 </div>
               )}
             </div>
+            <div className="miroooo-drawer-subtotal"><span>Shipping</span><strong>{totals.shipping ? formatGBP(totals.shipping) : 'Free'}</strong></div>
             <div className="miroooo-drawer-subtotal">
-              <span>SUBTOTAL</span>
-              <strong>{formatGBP(totals.finalSubtotal)}</strong>
+              <span>TOTAL</span>
+              <strong>{formatGBP(totals.grandTotal)}</strong>
             </div>
             <div className="miroooo-checkout-btn-wrap">
               <Link

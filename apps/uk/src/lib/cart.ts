@@ -1,3 +1,4 @@
+import { HEADS_COMPARE_PRICE, HEADS_PACK_PRICE, isBrushHeads, shippingPence } from './commerce';
 import { PRODUCTS } from '@/data/products';
 
 export interface CartItem {
@@ -28,6 +29,8 @@ export interface CartTotals {
   promoDiscount: number;
   totalSavings: number;
   finalSubtotal: number;
+  shipping: number;
+  grandTotal: number;
   isX2: boolean;
   isX1: boolean;
   isHeadsOnly: boolean;
@@ -120,32 +123,27 @@ export function normalizeCartItems(raw: unknown, strict = false): CartItem[] {
       return [];
     }
     const isBrush = product.handle === 'miroooo-x' || product.handle === 'miroooo-x2';
-    const isX2Heads = product.handle === 'miroooo-x2-heads';
-    const hasCustomX2Pricing = isX2Heads && typeof line.unitPrice === 'number' && [10, 13, 11, 9].includes(line.unitPrice);
+    const isHeads = isBrushHeads(product.handle);
+    if (isHeads && (('purchaseOption' in line && line.purchaseOption === 'subscription') || /subscription|heads plan/i.test(String(line.title || '')))) {
+      if (strict) throw new Error('Invalid checkout: replacement heads are available as a one-time purchase.');
+      return [];
+    }
 
     return [{
       id: String(line.id || `${product.handle}-${variant.color}-${index}`),
       productHandle: product.handle,
       productId: product.plusBaseProductId,
       variantId: variant.id,
-      title: isX2Heads && line.title ? line.title : (isBrush ? `${product.name} (${variant.color})` : product.name),
-      subtitle: isX2Heads && line.subtitle ? line.subtitle : product.subtitle,
+      title: isHeads ? `Miroooo ${product.model}` : (isBrush ? `${product.name} (${variant.color})` : product.name),
+      subtitle: isHeads ? 'DuPont precision replacement heads' : product.subtitle,
       color: variant.color,
       quantity,
-      unitPrice: hasCustomX2Pricing ? line.unitPrice! : (variant.price ?? product.price),
-      comparePrice: isX2Heads ? (typeof line.comparePrice === 'number' ? line.comparePrice : (variant.compareAt ?? product.compareAt ?? 13.0)) : (variant.compareAt ?? product.compareAt),
+      unitPrice: isHeads ? HEADS_PACK_PRICE : (variant.price ?? product.price),
+      comparePrice: isHeads ? HEADS_COMPARE_PRICE : (variant.compareAt ?? product.compareAt),
       image: variant.image,
       url: `/products/${product.handle}${isBrush ? `?color=${variant.color}` : ''}`,
     }];
   });
-}
-
-function getHeadsNetGBP(count: number): number {
-  if (count <= 0) return 0;
-  if (count === 1) return 10;
-  if (count === 2) return 18;
-  if (count === 3) return 24;
-  return 24 + (count - 3) * 8;
 }
 
 export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]): CartTotals {
@@ -163,9 +161,6 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   let x2ItemCompare = 0;
   let x1ItemCompare = 0;
   let flosserItemCompare = 0;
-  let x2HeadsCustomSubtotal = 0;
-  let hasCustomX2Pricing = false;
-  let x2HeadsStandardCount = 0;
 
   items.forEach((item) => {
     const qty = item.quantity || 1;
@@ -186,17 +181,7 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
       otherItemsSubtotal += effectiveUnitPrice * qty;
       flosserItemCompare += (item.comparePrice || 139.0) * qty;
     }
-    else if (item.productHandle === 'miroooo-x2-heads') {
-      x2HeadsCount += qty;
-      const isCustomPrice = item.unitPrice === 13 || item.unitPrice === 11 || item.unitPrice === 9 ||
-        (item.unitPrice === 10 && (item.title?.toLowerCase().includes('subscription') || item.title?.toLowerCase().includes('plan')));
-      if (isCustomPrice) {
-        hasCustomX2Pricing = true;
-        x2HeadsCustomSubtotal += item.unitPrice * qty;
-      } else {
-        x2HeadsStandardCount += qty;
-      }
-    }
+    else if (item.productHandle === 'miroooo-x2-heads') x2HeadsCount += qty;
     else if (item.productHandle === 'miroooo-x1-heads') x1HeadsCount += qty;
     else {
       otherItemsQty += qty;
@@ -211,17 +196,17 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const isX2 = x2Count > 0;
   const isX1 = x1Count > 0;
   const hasPaidHeads = x2HeadsCount > 0 || x1HeadsCount > 0;
-  const isHeadsOnly = hasPaidHeads && x2Count === 0 && x1Count === 0;
+  const isHeadsOnly = hasPaidHeads && x2Count === 0 && x1Count === 0 && otherItemsQty === 0;
 
   const isX2Bundle = x1Count === 0 && (x2Count === 1 || x2Count === 2 || x2Count === 3);
   const isX1Bundle = x2Count === 0 && (x1Count === 1 || x1Count === 2 || x1Count === 3);
 
-  // Compare At calculations (base compare: flosser 139, X2 brush 139, X1 brush 139, X2 heads 13, X1 heads 20)
+  // Reference prices come from the storefront catalogue.
   const flosserCompare = flosserItemCompare || (flosserCount * 139.0);
   const x2Compare = x2ItemCompare || (x2Count * 139);
   const x1Compare = x1ItemCompare || (x1Count * 139);
-  const x2HeadsCompare = x2HeadsCount * 13;
-  const x1HeadsCompare = x1HeadsCount * 20;
+  const x2HeadsCompare = x2HeadsCount * HEADS_COMPARE_PRICE;
+  const x1HeadsCompare = x1HeadsCount * HEADS_COMPARE_PRICE;
   const compareAt = flosserCompare + x2Compare + x1Compare + x2HeadsCompare + x1HeadsCompare + otherItemsCompareAt;
 
   // Base savings on brushes (reference canonical: x1Count * 69, x2Count * 69)
@@ -287,17 +272,9 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     unlockedGiftsCount += extraX1BrushHeadSets;
   }
 
-  // Net calculation per brush model (reference rule: x2Count * 69, x1Count * 69)
-  const x2HeadsNet = (hasCustomX2Pricing ? x2HeadsCustomSubtotal : 0) + (x2HeadsStandardCount > 0 ? getHeadsNetGBP(x2HeadsStandardCount) : 0);
-  const x1HeadsNet = getHeadsNetGBP(x1HeadsCount);
-  const headsNet = x2HeadsNet + x1HeadsNet;
-  const x1HeadsBundleDiscount = Math.max(0, x1HeadsCount * 10 - x1HeadsNet);
-  const x2HeadsSavings = Math.max(0, x2HeadsCompare - x2HeadsNet);
-  const headsBundleDiscount = hasCustomX2Pricing
-    ? (x1HeadsBundleDiscount + (x2HeadsStandardCount > 0 ? (x2HeadsStandardCount * 10 - getHeadsNetGBP(x2HeadsStandardCount)) : 0))
-    : (x2HeadsCount * 10 + x1HeadsCount * 10 - headsNet);
-  const headsBundleCount = x1HeadsCount || x2HeadsCount;
-  const baseHeadsCompareSavings = (hasCustomX2Pricing ? x2HeadsSavings : (x2HeadsCount * (20 - 10))) + x1HeadsCount * (20 - 10);
+  const headsBundleCount = x1HeadsCount + x2HeadsCount;
+  const headsNet = headsBundleCount * HEADS_PACK_PRICE;
+  const headsBundleDiscount = x2HeadsCompare + x1HeadsCompare - headsNet;
 
   const x2Net = x1Count === 0
     ? (x2Count === 1 ? x2ItemSubtotal : (x2Count === 2 ? 128 : (x2Count === 3 ? 177 : Math.max(0, x2ItemSubtotal - x2BundlePromoDiscount))))
@@ -317,13 +294,16 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
   const finalSubtotal = Math.max(0, Number((subtotal - promoDiscount).toFixed(2)));
   const bundlePromoDiscount = x2BundlePromoDiscount > 0 ? x2BundlePromoDiscount : x1BundleDiscount > 0 ? x1BundleDiscount : isHeadsOnly && headsBundleDiscount > 0 ? headsBundleDiscount : 0;
   const bundlePromoName = x2BundlePromoName || x1BundlePromoName || (isHeadsOnly && headsBundleDiscount > 0 ? `Buy ${headsBundleCount} heads bundle (£${headsBundleDiscount} extra saving)` : '');
-  const bundleSavings = baseBrushCompareSavings + baseHeadsCompareSavings + headsBundleDiscount;
+  const bundleSavings = baseBrushCompareSavings + (isHeadsOnly ? 0 : headsBundleDiscount);
   const totalSavings = Number(
-    (bundleSavings + (isHeadsOnly ? 0 : (x2BundlePromoDiscount + x1BundleDiscount)) + giftsValue + promoDiscount).toFixed(2)
+    (bundleSavings + (isHeadsOnly ? headsBundleDiscount : x2BundlePromoDiscount + x1BundleDiscount) + giftsValue + promoDiscount).toFixed(2)
   );
 
+  const shipping = shippingPence(Math.round(finalSubtotal * 100)) / 100;
   return {
     itemCount: totalQty,
+    shipping,
+    grandTotal: Number((finalSubtotal + shipping).toFixed(2)),
     subtotal,
     compareAt,
     bundleSavings,
@@ -345,7 +325,9 @@ export function calculateTotals(items: CartItem[], appliedPromoCodes: string[]):
     x1Count,
     x2HeadsCount,
     x1HeadsCount,
-    bundleEligible: isX2Bundle || isX1Bundle || (isHeadsOnly && ((x1HeadsCount >= 1 && x1HeadsCount <= 3 && x2HeadsCount === 0) || (x2HeadsCount >= 1 && x2HeadsCount <= 3 && x1HeadsCount === 0))),
+    // XPage's older multi-pack offers apply an additional discount. The standard cart
+    // uses the advertised £10 per pack for all quantities.
+    bundleEligible: isX2Bundle || isX1Bundle || (isHeadsOnly && headsBundleCount === 1),
     hasFreeGiftCard,
   };
 }

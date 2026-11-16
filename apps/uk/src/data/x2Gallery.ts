@@ -2,7 +2,7 @@
 export const x2Gallery = {
   "Silver": {
     "images": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp?v=8e6f3bd0f1db",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-90-day-battery-life.webp",
@@ -19,7 +19,7 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-smile-coach-app.webp"
     ],
     "thumbnails": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp?v=8e6f3bd0f1db",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-90-day-battery-life.webp",
@@ -62,8 +62,8 @@ export const x2Gallery = {
   },
   "Pink": {
     "images": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp?v=7d4ea385ff31",
+      "/assets_ref/x2/gallery/miroooo-x2-rose-pink-sonic-electric-toothbrush-lightweight-handle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-45-degree-bass-sweep-action.webp",
@@ -78,8 +78,8 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-smile-coach-app.webp"
     ],
     "thumbnails": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp",
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp?v=7d4ea385ff31",
+      "/assets_ref/x2/gallery/miroooo-x2-rose-pink-sonic-electric-toothbrush-lightweight-handle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-ipx7-waterproof-submersion.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-45-degree-bass-sweep-action.webp",
@@ -95,7 +95,7 @@ export const x2Gallery = {
     ],
     "alts": [
       "Miroooo X2 Sonic Electric Toothbrush Pink with Global Dental Innovation 2026 Award and Luxury Travel Case",
-      "Miroooo X2 Sonic Electric Toothbrush Pink Upright Grip in Hand",
+      "Miroooo X2 rose pink sonic electric toothbrush held in two hands, showing the brush head and power button",
       "Miroooo X2 Sonic Electric Toothbrush Luxury Travel Case Lifestyle Presentation",
       "Miroooo X2 Sonic Electric Toothbrush Pink IPX7 Full Immersion Waterproof Design",
       "Miroooo X2 Sonic Electric Toothbrush Pink 45-Degree Bass Sweep Method Sonic Vibration",
@@ -119,7 +119,7 @@ export const x2Gallery = {
   },
   "Grey": {
     "images": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp?v=3647c8e72320",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-ipx7-waterproof-submersion.webp",
@@ -136,7 +136,7 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-smile-coach-app.webp"
     ],
     "thumbnails": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp",
+      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp?v=3647c8e72320",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-ipx7-waterproof-submersion.webp",

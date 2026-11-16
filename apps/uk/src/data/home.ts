@@ -61,9 +61,9 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: '£139',
     rating: 4.9,
     images: [
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-in-hand.webp?v=pink-v2',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp',
+      '/assets/home/x2-finishes/miroooo-x2-pink-angled-grip.webp',
+      '/assets/home/x2-finishes/miroooo-x2-pink-upright-grip.webp',
+      '/assets/home/x2-finishes/miroooo-x2-pink-boxed-set.png',
     ],
   },
   {
@@ -76,9 +76,9 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: '£139',
     rating: 4.9,
     images: [
+      '/assets/home/x2-finishes/miroooo-x2-grey-angled-grip.webp',
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-in-hand.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp',
+      '/assets/home/x2-finishes/miroooo-x2-grey-boxed-set.png',
     ],
   },
   {
@@ -91,8 +91,8 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: '£139',
     rating: 4.8,
     images: [
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-in-hand.webp',
+      '/assets/home/x2-finishes/miroooo-x2-silver-angled-grip.webp',
+      '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-comparison.webp',
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
     ],
   },

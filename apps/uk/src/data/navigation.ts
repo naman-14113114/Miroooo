@@ -100,7 +100,6 @@ export const FOOTER_NAV = {
     links: [
       { label: 'Miroooo X2 Flagship', href: '/products/miroooo-x2' },
       { label: 'Miroooo X1 Essential', href: '/products/miroooo-x' },
-      { label: 'Miroooo Water Flosser', href: '/products/miroooo-water-flosser' },
       { label: 'Miroooo X2 Heads (2-Pack)', href: '/products/miroooo-x2-heads' },
       { label: 'Miroooo X1 Heads (2-Pack)', href: '/products/miroooo-x1-heads' },
       { label: 'Luxury Travel Case', href: '/products/travel-case' },
@@ -142,6 +141,6 @@ export const FOOTER_NAV = {
     address: '71-75 Shelton St, London WC2H 9JQ, United Kingdom',
     email: 'support@trymiroooo.com',
     hours: 'Monday – Friday: 9:00 AM – 5:00 PM GMT',
-    announcement: 'Free Tracked UK Delivery across all England, Scotland, Wales & Northern Ireland.',
+    announcement: 'Free tracked UK delivery on orders £49 or more.',
   },
 };

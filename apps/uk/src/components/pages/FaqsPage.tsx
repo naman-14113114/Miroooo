@@ -22,7 +22,7 @@ const FAQS: FaqItem[] = [
     id: 'faq-2',
     question: 'What is the UK shipping policy and delivery timeframe?',
     answerHtml: `
-      <p>We provide <strong>free tracked UK delivery</strong> on qualifying orders. Orders are processed within <strong>1 to 3 business days</strong> and dispatched with a premier tracked courier service.</p>
+      <p>Tracked delivery costs £2.99 on orders below £49 and is free on orders of £49 or more after discounts. Orders are processed within <strong>1 to 3 business days</strong> and dispatched with a premier tracked courier service.</p>
       <p>Once dispatched, standard delivery transit takes <strong>3 to 10 business days</strong>. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel. Read our full <a href="/policies/shipping-policy">Shipping Policy</a> for complete details.</p>
     `,
   },
@@ -48,7 +48,7 @@ const FAQS: FaqItem[] = [
     id: 'faq-5',
     question: 'What are the shipping costs?',
     answerHtml: `
-      <p>Standard tracked shipping is <strong>100% free</strong> across the United Kingdom. There are no additional handling fees or unexpected charges added at checkout.</p>
+      <p>Tracked delivery costs £2.99 on orders below £49 and is free on orders of £49 or more after discounts.</p>
     `,
   },
   {

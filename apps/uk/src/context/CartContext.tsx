@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { HEADS_COMPARE_PRICE, HEADS_PACK_PRICE, isBrushHeads } from '@/lib/commerce';
 import { CartItem, CartTotals, calculateTotals, normalizeCartItems, VALID_PROMO_CODES } from '@/lib/cart';
 import { PRODUCTS } from '@/data/products';
 
@@ -234,26 +235,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const addItem = useCallback((itemData: Partial<CartItem> & { productHandle: string }) => {
     invalidateCheckout();
     const product = PRODUCTS[itemData.productHandle] || PRODUCTS['miroooo-x2'];
-    const color = itemData.color || 'Silver';
+    const isHeads = isBrushHeads(product.handle);
+    const color = itemData.color || (isHeads ? 'Default' : 'Silver');
     const variant = (itemData.variantId && product.variants.find((v) => v.id === itemData.variantId)) ||
       product.variants.find((v) => v.color.toLowerCase() === color.toLowerCase()) || product.variants[0];
     const isBrush = itemData.productHandle === 'miroooo-x2' || itemData.productHandle === 'miroooo-x';
     const isFlosser = itemData.productHandle === 'miroooo-water-flosser' || itemData.productHandle === 'water-flosser';
 
     setItems((currentItems) => {
-      // If item with same product & variant (or title for heads) exists, increment quantity
+      // One-time heads purchases all use the same variant and per-pack price.
       const existingIndex = currentItems.findIndex(
         (i) => i.productHandle === itemData.productHandle &&
-          (i.productHandle === 'miroooo-x2-heads'
-            ? (itemData.title ? i.title === itemData.title : true)
-            : (itemData.variantId ? i.variantId === itemData.variantId : i.color === color))
+          (isHeads || (itemData.variantId ? i.variantId === itemData.variantId : i.color === color))
       );
 
       if (existingIndex > -1) {
         const updated = [...currentItems];
         updated[existingIndex] = {
           ...updated[existingIndex],
-          quantity: updated[existingIndex].quantity + (itemData.quantity || 1),
+          quantity: Math.min(99, updated[existingIndex].quantity + (itemData.quantity || 1)),
           unitPrice: itemData.unitPrice !== undefined ? itemData.unitPrice : updated[existingIndex].unitPrice,
           comparePrice: itemData.comparePrice !== undefined ? itemData.comparePrice : updated[existingIndex].comparePrice,
           title: itemData.title || updated[existingIndex].title,
@@ -267,12 +267,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         productHandle: itemData.productHandle,
         productId: product.plusBaseProductId,
         variantId: variant.id,
-        title: itemData.title || (isBrush ? `${product.name} (${color})` : isFlosser ? `${product.name} (${variant.name})` : product.name),
+        title: isHeads ? `Miroooo ${product.model}` : itemData.title || (isBrush ? `${product.name} (${color})` : isFlosser ? `${product.name} (${variant.name})` : product.name),
         subtitle: itemData.subtitle || product.subtitle,
         color,
         quantity: itemData.quantity || 1,
-        unitPrice: itemData.unitPrice !== undefined ? itemData.unitPrice : (variant.price ?? product.price),
-        comparePrice: itemData.comparePrice !== undefined ? itemData.comparePrice : (variant.compareAt ?? product.compareAt),
+        unitPrice: isHeads ? HEADS_PACK_PRICE : (itemData.unitPrice ?? variant.price ?? product.price),
+        comparePrice: isHeads ? HEADS_COMPARE_PRICE : (itemData.comparePrice ?? variant.compareAt ?? product.compareAt),
         image: itemData.image || variant.image || product.galleryImages[0]?.src || '',
         url: itemData.url || `/products/${product.handle}${isBrush ? `?color=${color}` : ''}`,
       };

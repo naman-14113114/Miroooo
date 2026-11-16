@@ -145,8 +145,8 @@ export const QUIZ_STEPS: QuizStep[] = [
   {
     step: 5,
     name: 'finish',
-    legend: 'Select your preferred finish & setup:',
-    description: 'Choose your anodised aluminium unibody colour or multi-instrument set.',
+    legend: 'Select your preferred finish:',
+    description: 'Choose your anodised aluminium unibody colour.',
     options: [
       {
         id: 'silver',
@@ -165,12 +165,6 @@ export const QUIZ_STEPS: QuizStep[] = [
         value: 'pink',
         title: 'Rose Pink (Warm satin metallic)',
         subtitle: 'Warm champagne rose gold anodised aluminium',
-      },
-      {
-        id: 'bundle-two',
-        value: 'bundle-two',
-        title: 'Bundle for Two (His & Hers set with extra savings)',
-        subtitle: '2x Complete sets + Complimentary 2x Extra Brush Heads (£10 extra off)',
       },
     ],
   },

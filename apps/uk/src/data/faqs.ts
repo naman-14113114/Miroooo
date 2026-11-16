@@ -18,7 +18,7 @@ export const FAQS_GENERAL: FaqItem[] = [
     category: 'Shipping & Delivery',
     question: 'What is the UK shipping policy and delivery timeframe?',
     answer:
-      'We provide free tracked UK delivery on qualifying orders. Orders are processed within 1 to 3 business days, and standard tracked delivery transit takes 3 to 10 business days. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel.',
+      'Tracked delivery costs £2.99 on orders below £49 and is free on orders of £49 or more after discounts. Orders are processed within 1 to 3 business days, and standard tracked delivery transit takes 3 to 10 business days. You will receive an automated dispatch notification with your tracking link as soon as the courier scans your parcel.',
   },
   {
     id: 'choosing-brush',
@@ -39,7 +39,7 @@ export const FAQS_GENERAL: FaqItem[] = [
     category: 'Shipping & Delivery',
     question: 'What are the shipping costs?',
     answer:
-      'Standard tracked shipping is 100% free across the United Kingdom with no hidden fees or surprise handling charges.',
+      'Tracked delivery costs £2.99 on orders below £49 and is free on orders of £49 or more after discounts.',
   },
   {
     id: 'care-maintenance',

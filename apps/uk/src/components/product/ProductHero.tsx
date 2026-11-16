@@ -6,17 +6,21 @@ import { x1Gallery, x1GalleryMirooooX1 } from '@/data/x1Gallery';
 import { x2Gallery } from '@/data/x2Gallery';
 import { getFlosserHeroSlides } from '@/data/flosserGallery';
 import { ProductAccordions } from './ProductAccordions';
-import { Product } from '@/data/products';
+import { PRODUCTS, type Product } from '@/data/products';
+import { formatGBP } from '@/lib/cart';
+import { HEADS_COMPARE_PRICE, HEADS_DISCOUNT_PERCENT, HEADS_PACK_PRICE } from '@/lib/commerce';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { FreeBrushHeadsGift } from './FreeBrushHeadsGift';
 import { ShippingInfoTooltip } from '@/components/ui/ShippingInfoTooltip';
+import { useStickyAddToCart } from './useStickyAddToCart';
 
 interface ProductHeroProps {
   product: Product;
   initialColor?: string;
   onColorChange?: (color: string) => void;
   isSimpleBuybox?: boolean;
+  isPrimaryX2?: boolean;
   isMirooooX1Route?: boolean;
   isHalloween?: boolean;
 }
@@ -44,6 +48,7 @@ export function ProductHero({
   initialColor = 'Silver',
   onColorChange,
   isSimpleBuybox = false,
+  isPrimaryX2 = false,
   isMirooooX1Route = true,
   isHalloween = false,
 }: ProductHeroProps) {
@@ -66,13 +71,21 @@ export function ProductHero({
   // Addon checkbox for Buy 1 tier
   const [buy1HeadsChecked, setBuy1HeadsChecked] = useState(false);
   const [simpleHeadsChecked, setSimpleHeadsChecked] = useState(false);
-  const [simpleHeadsSets, setSimpleHeadsSets] = useState(1);
-
+  const [headsQuantity, setHeadsQuantity] = useState(1);
+  const maxHeadsQuantity = Math.max(1, 99 - quantity);
+  const simpleHeadsQuantity = Math.min(headsQuantity, maxHeadsQuantity);
+  function changeHeadsQuantity(delta: number) {
+    setHeadsQuantity(Math.max(1, Math.min(maxHeadsQuantity, simpleHeadsQuantity + delta)));
+    setSimpleHeadsChecked(true);
+  }
+  const headsHandle = isX2 ? 'miroooo-x2-heads' : 'miroooo-x1-heads';
+  const headsProduct = PRODUCTS[headsHandle];
+  const showHeadsAddon = isSimpleBuybox && !isPrimaryX2 && (isX2 || product.handle === 'miroooo-x');
+  const includeSimpleHeads = showHeadsAddon && simpleHeadsChecked;
   // Gallery active index & Lightbox state
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isLightboxZoomed, setIsLightboxZoomed] = useState(false);
-  const [isStickyVisible, setIsStickyVisible] = useState(false);
 
   // Urgency banner countdown timer
   const [urgencyTime, setUrgencyTime] = useState('09:15:54');
@@ -84,8 +97,7 @@ export function ProductHero({
     return targetDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' }).replace(',', '');
   });
 
-  const heroSectionRef = useRef<HTMLDivElement | null>(null);
-  const heroCtaRef = useRef<HTMLButtonElement | null>(null);
+  const { heroCtaRef, isStickyVisible } = useStickyAddToCart();
   const navRef = useRef<HTMLDivElement | null>(null);
   const touchStartXRef = useRef<number>(0);
   const touchStartYRef = useRef<number>(0);
@@ -131,23 +143,6 @@ export function ProductHero({
     setBundle3Colors([color, bundle3Colors[1], bundle3Colors[2]]);
     setActiveMediaIndex(0);
   };
-
-  // Sticky Bar Scroll Observer: appears only after the whole first section (main product hero) ends
-  useEffect(() => {
-    const handleScroll = () => {
-      const targetEl = heroSectionRef.current || document.getElementById('shopify-section-template--24203751129433__main-product');
-      if (!targetEl) return;
-      const rect = targetEl.getBoundingClientRect();
-      if (rect.bottom < 0) {
-        setIsStickyVisible(true);
-      } else {
-        setIsStickyVisible(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const videos = document.querySelectorAll<HTMLVideoElement>('#MirooooGallerySlides video');
@@ -212,7 +207,9 @@ export function ProductHero({
 
   const currentPrice =
     isSimpleBuybox
-      ? (isX2 ? singlePrice : singlePrice * quantity + (simpleHeadsChecked ? 10 * simpleHeadsSets : 0))
+      ? (showHeadsAddon && quantity === 2 ? bundle2Price
+        : showHeadsAddon && quantity === 3 ? bundle3Price
+        : singlePrice * quantity) + (includeSimpleHeads ? HEADS_PACK_PRICE * simpleHeadsQuantity : 0)
       : selectedTier === 'single'
       ? singlePrice + (buy1HeadsChecked ? 10 : 0)
       : selectedTier === 'bundle-2'
@@ -222,13 +219,11 @@ export function ProductHero({
   const addToCartLabel = isWaterFlosser
     ? 'Add to Cart + Free Gift Card'
     : isSimpleBuybox
-    ? (isX2
-        ? 'Add to Cart + 3 Free Gifts'
-        : (quantity === 2
-            ? 'Add to Cart + Free 4 Brush Heads'
-            : quantity === 3
-            ? 'Add to Cart + Free 6 Brush Heads'
-            : 'Add to Cart + 3 Free Gifts'))
+    ? (quantity === 2
+        ? 'Add to Cart + Free 4 Brush Heads'
+        : quantity === 3
+        ? 'Add to Cart + Free 6 Brush Heads'
+        : 'Add to Cart + 3 Free Gifts')
     : (selectedTier === 'bundle-2'
         ? 'Add to Cart + Free 4 Brush Heads'
         : selectedTier === 'bundle-3'
@@ -263,14 +258,10 @@ export function ProductHero({
       addItem({
         productHandle: product.handle,
         color: selectedColor,
-        quantity: isX2 ? 1 : quantity,
+        quantity: isPrimaryX2 ? 1 : quantity,
       });
-      if (!isX2 && simpleHeadsChecked) {
-        addItem({
-          productHandle: 'miroooo-x1-heads',
-          color: 'Default',
-          quantity: simpleHeadsSets,
-        });
+      if (includeSimpleHeads) {
+        addItem({ productHandle: headsHandle, color: 'Default', quantity: simpleHeadsQuantity });
       }
       router.push('/cart');
       return;
@@ -316,7 +307,7 @@ export function ProductHero({
 
     const uprightGrip =
       colorLower === 'pink'
-        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3'
+        ? '/assets_ref/x2/gallery/miroooo-x2-rose-pink-sonic-electric-toothbrush-lightweight-handle.webp'
         : colorLower === 'grey'
         ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp'
         : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp';
@@ -345,7 +336,7 @@ export function ProductHero({
       {
         type: 'image',
         src: uprightGrip,
-        alt: `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Upright Grip in Hand`,
+        alt: colorLower === 'pink' ? 'Miroooo X2 rose pink sonic electric toothbrush held in two hands, showing the brush head and power button' : `Miroooo X2 Sonic Electric Toothbrush ${selectedColor} Upright Grip in Hand`,
         thumbImg: uprightGrip,
         ...(colorLower === 'silver'
           ? {
@@ -358,7 +349,7 @@ export function ProductHero({
           : colorLower === 'pink'
           ? {
               badge: {
-                pos: 'miroooo-infographic-badge--top-left miroooo-infographic-badge--white',
+                pos: 'miroooo-infographic-badge--top-right',
                 title: '51g Ultra<br>Lightweight',
                 sub: 'Featherlight Handle For<br>Fatigue-Free Brushing',
               },
@@ -835,7 +826,7 @@ export function ProductHero({
   };
 
   return (
-    <div ref={heroSectionRef} id="shopify-section-template--24203751129433__main-product" className="shopify-section">
+    <div id="shopify-section-template--24203751129433__main-product" className="shopify-section">
       <div className="section section--padding section--rounded relative" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <div className="page-width relative">
           <div id="miroooo-urgency-banner" className="x2-urgency-banner" role="region" aria-label="Limited Time Upgrade Offer">
@@ -1233,152 +1224,120 @@ export function ProductHero({
                 </div>
               </div>
 
-              {/* Quantity Selector Bar and Heads Addon for Simple Buybox (X1 only; X2 has standalone color + direct CTA on Whop) */}
-              {isSimpleBuybox && !isX2 && (
-                <>
-                  <div className="quantity-selector-container my-4" style={{ margin: '18px 0 16px 0' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
-                      <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Quantity:</span>
-                    </div>
-                    <div
-                      className="inline-flex items-center"
+              {/* Quantity Selector Bar for Simple Buybox */}
+              {isSimpleBuybox && !isPrimaryX2 && (
+                <div className="quantity-selector-container my-4" style={{ margin: '18px 0 16px 0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '14px' }}>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 500 }}>Quantity:</span>
+                  </div>
+                  <div
+                    className="inline-flex items-center"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      border: '1px solid rgba(255, 255, 255, 0.18)',
+                      borderRadius: '9999px',
+                      padding: '4px 6px',
+                      gap: '8px',
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                      disabled={quantity <= 1}
+                      aria-label="Decrease quantity"
                       style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        background: 'rgba(255, 255, 255, 0.06)',
-                        border: '1px solid rgba(255, 255, 255, 0.18)',
-                        borderRadius: '9999px',
-                        padding: '4px 6px',
-                        gap: '8px',
+                        justifyContent: 'center',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        color: '#ffffff',
+                        border: 'none',
+                        cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
+                        opacity: quantity <= 1 ? 0.4 : 1,
+                        transition: 'all 0.15s ease',
                       }}
                     >
-                      <button
-                        type="button"
-                        onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                        disabled={quantity <= 1}
-                        aria-label="Decrease quantity"
-                        style={{
-                          width: '32px',
-                          height: '32px',
-                          borderRadius: '50%',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          color: '#ffffff',
-                          border: 'none',
-                          cursor: quantity <= 1 ? 'not-allowed' : 'pointer',
-                          opacity: quantity <= 1 ? 0.4 : 1,
-                          transition: 'all 0.15s ease',
-                        }}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                      </button>
-                      <span
-                        style={{
-                          minWidth: '32px',
-                          textAlign: 'center',
-                          fontWeight: 700,
-                          fontSize: '15px',
-                          color: '#ffffff',
-                          userSelect: 'none',
-                        }}
-                        aria-live="polite"
-                        aria-atomic="true"
-                      >
-                        {quantity}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setQuantity((prev) => prev + 1)}
-                        aria-label="Increase quantity"
-                        style={{
-                          width: '32px',
-                          height: '32px',
-                          borderRadius: '50%',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          color: '#ffffff',
-                          border: 'none',
-                          cursor: 'pointer',
-                          transition: 'all 0.15s ease',
-                        }}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                      </button>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </button>
+                    <span
+                      style={{
+                        minWidth: '32px',
+                        textAlign: 'center',
+                        fontWeight: 700,
+                        fontSize: '15px',
+                        color: '#ffffff',
+                        userSelect: 'none',
+                      }}
+                      aria-live="polite"
+                      aria-atomic="true"
+                    >
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((prev) => prev + 1)}
+                      aria-label="Increase quantity"
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        color: '#ffffff',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {showHeadsAddon && (
+                <div className="simple-heads-bundle-card" id="simple-heads-bundle-addon">
+                  <label className="simple-heads-bundle-selection">
+                    <input
+                      className="simple-heads-bundle-checkbox"
+                      type="checkbox"
+                      checked={simpleHeadsChecked}
+                      onChange={(event) => setSimpleHeadsChecked(event.target.checked)}
+                      aria-label={`Add Miroooo ${headsProduct.model}`}
+                    />
+                    <span className="simple-heads-bundle-check" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <img className="simple-heads-bundle-image" src={headsProduct.variants[0].image} alt="" width="68" height="68" />
+                    <span className="simple-heads-bundle-copy">
+                      <strong>Miroooo {headsProduct.model} ({simpleHeadsQuantity} {simpleHeadsQuantity === 1 ? 'Set' : 'Sets'})</strong>
+                      <span>{simpleHeadsQuantity * 2}x DuPont precision replacement heads</span>
+                    </span>
+                  </label>
+                  <div className="simple-heads-bundle-price">
+                    <strong>+{formatGBP(HEADS_PACK_PRICE * simpleHeadsQuantity)}</strong>
+                    <span className="simple-heads-bundle-saving"><del>{formatGBP(HEADS_COMPARE_PRICE * simpleHeadsQuantity)}</del> {HEADS_DISCOUNT_PERCENT}% off</span>
+                    <div className="simple-heads-bundle-stepper" role="group" aria-label="Number of extra head sets">
+                      <button type="button" aria-label="Decrease extra head sets" disabled={simpleHeadsQuantity <= 1} onClick={() => changeHeadsQuantity(-1)}>−</button>
+                      <output aria-live="polite">{simpleHeadsQuantity}</output>
+                      <button type="button" aria-label="Increase extra head sets" disabled={simpleHeadsQuantity >= maxHeadsQuantity} onClick={() => changeHeadsQuantity(1)}>+</button>
                     </div>
                   </div>
-
-                  {/* Horizontal Heads Bundle Addon Container matching Whop */}
-                  {!isWaterFlosser && (
-                    <div className="simple-heads-bundle-card" id="simple-heads-bundle-addon">
-                      <label className="simple-heads-bundle-selection">
-                        <input
-                          className="simple-heads-bundle-checkbox"
-                          type="checkbox"
-                          aria-label="Add Miroooo X1 Heads"
-                          checked={simpleHeadsChecked}
-                          onChange={(e) => setSimpleHeadsChecked(e.target.checked)}
-                        />
-                        <span className="simple-heads-bundle-check" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        </span>
-                        <img
-                          className="simple-heads-bundle-image"
-                          src="/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp"
-                          alt=""
-                          width={68}
-                          height={68}
-                        />
-                        <span className="simple-heads-bundle-copy">
-                          <strong>Miroooo X1 Heads ({simpleHeadsSets} Set{simpleHeadsSets > 1 ? 's' : ''})</strong>
-                          <span>{simpleHeadsSets * 2}x DuPont precision replacement heads</span>
-                        </span>
-                      </label>
-                      <div className="simple-heads-bundle-price">
-                        <strong>+£{10 * simpleHeadsSets}</strong>
-                        <span className="simple-heads-bundle-saving">
-                          <del>£{12 * simpleHeadsSets}</del> 17% off
-                        </span>
-                        <div className="simple-heads-bundle-stepper" role="group" aria-label="Number of extra head sets">
-                          <button
-                            type="button"
-                            aria-label="Decrease extra head sets"
-                            disabled={simpleHeadsSets <= 1}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              setSimpleHeadsSets((prev) => Math.max(1, prev - 1));
-                            }}
-                          >
-                            −
-                          </button>
-                          <output aria-live="polite">{simpleHeadsSets}</output>
-                          <button
-                            type="button"
-                            aria-label="Increase extra head sets"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              setSimpleHeadsSets((prev) => prev + 1);
-                            }}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </>
+                </div>
               )}
 
               {!isSimpleBuybox && (
@@ -1734,7 +1693,7 @@ export function ProductHero({
                   </svg>
                 </div>
                 <div className="flex-1 text-xs sm:text-sm leading-snug" style={{ fontSize: '13px', lineHeight: 1.4 }}>
-                  Order within <strong className="font-mono font-bold" id="bundle-countdown-timer" style={{ color: '#ffffff', fontWeight: 700, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{deliveryCountdown}</strong> to get as fast as <strong className="font-bold" id="bundle-delivery-date" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
+                  Order within <strong className="font-mono font-bold" id="bundle-countdown-timer" style={{ color: '#ffffff', fontWeight: 700, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}>{deliveryCountdown}</strong> to get as fast as <strong suppressHydrationWarning className="font-bold" id="bundle-delivery-date" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
                 </div>
 
                 {/* Tooltip / Question Mark Button */}
@@ -1750,7 +1709,7 @@ export function ProductHero({
                   ref={heroCtaRef}
                   type="button"
                   id="hero-cta"
-                  className="button button--primary"
+                  className="button button--primary miroooo-buy-sheen"
                   style={{ width: '100%', fontSize: '1.05rem' }}
                   onClick={handleAddToCart}
                 >
@@ -1780,7 +1739,7 @@ export function ProductHero({
                 </div>
               </div>
 
-              <FreeBrushHeadsGift model={isX2 ? 'X2' : isWaterFlosser ? 'WaterFlosser' : 'X1'} currency="£" onlyGiftCard={isWaterFlosser} />
+              <FreeBrushHeadsGift model={isX2 ? 'X2' : isWaterFlosser ? 'WaterFlosser' : 'X1'} currency="£" onlyGiftCard={isWaterFlosser} highlightHeading={isPrimaryX2} />
 
               <ProductAccordions model={isWaterFlosser ? 'flosser' : (isX2 ? 'x2' : 'x1')} />
             </div>
@@ -1796,9 +1755,9 @@ export function ProductHero({
                       <div className="miroooo-sticky-img-thumb" style={{ zIndex: 1 }}>
                         <img src={getColorThumbnail(selectedColor)} alt={`${product.name} - ${selectedColor}`} width="50" height="50" decoding="async" />
                       </div>
-                      {!isX2 && simpleHeadsChecked && (
+                      {includeSimpleHeads && (
                         <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
-                          <img src="/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp" alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
+                          <img src={headsProduct.variants[0].image} alt="" width="50" height="50" decoding="async" />
                         </div>
                       )}
                     </>
@@ -1810,7 +1769,7 @@ export function ProductHero({
                         </div>
                       ))}
                       {selectedTier === 'single' && buy1HeadsChecked && (
-                        <div className="miroooo-sticky-img-thumb" style={{ zIndex: 2 }}>
+                        <div className="miroooo-sticky-img-thumb" style={{ zIndex: 4 }}>
                           <img src={isX2 ? '/assets_ref/x2/heads/B1.webp' : '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'} alt={`${product.name} Heads`} width="50" height="50" decoding="async" />
                         </div>
                       )}
@@ -1820,7 +1779,7 @@ export function ProductHero({
                 <div className="miroooo-sticky-info">
                   <p className="miroooo-sticky-title" id="sticky-bar-title">
                     {isSimpleBuybox
-                      ? (isX2 ? `${product.name} - ${selectedColor}` : `${product.name} - ${selectedColor}${simpleHeadsChecked ? ' + Heads' : ''}`)
+                      ? `${product.name} - ${selectedColor}${includeSimpleHeads ? ' + Heads' : ''}`
                       : selectedTier === 'single'
                       ? `${product.name} - ${singleColor}${buy1HeadsChecked ? ' + Heads' : ''}`
                       : selectedTier === 'bundle-2'
@@ -1829,18 +1788,12 @@ export function ProductHero({
                   </p>
                   <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                     {isSimpleBuybox ? (
-                      isX2 ? (
+                      <>
+                        {!isPrimaryX2 && <span style={{ marginRight: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>Qty: {quantity}</span>}
                         <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                          £{singlePrice}
+                          {formatGBP(currentPrice)}
                         </span>
-                      ) : (
-                        <>
-                          <span style={{ marginRight: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>Qty: {quantity}</span>
-                          <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                            £{currentPrice}
-                          </span>
-                        </>
-                      )
+                      </>
                     ) : (
                       <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
                         £{currentPrice}

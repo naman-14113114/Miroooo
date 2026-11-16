@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- The existing checkout endpoint accepts several legacy request shapes. */
 import { NextResponse } from "next/server";
 import { XPAGE_VARIANTS, detectBundlePayload } from "@miroooo/shared";
-import { calculateTotals, normalizeCartItems } from "@/lib/cart";
+import { calculateTotals, normalizeCartItems, VALID_PROMO_CODES } from "@/lib/cart";
 import { CheckoutQuoteError } from "@/lib/checkout-quote";
 import { prepareUKCheckout } from "@/lib/checkout";
 import { PRODUCTS } from "@/data/products";
@@ -12,7 +12,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-const validDiscountCodes = ["MIROOOO", "MIROOOO10"];
 export const KNOWN_VARIANTS: Record<string, { handle: string; color: string }> = {
   [XPAGE_VARIANTS.x1_silver]: { handle: 'miroooo-x', color: 'Silver' },
   [XPAGE_VARIANTS.x1_grey]: { handle: 'miroooo-x', color: 'Grey' },
@@ -67,9 +66,9 @@ function collectRequestedDiscountCode(body: any): string {
 
   const matched = candidates
     .map(normalizeDiscountCode)
-    .filter((code) => validDiscountCodes.includes(code));
+    .filter((code) => VALID_PROMO_CODES.includes(code));
 
-  return matched.find((c) => c === "MIROOOO10" || c === "MIROOOO") || "";
+  return matched[0] || "";
 }
 
 export async function OPTIONS() {
@@ -195,14 +194,17 @@ export async function POST(req: Request) {
     if (requestedProtection && !canonicalItems.some((i) => i.productHandle === 'miroooo-package-protection')) {
       expectedGBP += 3;
     }
-    const bundlePayload = totals.bundleEligible ? detectBundlePayload(canonicalCart, discountCode) : null;
+    // All storefront brush codes advertise the same 10% offer. XPage's
+    // configured native bundle is keyed by MIROOOO10.
+    const providerDiscount = discountCode ? "MIROOOO10" : "";
+    const bundlePayload = totals.bundleEligible ? detectBundlePayload(canonicalCart, providerDiscount) : null;
     const useBundle = Boolean(bundlePayload);
     const result = await prepareUKCheckout({
       cart: canonicalCart,
       attribution,
       expectedGBP,
       useBundle,
-      discountCode: discountCode === "MIROOOO" ? "MIROOOO10" : discountCode,
+      discountCode: providerDiscount,
     });
 
     return NextResponse.json(

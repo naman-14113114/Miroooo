@@ -1,3 +1,4 @@
+import { x2FreeBrushHeads } from '@/data/brush-box-contents';
 import styles from './FreeBrushHeadsGift.module.css';
 
 function Checkmark() {
@@ -12,9 +13,10 @@ interface FreeBrushHeadsGiftProps {
   model?: 'X1' | 'X2' | 'WaterFlosser';
   currency?: '£' | '$';
   onlyGiftCard?: boolean;
+  highlightHeading?: boolean;
 }
 
-export function FreeBrushHeadsGift({ model = 'X2', currency = '£', onlyGiftCard = false }: FreeBrushHeadsGiftProps) {
+export function FreeBrushHeadsGift({ model = 'X2', currency = '£', onlyGiftCard = false, highlightHeading = false }: FreeBrushHeadsGiftProps) {
   const isX1 = model === 'X1';
   const isFlosser = onlyGiftCard || model === 'WaterFlosser';
 
@@ -35,20 +37,22 @@ export function FreeBrushHeadsGift({ model = 'X2', currency = '£', onlyGiftCard
     },
     {
       id: 'brush-heads',
-      title: 'Free Brush Heads',
+      title: isX1 ? 'Free Brush Heads' : x2FreeBrushHeads.name,
       regularPrice: currency === '£' ? '£10' : '$10',
       image: isX1
         ? '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp'
-        : '/assets_ref/gifts/miroooo-x2-sonic-electric-toothbrush-free-replacement-brush-heads.webp',
+        : x2FreeBrushHeads.image,
       alt: isX1
         ? 'One pair of Miroooo X1 replacement brush heads'
-        : 'MIROOOO X2 sonic toothbrush replacement head with blue, white and yellow bristles',
+        : x2FreeBrushHeads.alt,
     },
   ];
 
   return (
     <section className={styles.section} id="special-flash-sale-gifts" aria-labelledby="free-heads-title">
-      <h3 className={styles.heading} id="free-heads-title">{isX1 ? 'Black Friday Sale' : 'Black Friday Free Gifts'}</h3>
+      <h3 className={styles.heading} id="free-heads-title">
+        {highlightHeading ? <span className={styles.giftHeading}>Black Friday Free Gifts</span> : 'Black Friday Sale'}
+      </h3>
 
       {isFlosser ? (
         <div className={styles.cardList}>

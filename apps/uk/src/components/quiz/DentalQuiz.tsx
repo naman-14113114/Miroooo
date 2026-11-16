@@ -48,7 +48,6 @@ export function DentalQuiz() {
 
   // Determine recommendation
   const recommendedProduct = PRODUCTS['miroooo-x2'];
-  const isBundle = answers.finish === 'bundle-two';
   const recommendedColor =
     answers.finish === 'pink' ? 'Pink' : answers.finish === 'grey' ? 'Grey' : 'Silver';
 
@@ -230,10 +229,10 @@ export function DentalQuiz() {
                     />
                     <div className="quiz-results-pricing" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                       <strong style={{ fontSize: '22px', fontWeight: 900, color: '#111111' }}>
-                        {formatGBP(isBundle ? recommendedProduct.price * 2 - 10 : recommendedProduct.price)}
+                        {formatGBP(recommendedProduct.price)}
                       </strong>
                       <s style={{ fontSize: '14px', color: '#888888' }}>
-                        {formatGBP(isBundle ? recommendedProduct.compareAt * 2 : recommendedProduct.compareAt)}
+                        {formatGBP(recommendedProduct.compareAt)}
                       </s>
                       <span style={{ fontSize: '12px', fontWeight: 800, color: '#15803d', background: 'rgba(21,128,61,0.1)', padding: '2px 8px', borderRadius: '4px' }}>
                         Save 50%
@@ -259,7 +258,7 @@ export function DentalQuiz() {
                           addItem({
                             productHandle: recommendedProduct.handle,
                             color: recommendedColor,
-                            quantity: isBundle ? 2 : 1,
+                            quantity: 1,
                           });
                           router.push('/cart');
                         }}
@@ -267,7 +266,7 @@ export function DentalQuiz() {
                       >
                         <span className="btn-fill" data-fill />
                         <span className="btn-text">
-                          Add {isBundle ? 'Bundle (2x Brushes + Free Heads)' : 'to Cart'} ({formatGBP(isBundle ? recommendedProduct.price * 2 - 10 : recommendedProduct.price)}) <span aria-hidden="true">↗</span>
+                          Add to Cart ({formatGBP(recommendedProduct.price)}) <span aria-hidden="true">↗</span>
                         </span>
                       </button>
 

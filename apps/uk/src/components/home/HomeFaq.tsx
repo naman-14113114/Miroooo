@@ -23,7 +23,7 @@ export function HomeFaq() {
             Frequently Asked Questions
           </h2>
           <p className="text-[14.5px] text-white/70">
-            Answers to common questions about free tracked UK shipping, return guarantees, and Miroooo toothbrushes.
+            Answers to common questions about tracked UK shipping, return guarantees, and Miroooo toothbrushes.
           </p>
         </div>
 

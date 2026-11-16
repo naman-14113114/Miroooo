@@ -2,59 +2,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Minus, Plus, Trash2 } from "lucide-react";
+import { HEADS_COMPARE_PRICE, isBrushHeads } from "@/lib/commerce";
 import { useCart } from "@/context/CartContext";
 import { formatGBP } from "@/lib/cart";
-
-const INCLUDED_IN_BOX: Record<string, { name: string; image: string }[]> = {
-  "miroooo-x2": [
-    {
-      name: "Luxury Travel Case",
-      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-    },
-    {
-      name: "Wall Mounted",
-      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-wall-mounted-dock-storage.webp",
-    },
-    {
-      name: "2 Free Heads",
-      image: "/assets_ref/x2/heads/B1.webp",
-    },
-  ],
-  "miroooo-x": [
-    {
-      name: "Luxury Travel Case",
-      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-    },
-    {
-      name: "Charging Dock",
-      image: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
-    },
-    {
-      name: "2 Free Heads",
-      image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
-    },
-  ],
-  "miroooo-x1": [
-    {
-      name: "Luxury Travel Case",
-      image: "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
-    },
-    {
-      name: "Charging Dock",
-      image: "/assets_ref/x/gallery/miroooo-x1-charging-dock.webp",
-    },
-    {
-      name: "2 Free Heads",
-      image: "/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp",
-    },
-  ],
-};
+import { brushBoxContents, type BrushBoxItem } from "@/data/brush-box-contents";
 
 function IncludedInTheBox({
   items,
   drawer = false,
 }: {
-  items: { name: string; image: string }[];
+  items: BrushBoxItem[];
   drawer?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -68,7 +25,7 @@ function IncludedInTheBox({
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        <span>Included in the box</span>
+        <span>{drawer ? "Included in the box" : "Free Gifts Included"}</span>
         <ChevronDown
           size={14}
           strokeWidth={2}
@@ -101,7 +58,7 @@ function IncludedInTheBox({
               >
                 <img
                   src={includedItem.image}
-                  alt={includedItem.name}
+                  alt={includedItem.alt ?? includedItem.name}
                   loading="lazy"
                   width={76}
                   height={76}
@@ -145,7 +102,7 @@ export function CartLines({
           .filter((item) => item.productHandle !== "miroooo-package-protection")
           .map((item) => ({
           ...item,
-          comparePrice: item.productHandle === 'miroooo-x2-heads' ? (item.comparePrice || 13) : (item.productHandle.endsWith('-heads') ? 10 : item.comparePrice),
+          comparePrice: isBrushHeads(item.productHandle) ? HEADS_COMPARE_PRICE : item.comparePrice,
           subtitle:
             item.productHandle === "miroooo-x2"
               ? "Includes free luxury travel case, wall-mounted storage & 90-day battery life."
@@ -153,7 +110,7 @@ export function CartLines({
                 ? "Electric Toothbrush with 32,000 VPM acoustic motor & 60-day battery."
                 : item.productHandle === "miroooo-package-protection"
                   ? "Complete transit damage, loss, and doorstep theft guarantee."
-                  : item.subtitle || (item.productHandle.endsWith('-heads') ? `DuPont precision heads for Miroooo ${item.productHandle === "miroooo-x2-heads" ? "X2" : "X1"}.` : ""),
+                  : isBrushHeads(item.productHandle) ? `${item.quantity * 2} brush heads` : item.subtitle,
           gift: false,
           badgeText: undefined as string | undefined,
           alt: item.title,
@@ -215,7 +172,7 @@ export function CartLines({
                     onClick={onNavigate}
                     className="cart-line-item__title-link"
                   >
-                    {item.title}
+                    {isBrushHeads(item.productHandle) ? `${item.title} (${item.quantity} ${item.quantity === 1 ? "Pack" : "Packs"})` : item.title}
                   </Link>
                 </h2>
                 <p
@@ -239,7 +196,7 @@ export function CartLines({
                     "miroooo-cart-item-price",
                   )}
                 >
-                  {item.gift ? "Free" : formatGBP(item.unitPrice)}
+                  {item.gift ? "Free" : formatGBP(item.productHandle.endsWith('-heads') ? item.unitPrice * item.quantity : item.unitPrice)}
                 </span>
                 {item.comparePrice > item.unitPrice && (
                   <s
@@ -248,7 +205,7 @@ export function CartLines({
                       "miroooo-cart-item-compare",
                     )}
                   >
-                    {formatGBP(item.comparePrice)}
+                    {formatGBP(item.productHandle.endsWith('-heads') ? item.comparePrice * item.quantity : item.comparePrice)}
                   </s>
                 )}
               </div>
@@ -279,7 +236,7 @@ export function CartLines({
                       type="button"
                       className={cls("cart-stepper-btn", "miroooo-stepper-btn")}
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      aria-label="Decrease quantity"
+                                            aria-label="Decrease quantity"
                     >
                       <Minus size={14} strokeWidth={2.5} />
                     </button>
@@ -295,6 +252,7 @@ export function CartLines({
                       type="button"
                       className={cls("cart-stepper-btn", "miroooo-stepper-btn")}
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      disabled={item.quantity >= 99}
                       aria-label="Increase quantity"
                     >
                       <Plus size={14} strokeWidth={2.5} />
@@ -315,9 +273,9 @@ export function CartLines({
                 </>
               )}
             </div>
-            {!item.gift && INCLUDED_IN_BOX[item.productHandle] && (
+            {!item.gift && brushBoxContents[item.productHandle] && (
               <IncludedInTheBox
-                items={INCLUDED_IN_BOX[item.productHandle]}
+                items={brushBoxContents[item.productHandle]}
                 drawer={drawer}
               />
             )}

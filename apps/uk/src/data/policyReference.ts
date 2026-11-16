@@ -21,8 +21,8 @@ export const POLICY_REFERENCE: Record<string, string> = {
                 <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
               </svg>
               <div class="policy-highlight-text">
-                <strong>Free Tracked Shipping</strong>
-                <span>UK delivery on all orders</span>
+                <strong>Tracked UK shipping</strong>
+                <span>£2.99 below £49 · Free from £49</span>
               </div>
             </div>
             <div class="policy-highlight-pill">
@@ -61,7 +61,7 @@ export const POLICY_REFERENCE: Record<string, string> = {
 
           <div class="policy-body">
             <h2>Overview</h2>
-            <p>We currently offer free tracked UK delivery on all orders.</p>
+            <p>Tracked delivery costs £2.99 on orders below £49 and is free on orders of £49 or more after discounts.</p>
             <p>All orders are processed within <strong>1 to 3 business days</strong> and shipped using a fully tracked courier service.</p>
             <p>Rest assured, we are doing everything in our power to get your order to you as soon as possible. Once your order is dispatched, transit time is normally between <strong>3 and 10 business days</strong> depending on your country or region. Please consider any holidays that might impact delivery times.</p>
             <p>Due to the nature of the shipping business, delays are sometimes inevitable. Our shipping times are guidelines only, and specific delivery dates are not guaranteed.</p>
@@ -491,8 +491,8 @@ export const POLICY_REFERENCE: Record<string, string> = {
                 <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
               </svg>
               <div class="policy-highlight-text">
-                <strong>Free Tracked Delivery</strong>
-                <span>UK shipping on all orders</span>
+                <strong>Tracked UK delivery</strong>
+                <span>£2.99 below £49 · Free from £49</span>
               </div>
             </div>
             <div class="policy-highlight-pill">
@@ -542,7 +542,7 @@ export const POLICY_REFERENCE: Record<string, string> = {
             <!-- Section 1: UK Delivery -->
             <section id="delivery">
               <h2>UK delivery: Processing and transit</h2>
-              <p>Standard tracked delivery to all UK addresses is <strong>free</strong> on every order. Orders normally take <strong>1–3 business days</strong> to process. After dispatch, tracked transit is usually <strong>3–10 business days</strong>.</p>
+              <p>Tracked delivery costs £2.99 on orders below £49 and is free on orders of £49 or more after discounts. Orders normally take <strong>1–3 business days</strong> to process. After dispatch, tracked transit is usually <strong>3–10 business days</strong>.</p>
               <p>Delivery dates are guidelines rather than guarantees. Weekends, bank holidays, weather events, address verifications, and carrier disruption can occasionally impact timings.</p>
               <p>When your order is dispatched, a tracking ID and carrier link are emailed to the address provided at checkout. You can also monitor your package directly on our <a href="/order-tracking">Order Tracking Page</a>. For complete transit details, view our full <a href="/shipping-policy">Shipping Policy</a>.</p>
             </section>

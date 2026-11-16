@@ -180,7 +180,9 @@ function mockStandardCheckout(options: { currency?: string; price?: number; unav
 const head = (model: 'x1' | 'x2', quantity = 1) => ({ productHandle: `miroooo-${model}-heads`, variantId: PRODUCTS[`miroooo-${model}-heads`].variants[0].id, quantity });
 
 for (const [label, lines, amount] of [
-  ['both head models', [head('x1', 2), head('x2', 4)], 50],
+  ['both head models', [head('x1', 2), head('x2', 4)], 60],
+  ['three X1 heads packs', [head('x1', 3)], 30],
+  ['six X2 heads packs', [head('x2', 6)], 60],
   ['X1 four brushes', [{ ...x1Grey, quantity: 4 }], 276],
   ['X2 five brushes', [{ ...x2Grey, quantity: 5 }], 345],
   ['mixed brushes', [x1Grey, x2Grey], 138],
@@ -198,7 +200,7 @@ for (const [label, lines, amount] of [
       assert.equal(body.offerType, 'standard_cart');
       assert.equal(totals([...lines]).finalSubtotal, amount);
       assert.equal(mock.submitted.reduce((sum, line) => sum + line.quantity, 0), lines.reduce((sum, line) => sum + line.quantity, 0));
-      assert.match(body.checkoutUrl, /^https:\/\/(x1|offer)\.miroooo\.us\/[a-z0-9]{256}\/checkout\/[a-f0-9]{64}\?currency=GBP$/);
+      assert.match(body.checkoutUrl, /^https:\/\/(x1|offer|x1heads|x2heads)\.miroooo\.us\/[a-z0-9]{256}\/checkout\/[a-f0-9]{64}\?currency=GBP$/);
       assert.ok(mock.calls.every((url) => !url.includes('create-bundle-order')));
     } finally { mock.restore(); }
   });
@@ -999,70 +1001,25 @@ test('flosser cart calculates £69 subtotal, £139 compareAt, and unlocks compli
   assert.equal(fallbackTotals.compareAt, 139.0);
 });
 
-test('X2 heads Plan and Bundle pricing supports subscription and 1, 3, 6 pack options with compareAt base of 13', () => {
-  const x2VariantId = PRODUCTS['miroooo-x2-heads'].variants[0].id;
-
-  // Plan 1: Subscription (1 pack = £10, compare £13, saves £3)
-  const subLine = {
-    productHandle: 'miroooo-x2-heads',
-    variantId: x2VariantId,
-    quantity: 1,
-    unitPrice: 10.0,
-    comparePrice: 13.0,
-    title: 'Miroooo X2 Heads Plan (Subscription)',
-    subtitle: '2 Extra Brush Heads (Every 2 Months)',
-  };
-  const subTotals = totals([subLine]);
-  assert.equal(subTotals.subtotal, 10.0);
-  assert.equal(subTotals.compareAt, 13.0);
-  assert.equal(subTotals.totalSavings, 3.0);
-  assert.equal(subTotals.isX2Heads, true);
-
-  // Plan 2: Buy 1 (1 pack = £13, compare £13, saves £0)
-  const buy1Line = {
-    productHandle: 'miroooo-x2-heads',
-    variantId: x2VariantId,
-    quantity: 1,
-    unitPrice: 13.0,
-    comparePrice: 13.0,
-    title: 'Miroooo X2 Heads (1 Pack)',
-    subtitle: '2 Brush Heads (One-Time Purchase)',
-  };
-  const buy1Totals = totals([buy1Line]);
-  assert.equal(buy1Totals.subtotal, 13.0);
-  assert.equal(buy1Totals.compareAt, 13.0);
-  assert.equal(buy1Totals.totalSavings, 0.0);
-
-  // Plan 2: Buy 3 (3 packs = £33, compare £39, saves £6)
-  const buy3Line = {
-    productHandle: 'miroooo-x2-heads',
-    variantId: x2VariantId,
-    quantity: 3,
-    unitPrice: 11.0,
-    comparePrice: 13.0,
-    title: 'Miroooo X2 Heads (3 Packs)',
-    subtitle: '6 Brush Heads (One-Time Purchase)',
-  };
-  const buy3Totals = totals([buy3Line]);
-  assert.equal(buy3Totals.subtotal, 33.0);
-  assert.equal(buy3Totals.compareAt, 39.0);
-  assert.equal(buy3Totals.totalSavings, 6.0);
-
-  // Plan 2: Buy 6 (6 packs = £54, compare £78, saves £24)
-  const buy6Line = {
-    productHandle: 'miroooo-x2-heads',
-    variantId: x2VariantId,
-    quantity: 6,
-    unitPrice: 9.0,
-    comparePrice: 13.0,
-    title: 'Miroooo X2 Heads (6 Packs)',
-    subtitle: '12 Brush Heads (One-Time Purchase)',
-  };
-  const buy6Totals = totals([buy6Line]);
-  assert.equal(buy6Totals.subtotal, 54.0);
-  assert.equal(buy6Totals.compareAt, 78.0);
-  assert.equal(buy6Totals.totalSavings, 24.0);
+test('heads are sold as one-time packs and old per-pack prices are normalized', () => {
+  for (const model of ['x1', 'x2'] as const) {
+    for (const [quantity, oldUnitPrice] of [[1, 13], [3, 11], [6, 9]]) {
+      const [item] = normalizeCartItems([{ ...head(model, quantity), unitPrice: oldUnitPrice, comparePrice: 13 }], true);
+      assert.equal(item.unitPrice, 10);
+      assert.equal(item.comparePrice, 12);
+      const total = totals([item]);
+      assert.equal(total.finalSubtotal, quantity * 10);
+      assert.equal(total.totalSavings, quantity * 2);
+      assert.equal(total.shipping, quantity === 6 ? 0 : 2.99);
+    }
+  }
+  const subscription = { ...head('x2'), title: 'Miroooo X2 Heads Plan (Subscription)' };
+  assert.deepEqual(normalizeCartItems([subscription]), []);
+  assert.throws(() => normalizeCartItems([subscription], true), /one-time purchase/);
 });
 
-
-
+test('free tracked delivery uses the after-discount subtotal', () => {
+  assert.equal(totals([head('x2', 4)]).grandTotal, 42.99);
+  assert.equal(totals([head('x2', 5)]).grandTotal, 50);
+  assert.equal(totals([x2Grey], ['BLACKFRIDAY10']).grandTotal, 62);
+});

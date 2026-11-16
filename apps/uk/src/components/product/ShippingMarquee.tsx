@@ -1,11 +1,11 @@
 const BRUSH_MARQUEE_ITEMS = [
-  'Free shipping on all orders',
+  'Free shipping on orders £49+',
   'Easy return and refund',
   'Ultra Light Weight',
 ];
 
 const FLOSSER_MARQUEE_ITEMS = [
-  'Free shipping on all orders',
+  'Free shipping on orders £49+',
   'Easy return and refund',
   'IPX7 Waterproof & 60-Day Battery',
 ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
@@ -44,14 +44,7 @@ export function Header({
 }) {
   const pathname = usePathname();
   const { totals, openCart, closeCart } = useCart();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [drawer, setDrawer] = useState<"menu" | "shop" | null>(null);
-  useEffect(() => {
-    const scroll = () => setIsScrolled(window.scrollY > 40);
-    scroll();
-    window.addEventListener("scroll", scroll, { passive: true });
-    return () => window.removeEventListener("scroll", scroll);
-  }, []);
   const close = () => setDrawer(null);
   const links = (items: [string, string][]) =>
     items.map(([href, label]) => (
@@ -74,7 +67,7 @@ export function Header({
   return (
     <>
       <header
-        className={`site-header ${pathname === "/" && isTransparentHome ? "site-header--overlay" : ""} ${isScrolled ? "is-scrolled" : ""} ${isHalloween ? "header--halloween" : ""}`}
+        className={`site-header ${pathname === "/" && isTransparentHome ? "site-header--overlay" : ""} ${isHalloween ? "header--halloween" : ""}`}
       >
         <div className="site-header__inner">
           <div className="site-header__left flex items-center justify-start">

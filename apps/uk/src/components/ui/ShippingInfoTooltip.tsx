@@ -151,7 +151,7 @@ export function ShippingInfoTooltip({
               color: isDark ? "rgba(255, 255, 255, 0.8)" : "#555555",
             }}
           >
-            This is the earliest date you can receive your order, but standard delivery transit is 7–20 business days. For more information, please visit our shipping policy page.
+            The date shown is an early estimate. Orders are processed within 1–3 business days. Standard tracked delivery takes 3–10 business days after dispatch. Tracked delivery costs £2.99 on orders below £49 and is free on orders of £49 or more after discounts. See our shipping policy for details.
           </p>
         </div>
       )}

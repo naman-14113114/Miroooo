@@ -7,8 +7,8 @@ interface VariantSelectorProps {
   product: Product;
   selectedColor: string;
   onSelectColor: (color: string) => void;
-  selectedQuantity: 1 | 2 | 3 | 6;
-  onSelectQuantity: (quantity: 1 | 2 | 3 | 6) => void;
+  selectedQuantity: 1 | 2 | 3;
+  onSelectQuantity: (quantity: 1 | 2 | 3) => void;
   bundleColors: string[];
   onUpdateBundleColors: (colors: string[]) => void;
 }
@@ -88,7 +88,10 @@ export function VariantSelector({
 
           <div className="space-y-2.5">
             {product.bundles.map((bundle) => {
-              const isSelected = selectedQuantity === bundle.quantity;
+              // This selector configures toothbrush colours. Six-pack offers use the heads selector.
+              if (bundle.quantity === 6) return null;
+              const quantity = bundle.quantity;
+              const isSelected = selectedQuantity === quantity;
               return (
                 <div
                   key={bundle.quantity}
@@ -97,7 +100,7 @@ export function VariantSelector({
                       ? 'border-white bg-white/[0.08] shadow-lg ring-1 ring-white/20'
                       : 'border-white/15 bg-white/[0.02] hover:border-white/30'
                   }`}
-                  onClick={() => onSelectQuantity(bundle.quantity)}
+                  onClick={() => onSelectQuantity(quantity)}
                 >
                   {/* Badge */}
                   {bundle.badge && (

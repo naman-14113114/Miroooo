@@ -22,6 +22,7 @@ import { X1TriCleaningModes } from './X1TriCleaningModes';
 import { BrushStylePrecision } from './BrushStylePrecision';
 import { DiscoverOralHygiene } from './DiscoverOralHygiene';
 import { LuxuriousProfessionalism } from './LuxuriousProfessionalism';
+import { ProductStickyNav } from './ProductStickyNav';
 import { MinimalProductHero } from './MinimalProductHero';
 import { FlosserModesSection } from './FlosserModesSection';
 import { FlosserStylePrecision } from './FlosserStylePrecision';
@@ -32,6 +33,7 @@ interface ProductPageProps {
   handle: string;
   searchParams?: { color?: string };
   isSimpleBuybox?: boolean;
+  isPrimaryX2?: boolean;
   isMirooooX1Route?: boolean;
   isHalloween?: boolean;
 }
@@ -40,6 +42,7 @@ export function ProductPage({
   handle,
   searchParams,
   isSimpleBuybox = false,
+  isPrimaryX2 = false,
   isMirooooX1Route = true,
   isHalloween = false,
 }: ProductPageProps) {
@@ -89,12 +92,15 @@ export function ProductPage({
 
   return (
     <main className={`product-page-root ${isFlosser ? 'flosser-product-page' : (isX2 ? 'x2-product-page' : 'x1-product-page')} bg-[#080909] min-h-screen text-white`}>
+      {!isPrimaryX2 && <ProductStickyNav isX2={isX2} isFlosser={isFlosser} />}
+
       {/* 1. Main Product Hero & Buy Box */}
       <ProductHero
         product={product}
         initialColor={initialColor}
         onColorChange={setSelectedColor}
         isSimpleBuybox={isSimpleBuybox}
+        isPrimaryX2={isPrimaryX2}
         isMirooooX1Route={isMirooooX1Route}
         isHalloween={isHalloween}
       />
@@ -142,7 +148,7 @@ export function ProductPage({
           <CustomerStats />
 
           {/* 5. Verified Customer Reviews */}
-          <ProductReviews isX2={true} />
+          <ProductReviews isX2={true} compactSummary={isPrimaryX2} />
 
           {/* 6. Built for Travel Split Section (Moved below reviews) */}
           <EnergyBoostSplit />

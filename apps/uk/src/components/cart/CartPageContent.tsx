@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatGBP, VALID_PROMO_CODES } from "@/lib/cart";
+import { HEADS_PACK_PRICE } from "@/lib/commerce";
 import { AnimatedIcon } from "@/components/ui/AnimatedIcon";
 import { CartLines } from "./CartLines";
 
@@ -57,23 +58,23 @@ export function CartPageContent() {
   const [discountOpen, setDiscountOpen] = useState(false);
   const [giftOpen, setGiftOpen] = useState(false);
   const [isPriceUpdated, setIsPriceUpdated] = useState(false);
-  const prevTotalRef = useRef(totals.finalSubtotal);
+  const prevTotalRef = useRef(totals.grandTotal);
 
   useEffect(() => {
-    if (prevTotalRef.current !== totals.finalSubtotal) {
-      prevTotalRef.current = totals.finalSubtotal;
+    if (prevTotalRef.current !== totals.grandTotal) {
+      prevTotalRef.current = totals.grandTotal;
       setIsPriceUpdated(true);
       const t = setTimeout(() => setIsPriceUpdated(false), 350);
       return () => clearTimeout(t);
     }
-  }, [totals.finalSubtotal]);
+  }, [totals.grandTotal]);
 
   const handlePromoChange = (val: string) => {
     setPromoInput(val);
     const normalized = val.trim().toUpperCase().replace(/\s+/g, "");
-    if (normalized === "MIROOOO10") {
-      if (!appliedPromoCodes.includes("MIROOOO10")) {
-        applyPromoCode("MIROOOO10");
+    if (normalized !== "MIROOOO" && VALID_PROMO_CODES.includes(normalized)) {
+      if (!appliedPromoCodes.includes(normalized)) {
+        applyPromoCode(normalized);
       }
       setPromoInput("");
       setPromoStatus({
@@ -87,7 +88,7 @@ export function CartPageContent() {
 
   const handlePromoBlur = () => {
     const normalized = promoInput.trim().toUpperCase().replace(/\s+/g, "");
-    if (normalized === "MIROOOO10" || normalized === "MIROOOO") {
+    if (VALID_PROMO_CODES.includes(normalized)) {
       if (!appliedPromoCodes.includes(normalized)) {
         applyPromoCode(normalized);
       }
@@ -156,8 +157,8 @@ export function CartPageContent() {
             <ShoppingBag className="cart-empty-icon" strokeWidth={1.6} />
             <h1 className="cart-empty-title">Your cart is empty.</h1>
             <p className="cart-empty-desc">
-              Add the Miroooo X1 or Miroooo X2 to unlock current bundle offers,
-              complimentary DuPont brush heads, and free tracked UK delivery.
+              Add the Miroooo X1 or Miroooo X2 to unlock current bundle offers
+              and complimentary DuPont brush heads.
             </p>
             <div className="cart-empty-actions">
               <Link href="/all-products" className="cart-empty-shop-btn">
@@ -228,7 +229,7 @@ export function CartPageContent() {
                       </div>
                       <div className="cart-upsell-action-row">
                         <div className="cart-upsell-price-wrap">
-                          <span className="cart-upsell-price">£10</span>
+                          <span className="cart-upsell-price">{formatGBP(HEADS_PACK_PRICE)}</span>
                         </div>
                         <button
                           type="button"
@@ -292,10 +293,12 @@ export function CartPageContent() {
                         <span>-{formatGBP(amount)}</span>
                       </div>
                     ))}
-                  <div className="cart-discount-breakdown-row">
-                    <span className="uppercase">Tracked UK Shipping</span>
-                    <strong>FREE</strong>
-                  </div>
+                  {totals.shipping === 0 && (
+                    <div className="cart-discount-breakdown-row">
+                      <span className="uppercase">Free Tracked Shipping</span>
+                      <strong>FREE</strong>
+                    </div>
+                  )}
                 </div>
                 <div id="promo-code-container">
                   <form
@@ -410,8 +413,13 @@ export function CartPageContent() {
                     </div>
                   )}
                 </div>
+                <div style={{ display: 'grid', gap: '10px', paddingBottom: '16px', color: '#111111' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Subtotal</span><span>{formatGBP(totals.finalSubtotal)}</span></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Tracked shipping</span><span>{totals.shipping ? formatGBP(totals.shipping) : 'Free'}</span></div>
+                  {totals.shipping > 0 && <p style={{ margin: 0, fontSize: '12px', color: '#555555' }}>Free shipping from £49 after discounts.</p>}
+                </div>
                 <div className="cart-subtotal-section">
-                  <span className="cart-subtotal-label">SUBTOTAL</span>
+                  <span className="cart-subtotal-label">TOTAL</span>
                   <span
                     className="cart-subtotal-amount"
                     id="summary-subtotal-price"
@@ -422,7 +430,7 @@ export function CartPageContent() {
                       color: isPriceUpdated ? "#666666" : "#000000",
                     }}
                   >
-                    {formatGBP(totals.finalSubtotal)}
+                    {formatGBP(totals.grandTotal)}
                   </span>
                 </div>
                 <button

@@ -1,15 +1,36 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import styles from './ProductReviews.module.css';
 
 interface ProductReviewsProps {
   isX2?: boolean;
   isFlosser?: boolean;
+  compactSummary?: boolean;
 
 }
 
-export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReviewsProps) {
+export function ProductReviews({ isX2 = true, isFlosser = false, compactSummary = false }: ProductReviewsProps) {
   const starSrc = '/assets/star.png';
+  const starWidth = compactSummary ? 16 : 22;
+  const starHeight = compactSummary ? 15 : 21;
+  const ratingStars = (
+    <div className="miroooo-score-stars" aria-label="4.9 out of 5 stars" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <img key={star} src={starSrc} alt="" width={starWidth} height={starHeight} className="miroooo-star-img" style={{ width: starWidth, height: starHeight, display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
+      ))}
+    </div>
+  );
+  const reviewProof = (
+    <>
+      <div className="miroooo-archive-count">Based on <strong>4,275</strong> verified reviews</div>
+      <div className="miroooo-badge-guarantee">
+        <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+        100% Authentic Purchases
+      </div>
+    </>
+  );
+
   useEffect(() => {
     let active = true;
     let dispose: (() => void) | undefined;
@@ -22,10 +43,10 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
     };
     const script = document.createElement('script');
     script.src = isFlosser
-      ? '/assets_ref/miroooo-flosser-reviews.js'
+      ? '/assets_ref/miroooo-flosser-reviews.js?v=a94453486887'
       : isX2
-        ? '/assets_ref/miroooo-x2-reviews.js'
-        : '/assets_ref/miroooo-reviews.js';
+        ? '/assets_ref/miroooo-x2-reviews.js?v=4a6eb540f09d'
+        : '/assets_ref/miroooo-reviews.js?v=09927735d021';
     script.onload = () => {
       if (!active) return;
       if (isFlosser) {
@@ -55,38 +76,44 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
       <section className="miroooo-reviews-section" id="reviews" aria-label="Customer Reviews">
         <div className="miroooo-reviews-container">
 
-          {/* Section Header Eyebrow */}
-          <div className="miroooo-section-eyebrow" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }} aria-hidden="true">
-              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-              <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
-            </div>
-            <span>Verified Customer Feedback</span>
-          </div>
-          <h2 className="miroooo-section-title">What Our Customers Say</h2>
+          {!compactSummary && (
+            <>
+              {/* Section Header Eyebrow */}
+              <div className="miroooo-section-eyebrow" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }} aria-hidden="true">
+                  <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                  <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                  <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                  <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                  <img src={starSrc} alt="★" width="14" height="13" style={{ width: '14px', height: '13px', display: 'block', objectFit: 'contain' }} loading="lazy" decoding="async" />
+                </div>
+                <span>Verified Customer Feedback</span>
+              </div>
+              <h2 className="miroooo-section-title">What Our Customers Say</h2>
+            </>
+          )}
 
           {/* 1. Header Summary Card */}
-          <div className="miroooo-reviews-header-card">
-            <div className="miroooo-reviews-header-grid">
+          <div className={`miroooo-reviews-header-card${compactSummary ? ` ${styles.summary}` : ''}`}>
+            <div className={`miroooo-reviews-header-grid${compactSummary ? ` ${styles.grid}` : ''}`}>
 
               {/* Overall Rating Score */}
               <div className="miroooo-score-col">
-                <div className="miroooo-score-number">4.9</div>
-                <div className="miroooo-score-stars" aria-label="4.9 out of 5 stars" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                  <img src={starSrc} alt="★" width="22" height="21" className="miroooo-star-img" style={{ width: '22px', height: '21px', display: 'block', objectFit: 'contain' }} loading="eager" decoding="async" />
-                </div>
-                <div className="miroooo-archive-count">Based on <strong>4,275</strong> verified reviews</div>
-                <div className="miroooo-badge-guarantee">
-                  <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                  100% Authentic Purchases
-                </div>
+                {compactSummary ? (
+                  <>
+                    <h2 className={styles.heading}>Reviews</h2>
+                    <div className={styles.rating}>
+                      <p>4.9</p>
+                      {ratingStars}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="miroooo-score-number">4.9</div>
+                    {ratingStars}
+                  </>
+                )}
+                {compactSummary ? <div className={styles.proof}>{reviewProof}</div> : reviewProof}
               </div>
 
               {/* Interactive Rating Breakdown Bars */}
@@ -133,20 +160,24 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
                 </button>
               </div>
 
-              {/* Write Review Action */}
-              <div className="miroooo-action-col">
-                <div className="miroooo-action-text">{isFlosser ? 'Share your flossing experience' : 'Share your brushing experience'}</div>
-                <button type="button" className="miroooo-btn-write" id="miroooo-write-review-btn">
-                  <span className="btn-text" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                    <span>Write a Review</span>
-                  </span>
-                </button>
-                <div className="miroooo-satisfaction-pill">
-                  <span className="miroooo-green-dot"></span>
-                  99.4% Customer Recommendation
-                </div>
-              </div>
+              {!compactSummary && (
+                <>
+                  {/* Write Review Action */}
+                  <div className="miroooo-action-col">
+                    <div className="miroooo-action-text">{isFlosser ? 'Share your flossing experience' : 'Share your brushing experience'}</div>
+                    <button type="button" className="miroooo-btn-write" id="miroooo-write-review-btn">
+                      <span className="btn-text" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        <span>Write a Review</span>
+                      </span>
+                    </button>
+                    <div className="miroooo-satisfaction-pill">
+                      <span className="miroooo-green-dot"></span>
+                      99.4% Customer Recommendation
+                    </div>
+                  </div>
+                </>
+              )}
 
             </div>
           </div>
@@ -268,101 +299,106 @@ export function ProductReviews({ isX2 = true, isFlosser = false }: ProductReview
       </div>
 
       {/* 7. Write Review Form Modal */}
-      <div className="miroooo-modal-backdrop" id="miroooo-write-modal" aria-hidden="true" style={{ display: 'none' }}>
-        <div className="miroooo-write-dialog" role="dialog" aria-modal="true" aria-label="Write a Review">
-          <button type="button" className="miroooo-modal-close" id="miroooo-write-close" aria-label="Close form modal">✕</button>
+      {!compactSummary && (
+        <>
+          <div className="miroooo-modal-backdrop" id="miroooo-write-modal" aria-hidden="true" style={{ display: 'none' }}>
+            <div className="miroooo-write-dialog" role="dialog" aria-modal="true" aria-label="Write a Review">
+              <button type="button" className="miroooo-modal-close" id="miroooo-write-close" aria-label="Close form modal">✕</button>
 
-          <div className="miroooo-write-header">
-            <h3>Write a Review</h3>
-            <p>{isFlosser ? 'Share your honest feedback on the Miroooo Water Flosser' : 'Share your honest feedback on the Miroooo Electric Toothbrush'}</p>
+              <div className="miroooo-write-header">
+                <h3>Write a Review</h3>
+                <p>{isFlosser ? 'Share your honest feedback on the Miroooo Water Flosser' : 'Share your honest feedback on the Miroooo Electric Toothbrush'}</p>
+              </div>
+
+              <form id="miroooo-review-form" className="miroooo-write-form">
+                <div className="miroooo-form-group">
+                  <label>Overall Rating *</label>
+                  <div className="miroooo-star-rating-input" id="miroooo-form-stars" role="radiogroup">
+                    <button type="button" className="miroooo-star-btn active" data-rating="1">★</button>
+                    <button type="button" className="miroooo-star-btn active" data-rating="2">★</button>
+                    <button type="button" className="miroooo-star-btn active" data-rating="3">★</button>
+                    <button type="button" className="miroooo-star-btn active" data-rating="4">★</button>
+                    <button type="button" className="miroooo-star-btn active" data-rating="5">★</button>
+                    <span className="miroooo-rating-text" id="miroooo-form-rating-label">5.0 - Excellent</span>
+                  </div>
+                </div>
+
+                <div className="miroooo-form-row">
+                  <div className="miroooo-form-group">
+                    <label htmlFor="miroooo-form-name">Your Name *</label>
+                    <input type="text" id="miroooo-form-name" required placeholder="e.g. Sarah Jenkins" className="miroooo-input" />
+                  </div>
+                  <div className="miroooo-form-group">
+                    <label htmlFor="miroooo-form-email">Your Email * (Kept Private)</label>
+                    <input type="email" id="miroooo-form-email" required placeholder="e.g. sarah@example.com" className="miroooo-input" />
+                  </div>
+                </div>
+
+                <div className="miroooo-form-row">
+                  <div className="miroooo-form-group">
+                    <label htmlFor="miroooo-form-variant">{isFlosser ? 'Flosser Color / Variant' : 'Toothbrush Color / Variant'}</label>
+                    <select id="miroooo-form-variant" className="miroooo-select">
+                      {isFlosser ? (
+                        <>
+                          <option value="Black / 7 Specialized Nozzles">Black / 7 Specialized Nozzles</option>
+                          <option value="White / 7 Specialized Nozzles">White / 7 Specialized Nozzles</option>
+                          <option value="Black / 4 Standard Nozzles">Black / 4 Standard Nozzles</option>
+                          <option value="White / 4 Standard Nozzles">White / 4 Standard Nozzles</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="Grey / Single">Grey / Single</option>
+                          <option value="Grey / Double Pack">Grey / Double Pack</option>
+                          <option value="Grey / Travel Edition">Grey / Travel Edition</option>
+                          <option value="Silver / Single">Silver / Single</option>
+                          <option value="Silver / Double Pack">Silver / Double Pack</option>
+                          <option value="Silver / Travel Edition">Silver / Travel Edition</option>
+                          <option value="Pink / Single">Pink / Single</option>
+                          <option value="Pink / Double Pack">Pink / Double Pack</option>
+                          <option value="Pink / Travel Edition">Pink / Travel Edition</option>
+                        </>
+                      )}
+                    </select>
+                  </div>
+                  <div className="miroooo-form-group">
+                    <label htmlFor="miroooo-form-title">Review Headline *</label>
+                    <input type="text" id="miroooo-form-title" required placeholder="e.g. Genuinely revolutionary clean" className="miroooo-input" />
+                  </div>
+                </div>
+
+                <div className="miroooo-form-group">
+                  <label htmlFor="miroooo-form-body">Review Details *</label>
+                  <textarea id="miroooo-form-body" required rows={4} placeholder={isFlosser ? "How has the Miroooo Water Flosser worked for you?" : "How has the Miroooo sonic toothbrush worked for you?"} className="miroooo-textarea"></textarea>
+                </div>
+
+                <div className="miroooo-form-group">
+                  <label>Add Photos (Optional)</label>
+                  <div className="miroooo-file-dropzone" id="miroooo-dropzone">
+                    <svg className="miroooo-dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '24px', height: '24px', margin: '0 auto 6px', color: 'var(--miroooo-gold)' }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <div style={{ fontSize: '13px', color: '#d1d5db' }}>Click to select photos or drag & drop</div>
+                    <input type="file" id="miroooo-form-photos" multiple accept="image/*" className="miroooo-file-input" />
+                  </div>
+                  <div className="miroooo-preview-thumbs" id="miroooo-preview-thumbs"></div>
+                </div>
+
+                <div className="miroooo-form-actions">
+                  <button type="button" className="miroooo-btn-cancel" id="miroooo-form-cancel">Cancel</button>
+                  <button type="submit" className="miroooo-btn-submit" id="miroooo-form-submit">Submit Review</button>
+                </div>
+              </form>
+
+              {/* Success Confirmation */}
+              <div className="miroooo-write-success" id="miroooo-write-success" style={{ display: 'none' }}>
+                <div className="miroooo-success-icon">✓</div>
+                <h3>Thank You For Your Review!</h3>
+                <p>Your review has been verified and published to the Miroooo community.</p>
+                <button type="button" className="miroooo-btn-primary" id="miroooo-success-close">Continue Browsing</button>
+              </div>
+            </div>
           </div>
+        </>
+      )}
 
-          <form id="miroooo-review-form" className="miroooo-write-form">
-            <div className="miroooo-form-group">
-              <label>Overall Rating *</label>
-              <div className="miroooo-star-rating-input" id="miroooo-form-stars" role="radiogroup">
-                <button type="button" className="miroooo-star-btn active" data-rating="1">★</button>
-                <button type="button" className="miroooo-star-btn active" data-rating="2">★</button>
-                <button type="button" className="miroooo-star-btn active" data-rating="3">★</button>
-                <button type="button" className="miroooo-star-btn active" data-rating="4">★</button>
-                <button type="button" className="miroooo-star-btn active" data-rating="5">★</button>
-                <span className="miroooo-rating-text" id="miroooo-form-rating-label">5.0 - Excellent</span>
-              </div>
-            </div>
-
-            <div className="miroooo-form-row">
-              <div className="miroooo-form-group">
-                <label htmlFor="miroooo-form-name">Your Name *</label>
-                <input type="text" id="miroooo-form-name" required placeholder="e.g. Sarah Jenkins" className="miroooo-input" />
-              </div>
-              <div className="miroooo-form-group">
-                <label htmlFor="miroooo-form-email">Your Email * (Kept Private)</label>
-                <input type="email" id="miroooo-form-email" required placeholder="e.g. sarah@example.com" className="miroooo-input" />
-              </div>
-            </div>
-
-            <div className="miroooo-form-row">
-              <div className="miroooo-form-group">
-                <label htmlFor="miroooo-form-variant">{isFlosser ? 'Flosser Color / Variant' : 'Toothbrush Color / Variant'}</label>
-                <select id="miroooo-form-variant" className="miroooo-select">
-                  {isFlosser ? (
-                    <>
-                      <option value="Black / 7 Specialized Nozzles">Black / 7 Specialized Nozzles</option>
-                      <option value="White / 7 Specialized Nozzles">White / 7 Specialized Nozzles</option>
-                      <option value="Black / 4 Standard Nozzles">Black / 4 Standard Nozzles</option>
-                      <option value="White / 4 Standard Nozzles">White / 4 Standard Nozzles</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value="Grey / Single">Grey / Single</option>
-                      <option value="Grey / Double Pack">Grey / Double Pack</option>
-                      <option value="Grey / Travel Edition">Grey / Travel Edition</option>
-                      <option value="Silver / Single">Silver / Single</option>
-                      <option value="Silver / Double Pack">Silver / Double Pack</option>
-                      <option value="Silver / Travel Edition">Silver / Travel Edition</option>
-                      <option value="Pink / Single">Pink / Single</option>
-                      <option value="Pink / Double Pack">Pink / Double Pack</option>
-                      <option value="Pink / Travel Edition">Pink / Travel Edition</option>
-                    </>
-                  )}
-                </select>
-              </div>
-              <div className="miroooo-form-group">
-                <label htmlFor="miroooo-form-title">Review Headline *</label>
-                <input type="text" id="miroooo-form-title" required placeholder="e.g. Genuinely revolutionary clean" className="miroooo-input" />
-              </div>
-            </div>
-
-            <div className="miroooo-form-group">
-              <label htmlFor="miroooo-form-body">Review Details *</label>
-              <textarea id="miroooo-form-body" required rows={4} placeholder={isFlosser ? "How has the Miroooo Water Flosser worked for you?" : "How has the Miroooo sonic toothbrush worked for you?"} className="miroooo-textarea"></textarea>
-            </div>
-
-            <div className="miroooo-form-group">
-              <label>Add Photos (Optional)</label>
-              <div className="miroooo-file-dropzone" id="miroooo-dropzone">
-                <svg className="miroooo-dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '24px', height: '24px', margin: '0 auto 6px', color: 'var(--miroooo-gold)' }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                <div style={{ fontSize: '13px', color: '#d1d5db' }}>Click to select photos or drag & drop</div>
-                <input type="file" id="miroooo-form-photos" multiple accept="image/*" className="miroooo-file-input" />
-              </div>
-              <div className="miroooo-preview-thumbs" id="miroooo-preview-thumbs"></div>
-            </div>
-
-            <div className="miroooo-form-actions">
-              <button type="button" className="miroooo-btn-cancel" id="miroooo-form-cancel">Cancel</button>
-              <button type="submit" className="miroooo-btn-submit" id="miroooo-form-submit">Submit Review</button>
-            </div>
-          </form>
-
-          {/* Success Confirmation */}
-          <div className="miroooo-write-success" id="miroooo-write-success" style={{ display: 'none' }}>
-            <div className="miroooo-success-icon">✓</div>
-            <h3>Thank You For Your Review!</h3>
-            <p>Your review has been verified and published to the Miroooo community.</p>
-            <button type="button" className="miroooo-btn-primary" id="miroooo-success-close">Continue Browsing</button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

@@ -59,7 +59,7 @@ const FAQS_X1: FaqItem[] = [
   {
     "id": "miroooo-x-faq-4",
     "question": "Can I subscribe for replacement brush heads?",
-    "answer": "<p>Yes, replacement brush head sets are readily available on our site or via recurring delivery so you always have fresh, hygienic bristles ready every 3 months.</p>"
+    "answer": "<p>Yes, replacement brush head sets are available on our site.</p>"
   },
   {
     "id": "miroooo-x-faq-5",

@@ -1,0 +1,49 @@
+.summary:global(.miroooo-reviews-header-card) {
+  max-width: 920px;
+  margin-inline: auto;
+}
+
+.grid:global(.miroooo-reviews-header-grid) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+.heading {
+  margin: 0 0 8px;
+  font-size: clamp(32px, 3.2vw, 46px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+
+.rating p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.rating :global(.miroooo-score-stars) {
+  margin: 0;
+}
+
+.proof {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .grid:global(.miroooo-reviews-header-grid) {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 32px;
+  }
+}

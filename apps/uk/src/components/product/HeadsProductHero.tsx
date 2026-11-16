@@ -8,7 +8,9 @@ import { AnimatedIcon } from '@/components/ui/AnimatedIcon';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { formatGBP } from '@/lib/cart';
+import { HEADS_COMPARE_PRICE, HEADS_DISCOUNT_PERCENT, HEADS_PACK_PRICE } from '@/lib/commerce';
 import { ShippingInfoTooltip } from '@/components/ui/ShippingInfoTooltip';
+import { useStickyAddToCart } from './useStickyAddToCart';
 
 interface HeadsProductHeroProps {
   product: Product;
@@ -22,11 +24,10 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   const isOutOfStock = product.handle === 'wall-mounted-dock' || product.handle === 'travel-case' || product.handle === 'x1-charger' || product.handle === 'miroooo-x1-charging-dock' || product.handle === 'x1-charging-dock';
 
   const [quantity, setQuantity] = useState(1);
-  const [packTier, setPackTier] = useState<1 | 3 | 6>(1);
+  const [onetimeTier, setOnetimeTier] = useState<1 | 3 | 6>(1);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isLightboxZoomed, setIsLightboxZoomed] = useState(false);
-  const [isStickyVisible, setIsStickyVisible] = useState(false);
 
   // Accordion state
   const [openAccordion, setOpenAccordion] = useState<number | null>(0); // 0: Details, 1: Package contents, 2: Specs
@@ -39,7 +40,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
     return targetDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' }).replace(',', '');
   });
 
-  const heroCtaRef = useRef<HTMLButtonElement | null>(null);
+  const { heroCtaRef, isStickyVisible } = useStickyAddToCart(!isOutOfStock);
   const navRef = useRef<HTMLDivElement | null>(null);
 
   const images = (product.galleryImages && product.galleryImages.length > 0)
@@ -54,13 +55,12 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
       ];
 
   const basePrice = product.price || 10;
-  const totalPrice = isHeads
-    ? (packTier === 1 ? 10.0 : packTier === 3 ? 30.0 : 60.0)
-    : (product.price || 9) * quantity;
-  const comparePrice = isHeads
-    ? (packTier === 1 ? 12.0 : packTier === 3 ? 36.0 : 72.0)
-    : (product.compareAt || 18) * quantity;
-  const brushHeadsCount = isHeads ? packTier * 2 : quantity * 2;
+  const totalPrice = (product.price || 9) * quantity;
+  const comparePrice = isHeads ? HEADS_COMPARE_PRICE * onetimeTier : (product.compareAt || 18) * quantity;
+
+  const packUnitPrice = HEADS_PACK_PRICE;
+  const packTotal = packUnitPrice * onetimeTier;
+  const headCount = onetimeTier * 2;
 
   // Match the reference delivery estimate and countdown.
   useEffect(() => {
@@ -85,23 +85,6 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   useEffect(() => {
     router.prefetch('/cart');
   }, [router]);
-
-  // Sticky Bar Scroll Observer
-  useEffect(() => {
-    if (isOutOfStock) return;
-    const handleScroll = () => {
-      if (!heroCtaRef.current) return;
-      const rect = heroCtaRef.current.getBoundingClientRect();
-      if (rect.bottom < 0) {
-        setIsStickyVisible(true);
-      } else {
-        setIsStickyVisible(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isOutOfStock]);
 
   // Keyboard navigation for Lightbox
   useEffect(() => {
@@ -160,14 +143,10 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
   const handleAddToCart = () => {
     if (isOutOfStock) return;
     if (isHeads) {
-      const unitPrice = 10.0;
       addItem({
         productHandle: product.handle,
-        quantity: packTier,
-        unitPrice,
-        comparePrice: 12.0,
-        title: packTier === 1 ? `${product.name} (1 Pack)` : `${product.name} (${packTier} Packs)`,
-        subtitle: `${packTier * 2} Brush Heads`,
+        quantity: onetimeTier,
+        color: 'Default',
       });
     } else {
       addItem({
@@ -306,15 +285,15 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
               <div className="product__price grid gap-2 mt-1" id="main-product-price-section">
                 <div className="flex flex-wrap items-baseline gap-2" style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white" id="main-price-display" style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff' }}>
-                    {isOutOfStock ? `£${product.price}` : formatGBP(totalPrice)}
+                    {isHeads ? formatGBP(packTotal) : (isOutOfStock ? `£${product.price}` : formatGBP(totalPrice))}
                   </span>
-                  {comparePrice > totalPrice && (
+                  {comparePrice > (isHeads ? packTotal : totalPrice) && (
                     <span className="text-base sm:text-lg price-compare-strike" id="main-compare-price-display" style={{ color: 'rgba(255, 255, 255, 0.55)', fontSize: '1.15rem' }}>
                       {formatGBP(comparePrice)}
                     </span>
                   )}
                   {isHeads ? (
-                    <span className="heads-product-saving">17% OFF</span>
+                    <span className="heads-product-saving">{HEADS_DISCOUNT_PERCENT}% OFF</span>
                   ) : (
                     <div className="inline-flex items-center gap-2 py-0.5" id="main-discount-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ fontFamily: "var(--font-didot), 'Playfair Display', Georgia, serif", fontSize: '24px', fontWeight: 400, lineHeight: 1, color: '#00b67a', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>50% OFF</span>
@@ -358,119 +337,128 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     <span className="h-px flex-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', height: '1px', flex: 1 }}></span>
                   </div>
 
-                  <div className="bundle-tiers-container flex flex-col gap-4 mb-4" role="radiogroup" aria-label="Choose your brush-head pack" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                    {/* Option 1: Buy 1 */}
-                    <div
-                      className={`bundle-tier-card ${packTier === 1 ? 'is-selected' : ''}`}
-                      data-tier="single"
-                      onClick={() => setPackTier(1)}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <button type="button" className="tier-header-btn" role="radio" aria-checked={packTier === 1} tabIndex={packTier === 1 ? 0 : -1} aria-label="Select Buy 1 Pack">
-                        <div className="tier-radio"><div className="tier-radio-dot"></div></div>
-                        <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 1</span>
-                            </div>
-                            <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555' }}>1 Pack (2 Brush Heads)</p>
+                  <div className="bundle-tiers-container flex flex-col gap-4 mb-4" role="radiogroup" aria-label="Choose your brush-head pack"
+                    onKeyDown={event => {
+                      const tiers = [1, 3, 6] as const;
+                      const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : ['ArrowLeft', 'ArrowUp'].includes(event.key) ? -1 : 0;
+                      if (!direction) return;
+                      event.preventDefault();
+                      const nextIndex = (tiers.indexOf(onetimeTier) + direction + tiers.length) % tiers.length;
+                      setOnetimeTier(tiers[nextIndex]);
+                      event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]')[nextIndex]?.focus();
+                    }} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                          {/* Option 1: Buy 1 */}
+                          <div
+                            className={`bundle-tier-card ${onetimeTier === 1 ? 'is-selected' : ''}`}
+                            data-tier="single"
+                            onClick={(e) => { e.stopPropagation(); setOnetimeTier(1); }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <button type="button" className="tier-header-btn" role="radio" aria-checked={onetimeTier === 1} tabIndex={onetimeTier === 1 ? 0 : -1} aria-label="Select Buy 1 Pack">
+                              <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                              <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 1</span>
+                                  </div>
+                                  <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555' }}>1 Pack (2 Brush Heads)</p>
+                                </div>
+                                <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
+                                  <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                                    <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                      £10.00
+                                    </span>
+                                    <del style={{ fontSize: 12, color: '#666666' }}>{formatGBP(HEADS_COMPARE_PRICE)}</del>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
                           </div>
-                          <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0 }}>
-                            <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
-                              <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                £10.00
-                              </span>
-                              <del style={{ fontSize: '12px', color: '#666666' }}>£12</del>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    </div>
 
-                    {/* Option 2: Buy 3 (Most Popular) */}
-                    <div
-                      className={`bundle-tier-card has-top-badge ${packTier === 3 ? 'is-selected' : ''}`}
-                      data-tier="bundle-2"
-                      onClick={() => setPackTier(3)}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <div className="tier-popular-badge-wrap badge-popular">
-                        <div className="tier-popular-seal">
-                          <svg width="84" height="53" viewBox="0 0 90 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M 85.0 28.0 Q 80.2 31.2 83.0 35.1 Q 76.8 37.3 77.4 41.5 Q 70.2 42.5 68.5 46.6 Q 61.2 46.3 57.4 49.9 Q 50.6 48.2 45.0 51.0 Q 39.4 48.2 32.6 49.9 Q 28.8 46.3 21.5 46.6 Q 19.8 42.5 12.6 41.5 Q 13.2 37.3 7.0 35.1 Q 9.8 31.2 5.0 28.0 Q 9.8 24.8 7.0 20.9 Q 13.2 18.7 12.6 14.5 Q 19.8 13.5 21.5 9.4 Q 28.8 9.7 32.6 6.1 Q 39.4 7.8 45.0 5.0 Q 50.6 7.8 57.4 6.1 Q 61.2 9.7 68.5 9.4 Q 70.2 13.5 77.4 14.5 Q 76.8 18.7 83.0 20.9 Q 80.2 24.8 85.0 28.0 Z" fill="#22c55e" />
-                            <ellipse cx="45" cy="28" rx="34" ry="18.5" stroke="rgba(255, 255, 255, 0.45)" strokeWidth="0.9" strokeDasharray="2 1.5" fill="none" />
-                            <text x="45" y="23" textAnchor="middle" fill="#ffffff" fontFamily="'Playfair Display', Georgia, serif" fontSize="12.5" fontStyle="italic" fontWeight="600" letterSpacing="0.3">Most</text>
-                            <text x="45" y="37.5" textAnchor="middle" fill="#ffffff" fontFamily="'Inter', -apple-system, sans-serif" fontSize="11" fontWeight="800" letterSpacing="0.5">Popular</text>
-                          </svg>
-                        </div>
-                      </div>
-                      <button type="button" className="tier-header-btn" role="radio" aria-checked={packTier === 3} tabIndex={packTier === 3 ? 0 : -1} aria-label="Select Buy 3 Tier">
-                        <div className="tier-radio"><div className="tier-radio-dot"></div></div>
-                        <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 3</span>
+                          {/* Option 2: Buy 3 (Most Popular) */}
+                          <div
+                            className={`bundle-tier-card has-top-badge ${onetimeTier === 3 ? 'is-selected' : ''}`}
+                            data-tier="bundle-2"
+                            onClick={(e) => { e.stopPropagation(); setOnetimeTier(3); }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <div className="tier-popular-badge-wrap badge-popular">
+                              <div className="tier-popular-seal">
+                                <svg width="84" height="53" viewBox="0 0 90 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M 85.0 28.0 Q 80.2 31.2 83.0 35.1 Q 76.8 37.3 77.4 41.5 Q 70.2 42.5 68.5 46.6 Q 61.2 46.3 57.4 49.9 Q 50.6 48.2 45.0 51.0 Q 39.4 48.2 32.6 49.9 Q 28.8 46.3 21.5 46.6 Q 19.8 42.5 12.6 41.5 Q 13.2 37.3 7.0 35.1 Q 9.8 31.2 5.0 28.0 Q 9.8 24.8 7.0 20.9 Q 13.2 18.7 12.6 14.5 Q 19.8 13.5 21.5 9.4 Q 28.8 9.7 32.6 6.1 Q 39.4 7.8 45.0 5.0 Q 50.6 7.8 57.4 6.1 Q 61.2 9.7 68.5 9.4 Q 70.2 13.5 77.4 14.5 Q 76.8 18.7 83.0 20.9 Q 80.2 24.8 85.0 28.0 Z" fill="#22c55e" />
+                                  <ellipse cx="45" cy="28" rx="34" ry="18.5" stroke="rgba(255, 255, 255, 0.45)" strokeWidth="0.9" strokeDasharray="2 1.5" fill="none" />
+                                  <text x="45" y="23" textAnchor="middle" fill="#ffffff" fontFamily="'Playfair Display', Georgia, serif" fontSize="12.5" fontStyle="italic" fontWeight="600" letterSpacing="0.3">Most</text>
+                                  <text x="45" y="37.5" textAnchor="middle" fill="#ffffff" fontFamily="'Inter', -apple-system, sans-serif" fontSize="11" fontWeight="800" letterSpacing="0.5">Popular</text>
+                                </svg>
+                              </div>
                             </div>
-                            <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>3 Packs (6 Brush Heads)</p>
+                            <button type="button" className="tier-header-btn" role="radio" aria-checked={onetimeTier === 3} tabIndex={onetimeTier === 3 ? 0 : -1} aria-label="Select Buy 3 Tier">
+                              <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                              <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 3</span>
+                                  </div>
+                                  <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>3 Packs (6 Brush Heads)</p>
+                                </div>
+                                <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
+                                  <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                                    <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                      £30.00
+                                    </span>
+                                    <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
+                                      {formatGBP(HEADS_COMPARE_PRICE * 3)}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
+                                    <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
+                                      (£10 each)
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
                           </div>
-                          <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
-                            <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
-                              <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                £30.00
-                              </span>
-                              <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
-                                £36
-                              </span>
-                            </div>
-                            <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
-                              <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                                (£10 each)
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    </div>
 
-                    {/* Option 3: Buy 6 (Best Value) */}
-                    <div
-                      className={`bundle-tier-card has-top-badge ${packTier === 6 ? 'is-selected' : ''}`}
-                      data-tier="bundle-3"
-                      onClick={() => setPackTier(6)}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <div className="tier-best-value-wrap badge-value">
-                        <div className="tier-best-value-ribbon">
-                          BEST VALUE
-                        </div>
-                      </div>
-                      <button type="button" className="tier-header-btn" role="radio" aria-checked={packTier === 6} tabIndex={packTier === 6 ? 0 : -1} aria-label="Select Buy 6 Tier">
-                        <div className="tier-radio"><div className="tier-radio-dot"></div></div>
-                        <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 6</span>
+                          {/* Option 3: Buy 6 (Best Value) */}
+                          <div
+                            className={`bundle-tier-card has-top-badge ${onetimeTier === 6 ? 'is-selected' : ''}`}
+                            data-tier="bundle-3"
+                            onClick={(e) => { e.stopPropagation(); setOnetimeTier(6); }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <div className="tier-best-value-wrap badge-value">
+                              <div className="tier-best-value-ribbon">
+                                BEST VALUE
+                              </div>
                             </div>
-                            <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>6 Packs (12 Brush Heads)</p>
+                            <button type="button" className="tier-header-btn" role="radio" aria-checked={onetimeTier === 6} tabIndex={onetimeTier === 6 ? 0 : -1} aria-label="Select Buy 6 Tier">
+                              <div className="tier-radio"><div className="tier-radio-dot"></div></div>
+                              <div className="flex-1 flex justify-between items-start gap-2" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-normal text-[13px] sm:text-[15px] leading-[1.6] uppercase tracking-tight" style={{ color: '#111111' }}>Buy 6</span>
+                                  </div>
+                                  <p className="text-xs sm:text-sm mt-0.5" style={{ color: '#555555', lineHeight: 1.4 }}>6 Packs (12 Brush Heads)</p>
+                                </div>
+                                <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
+                                  <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
+                                    <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
+                                      £60.00
+                                    </span>
+                                    <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
+                                      {formatGBP(HEADS_COMPARE_PRICE * 6)}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
+                                    <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
+                                      (£10 each)
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
                           </div>
-                          <div className="text-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-start', flexShrink: 0, marginTop: '14px' }}>
-                            <div className="flex items-baseline gap-1.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '6px' }}>
-                              <span className="font-bold text-base sm:text-lg" style={{ fontWeight: 700, fontSize: '1.1rem', color: '#111111' }}>
-                                £60.00
-                              </span>
-                              <span className="text-xs sm:text-sm price-compare-strike" style={{ fontSize: 12, color: '#777777', textDecoration: 'line-through' }}>
-                                £72
-                              </span>
-                            </div>
-                            <div className="flex items-baseline gap-1 mt-0.5 justify-end" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'flex-end', gap: '4px' }}>
-                              <span className="font-bold text-xs sm:text-sm" style={{ color: '#111111', fontWeight: 700, fontSize: '11.5px' }}>
-                                (£10 each)
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    </div>
                   </div>
                 </>
               )}
@@ -479,8 +467,8 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
               {!isOutOfStock && !isHeads && (
                 <div className="heads-quantity-selector my-4" style={{ margin: '20px 0 16px 0' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>QUANTITY:</span>
-                    <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '12px' }}>£{basePrice} per pack</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{isHeads ? 'OR CHOOSE QUANTITY:' : 'QUANTITY:'}</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '12px' }}>{isHeads ? `${quantity * 2} brush heads total` : `£${basePrice} per pack`}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111111', border: '1px solid rgba(255, 255, 255, 0.18)', borderRadius: '9999px', padding: '4px 8px', height: '50px', boxSizing: 'border-box' }}>
                     <button
@@ -522,7 +510,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   </svg>
                 </div>
                 <div className="flex-1 text-xs sm:text-sm leading-snug" style={{ fontSize: '13px', lineHeight: 1.4 }}>
-                  Order within <strong className="font-mono font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryCountdown}</strong> to get as fast as <strong className="font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
+                  Order within <strong className="font-mono font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryCountdown}</strong> to get as fast as <strong suppressHydrationWarning className="font-bold" style={{ color: '#ffffff', fontWeight: 700 }}>{deliveryDateStr}</strong>
                 </div>
                 <ShippingInfoTooltip isDark={true} />
               </div>
@@ -553,7 +541,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                     ref={heroCtaRef}
                     type="button"
                     id="hero-cta"
-                    className="button button--primary"
+                    className={`button button--primary${isHeads ? ' miroooo-buy-sheen' : ''}`}
                     style={{ width: '100%', fontSize: '1.05rem' }}
                     onClick={handleAddToCart}
                   >
@@ -578,7 +566,7 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                 </div>
                 <div className="flex flex-col items-center gap-1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                   <svg style={{ width: '24px', height: '24px', color: '#ffffff' }} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.7"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free Tracked<br/>Shipping</span>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-tight" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>Free shipping<br/>on orders £49+</span>
                 </div>
               </div>
 
@@ -667,16 +655,16 @@ export function HeadsProductHero({ product }: HeadsProductHeroProps) {
                   <div className="miroooo-sticky-info">
                     <p className="miroooo-sticky-title" id="sticky-bar-title">
                       {isHeads
-                        ? `${product.name} (${packTier} Pack${packTier > 1 ? 's' : ''})`
+                        ? `Miroooo ${isX2 ? 'X2' : 'X1'} Heads (${onetimeTier} ${onetimeTier === 1 ? 'Pack' : 'Packs'})`
                         : `${product.name} (${quantity} Pack${quantity > 1 ? 's' : ''})`}
                     </p>
                     <p className="miroooo-sticky-sub" id="sticky-bar-subtitle">
                       <span id="sticky-bar-price" style={{ fontWeight: 700, color: '#ffffff' }}>
-                        {formatGBP(totalPrice)}
+                        {isHeads ? formatGBP(packTotal) : formatGBP(totalPrice)}
                       </span>
                       <span className="miroooo-sticky-bullet">·</span>
                       <span id="sticky-bar-gifts" className="miroooo-sticky-gifts-tag" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>
-                        {brushHeadsCount} Brush Heads
+                        {isHeads ? `${headCount} Brush Heads` : `${quantity * 2} Brush Heads`}
                       </span>
                     </p>
                   </div>

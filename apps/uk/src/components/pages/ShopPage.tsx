@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { HEADS_COMPARE_PRICE, HEADS_DISCOUNT_PERCENT } from '@/lib/commerce';
 
 type CategoryFilter = 'all' | 'toothbrushes' | 'heads' | 'accessories';
 
@@ -13,7 +14,7 @@ interface CollectionProduct {
   eyebrow: string;
   description: string;
   price: string;
-  compareAt: string;
+  compareAt?: string;
   badge?: string;
   isSoldOut?: boolean;
   image: string;
@@ -60,8 +61,8 @@ const UK_COLLECTION_PRODUCTS: CollectionProduct[] = [
     eyebrow: 'Replacement',
     description: 'DuPont™ precision rounded bristles engineered for 45° Bass sweep oscillating drive coupling.',
     price: '£10',
-    compareAt: '£12',
-    badge: '17% OFF',
+    compareAt: `£${HEADS_COMPARE_PRICE}`,
+    badge: `${HEADS_DISCOUNT_PERCENT}% OFF`,
     isSoldOut: false,
     image: '/assets_ref/x2/heads/B1.webp',
     link: '/products/miroooo-x2-heads',
@@ -75,8 +76,8 @@ const UK_COLLECTION_PRODUCTS: CollectionProduct[] = [
     eyebrow: 'Replacement',
     description: 'Micro-diamond polished DuPont filaments protecting delicate enamel & gumline.',
     price: '£10',
-    compareAt: '£12',
-    badge: '17% OFF',
+    compareAt: `£${HEADS_COMPARE_PRICE}`,
+    badge: `${HEADS_DISCOUNT_PERCENT}% OFF`,
     isSoldOut: false,
     image: '/assets_ref/x/gallery/miroooo-x1-replacement-brush-heads-beside-retail-carton.webp',
     link: '/products/miroooo-x1-heads',
@@ -475,7 +476,7 @@ export function ShopPage() {
         <div className="site-shell" style={{ textAlign: 'center' }}>
           <h1 className="shop-hero-title">The Complete Collection</h1>
           <p className="shop-hero-lead">
-            Precision oral care engineered for considered daily routines — from high-frequency sonic toothbrushes and hydrodynamic water flossers to refined replacement heads and travel essentials.
+            Precision oral care engineered for considered daily routines — from high-frequency sonic toothbrushes to refined replacement heads and travel essentials.
           </p>
 
           {/* Interactive Filter / Category Tabs */}
@@ -564,7 +565,7 @@ export function ShopPage() {
                         <>
                           <span className="shop-price-compare">{product.compareAt}</span>
                           {!product.isSoldOut && (
-                            <span className="shop-price-save">(50% OFF)</span>
+                            <span className="shop-price-save">({product.category === 'heads' ? product.badge : '50% OFF'})</span>
                           )}
                         </>
                       ) : null}

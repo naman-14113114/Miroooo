@@ -18,6 +18,15 @@
   letter-spacing: -0.015em;
 }
 
+.giftHeading {
+  padding: 7px clamp(12px, 1.5vw, 20px);
+  border-radius: 999px;
+  background: #f4f4f1;
+  color: #171717;
+  font-size: clamp(18px, 2vw, 26px);
+  white-space: nowrap;
+}
+
 .valuePillWrap {
   display: flex;
   justify-content: center;

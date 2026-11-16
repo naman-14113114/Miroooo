@@ -810,3 +810,83 @@ scripts/verify-us.mjs
   - `node scripts/verify.mjs`: 561/561 checks passed.
   - `pnpm --filter @miroooo/us build`: Turbopack build succeeded (47/47 static and dynamic pages generated).
   - `pnpm --filter @miroooo/uk build`: Turbopack build succeeded (47/47 static and dynamic pages generated).
+
+
+## 2026-11-16T14:54:34+05:30 - Local Whop storefront and tracking parity for the Vercel domain
+
+- The owner asked to match recent changes from live https://www.trymiroooo.com on https://www.miroooo.us, including website presentation and order tracking, retain XPage checkout, and leave the result in the local checkout for the owner to publish manually. The owner explicitly confirmed that the overlapping prior parity release `25e7725` was the intended baseline.
+- Repository `E:/1st YEAR DTU/New folder/miroooo`, GitHub https://github.com/naman-14113114/Miroooo.git. Starting and final branch `main`, HEAD and fetched `origin/main` both `25e772588785b041b5a1f65413a44fa8f31add66`, ahead/behind 0/0, no starting staged, unstaged or untracked changes. Checked remotes, fetched twice and inspected `25e7725` and `0dc49e6` without pulling. Public HTML, UK title/currency and the prior hosting handoff confirm this domain uses `apps/uk`. The USD app, shared catalogue, Vercel project settings, DNS, analytics code, Whop site and its source repository were outside the edit scope.
+- Reference authority was live Whop and the read-only migration directory. The reference remained on unborn `main` without remotes, and all 733 deployable files matched the approved `apbu_3WpoJTqOjmeEg` source ZIP byte-for-byte at closeout. Checked public X2 and tracking pages, shop, cart, home, heads, flosser, About, robots and sitemap. Live comparison identified the older tracking form and differences in gallery, product scope and cart delivery. Read governing instructions, workspace and project histories, README, PRODUCT/DESIGN, migration documentation and relevant checkout, tracking and product handoffs. The large context logs were read from disk, with task-relevant passages extracted for inspection after display truncation.
+- Storefront work includes the latest home X2 finish artwork, X2 Silver/Pink/Grey gallery assets and Pink detail image, main X2 review summary and gift badge, product-specific section navigation and sticky cart timing, X1 matching-head selector, one-time 1/3/6 heads tiers, cart gift and pack presentation, header scroll, quiz, shop and delivery wording. Main X2 uses the simple buy box. The legacy underscore X2 landing pages retain their bundle controls to match the Whop reference. The existing Vercel About Us conversion page and direct flosser landing and checkout remain available. The flosser is absent from the shop, menus and footer as on the reference.
+- Cart and drawer calculate each paid two-head pack at GBP10 with a GBP12 reference price. Tracked shipping is GBP2.99 below GBP49 after discounts and zero from GBP49. Free Tracked Shipping appears in the full-cart discount breakdown only when the calculated shipping fee is zero. Older persisted one-time prices are normalized, and obsolete subscription lines do not turn into purchases. The checkout remains the GBP XPage adapter at `/api/checkout/prepare`. Multi-pack heads use the existing native standard cart because the older published two- and three-pack XPage offers apply extra discounts. All three advertised equivalent brush codes use the configured XPage MIROOOO10 native offer when eligible. XPage hosted settings, theme and post-purchase features remain provider-managed.
+- Tracking now uses the reference's responsive light summary cards, Delivery Journey, Shipment Timeline, order contents and support actions. The API accepts exact reference/barcode requests, responds with private no-store headers, and does not expose names, street addresses or contact details. It reads exact XPage matches and CJ carrier scans, can use private historical aliases, and optionally reads exact paid Whop references for the existing Miroooo business. No fabricated tracking dates, item details or status advancement. Copied Cloudflare cache routines were adapted to bounded Node memory. The checked-in example documents server variables by name. XPage and CJ tracking credentials are needed for live verification, and Whop lookup requires its separate read-only key. Real orders were not queried.
+- Changed or added the following application paths, plus this append-only history and its workspace summary.
+  - `apps/uk/.env.example`
+  - `apps/uk/public/assets/home/x2-finishes/miroooo-x2-grey-angled-grip.webp`
+  - `apps/uk/public/assets/home/x2-finishes/miroooo-x2-grey-boxed-set.png`
+  - `apps/uk/public/assets/home/x2-finishes/miroooo-x2-pink-angled-grip.webp`
+  - `apps/uk/public/assets/home/x2-finishes/miroooo-x2-pink-boxed-set.png`
+  - `apps/uk/public/assets/home/x2-finishes/miroooo-x2-pink-upright-grip.webp`
+  - `apps/uk/public/assets/home/x2-finishes/miroooo-x2-silver-angled-grip.webp`
+  - `apps/uk/public/assets/site.css`
+  - `apps/uk/public/assets_ref/miroooo-flosser-reviews.js`
+  - `apps/uk/public/assets_ref/miroooo-reviews.js`
+  - `apps/uk/public/assets_ref/miroooo-x2-reviews.js`
+  - `apps/uk/public/assets_ref/org_miroooo-reviews.js`
+  - `apps/uk/public/assets_ref/org_miroooo-x2-reviews.js`
+  - `apps/uk/public/assets_ref/x2/gallery/miroooo-x2-rose-pink-sonic-electric-toothbrush-lightweight-handle.webp`
+  - `apps/uk/public/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp`
+  - `apps/uk/public/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp`
+  - `apps/uk/public/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp`
+  - `apps/uk/src/app/api/checkout/prepare/route.ts`
+  - `apps/uk/src/app/api/order-tracking/route.ts`
+  - `apps/uk/src/app/miroooo_x2/page.tsx`
+  - `apps/uk/src/app/policies/shipping-policy/page.tsx`
+  - `apps/uk/src/app/products/miroooo-x2/page.tsx`
+  - `apps/uk/src/app/products/miroooo_x2/page.tsx`
+  - `apps/uk/src/components/cart/CartDrawer.tsx`
+  - `apps/uk/src/components/cart/CartLines.tsx`
+  - `apps/uk/src/components/cart/CartPageContent.tsx`
+  - `apps/uk/src/components/home/HomeFaq.tsx`
+  - `apps/uk/src/components/layout/CartMinimalFooter.tsx`
+  - `apps/uk/src/components/layout/Footer.tsx`
+  - `apps/uk/src/components/layout/Header.tsx`
+  - `apps/uk/src/components/pages/FaqsPage.tsx`
+  - `apps/uk/src/components/pages/OrderTracking.module.css`
+  - `apps/uk/src/components/pages/OrderTracking.tsx`
+  - `apps/uk/src/components/pages/ShopPage.tsx`
+  - `apps/uk/src/components/product/FreeBrushHeadsGift.module.css`
+  - `apps/uk/src/components/product/FreeBrushHeadsGift.tsx`
+  - `apps/uk/src/components/product/HeadsProductHero.tsx`
+  - `apps/uk/src/components/product/ProductFaqs.tsx`
+  - `apps/uk/src/components/product/ProductHero.tsx`
+  - `apps/uk/src/components/product/ProductPage.tsx`
+  - `apps/uk/src/components/product/ProductReviews.module.css`
+  - `apps/uk/src/components/product/ProductReviews.tsx`
+  - `apps/uk/src/components/product/ProductStickyNav.tsx`
+  - `apps/uk/src/components/product/ShippingMarquee.tsx`
+  - `apps/uk/src/components/product/VariantSelector.tsx`
+  - `apps/uk/src/components/product/useStickyAddToCart.ts`
+  - `apps/uk/src/components/quiz/DentalQuiz.tsx`
+  - `apps/uk/src/components/ui/ShippingInfoTooltip.tsx`
+  - `apps/uk/src/context/CartContext.tsx`
+  - `apps/uk/src/data/brush-box-contents.ts`
+  - `apps/uk/src/data/faqs.ts`
+  - `apps/uk/src/data/home.ts`
+  - `apps/uk/src/data/navigation.ts`
+  - `apps/uk/src/data/policies.ts`
+  - `apps/uk/src/data/policyReference.ts`
+  - `apps/uk/src/data/quiz.ts`
+  - `apps/uk/src/data/x2Gallery.ts`
+  - `apps/uk/src/lib/cart.ts`
+  - `apps/uk/src/lib/cj-tracking.ts`
+  - `apps/uk/src/lib/commerce.ts`
+  - `apps/uk/src/lib/miroooo-tracking.server.ts`
+  - `apps/uk/src/lib/order-tracking.ts`
+  - `apps/uk/src/lib/xpage-tracking.ts`
+  - `apps/uk/src/styles/storefront.css`
+  - `apps/uk/tests/commerce.test.ts`
+  - `apps/uk/tests/tracking.test.ts`
+- Verification and corrections. Ran the production UK build twice, with 47 routes emitted in the final build, TypeScript and the repository static verifier with 553 checks, plus 51 commerce and tracking tests. Fixed the copied heads handler's obsolete purchase-option field, repaired one-time heads savings, adjusted old test fixtures from subscription and volume pricing to the new rules, and stopped the dev preview before the production rebuild. The XPage offer check initially had a relative scratch import error, corrected before the read-only GBP offer requests. A baseline source inspection inadvertently displayed pre-existing hard-coded tracking credential literals in diagnostic output. They were not copied into new code or history. The new Vercel route uses environment variables and a check of 25 emitted client JavaScript chunks found none of those values. The legacy shared file and Git history still contain the original records.
+- Playwright ran 18 explicit checks at 1440 and 390 px, including Pink image revision and load, main X2 buy box and gifts, sticky CTA transition, heads selector, three heads packs at GBP32.99 delivered, five at GBP50 delivered, conditional cart shipping, tracking progress, order contents, mobile width and unknown-reference clearing. Tracking browser results used synthetic fixtures. Existing Tawk localhost CORS errors, intentionally intercepted Klaviyo requests and an expected mocked 404 did not affect these checks. Reviewed both tracking screenshots. Twelve local production routes returned 200, the tracking alias redirected as expected, and missing API input returned 400 with private no-store headers. Production-style local preview is at http://127.0.0.1:4516. No real shopper checkout, payment, shipping charge, authentication against live providers or end-to-end post-purchase flow was attempted. Confirm Vercel provider variables and real XPage shipping behaviour before treating those parts as verified.
+- Final application state is 50 modified tracked source/assets/tests and 16 added untracked source/assets/tests, all under `apps/uk`, plus this context append. A layout file showed a working-copy stat or line-ending change with no Git content diff, byte-checked against the baseline. No staged content, commit, branch, push, pull, PR, Vercel action, Whop deployment, XPage settings change, DNS change, customer message, order or payment. The owner retains publication control.

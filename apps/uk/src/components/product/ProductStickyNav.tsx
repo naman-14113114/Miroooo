@@ -12,62 +12,48 @@ interface NavSection {
 const X2_DESKTOP_SECTIONS: NavSection[] = [
   { id: 'stories', label: 'Customer Stories', targetId: 'shopify-section-template--miroooo-x2-customer-stories' },
   { id: 'description', label: 'Description', targetId: 'x2-section-energy-boost-split' },
-  { id: 'modes', label: 'Modes', targetId: 'shopify-section-template--miroooo-x2-modes-swipe' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-comparison' },
-  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
-  { id: 'x1-vs-x2', label: 'X1 vs X2', targetId: 'shopify-section-template--miroooo-x2-comparison' },
   { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
 ];
 
 const X2_MOBILE_SECTIONS: NavSection[] = [
   { id: 'stories', label: 'Customer Stories', targetId: 'shopify-section-template--miroooo-x2-customer-stories' },
   { id: 'description', label: 'Description', targetId: 'x2-section-energy-boost-split' },
-  { id: 'modes', label: 'Modes', targetId: 'shopify-section-template--miroooo-x2-modes-swipe' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-comparison' },
-  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
-  { id: 'x1-vs-x2', label: 'X1 vs X2', targetId: 'shopify-section-template--miroooo-x2-comparison' },
   { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
 ];
 
 const X1_DESKTOP_SECTIONS: NavSection[] = [
   { id: 'customer-videos', label: 'Real Customer Video', targetId: 'shopify-section-template--miroshine-reels-container' },
-  { id: 'modes', label: 'Modes', targetId: 'shopify-section-template--24203751129433__video_with_text_BkMKDR' },
   { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-brush-style-precision' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-comparison' },
-  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
   { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
 ];
 
 const X1_MOBILE_SECTIONS: NavSection[] = [
   { id: 'customer-videos', label: 'Real Customer Video', targetId: 'shopify-section-template--miroshine-reels-container' },
-  { id: 'modes', label: 'Modes', targetId: 'shopify-section-template--24203751129433__video_with_text_BkMKDR' },
   { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-brush-style-precision' },
   { id: 'travel', label: 'Travel', targetId: 'shopify-section-template--miroooo-discover-oral-hygiene' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-comparison' },
-  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
   { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
 ];
 
 const FLOSSER_DESKTOP_SECTIONS: NavSection[] = [
-  { id: 'modes', label: 'Modes', targetId: 'flosser-modes-section', altTargetId: 'shopify-section-template--flosser_cleaning_modes' },
   { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-flosser-style-precision' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-flosser-comparison' },
-  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
   { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
 ];
 
 const FLOSSER_MOBILE_SECTIONS: NavSection[] = [
-  { id: 'modes', label: 'Modes', targetId: 'flosser-modes-section', altTargetId: 'shopify-section-template--flosser_cleaning_modes' },
   { id: 'description', label: 'Description', targetId: 'shopify-section-template--miroooo-flosser-style-precision' },
   { id: 'travel', label: 'Travel', targetId: 'shopify-section-template--miroooo-discover-flosser-hygiene' },
   { id: 'reviews', label: 'Reviews', targetId: 'shopify-section-template--24203751129433__reviews', altTargetId: 'reviews' },
   { id: 'compare', label: 'Compare', targetId: 'shopify-section-template--miroooo-flosser-comparison' },
-  { id: 'in-the-box', label: 'In The Box', targetId: 'shopify-section-template--24203751129433__image-with-text-1' },
   { id: 'faq', label: 'FAQ', targetId: 'shopify-section-template--24203751129433__faq' },
 ];
 
@@ -101,18 +87,45 @@ export function ProductStickyNav({ isX2 = false, isFlosser = false }: ProductSti
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const sections = isFlosser
+  const candidates = isFlosser
     ? (isMobile ? FLOSSER_MOBILE_SECTIONS : FLOSSER_DESKTOP_SECTIONS)
     : (isX2
         ? (isMobile ? X2_MOBILE_SECTIONS : X2_DESKTOP_SECTIONS)
         : (isMobile ? X1_MOBILE_SECTIONS : X1_DESKTOP_SECTIONS));
   const [isVisible, setIsVisible] = useState(false);
-  const [activeId, setActiveId] = useState(sections[0].id);
+  const [sections, setSections] = useState<NavSection[]>([]);
+  const [activeId, setActiveId] = useState('');
   const trackRef = useRef<HTMLDivElement>(null);
   const isClickingRef = useRef(false);
 
+  useEffect(() => {
+    let frame = 0;
+    const refresh = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const visible = candidates.filter(section => {
+          const target = getTargetElement(section.targetId, section.altTargetId);
+          return target && target.offsetHeight > 0 && target.getClientRects().length > 0;
+        });
+        setSections(previous => previous.map(section => section.id).join(',') === visible.map(section => section.id).join(',') ? previous : visible);
+        setActiveId(previous => visible.some(section => section.id === previous) ? previous : visible[0]?.id || '');
+      });
+    };
+    refresh();
+    window.addEventListener('resize', refresh, { passive: true });
+    const observer = new MutationObserver(refresh);
+    const page = document.querySelector('.product-page-root');
+    if (page) observer.observe(page, { childList: true, subtree: true });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('resize', refresh);
+      observer.disconnect();
+    };
+  }, [candidates]);
+
   // 1. Visibility and ScrollSpy
   useEffect(() => {
+    if (!sections.length) return;
     let ticking = false;
 
     const onScroll = () => {
@@ -191,6 +204,8 @@ export function ProductStickyNav({ isX2 = false, isFlosser = false }: ProductSti
     }
   }, []);
 
+  if (!sections.length) return null;
+
   return (
     <aside
       className={`miroooo-sticky-nav-wrap ${isVisible ? 'is-visible' : ''}`}
@@ -198,7 +213,6 @@ export function ProductStickyNav({ isX2 = false, isFlosser = false }: ProductSti
       role="navigation"
     >
       <div className="miroooo-sticky-nav-pill">
-        <span className="miroooo-sticky-nav-label">Select</span>
         <div className="miroooo-sticky-nav-track" ref={trackRef}>
           {sections.map((sec) => {
             const isActive = activeId === sec.id;
