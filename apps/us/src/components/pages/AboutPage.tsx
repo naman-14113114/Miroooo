@@ -205,7 +205,144 @@ export function AboutPage() {
           </div>
         </section>
 
-        {/* SECTION 4: CUSTOMER SUPPORT (Centered Box) */}
+        {/* SECTION 4: OUR INSTRUMENTS (THE CLEAN PRODUCT BRIDGE - X1 & X2) */}
+        <section className="about-section about-section--surface" aria-labelledby="collection-title">
+          <div className="about-shell">
+            <div className="about-values-header reveal">
+              <p className="about-eyebrow">OUR INSTRUMENTS</p>
+              <h2 id="collection-title" className="about-section-title">
+                Explore the Miroooo Range
+              </h2>
+              <p className="about-copy">
+                Quiet acoustic precision engineered for modern daily life. Compare our models and choose the clean that fits your routine.
+              </p>
+            </div>
+
+            <div className="about-collection-grid">
+              {/* Product 1: Miroooo X1 */}
+              <Link
+                href="/products/miroooo-x"
+                className="about-col-card reveal"
+                aria-label="Explore Miroooo X1 Sonic Electric Toothbrush"
+              >
+                <div className="about-col-media">
+                  <img
+                    src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-aerospace-aluminium-body.webp"
+                    alt="Miroooo X1 Sonic Electric Toothbrush in Silver"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="about-col-badge">MINIMALIST EVERYDAY</span>
+                </div>
+                <div className="about-col-content">
+                  <h3 className="about-col-title">Miroooo X1</h3>
+                  <p className="about-col-desc">
+                    Ultra-light 51g aerospace aluminium unibody with 3 acoustic brushing modes and 60-day battery endurance.
+                  </p>
+                  <ul className="about-col-bullets">
+                    <li>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>3 Sonic Cleaning Modes</span>
+                    </li>
+                    <li>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>51g Aerospace Aluminium</span>
+                    </li>
+                    <li>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>60-Day USB-C Battery</span>
+                    </li>
+                  </ul>
+                  <div className="about-col-footer">
+                    <div className="about-col-price-stack">
+                      <div className="about-col-price-row">
+                        <span className="about-col-price">From $69.00</span>
+                      </div>
+                    </div>
+                    <div className="about-col-btn">
+                      <span className="btn-fill" data-fill />
+                      <span className="btn-text">
+                        <span>Explore Miroooo X1</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Product 2: Miroooo X2 (Flagship Bestseller - Priority) */}
+              <Link
+                href="/products/miroooo-x2"
+                className="about-col-card about-col-card--featured reveal"
+                aria-label="Explore Miroooo X2 Flagship Acoustic Sonic Toothbrush"
+              >
+                <div className="about-col-media">
+                  <img
+                    src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp"
+                    alt="Miroooo X2 Flagship Acoustic Sonic Toothbrush with Free Gifts"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="about-col-badge about-col-badge--featured">FOR TODAY ONLY: X2 AT PRICE OF X1</span>
+                </div>
+                <div className="about-col-content">
+                  <h3 className="about-col-title">Miroooo X2 Flagship</h3>
+                  <p className="about-col-desc">
+                    45° Bass sweeping action with Smart Red Halo Pressure Sensor, 90-day cobalt cell, and 3 free gifts.
+                  </p>
+                  <ul className="about-col-bullets">
+                    <li>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span><strong>Smart Red Halo:</strong> Visual pressure protection</span>
+                    </li>
+                    <li>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span><strong>40,000 VPM:</strong> Under 45 dB acoustic hum</span>
+                    </li>
+                    <li>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span><strong>90-Day Battery:</strong> Includes Travel Case + Wall Mount</span>
+                    </li>
+                  </ul>
+                  <div className="about-col-footer">
+                    <div className="about-col-price-stack">
+                      <div className="about-col-price-row">
+                        <span className="about-col-price">From $69.00</span>
+                        <span className="about-col-compare">$140.00</span>
+                      </div>
+                      <span className="about-col-deal-note">For today only, X2 at price of X1</span>
+                    </div>
+                    <div className="about-col-btn about-col-btn--primary">
+                      <span className="btn-fill" data-fill />
+                      <span className="btn-text">
+                        <span>Explore Miroooo X2</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 5: CUSTOMER SUPPORT (Centered Box) */}
         <section className="about-section about-section--surface" aria-labelledby="support-title">
           <div className="about-shell">
             <div className="about-support-container reveal">

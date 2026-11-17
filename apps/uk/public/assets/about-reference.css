@@ -482,6 +482,10 @@
       flex-direction: column;
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
+      text-decoration: none !important;
+      color: inherit !important;
+      cursor: pointer;
+      position: relative;
     }
 
     .about-col-card:hover {
@@ -526,15 +530,18 @@
       color: #ffffff;
       font-size: 0.6875rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      padding: 5px 12px;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
       border-radius: 999px;
+      z-index: 2;
+      text-transform: uppercase;
     }
 
     .about-col-badge--featured {
       background: #ffffff;
       color: #000000;
       border-color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
     }
 
     .about-col-content {
@@ -598,6 +605,12 @@
 
     .about-col-price-stack {
       display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .about-col-price-row {
+      display: flex;
       align-items: baseline;
       gap: 8px;
     }
@@ -615,35 +628,100 @@
       text-decoration: line-through;
     }
 
-    .about-col-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 20px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
+    .about-col-deal-note {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
       color: #ffffff;
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      transition: all 0.25s ease;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 3px 10px;
+      border-radius: 999px;
+      width: fit-content;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
     }
 
-    .about-col-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
-      transform: translateY(-2px);
+    /* Primary & Interactive Action Buttons with Radial Fill Hover (Matching Add-to-Cart) */
+    .about-col-btn {
+      position: relative !important;
+      overflow: hidden !important;
+      isolation: isolate !important;
+      background: #ffffff !important;
+      color: #000000 !important;
+      border: 1px solid #ffffff !important;
+      border-radius: 9999px !important;
+      font-weight: 700 !important;
+      font-size: 0.875rem !important;
+      padding: 10px 22px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.16) !important;
+      transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
     }
 
-    .about-col-btn--primary {
-      background: #ffffff;
-      color: #000000;
-      border-color: #ffffff;
-      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.18);
+    .about-col-btn .btn-fill {
+      position: absolute !important;
+      border-radius: 50% !important;
+      width: 150% !important;
+      height: 200% !important;
+      inset-block-start: -50% !important;
+      top: -50% !important;
+      inset-inline-start: -25% !important;
+      left: -25% !important;
+      background-color: #000000 !important;
+      background: #000000 !important;
+      pointer-events: none !important;
+      z-index: 1 !important;
+      transform: translate3d(0, 76%, 0) !important;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
-    .about-col-btn--primary:hover {
-      background: #f0f0f0;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.28);
+    .about-col-btn .btn-text {
+      position: relative !important;
+      z-index: 2 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      color: #000000 !important;
+      font-weight: 700 !important;
+      transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      pointer-events: none !important;
+    }
+
+    .about-col-btn .btn-text svg {
+      color: #000000 !important;
+      stroke: #000000 !important;
+      fill: none !important;
+      transition: stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease !important;
+    }
+
+    .about-col-btn:hover .btn-fill,
+    .about-col-btn:focus-visible .btn-fill,
+    .about-col-card:hover .about-col-btn .btn-fill {
+      transform: translate3d(0, 0%, 0) !important;
+    }
+
+    .about-col-btn:hover .btn-text,
+    .about-col-btn:focus-visible .btn-text,
+    .about-col-card:hover .about-col-btn .btn-text {
+      color: #ffffff !important;
+    }
+
+    .about-col-btn:hover .btn-text svg,
+    .about-col-btn:focus-visible .btn-text svg,
+    .about-col-card:hover .about-col-btn .btn-text svg {
+      color: #ffffff !important;
+      stroke: #ffffff !important;
+      transform: translateX(3px) !important;
+    }
+
+    .about-col-card:hover .about-col-btn {
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25) !important;
     }

@@ -255,7 +255,11 @@ export function AboutPage() {
 
             <div className="about-collection-grid">
               {/* Product 1: Miroooo X1 */}
-              <article className="about-col-card reveal">
+              <Link
+                href="/products/miroooo-x"
+                className="about-col-card reveal"
+                aria-label="Explore Miroooo X1 Sonic Electric Toothbrush"
+              >
                 <div className="about-col-media">
                   <img
                     src="/assets_ref/x/gallery/miroooo-x1-sonic-electric-toothbrush-silver-aerospace-aluminium-body.webp"
@@ -291,19 +295,30 @@ export function AboutPage() {
                     </li>
                   </ul>
                   <div className="about-col-footer">
-                    <span className="about-col-price">From £49.00</span>
-                    <Link href="/products/miroooo-x1" className="about-col-btn">
-                      <span>Explore Miroooo X1</span>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </Link>
+                    <div className="about-col-price-stack">
+                      <div className="about-col-price-row">
+                        <span className="about-col-price">From £69.00</span>
+                      </div>
+                    </div>
+                    <div className="about-col-btn">
+                      <span className="btn-fill" data-fill />
+                      <span className="btn-text">
+                        <span>Explore Miroooo X1</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </article>
+              </Link>
 
               {/* Product 2: Miroooo X2 (Flagship Bestseller - Priority) */}
-              <article className="about-col-card about-col-card--featured reveal">
+              <Link
+                href="/products/miroooo-x2"
+                className="about-col-card about-col-card--featured reveal"
+                aria-label="Explore Miroooo X2 Flagship Acoustic Sonic Toothbrush"
+              >
                 <div className="about-col-media">
                   <img
                     src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp"
@@ -311,7 +326,7 @@ export function AboutPage() {
                     loading="lazy"
                     decoding="async"
                   />
-                  <span className="about-col-badge about-col-badge--featured">BESTSELLER · 50% OFF TODAY</span>
+                  <span className="about-col-badge about-col-badge--featured">FOR TODAY ONLY: X2 AT PRICE OF X1</span>
                 </div>
                 <div className="about-col-content">
                   <h3 className="about-col-title">Miroooo X2 Flagship</h3>
@@ -340,18 +355,24 @@ export function AboutPage() {
                   </ul>
                   <div className="about-col-footer">
                     <div className="about-col-price-stack">
-                      <span className="about-col-price">From £69.00</span>
-                      <span className="about-col-compare">£140.00</span>
+                      <div className="about-col-price-row">
+                        <span className="about-col-price">From £69.00</span>
+                        <span className="about-col-compare">£140.00</span>
+                      </div>
+                      <span className="about-col-deal-note">For today only, X2 at price of X1</span>
                     </div>
-                    <Link href="/products/miroooo-x2" className="about-col-btn about-col-btn--primary">
-                      <span>Explore Miroooo X2</span>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </Link>
+                    <div className="about-col-btn about-col-btn--primary">
+                      <span className="btn-fill" data-fill />
+                      <span className="btn-text">
+                        <span>Explore Miroooo X2</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </article>
+              </Link>
             </div>
           </div>
         </section>

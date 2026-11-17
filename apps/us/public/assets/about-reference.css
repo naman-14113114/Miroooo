@@ -427,3 +427,271 @@
       background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
       filter: blur(100px);
     }
+
+    /* Section 4: Collection Grid (X1 & X2 Direct Bridge) */
+    .about-collection-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(24px, 3vw, 36px);
+      max-width: 1040px;
+      margin-inline: auto;
+    }
+
+    @media (min-width: 768px) {
+      .about-collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .about-col-card {
+      background-color: #111111;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
+      text-decoration: none !important;
+      color: inherit !important;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .about-col-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8);
+    }
+
+    .about-col-card--featured {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(180deg, #141414 0%, #0e0e0e 100%);
+    }
+
+    .about-col-media {
+      width: 100%;
+      aspect-ratio: 16 / 11;
+      overflow: hidden;
+      background-color: #080808;
+      position: relative;
+    }
+
+    .about-col-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+
+    .about-col-card:hover .about-col-media img {
+      transform: scale(1.04);
+    }
+
+    .about-col-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+
+    .about-col-badge--featured {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    .about-col-content {
+      padding: clamp(24px, 3vw, 32px);
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .about-col-title {
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin: 0 0 10px 0;
+      letter-spacing: -0.015em;
+    }
+
+    .about-col-desc {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: #a0a0a0;
+      margin: 0 0 20px 0;
+    }
+
+    .about-col-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .about-col-bullets li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: #cccccc;
+    }
+
+    .about-col-bullets svg {
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .about-col-bullets strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .about-col-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .about-col-price-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .about-col-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .about-col-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .about-col-compare {
+      font-size: 0.9375rem;
+      color: #777777;
+      text-decoration: line-through;
+    }
+
+    .about-col-deal-note {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 3px 10px;
+      border-radius: 999px;
+      width: fit-content;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    /* Primary & Interactive Action Buttons with Radial Fill Hover (Matching Add-to-Cart) */
+    .about-col-btn {
+      position: relative !important;
+      overflow: hidden !important;
+      isolation: isolate !important;
+      background: #ffffff !important;
+      color: #000000 !important;
+      border: 1px solid #ffffff !important;
+      border-radius: 9999px !important;
+      font-weight: 700 !important;
+      font-size: 0.875rem !important;
+      padding: 10px 22px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.16) !important;
+      transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+
+    .about-col-btn .btn-fill {
+      position: absolute !important;
+      border-radius: 50% !important;
+      width: 150% !important;
+      height: 200% !important;
+      inset-block-start: -50% !important;
+      top: -50% !important;
+      inset-inline-start: -25% !important;
+      left: -25% !important;
+      background-color: #000000 !important;
+      background: #000000 !important;
+      pointer-events: none !important;
+      z-index: 1 !important;
+      transform: translate3d(0, 76%, 0) !important;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .about-col-btn .btn-text {
+      position: relative !important;
+      z-index: 2 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      color: #000000 !important;
+      font-weight: 700 !important;
+      transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      pointer-events: none !important;
+    }
+
+    .about-col-btn .btn-text svg {
+      color: #000000 !important;
+      stroke: #000000 !important;
+      fill: none !important;
+      transition: stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease !important;
+    }
+
+    .about-col-btn:hover .btn-fill,
+    .about-col-btn:focus-visible .btn-fill,
+    .about-col-card:hover .about-col-btn .btn-fill {
+      transform: translate3d(0, 0%, 0) !important;
+    }
+
+    .about-col-btn:hover .btn-text,
+    .about-col-btn:focus-visible .btn-text,
+    .about-col-card:hover .about-col-btn .btn-text {
+      color: #ffffff !important;
+    }
+
+    .about-col-btn:hover .btn-text svg,
+    .about-col-btn:focus-visible .btn-text svg,
+    .about-col-card:hover .about-col-btn .btn-text svg {
+      color: #ffffff !important;
+      stroke: #ffffff !important;
+      transform: translateX(3px) !important;
+    }
+
+    .about-col-card:hover .about-col-btn {
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25) !important;
+    }
