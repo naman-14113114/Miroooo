@@ -55,6 +55,21 @@ export const HOME_HERO_DATA: HomeHeroData = {
 export const X2_FINISHES: ShowcaseProductFinish[] = [
   {
     handle: 'miroooo-x2',
+    name: 'Miroooo X2 Silver',
+    color: 'Silver',
+    price: PRODUCTS['miroooo-x2'].price,
+    compareAt: PRODUCTS['miroooo-x2'].compareAt,
+    formattedPrice: PRODUCTS['miroooo-x2'].formattedPrice,
+    formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
+    rating: 4.8,
+    images: [
+      '/assets/home/x2-finishes/Gemini_Generated_Image_k002qfk002qfk002.webp',
+      '/assets/home/x2-finishes/c87ae4561f11aa13a2e75b6755f78ea9.jpg.jpeg',
+      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
+    ],
+  },
+  {
+    handle: 'miroooo-x2',
     name: 'Miroooo X2 Pink',
     color: 'Pink',
     price: PRODUCTS['miroooo-x2'].price,
@@ -63,8 +78,8 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
     rating: 4.9,
     images: [
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-upright-grip.webp?v=pink-v3',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-in-hand.webp?v=pink-v2',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_r1svq0r1svq0r1sv.webp',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_cma6ezcma6ezcma6.webp',
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-complete-set-packaging.webp',
     ],
   },
@@ -78,24 +93,9 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
     rating: 4.9,
     images: [
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-in-hand.webp',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_qy5r2pqy5r2pqy5r.webp',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_n0w0xjn0w0xjn0w0.webp',
       '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-complete-set-packaging.webp',
-    ],
-  },
-  {
-    handle: 'miroooo-x2',
-    name: 'Miroooo X2 Silver',
-    color: 'Silver',
-    price: PRODUCTS['miroooo-x2'].price,
-    compareAt: PRODUCTS['miroooo-x2'].compareAt,
-    formattedPrice: PRODUCTS['miroooo-x2'].formattedPrice,
-    formattedCompareAt: PRODUCTS['miroooo-x2'].formattedCompareAt,
-    rating: 4.8,
-    images: [
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-upright-grip.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-in-hand.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
     ],
   },
 ];

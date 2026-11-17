@@ -53,6 +53,21 @@ export const HOME_HERO_DATA: HomeHeroData = {
 export const X2_FINISHES: ShowcaseProductFinish[] = [
   {
     handle: 'miroooo-x2',
+    name: 'Miroooo X2 Silver',
+    color: 'Silver',
+    price: 69,
+    compareAt: 139,
+    formattedPrice: '£69',
+    formattedCompareAt: '£139',
+    rating: 4.8,
+    images: [
+      '/assets/home/x2-finishes/Gemini_Generated_Image_k002qfk002qfk002.webp',
+      '/assets/home/x2-finishes/c87ae4561f11aa13a2e75b6755f78ea9.jpg.jpeg',
+      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
+    ],
+  },
+  {
+    handle: 'miroooo-x2',
     name: 'Miroooo X2 Pink',
     color: 'Pink',
     price: 69,
@@ -61,8 +76,8 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: '£139',
     rating: 4.9,
     images: [
-      '/assets/home/x2-finishes/miroooo-x2-pink-angled-grip.webp',
-      '/assets/home/x2-finishes/miroooo-x2-pink-upright-grip.webp',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_r1svq0r1svq0r1sv.webp',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_cma6ezcma6ezcma6.webp',
       '/assets/home/x2-finishes/miroooo-x2-pink-boxed-set.png',
     ],
   },
@@ -76,24 +91,9 @@ export const X2_FINISHES: ShowcaseProductFinish[] = [
     formattedCompareAt: '£139',
     rating: 4.9,
     images: [
-      '/assets/home/x2-finishes/miroooo-x2-grey-angled-grip.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_qy5r2pqy5r2pqy5r.webp',
+      '/assets/home/x2-finishes/Gemini_Generated_Image_n0w0xjn0w0xjn0w0.webp',
       '/assets/home/x2-finishes/miroooo-x2-grey-boxed-set.png',
-    ],
-  },
-  {
-    handle: 'miroooo-x2',
-    name: 'Miroooo X2 Silver',
-    color: 'Silver',
-    price: 69,
-    compareAt: 139,
-    formattedPrice: '£69',
-    formattedCompareAt: '£139',
-    rating: 4.8,
-    images: [
-      '/assets/home/x2-finishes/miroooo-x2-silver-angled-grip.webp',
-      '/assets_ref/x2/miroooo-x2-sonic-electric-toothbrush-comparison.webp',
-      '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-complete-set-packaging.webp',
     ],
   },
 ];

@@ -176,7 +176,7 @@ function processTsReviewsFile(filePath, days, filterHandle) {
   let formattedCount = 0;
 
   const updateDatesInBlock = (block) => {
-    return block.replace(/("date":\s*")([^"]+)(")/g, (match, p1, dateVal, p3) => {
+    return block.replace(/(["']?date["']?:\s*['"])([^'"]+)(['"])/g, (match, p1, dateVal, p3) => {
       // Check if ISO format YYYY-MM-DD
       if (/^\d{4}-\d{2}-\d{2}$/.test(dateVal)) {
         const shifted = parseAndShiftIso(dateVal, days);

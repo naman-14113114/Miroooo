@@ -4413,18 +4413,45 @@ div[class*="tawk"],
   transition: opacity 0.2s ease !important;
 }
 
-.miroooo-gallery__slide[data-media-type="video"],
-.miroooo-gallery__slide .video-wrapper {
+.miroooo-gallery__slide[data-media-type="video"] {
   background: #000000 !important;
   width: 100% !important;
   height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.miroooo-gallery__slide .video-wrapper {
+  background: #000000 !important;
+  width: auto !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: 9 / 16 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  transform: translateZ(0) !important;
+  -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
 }
 
 .miroooo-gallery__slide video {
   width: 100% !important;
   height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: 9 / 16 !important;
   object-fit: cover !important;
   display: block !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  transform: translateZ(0) !important;
+  -webkit-mask-image: -webkit-radial-gradient(white, black) !important;
 }
 
 /* Miroooo X2 Product Gallery Direct-on-Image Editorial Typography */

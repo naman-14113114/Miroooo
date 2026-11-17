@@ -119,7 +119,7 @@ export const x2Gallery = {
   },
   "Grey": {
     "images": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp",
+      "/assets_ref/x2/gallery/b6.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-ipx7-waterproof-submersion.webp",
@@ -135,7 +135,7 @@ export const x2Gallery = {
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-smile-coach-app.webp"
     ],
     "thumbnails": [
-      "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp",
+      "/assets_ref/x2/gallery/b6.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-upright-grip.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-luxury-travel-case-lifestyle.webp",
       "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-ipx7-waterproof-submersion.webp",

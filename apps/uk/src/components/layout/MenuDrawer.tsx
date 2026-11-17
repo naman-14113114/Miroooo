@@ -21,7 +21,7 @@ const sections = [
         title: "Miroooo X2",
         eyebrow: "Flagship Pro",
         image:
-          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-upright-grip.webp",
+          "/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp",
         price: 69,
         comparePrice: 139,
       },

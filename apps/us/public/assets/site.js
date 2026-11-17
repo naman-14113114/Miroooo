@@ -949,7 +949,7 @@ ${tickerItemSet.repeat(12)}
                 <li>
                   <a href="/products/miroooo-x2" class="shop-drawer__card" data-shop-item="brush-x2">
                     <div class="shop-drawer__thumb">
-                      <img src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-upright-grip.webp" alt="Miroooo X2" width="140" height="140" loading="lazy" />
+                      <img src="/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp" alt="Miroooo X2" width="140" height="140" loading="lazy" />
                     </div>
                     <div class="shop-drawer__info">
                       <span class="shop-drawer__eyebrow">Flagship Pro</span>

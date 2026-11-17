@@ -295,7 +295,7 @@ export function ProductHero({
       colorLower === 'pink'
         ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-pink-global-dental-innovation-award.webp'
         : colorLower === 'grey'
-        ? '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-grey-global-dental-innovation-award.webp'
+        ? '/assets_ref/x2/gallery/b6.webp'
         : '/assets_ref/x2/gallery/miroooo-x2-sonic-electric-toothbrush-silver-global-dental-innovation-award.webp';
 
     const heroAlt =
@@ -955,7 +955,20 @@ export function ProductHero({
                             }}
                           >
                             {slide.type === 'video' ? (
-                              <div className="video-wrapper">
+                              <div
+                                className="video-wrapper"
+                                style={{
+                                  width: 'auto',
+                                  height: '100%',
+                                  maxHeight: '100%',
+                                  maxWidth: '100%',
+                                  aspectRatio: '9 / 16',
+                                  borderRadius: '16px',
+                                  overflow: 'hidden',
+                                  transform: 'translateZ(0)',
+                                  WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+                                }}
+                              >
                                 <video
                                   id="gallery-featured-video"
                                   src={slide.videoSrc}
@@ -967,6 +980,15 @@ export function ProductHero({
                                   disablePictureInPicture
                                   controlsList="nodownload nofullscreen noremoteplayback"
                                   preload={activeMediaIndex === idx ? 'auto' : 'none'}
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    aspectRatio: '9 / 16',
+                                    objectFit: 'cover',
+                                    borderRadius: '16px',
+                                    overflow: 'hidden',
+                                    display: 'block',
+                                  }}
                                 ></video>
                               </div>
                             ) : (
@@ -1906,7 +1928,15 @@ export function ProductHero({
                   muted
                   playsInline
                   controls
-                  style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain' }}
+                  style={{
+                    width: 'auto',
+                    height: '100%',
+                    maxHeight: '80vh',
+                    aspectRatio: '9 / 16',
+                    objectFit: 'contain',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                  }}
                 ></video>
               ) : (
                 <>
